@@ -1,18 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/lastPage"
+            style="@android:style/Widget.Material.Light.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="上一頁"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:id="@+id/newExpense"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="新增支出" />
+
+        <Button
+            android:id="@+id/comfirm"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="確定" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="金額" />
+
+        <EditText
+            android:id="@+id/amount_input"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="日期" />
+
+        <EditText
+            android:id="@+id/date_input"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="類別" />
+
+
+        <Spinner
+            android:id="@+id/type_input"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="帳本" />
+
+        <Spinner
+            android:id="@+id/book_input"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+
+        <TextView
+            android:id="@+id/payer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="付款人" />
+
+        <EditText
+            android:id="@+id/payer_input"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="備註" />
+
+        <EditText
+            android:id="@+id/note_input"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/scanInvoice"
+            style="@android:style/Widget.DeviceDefault.Light.Button.Toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:text="掃發票" />
+
+        <Button
+            android:id="@+id/regularExpense"
+            style="@android:style/Widget.DeviceDefault.Light.Button.Toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:text="固定支出" />
+
+    </LinearLayout>
+</LinearLayout>
+
