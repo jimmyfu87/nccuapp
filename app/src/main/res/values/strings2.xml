@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">EXAM</string>
+    <string name="action_settings">Settings</string>
+    <string name="income">收入</string>
+    <string name="time">時間：</string>
+    <string name="fixedIncome">固定收入</string>
+    <string name="price">金額：</string>
+    <string name="note">備註：</string>
+    <string name="breakfast">早餐</string>
+    <string name="book">帳本：</string>
+    <string name="lunch">午餐</string>
+    <string name="other">其他</string>
+    <string name="clothes">衣服</string>
+    <string name="enter">Enter</string>
+</resources>

@@ -8,8 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +18,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Button enter = (Button)findViewById(R.id.button4);
+        Button breakfast = (Button)findViewById(R.id.button);
+        Button lunch = (Button)findViewById(R.id.button2);
+        Button clothes = (Button)findViewById(R.id.button5);
+        Button other = (Button)findViewById(R.id.button6);
+        Button fixedInput = (Button)findViewById(R.id.button3);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
