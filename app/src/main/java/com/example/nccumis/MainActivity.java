@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.misproject.R;
+
 public class MainActivity extends AppCompatActivity {
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPhone;
