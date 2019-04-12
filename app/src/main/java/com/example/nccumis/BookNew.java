@@ -1,4 +1,4 @@
-package com.myandroid.misprojectexpense;
+package com.example.nccumis;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
