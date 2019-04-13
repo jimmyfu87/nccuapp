@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.misproject.R;
 
-public class MainActivity extends AppCompatActivity {
+public class Register extends AppCompatActivity {
     private TextInputLayout textInputUserName;
     private TextInputLayout textInputPhone;
     private TextInputLayout textInputEmail;
@@ -19,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.register);
 
         textInputUserName = findViewById(R.id.text_input_userName);
         textInputPhone = findViewById(R.id.text_input_phone);

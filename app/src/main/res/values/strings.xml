@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">nccumis</string>
+    <string name="app_name">MIS Project</string>
+    <string name="error_invalid_password">填寫密碼無效</string>
+    <string name="permission_rationale">權限允許</string>
+    <string name="error_field_required">信箱未填寫</string>
+    <string name="error_invalid_email">填寫格式無效</string>
+    <string name="error_incorrect_password">密碼錯誤</string>
 </resources>
