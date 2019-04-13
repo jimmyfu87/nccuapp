@@ -2,7 +2,6 @@ package com.example.nccumis;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,7 +9,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class BookNew extends AppCompatActivity {
+public class add_book extends AppCompatActivity {
     private Button lastPage;
     private Button comfirm;
 
@@ -23,14 +22,14 @@ public class BookNew extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_book);
+        setContentView(R.layout.book_add);
 
         //不儲存回 新增支出 或 新增收入
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                jumpToaddExpense();
             }
         });
 
@@ -42,7 +41,7 @@ public class BookNew extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkInputInfo()){
                     //到下一頁
-
+                    jumpToaddExpense();
                 }else {
                     //把沒填好的部分填好
 
@@ -59,7 +58,7 @@ public class BookNew extends AppCompatActivity {
         //預設世界前幾常用的貨幣
         Spinner input_currency = (Spinner)findViewById(R.id.currency_input);
         final String[] currency = {"TWD", "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "RMB", "SEK", "NZD", "MXN", "SGD", "HDK", "KRW", "TRY", "RUB", "BRL", "INR", "ZAR", "DKK", "PLN", "NOK"};
-        ArrayAdapter<String> currencyList = new ArrayAdapter<>(BookNew.this,
+        ArrayAdapter<String> currencyList = new ArrayAdapter<>(add_book.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 currency);
         input_currency.setAdapter(currencyList);
@@ -77,5 +76,9 @@ public class BookNew extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void jumpToaddExpense(){
+        setContentView(R.layout.expense_add);
     }
 }
