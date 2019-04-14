@@ -45,7 +45,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="身份證字號"
+                    android:hint="帳號"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -64,9 +64,9 @@
                     android:imeActionId="6"
                     android:imeActionLabel="Sign in"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:inputType="textPassword"
                     />
 
             </android.support.design.widget.TextInputLayout>
