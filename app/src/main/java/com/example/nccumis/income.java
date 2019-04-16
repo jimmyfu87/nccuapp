@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 
-public class MainActivity extends AppCompatActivity {
+public class income extends AppCompatActivity {
     private Button lastPage;
     private Button newIncome;
     private Button comfirm;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         //類別
         Spinner input_type = (Spinner)findViewById(R.id.type_input);
         final String[] type = {"薪水", "發票中獎","樂透中獎", "其他","新增類別"};
-        ArrayAdapter<String> typeList = new ArrayAdapter<>(MainActivity.this,
+        ArrayAdapter<String> typeList = new ArrayAdapter<>(income.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
         input_type.setAdapter(typeList);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         //帳本
         Spinner input_book = (Spinner)findViewById(R.id.book_input);
         final String[] book = {"現金帳本", "一銀存摺帳本", "一銀信用卡帳本" ,"新增帳本"};
-        ArrayAdapter<String> bookList = new ArrayAdapter<>(MainActivity.this,
+        ArrayAdapter<String> bookList = new ArrayAdapter<>(income.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
         input_book.setAdapter(bookList);
@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDatePickDlg() {
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(income.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                MainActivity.this.input_date.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
+                income.this.input_date.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
