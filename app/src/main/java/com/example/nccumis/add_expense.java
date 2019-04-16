@@ -98,6 +98,11 @@ public class add_expense extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
         input_type.setAdapter(typeList);
+       /*
+        if(input_type.getAdapter().equals("新增類別")){
+            setContentView(R.layout.type_add);
+        }
+        */
 
         //帳本
         Spinner input_book = (Spinner)findViewById(R.id.book_input);
@@ -106,6 +111,9 @@ public class add_expense extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
         input_book.setAdapter(bookList);
+        if(input_book.getAdapter().equals("新增帳本")){
+            setContentView(R.layout.book_add);
+        }
 
         //付款人
         input_payer = (TextView)findViewById(R.id.payer_input);
@@ -119,7 +127,16 @@ public class add_expense extends AppCompatActivity {
 
         //固定支出
         regularExpense = (Button) findViewById(R.id.regularExpense);
+        regularExpense.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -147,6 +164,11 @@ public class add_expense extends AppCompatActivity {
     public void jumpToHome(){
 
         setContentView(R.layout.home);
+
+    }
+
+    //////////
+    public void setRegularExpense(){
 
     }
 }
