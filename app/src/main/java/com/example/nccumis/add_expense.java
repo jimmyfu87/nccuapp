@@ -3,7 +3,9 @@ package com.example.nccumis;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -28,11 +30,18 @@ public class add_expense extends AppCompatActivity {
     private Button scanInvoice;
     private Button regularExpense;
 
+    private EditText i_price,i_note,i_fixed,i_userid;                                             //宣告需要輸入的變數的EditText
+    private String i_date,i_typeid,i_bookid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_add);
+        i_price=(EditText)findViewById(R.id.amount_input);  //將amount_input從View轉為EditText
+        i_note=(EditText)findViewById(R.id.note_input);    //將note_input從View轉為EditText
+
+
 
         //不儲存回首頁
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -59,6 +68,12 @@ public class add_expense extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkInputInfo()){
                     //到首頁
+                    int price=Integer.parseInt(i_price.getText().toString());                               //將price轉為int
+                    String note=i_note.getText().toString();
+                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
+                    dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
+                    dbmanager.insert(price,i_date,i_typeid,i_bookid,note,"",1);            //將資料放到資料庫
+                    dbmanager.close();                                                                      //關閉資料庫
                     jumpToHome();
                 }else {
                     //把沒填好的部分填好
@@ -92,12 +107,24 @@ public class add_expense extends AppCompatActivity {
         });
 
         //類別
-        Spinner input_type = (Spinner)findViewById(R.id.type_input);
+        final Spinner input_type = (Spinner)findViewById(R.id.type_input);
         final String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
         ArrayAdapter<String> typeList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
         input_type.setAdapter(typeList);
+        //取回type的值
+        input_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                i_typeid = input_type.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
        /*
         if(input_type.getAdapter().equals("新增類別")){
             setContentView(R.layout.type_add);
@@ -105,12 +132,24 @@ public class add_expense extends AppCompatActivity {
         */
 
         //帳本
-        Spinner input_book = (Spinner)findViewById(R.id.book_input);
+        final Spinner input_book = (Spinner)findViewById(R.id.book_input);                  //改成final才能使用
         final String[] book = {"現金帳本", "新增帳本"};
         ArrayAdapter<String> bookList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
         input_book.setAdapter(bookList);
+        //取回book的值
+        input_book.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                i_bookid = input_book.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         if(input_book.getAdapter().equals("新增帳本")){
             setContentView(R.layout.book_add);
         }
@@ -131,7 +170,6 @@ public class add_expense extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-
                     return true;
                 }
                 return false;
@@ -159,6 +197,7 @@ public class add_expense extends AppCompatActivity {
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
+
     }
 
     public void jumpToHome(){
