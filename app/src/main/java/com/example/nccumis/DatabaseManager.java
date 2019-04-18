@@ -1,9 +1,4 @@
 package com.example.nccumis;
-
-/**
- * Created by IceMann on 23/2/2017.
- */
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
