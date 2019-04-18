@@ -194,11 +194,31 @@ public class add_expense extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear++;
+                setdateformat(year,monthOfYear,dayOfMonth);
                 add_expense.this.input_date.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
+
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
-
+    }
+    public void setdateformat(int year,int month,int day){
+        String st_month;
+        String st_day;
+        if(month<10){
+            st_month=Integer.toString(month);
+            st_month="0"+st_month;
+        }
+        else{
+            st_month=Integer.toString(month);
+        }
+        if(day<10){
+            st_day=Integer.toString(day);
+            st_day="0"+st_day;
+        }
+        else{
+            st_day=Integer.toString(day);
+        }
+        i_date=year+"-"+st_month+"-"+st_day;
     }
 
     public void jumpToHome(){
