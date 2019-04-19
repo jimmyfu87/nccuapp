@@ -15,14 +15,6 @@ public class AddType extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_type);
 
-        //使用Spinner
-        Spinner notify = (Spinner)findViewById(R.id.spinnerType);
-        ArrayAdapter<CharSequence> nAdapter = ArrayAdapter.createFromResource(
-                this, R.array.type_array, android.R.layout.simple_spinner_item );
-        nAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        notify.setAdapter(nAdapter);
-
 
     }
 }
