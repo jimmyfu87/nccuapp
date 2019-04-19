@@ -181,7 +181,7 @@ public class add_expense extends AppCompatActivity {
     //檢查輸入的值是否正確
     public boolean checkInputInfo(){
         int amount = Integer.parseInt(input_amount.getText().toString());
-        if(amount < 0 ){
+        if(amount < 0 && amount > Integer.MAX_VALUE){
             return false;
         }
 
