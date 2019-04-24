@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".Registerrr">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="註冊帳號"
+        android:layout_gravity="center"
+        android:textSize="20dp"/>
+
+
+
+    <EditText
+        android:id="@+id/et_userName"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="姓名"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/et_userAccount"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="帳號名稱(輸入英文)"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/et_userPhone"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="手機"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/et_userEmail"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="郵件信箱"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/et_userPassword1"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="密碼"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/et_userPassword2"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="確認密碼"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/et_userNumber"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="身分證字號"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/et_userBirth"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="生日(西元 年/月/日)"
+        android:inputType="date"/>
+    <Button
+        android:id="@+id/btn_checkRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="確認"/>
+
+
+</LinearLayout>
