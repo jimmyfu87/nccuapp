@@ -23,21 +23,25 @@
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="姓名"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLength="20"/>
 
     <EditText
         android:id="@+id/et_userAccount"
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="帳號名稱(輸入英文)"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLength="20"
+        />
 
     <EditText
         android:id="@+id/et_userPhone"
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="手機"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:maxLength="10"/>
 
     <EditText
         android:id="@+id/et_userEmail"
@@ -50,22 +54,37 @@
         android:id="@+id/et_userPassword1"
         android:layout_width="380dp"
         android:layout_height="50dp"
-        android:hint="密碼"
-        android:inputType="textPassword"/>
+        android:hint="密碼(12碼)"
+        android:inputType="textPassword"
+        android:maxLength="12"/>
+    <CheckBox
+        android:id="@+id/checkBoxPassword1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="隱藏/顯示密碼"
+        android:layout_gravity="right"/>
 
     <EditText
         android:id="@+id/et_userPassword2"
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="確認密碼"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        />
+    <CheckBox
+        android:id="@+id/checkBoxPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="隱藏/顯示密碼"
+        android:layout_gravity="right"/>
 
     <EditText
         android:id="@+id/et_userNumber"
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="身分證字號"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:maxLength="10"/>
 
     <EditText
         android:id="@+id/et_userBirth"

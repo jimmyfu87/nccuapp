@@ -19,10 +19,24 @@
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:hint="帳號"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <EditText
-        android:layout_width="400dp"
+        android:id="@+id/et_passwordLogin"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:hint="密碼"/>
+    <CheckBox
+        android:id="@+id/checkboxLogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="顯示密碼"/>
+    </LinearLayout>
+
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
