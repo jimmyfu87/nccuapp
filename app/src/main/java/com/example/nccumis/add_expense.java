@@ -12,7 +12,11 @@ import android.widget.ArrayAdapter;
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 import android.view.MotionEvent;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import android.content.Intent;
 
 
 public class add_expense extends AppCompatActivity {
@@ -20,12 +24,12 @@ public class add_expense extends AppCompatActivity {
     private Button newExpense;
     private Button comfirm;
 
-    private TextView input_amount;
-    private TextView input_date;
-    private TextView input_type;
-    private TextView input_book;
-    private TextView input_payer;
-    private TextView input_note;
+    private EditText input_amount;
+    private EditText input_date;
+    private Spinner input_type;
+    private Spinner input_book;                         //改成final才能使用
+    private EditText input_payer;
+    private EditText input_note;
 
     private Button scanInvoice;
     private Button regularExpense;
@@ -75,17 +79,14 @@ public class add_expense extends AppCompatActivity {
                     dbmanager.insert(price,i_date,i_typeid,i_bookid,note,"",1);            //將資料放到資料庫
                     dbmanager.close();                                                                      //關閉資料庫
                     jumpToHome();
-                }else {
-                    //把沒填好的部分填好
-
                 }
             }
         });
         //金額
-        input_amount = (TextView)findViewById(R.id.amount_input);
+        input_amount = (EditText)findViewById(R.id.amount_input);
 
         //日期
-        input_date = (TextView)findViewById(R.id.date_input);
+        input_date = (EditText)findViewById(R.id.date_input);
         input_date.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -107,7 +108,7 @@ public class add_expense extends AppCompatActivity {
         });
 
         //類別
-        final Spinner input_type = (Spinner)findViewById(R.id.type_input);
+        this.input_type = (Spinner)findViewById(R.id.type_input);
         final String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
         ArrayAdapter<String> typeList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -132,7 +133,7 @@ public class add_expense extends AppCompatActivity {
         */
 
         //帳本
-        final Spinner input_book = (Spinner)findViewById(R.id.book_input);                  //改成final才能使用
+        this.input_book = (Spinner)findViewById(R.id.book_input);
         final String[] book = {"現金帳本", "新增帳本"};
         ArrayAdapter<String> bookList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -155,33 +156,46 @@ public class add_expense extends AppCompatActivity {
         }
 
         //付款人
-        input_payer = (TextView)findViewById(R.id.payer_input);
+        input_payer = (EditText)findViewById(R.id.payer_input);
 
         //備註
-        input_note = (TextView)findViewById(R.id.note_input);
+        input_note = (EditText)findViewById(R.id.note_input);
+
 
         //掃發票
         scanInvoice = (Button) findViewById(R.id.scanInvoice);
 
 
         //固定支出
-        regularExpense = (Button) findViewById(R.id.regularExpense);
-        regularExpense.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    return true;
-                }
-                return false;
-            }
-        });
-
+//        regularExpense = (Button) findViewById(R.id.regularExpense);
+//        regularExpense.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     //檢查輸入的值是否正確
+    //付款人沒做
     public boolean checkInputInfo(){
         int amount = Integer.parseInt(input_amount.getText().toString());
-        if(amount < 0 && amount > Integer.MAX_VALUE){
+        if(amount < 0 && amount > Integer.MAX_VALUE) {
+            return false;
+        }
+        if(input_date.getText().toString().isEmpty()){
+            return false;
+        }
+        if(input_note.getText().toString().isEmpty()){
+            return false;
+        }
+        if(input_book.getAdapter().isEmpty()){
+            return false;
+        }
+        if(input_book.getAdapter().isEmpty()){
             return false;
         }
 
@@ -222,13 +236,8 @@ public class add_expense extends AppCompatActivity {
     }
 
     public void jumpToHome(){
-
-        setContentView(R.layout.home);
-
+        Intent intent = new Intent(this,Home.class);
+        startActivity(intent);
     }
 
-    //////////
-    public void setRegularExpense(){
-
-    }
 }
