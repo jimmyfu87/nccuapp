@@ -98,6 +98,14 @@ public class Registerrr extends AppCompatActivity {
        }
    };
 
+    public boolean recheckPassword(EditText editText){
+        if(et_userPassword1 != et_userPassword2){
+            editText.setError("密碼不符");
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     }
 
