@@ -6,14 +6,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.content.Intent;
@@ -28,6 +27,7 @@ public class add_expense extends AppCompatActivity {
     private EditText input_date;
     private Spinner input_type;
     private Spinner input_book;                         //改成final才能使用
+    private RadioButton newBookBtn;
     private EditText input_payer;
     private EditText input_note;
 
@@ -131,8 +131,15 @@ public class add_expense extends AppCompatActivity {
         */
 
         //帳本
+        this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
+        newBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToadd_book();
+            }
+        });
         this.input_book = (Spinner)findViewById(R.id.book_input);
-        final String[] book = {"現金帳本", "新增帳本"};
+        final String[] book = {"現金帳本"};
         ArrayAdapter<String> bookList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 book);

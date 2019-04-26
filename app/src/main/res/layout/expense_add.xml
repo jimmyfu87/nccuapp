@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent" >
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -79,12 +82,30 @@
             android:layout_marginTop="10dp"
             android:text="類別" />
 
-
-        <Spinner
-            android:id="@+id/type_input"
-            android:layout_width="200dp"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/type_input"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+                <!--android:layout_weight="1" -->
+
+            //之後再加新增類別
+            <!--<RadioButton-->
+                <!--android:id="@+id/newBookBtn"-->
+                <!--android:layout_width="200dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="新增帳本"-->
+                <!--android:layout_weight="1" />-->
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/book"
@@ -93,13 +114,29 @@
             android:layout_marginTop="10dp"
             android:text="帳本" />
 
-        <Spinner
-            android:id="@+id/book_input"
-            android:layout_width="200dp"
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:orientation="horizontal">
 
+            <Spinner
+                android:id="@+id/book_input"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"/>
 
+            <RadioButton
+                android:id="@+id/newBookBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="新增帳本"
+                android:layout_weight="1" />
+
+        </LinearLayout>
         <TextView
             android:id="@+id/payer"
             android:layout_width="match_parent"
@@ -157,3 +194,4 @@
     </LinearLayout>
 </LinearLayout>
 
+</ScrollView>

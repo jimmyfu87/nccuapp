@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 
 public class add_book extends AppCompatActivity {
     private Button lastPage;
