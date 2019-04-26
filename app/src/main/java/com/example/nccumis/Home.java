@@ -1,5 +1,6 @@
 package com.example.nccumis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,7 +20,7 @@ public class Home extends AppCompatActivity {
         addSpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.expense_add);
+                jumpToadd_expense();
             }
         });
 
@@ -28,8 +29,19 @@ public class Home extends AppCompatActivity {
         checkSpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //setContentView(R.layout.income_add);
+                //jumpTocheck_expense();
             }
         });
     }
+
+    public void jumpToadd_expense(){
+        Intent intent = new Intent(Home.this,add_expense.class);
+        startActivity(intent);
+    }
+
+//    public void jumpTocheck_expense(){
+//        Intent intent = new Intent(Home.this,check_expense.class);
+//        startActivity(intent);
+//    }
+
 }

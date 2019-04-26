@@ -83,7 +83,7 @@ public class add_book extends AppCompatActivity {
     }
 
     public void jumpToaddExpense(){
-        Intent intent = new Intent(this,Home.class);
+        Intent intent = new Intent(this,add_expense.class);
         startActivity(intent);
     }
 }

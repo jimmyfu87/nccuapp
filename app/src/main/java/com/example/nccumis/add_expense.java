@@ -45,8 +45,6 @@ public class add_expense extends AppCompatActivity {
         i_price=(EditText)findViewById(R.id.amount_input);  //將amount_input從View轉為EditText
         i_note=(EditText)findViewById(R.id.note_input);    //將note_input從View轉為EditText
 
-
-
         //不儲存回首頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +137,7 @@ public class add_expense extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
         input_book.setAdapter(bookList);
+
         //取回book的值
         input_book.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -151,9 +150,6 @@ public class add_expense extends AppCompatActivity {
 
             }
         });
-        if(input_book.getAdapter().equals("新增帳本")){
-            setContentView(R.layout.book_add);
-        }
 
         //付款人
         input_payer = (EditText)findViewById(R.id.payer_input);
@@ -183,7 +179,7 @@ public class add_expense extends AppCompatActivity {
     //付款人沒做
     public boolean checkInputInfo(){
         int amount = Integer.parseInt(input_amount.getText().toString());
-        if(amount < 0 && amount > Integer.MAX_VALUE) {
+        if(amount < 0 || amount > Integer.MAX_VALUE) {
             return false;
         }
         if(input_date.getText().toString().isEmpty()){
@@ -236,8 +232,18 @@ public class add_expense extends AppCompatActivity {
     }
 
     public void jumpToHome(){
-        Intent intent = new Intent(this,Home.class);
+        Intent intent = new Intent(add_expense.this,Home.class);
         startActivity(intent);
     }
+
+    public void jumpToadd_book(){
+        Intent intent = new Intent(add_expense.this,add_book.class);
+        startActivity(intent);
+    }
+
+//    public void jumpToadd_income(){
+//        Intent intent = new Intent(add_expense.this,add_income.class);
+//        startActivity(intent);
+//    }
 
 }
