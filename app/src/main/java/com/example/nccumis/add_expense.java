@@ -74,7 +74,7 @@ public class add_expense extends AppCompatActivity {
                     String note=i_note.getText().toString();
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
                     dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                    dbmanager.insert(price,i_date,i_typeid,i_bookid,note,"",1);            //將資料放到資料庫
+                    dbmanager.insert_Ex(price,i_date,i_typeid,i_bookid,note,"",1);            //將資料放到資料庫
                     dbmanager.close();                                                                      //關閉資料庫
                     jumpToHome();
                 }

@@ -25,16 +25,26 @@ public class DatabaseManager {
     }
 
     //typeid,bookid暫用text
-    public void insert(int ex_price,String ex_date,String typeid,String bookid,String ex_note,String ex_fixed,int user_id) {
+    public void insert_Ex(int ex_price,String ex_date,String typeid,String bookid,String ex_note,String ex_fixed,int user_id) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.EX_PRICE, ex_price);
         contentValues.put(dbHelper.EX_DATE, ex_date);
-        contentValues.put(dbHelper.TYPEID, typeid);
-        contentValues.put(dbHelper.BOOKID, bookid);
+        contentValues.put(dbHelper.TYPE_ID, typeid);
+        contentValues.put(dbHelper.BOOK_ID, bookid);
         contentValues.put(dbHelper.EX_NOTE, ex_note);
         contentValues.put(dbHelper.EX_FIXED, ex_fixed);
         contentValues.put(dbHelper.USER_ID, user_id);
         database.insert(dbHelper.tb_name, null, contentValues);
+
+    }
+    public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type,int user_id) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.BOOK_NAME, book_name);
+        contentValues.put(dbHelper.AMOUNT_START, amount_start);
+        contentValues.put(dbHelper.AMOUNT_REMAIN, amount_remain);
+        contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
+        contentValues.put(dbHelper.USER_ID, user_id);
+        database.insert(dbHelper.tb_name3, null, contentValues);
 
     }
 
