@@ -28,11 +28,11 @@
         android:orientation="horizontal">
     <EditText
         android:id="@+id/et_passwordLogin"
-        android:layout_width="280dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:hint="密碼"/>
     <CheckBox
-        android:id="@+id/checkboxLogIn"
+        android:id="@+id/checkLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="顯示密碼"/>

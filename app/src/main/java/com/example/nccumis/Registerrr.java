@@ -25,6 +25,7 @@ public class Registerrr extends AppCompatActivity {
     private CheckBox checkBoxPassword1 ;
     private CheckBox checkBoxPassword2 ;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class Registerrr extends AppCompatActivity {
          et_userEmail = findViewById(R.id.et_userEmail);
          et_userPassword1 = findViewById(R.id.et_userPassword1);
          et_userPassword2 = findViewById(R.id.et_userPassword2);
+
          et_userBirth = findViewById(R.id.et_userBirth);
          btn_checkRegister =  findViewById(R.id.btn_checkRegister);
          checkBoxPassword1 = findViewById(R.id.checkBoxPassword1);
@@ -48,8 +50,6 @@ public class Registerrr extends AppCompatActivity {
         et_userPassword1.addTextChangedListener(registerrrTextWatcher );
         et_userPassword2.addTextChangedListener(registerrrTextWatcher );
         et_userBirth.addTextChangedListener(registerrrTextWatcher );
-
-
 
         checkBoxPassword1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -95,8 +95,10 @@ public class Registerrr extends AppCompatActivity {
        @Override
        public void afterTextChanged(Editable s) {
 
+
        }
    };
+
 
     public boolean recheckPassword(EditText editText){
         if(et_userPassword1 != et_userPassword2){
