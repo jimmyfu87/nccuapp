@@ -38,7 +38,8 @@
     <EditText
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:hint="類別名稱"
+        android:hint="類別名稱(最多十個字)"
+        android:maxLength="10"
         />
 
 
