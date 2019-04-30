@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class Registerrr extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class Registerrr extends AppCompatActivity {
     private EditText et_userPassword1 ;
     private EditText et_userPassword2 ;
     private EditText et_userBirth ;
+    private TextView et_wrongPassword;
     private Button btn_checkRegister ;
     private CheckBox checkBoxPassword1 ;
     private CheckBox checkBoxPassword2 ;
@@ -37,7 +39,7 @@ public class Registerrr extends AppCompatActivity {
          et_userEmail = findViewById(R.id.et_userEmail);
          et_userPassword1 = findViewById(R.id.et_userPassword1);
          et_userPassword2 = findViewById(R.id.et_userPassword2);
-
+         et_wrongPassword =findViewById(R.id.et_wrongPassword);
          et_userBirth = findViewById(R.id.et_userBirth);
          btn_checkRegister =  findViewById(R.id.btn_checkRegister);
          checkBoxPassword1 = findViewById(R.id.checkBoxPassword1);
@@ -50,6 +52,11 @@ public class Registerrr extends AppCompatActivity {
         et_userPassword1.addTextChangedListener(registerrrTextWatcher );
         et_userPassword2.addTextChangedListener(registerrrTextWatcher );
         et_userBirth.addTextChangedListener(registerrrTextWatcher );
+
+        btn_checkRegister.setOnClickListener(ClickIntHere);
+
+
+
 
         checkBoxPassword1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -72,6 +79,18 @@ public class Registerrr extends AppCompatActivity {
             }
         });
    }
+   private View.OnClickListener ClickIntHere = new View.OnClickListener() {
+       @Override
+       public void onClick(View v) {
+           if(et_userPassword1.getText() != et_userPassword2.getText()){
+               et_wrongPassword.setText("密碼錯誤");
+           }else {
+               et_wrongPassword.setText("密碼正確");
+           }
+       }
+   };
+
+
    private TextWatcher registerrrTextWatcher = new TextWatcher() {
        @Override
        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -100,14 +119,6 @@ public class Registerrr extends AppCompatActivity {
    };
 
 
-    public boolean recheckPassword(EditText editText){
-        if(et_userPassword1 != et_userPassword2){
-            editText.setError("密碼不符");
-            return false;
-        }else{
-            return true;
-        }
-    }
 
     }
 

@@ -37,6 +37,7 @@
         android:hint="帳號名稱(輸入20英文字內)"
         android:inputType="text"
         android:maxLength="20"
+        android:digits="ZXCVBNMASDFGHJKLQWERTYUIOPzxcvbnmasdfghjklqwertyuiop"
         />
 
     <EditText
@@ -45,22 +46,27 @@
         android:layout_height="50dp"
         android:hint="手機"
         android:inputType="number"
-        android:maxLength="10"/>
+        android:maxLength="10"
+        android:digits="0123456789"/>
 
     <EditText
         android:id="@+id/et_userEmail"
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="郵件信箱"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        />
 
     <EditText
         android:id="@+id/et_userPassword1"
         android:layout_width="380dp"
         android:layout_height="50dp"
-        android:hint="密碼(12碼)"
+        android:hint="密碼(英數12碼)"
         android:inputType="textPassword"
-        android:maxLength="12"/>
+        android:maxLength="12"
+        android:digits="0123456789ZXCVBNMASDFGHJKLQWERTYUIOPzxcvbnmasdfghjklqwertyuiop"
+        />
+
     <CheckBox
         android:id="@+id/checkBoxPassword1"
         android:layout_width="wrap_content"
@@ -75,21 +81,26 @@
         android:layout_height="50dp"
         android:hint="確認密碼"
         android:inputType="textPassword"
+        android:digits="0123456789ZXCVBNMASDFGHJKLQWERTYUIOPzxcvbnmasdfghjklqwertyuiop"
+
         />
     <CheckBox
         android:id="@+id/checkBoxPassword2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="顯示密碼"
-        android:layout_gravity="right"/>
+        android:layout_gravity="right"
+        />
 
     <EditText
         android:id="@+id/et_userNumber"
         android:layout_width="380dp"
         android:layout_height="50dp"
-        android:hint="身分證字號"
+        android:hint="身分證字號(英文大寫)"
         android:inputType="textVisiblePassword"
-        android:maxLength="10"/>
+        android:maxLength="10"
+        android:digits="0123456789ZXCVBNMASDFGHJKLQWERTYUIOP"
+        />
 
     <EditText
         android:id="@+id/et_userBirth"
@@ -97,6 +108,14 @@
         android:layout_height="50dp"
         android:hint="生日(西元 年-月-日)"
         android:inputType="date"/>
+
+    <TextView
+        android:id="@+id/et_wrongPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
     <Button
         android:id="@+id/btn_checkRegister"
         android:layout_width="wrap_content"
