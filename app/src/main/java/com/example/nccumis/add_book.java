@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+
 public class add_book extends AppCompatActivity {
     private Button lastPage;
     private Button comfirm;
@@ -27,6 +28,10 @@ public class add_book extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_add);
+        Intent savedDataFromExpense = getIntent();
+        final Bundle saveBag = savedDataFromExpense.getExtras();
+
+
         //帳本名稱
         input_bookName = (EditText) findViewById(R.id.bookName_input);
 
@@ -39,7 +44,7 @@ public class add_book extends AppCompatActivity {
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToaddExpense();
+                jumpToaddExpense(saveBag);
             }
         });
 
@@ -58,7 +63,7 @@ public class add_book extends AppCompatActivity {
                     dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
                     dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,1);            //將資料放到資料庫
                     dbmanager.close();                                                                      //關閉資料庫
-                    jumpToaddExpense();
+                    jumpToaddExpense(saveBag);
                 }
             }
         });
@@ -91,21 +96,35 @@ public class add_book extends AppCompatActivity {
 
     //檢查輸入的值是否正確
     public boolean checkInputInfo(){
-        int amount = Integer.parseInt(input_startBudget.getText().toString());
-        if(amount < 0 || amount > Integer.MAX_VALUE){
+        int amount = 0;
+        try
+        {
+            amount = Integer.parseInt(input_startBudget.getText().toString());
+        }
+        catch (NumberFormatException e)
+        {
+            // handle the exception
+            input_startBudget.setError("起始金額未填寫");
+
+        }
+        if(amount < 0 || amount > Integer.MAX_VALUE ){
+            input_startBudget.setError("輸入金額有誤");
+            return false;
+        }
+        if(input_bookName.getText().length() > 20){
+            input_bookName.setError("輸入名稱太長");
             return false;
         }
         if(input_bookName.getText().toString().isEmpty()){
-            return false;
-        }
-        if(input_currency.getAdapter().toString().isEmpty()){
+            input_bookName.setError("輸入名稱未填寫");
             return false;
         }
         return true;
     }
 
-    public void jumpToaddExpense(){
-        Intent intent = new Intent(this,add_expense.class);
+    public void jumpToaddExpense(Bundle prelayoutData){
+        Intent intent = new Intent(add_book.this,add_expense.class);
+        intent.putExtras(prelayoutData);
         startActivity(intent);
     }
 }

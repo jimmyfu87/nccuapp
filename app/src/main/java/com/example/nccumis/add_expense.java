@@ -26,15 +26,19 @@ public class add_expense extends AppCompatActivity {
     private EditText input_amount;
     private EditText input_date;
     private Spinner input_type;
-    private Spinner input_book;                         //改成final才能使用
-    private RadioButton newBookBtn;
+    private Spinner input_book;                          //改成final才能使用
     private EditText input_payer;
     private EditText input_note;
 
+    private RadioButton newBookBtn;
     private Button scanInvoice;
     private Button regularExpense;
 
-    private EditText i_price,i_note,i_fixed,i_userid;                                             //宣告需要輸入的變數的EditText
+    private final String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
+    private final String[] book = {"現金帳本"};
+
+
+    private EditText i_price,i_note,i_fixed,i_userid;                  //宣告需要輸入的變數的EditText
     private String i_date,i_typeid,i_bookid;
 
 
@@ -42,8 +46,17 @@ public class add_expense extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_add);
+
         i_price=(EditText)findViewById(R.id.amount_input);  //將amount_input從View轉為EditText
         i_note=(EditText)findViewById(R.id.note_input);    //將note_input從View轉為EditText
+
+        //Spinner ArrayAdapter
+        ArrayAdapter<String> typeList = new ArrayAdapter<>(add_expense.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                type);
+        ArrayAdapter<String> bookList = new ArrayAdapter<>(add_expense.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                book);
 
         //不儲存回首頁
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -80,6 +93,23 @@ public class add_expense extends AppCompatActivity {
                 }
             }
         });
+
+        //////////////////// 錯誤部分.////////////////////////////
+        //從add_book 或 add_type 返回 填過的資料自動傳入
+//        Intent getSaveData = getIntent();
+//        Bundle getSaveBag = getSaveData.getExtras();
+//        if(getSaveBag != null){
+//            input_amount.setText(getSaveBag.getString("amount"));
+//            input_date.setText(getSaveBag.getString("date"));
+//            int typePosition = typeList.getPosition(getSaveBag.getString("type"));
+//            input_type.setSelection(typePosition);
+//            int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
+//            input_book.setSelection(bookPosition);
+//            input_payer.setText(getSaveBag.getString("payer"));
+//            input_note.setText(getSaveBag.getString("note"));
+//        }
+
+
         //金額
         input_amount = (EditText)findViewById(R.id.amount_input);
 
@@ -107,10 +137,6 @@ public class add_expense extends AppCompatActivity {
 
         //類別
         this.input_type = (Spinner)findViewById(R.id.type_input);
-        final String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
-        ArrayAdapter<String> typeList = new ArrayAdapter<>(add_expense.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                type);
         input_type.setAdapter(typeList);
         //取回type的值
         input_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -124,11 +150,6 @@ public class add_expense extends AppCompatActivity {
 
             }
         });
-       /*
-        if(input_type.getAdapter().equals("新增類別")){
-            setContentView(R.layout.type_add);
-        }
-        */
 
         //帳本
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
@@ -139,10 +160,6 @@ public class add_expense extends AppCompatActivity {
             }
         });
         this.input_book = (Spinner)findViewById(R.id.book_input);
-        final String[] book = {"現金帳本"};
-        ArrayAdapter<String> bookList = new ArrayAdapter<>(add_expense.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                book);
         input_book.setAdapter(bookList);
 
         //取回book的值
@@ -164,7 +181,6 @@ public class add_expense extends AppCompatActivity {
         //備註
         input_note = (EditText)findViewById(R.id.note_input);
 
-
         //掃發票
         scanInvoice = (Button) findViewById(R.id.scanInvoice);
 
@@ -185,20 +201,27 @@ public class add_expense extends AppCompatActivity {
     //檢查輸入的值是否正確
     //付款人沒做
     public boolean checkInputInfo(){
-        int amount = Integer.parseInt(input_amount.getText().toString());
+        int amount = 0;
+        try
+        {
+            amount = Integer.parseInt(input_amount.getText().toString());
+        }
+        catch (NumberFormatException e)
+        {
+            // handle the exception
+            input_amount.setError("輸入金額未填寫");
+
+        }
         if(amount < 0 || amount > Integer.MAX_VALUE) {
+            input_amount.setError("輸入金額錯誤");
             return false;
         }
         if(input_date.getText().toString().isEmpty()){
+            input_date.setError("輸入日期有誤");
             return false;
         }
-        if(input_note.getText().toString().isEmpty()){
-            return false;
-        }
-        if(input_book.getAdapter().isEmpty()){
-            return false;
-        }
-        if(input_book.getAdapter().isEmpty()){
+        if(input_note.getText().length() > 100){
+            input_note.setError("輸入備註太長");
             return false;
         }
 
@@ -245,7 +268,16 @@ public class add_expense extends AppCompatActivity {
 
     public void jumpToadd_book(){
         Intent intent = new Intent(add_expense.this,add_book.class);
+        Bundle saveExpenseData = new Bundle();
+        saveExpenseData.putString("amount",input_amount.getText().toString());
+        saveExpenseData.putString("date",input_date.getText().toString());
+        saveExpenseData.putString("type",input_type.getSelectedItem().toString());
+        saveExpenseData.putString("book",input_book.getSelectedItem().toString());
+        saveExpenseData.putString("payer",input_payer.getText().toString());
+        saveExpenseData.putString("note",input_note.getText().toString());
+        intent.putExtras(saveExpenseData);
         startActivity(intent);
+
     }
 
 //    public void jumpToadd_income(){
