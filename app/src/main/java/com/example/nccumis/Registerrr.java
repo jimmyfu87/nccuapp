@@ -86,7 +86,7 @@ public class Registerrr extends AppCompatActivity {
            if(et_userPassword1.getText().toString() .equals(et_userPassword2.getText().toString())){
                et_wrongPassword.setText("密碼正確");
            }else {
-               et_wrongPassword.setText("密碼錯誤");
+               et_wrongPassword.setText("密碼不一致");
            }
        }
    };
