@@ -25,7 +25,7 @@ public class PasswordCheckEmail extends AppCompatActivity {
     }
 
     public void JumpToLogInn(){
-        Intent intent = new Intent(PasswordCheckEmail.this.LogInn.class);
+        Intent intent = new Intent(PasswordCheckEmail.this,LogInn.class);
         startActivity(intent);
     }
 }

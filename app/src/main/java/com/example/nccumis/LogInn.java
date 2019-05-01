@@ -1,9 +1,12 @@
 package com.example.nccumis;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -12,6 +15,7 @@ public class LogInn extends AppCompatActivity {
 
     CheckBox checkboxLogIn;
     EditText et_passwordLogin;
+    Button btn_forgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,15 @@ public class LogInn extends AppCompatActivity {
 
         checkboxLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_passwordLogin =(EditText)findViewById(R.id.et_passwordLogin);
+        btn_forgetPassword=(Button)findViewById(R.id.btn_forgetPassword);
+
+        btn_forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpToPasswordCheckEmail();
+            }
+        });
+
         checkboxLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -31,6 +44,10 @@ public class LogInn extends AppCompatActivity {
             }
         });
 
+    }
 
+    public void JumpToPasswordCheckEmail(){
+        Intent intent= new Intent(LogInn.this,PasswordCheckEmail.class);
+        startActivity(intent);
     }
 }
