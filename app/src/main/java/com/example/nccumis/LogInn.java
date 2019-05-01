@@ -17,6 +17,7 @@ public class LogInn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_inn);
+
         checkboxLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_passwordLogin =(EditText)findViewById(R.id.et_passwordLogin);
         checkboxLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

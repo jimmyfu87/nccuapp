@@ -33,7 +33,8 @@ public class Registerrr extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registerrr);
 
-         et_userName = findViewById(R.id.et_userName);
+        //被findViewById抓下來的type是view ,要再轉string
+        et_userName = findViewById(R.id.et_userName);
          et_userAccount = findViewById(R.id.et_userAccount);
          et_userPhone = findViewById(R.id.et_userPhone);
          et_userEmail = findViewById(R.id.et_userEmail);
@@ -55,9 +56,7 @@ public class Registerrr extends AppCompatActivity {
 
         btn_checkRegister.setOnClickListener(ClickIntHere);
 
-
-
-
+        //讓密碼顯示的打勾框框
         checkBoxPassword1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -79,18 +78,20 @@ public class Registerrr extends AppCompatActivity {
             }
         });
    }
+
+   //核對密碼
    private View.OnClickListener ClickIntHere = new View.OnClickListener() {
        @Override
        public void onClick(View v) {
-           if(et_userPassword1.getText() != et_userPassword2.getText()){
-               et_wrongPassword.setText("密碼錯誤");
-           }else {
+           if(et_userPassword1.getText().toString() .equals(et_userPassword2.getText().toString())){
                et_wrongPassword.setText("密碼正確");
+           }else {
+               et_wrongPassword.setText("密碼錯誤");
            }
        }
    };
 
-
+   //空白沒輸入東西的話，會警告你
    private TextWatcher registerrrTextWatcher = new TextWatcher() {
        @Override
        public void beforeTextChanged(CharSequence s, int start, int count, int after) {

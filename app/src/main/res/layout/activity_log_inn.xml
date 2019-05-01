@@ -22,29 +22,33 @@
         android:layout_height="wrap_content"
         android:hint="帳號"/>
 
+
+    <EditText
+        android:id="@+id/et_passwordLogin"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:hint="密碼"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <EditText
-        android:id="@+id/et_passwordLogin"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:hint="密碼"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center">
     <CheckBox
         android:id="@+id/checkLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="顯示密碼"/>
-    </LinearLayout>
-
+        android:text="顯示密碼"
+        android:layout_marginTop="5dp"
+        />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="記住密碼"
-        android:layout_gravity="center"
         android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
