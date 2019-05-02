@@ -12,6 +12,8 @@
 
         <activity android:name=".Home"></activity>
         <activity android:name=".add_book"></activity>
+        <activity android:name=".check_expense"></activity>
+        <activity android:name=".check_income"></activity>
 
         <activity android:name=".add_expense">
             <intent-filter>

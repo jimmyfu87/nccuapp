@@ -29,7 +29,7 @@ public class Home extends AppCompatActivity {
         checkSpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //jumpTocheck_expense();
+                jumpTocheck_expense();
             }
         });
     }
@@ -41,9 +41,9 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void jumpTocheck_expense(){
-//        Intent intent = new Intent(Home.this,check_expense.class);
-//        startActivity(intent);
-//    }
+    public void jumpTocheck_expense(){
+        Intent intent = new Intent(Home.this,check_expense.class);
+        startActivity(intent);
+    }
 
 }
