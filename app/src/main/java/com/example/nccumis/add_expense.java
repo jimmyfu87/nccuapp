@@ -72,7 +72,7 @@ public class add_expense extends AppCompatActivity {
         newExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //jumpToAddIncome();
+                jumpToadd_income();
             }
         });
 
@@ -282,9 +282,9 @@ public class add_expense extends AppCompatActivity {
 
     }
 
-//    public void jumpToadd_income(){
-//        Intent intent = new Intent(add_expense.this,add_income.class);
-//        startActivity(intent);
-//    }
+    public void jumpToadd_income(){
+        Intent intent = new Intent(add_expense.this,add_income.class);
+        startActivity(intent);
+    }
 
 }

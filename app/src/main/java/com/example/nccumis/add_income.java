@@ -1,6 +1,7 @@
 package com.example.nccumis;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -49,7 +50,7 @@ public class add_income extends AppCompatActivity {
         newIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                jumpToadd_expense();
             }
         });
 
@@ -142,5 +143,9 @@ public class add_income extends AppCompatActivity {
 
         setContentView(R.layout.home);
 
+    }
+    public void jumpToadd_expense(){
+        Intent intent = new Intent(add_income.this,add_expense.class);
+        startActivity(intent);
     }
 }
