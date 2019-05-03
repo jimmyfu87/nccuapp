@@ -213,6 +213,7 @@ public class add_expense extends AppCompatActivity {
             }else{
                 input_amount.setError("輸入金額太大");
             }
+            return false;
         }
         if(amount < 0) {
             input_amount.setError("輸入金額小於零");
