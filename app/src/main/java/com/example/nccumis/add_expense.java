@@ -209,11 +209,14 @@ public class add_expense extends AppCompatActivity {
         catch (NumberFormatException e)
         {
             // handle the exception
-            input_amount.setError("輸入金額未填寫");
-
+            if(input_amount.getText().toString().isEmpty()){
+                input_amount.setError("輸入金額未填寫");
+            }else{
+                input_amount.setError("輸入金額太大");
+            }
         }
-        if(amount < 0 || amount > Integer.MAX_VALUE) {
-            input_amount.setError("輸入金額錯誤");
+        if(amount < 0) {
+            input_amount.setError("輸入金額小於零");
             return false;
         }
         if(input_date.getText().toString().isEmpty()){

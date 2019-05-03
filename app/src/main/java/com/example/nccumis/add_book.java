@@ -104,11 +104,15 @@ public class add_book extends AppCompatActivity {
         catch (NumberFormatException e)
         {
             // handle the exception
-            input_startBudget.setError("起始金額未填寫");
+            if(input_startBudget.getText().toString().isEmpty()){
+                input_startBudget.setError("起始金額未填寫");
+            }else{
+                input_startBudget.setError("起始金額太大");
+            }
 
         }
-        if(amount < 0 || amount > Integer.MAX_VALUE ){
-            input_startBudget.setError("輸入金額有誤");
+        if(amount < 0){
+            input_startBudget.setError("輸入金額小於零");
             return false;
         }
         if(input_bookName.getText().length() > 20){
