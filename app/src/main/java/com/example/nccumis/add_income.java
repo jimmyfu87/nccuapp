@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -34,6 +35,8 @@ public class add_income extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.income_add);
+        i_price =(EditText)findViewById(R.id.amount_input);
+        i_note =(EditText)findViewById(R.id.note_input);
 
         //不儲存回首頁
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -59,10 +62,10 @@ public class add_income extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkInputInfo()){
-                    //到首頁
+
                     jumpToHome();
                 }else {
-                    //把沒填好的部分填好
+
 
                 }
             }
@@ -93,12 +96,22 @@ public class add_income extends AppCompatActivity {
         });
 
         //類別
-        Spinner input_type = (Spinner)findViewById(R.id.type_input);
+        final Spinner input_type = (Spinner)findViewById(R.id.type_input);
         final String[] type = {"薪水", "發票中獎","樂透中獎", "其他","新增類別"};
         ArrayAdapter<String> typeList = new ArrayAdapter<>(add_income.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
         input_type.setAdapter(typeList);
+
+        input_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                i_typeid = input_type.getSelectedItem().toString();
+            }
+            public void onNothingSelected(AdapterView<?>parent){
+
+            }
+        });
 
         //帳本
         Spinner input_book = (Spinner)findViewById(R.id.book_input);
@@ -107,6 +120,9 @@ public class add_income extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
         input_book.setAdapter(bookList);
+
+
+
 
 
 
@@ -120,12 +136,22 @@ public class add_income extends AppCompatActivity {
     //檢查輸入的值是否正確
     public boolean checkInputInfo(){
         int amount = Integer.parseInt(input_amount.getText().toString());
-        if(amount < 0 ){
+        if(amount < 0 || amount > Integer.MAX_VALUE){
+            return false;
+        }
+        if(input_date.getText().toString().isEmpty()){
+            return false;
+        }
+        if(input_note.getText().toString().isEmpty()){
             return false;
         }
 
         return true;
     }
+
+
+
+
 
     public void showDatePickDlg() {
         Calendar calendar = Calendar.getInstance();
@@ -137,10 +163,29 @@ public class add_income extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
+    public void setdateformat(int year, int month, int day){
+        String st_month;
+        String st_day;
+        if(month<10){
+            st_month = Integer.toString(month);
+            st_month = "0"+st_month;
+        }
+        else{
+            st_month = Integer.toString(month);
+        }
+        if (day < 10) {
+            st_day = Integer.toString(day);
+            st_day = "0"+st_day;
+        }
+        else{
+            st_day = Integer.toString(day);
+        }
+        i_date = year+"-"+st_month+"-"+st_day;
+    }
 
     public void jumpToHome(){
 
-        setContentView(R.layout.home);
+
 
     }
 }
