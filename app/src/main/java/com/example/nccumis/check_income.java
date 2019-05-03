@@ -21,8 +21,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class check_income extends AppCompatActivity {
-    private float[] getData = {98.8f, 123.8f, 161.6f, 24.2f, 52f, 58.2f, 35.4f, 13.8f, 78.4f, 203.4f, 240.2f, 159.7f};
-    private final String[] typeName = {"Jan" , "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec"};
+    private int[] getData = {98, 123, 161, 24, 52, 58, 35, 13, 78, 203, 240, 159};
+    private String[] typeName = {"Jan" , "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec"};
 
     private Button lastPage;
     private Button switchAccount;
