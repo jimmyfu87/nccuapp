@@ -34,8 +34,8 @@ public class add_expense extends AppCompatActivity {
     private Button scanInvoice;
     private Button regularExpense;
 
-    private final String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
-    private final String[] book = {"現金帳本"};
+    private String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
+    private String[] book = {"現金帳本"};
 
 
     private EditText i_price,i_note,i_fixed,i_userid;                  //宣告需要輸入的變數的EditText
@@ -93,21 +93,6 @@ public class add_expense extends AppCompatActivity {
                 }
             }
         });
-
-        //////////////////// 錯誤部分.////////////////////////////
-        //從add_book 或 add_type 返回 填過的資料自動傳入
-//        Intent getSaveData = getIntent();
-//        Bundle getSaveBag = getSaveData.getExtras();
-//        if(getSaveBag != null){
-//            input_amount.setText(getSaveBag.getString("amount"));
-//            input_date.setText(getSaveBag.getString("date"));
-//            int typePosition = typeList.getPosition(getSaveBag.getString("type"));
-//            input_type.setSelection(typePosition);
-//            int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
-//            input_book.setSelection(bookPosition);
-//            input_payer.setText(getSaveBag.getString("payer"));
-//            input_note.setText(getSaveBag.getString("note"));
-//        }
 
 
         //金額
@@ -183,6 +168,20 @@ public class add_expense extends AppCompatActivity {
 
         //掃發票
         scanInvoice = (Button) findViewById(R.id.scanInvoice);
+
+        //從add_book 或 add_type 返回 填過的資料自動傳入
+        Intent getSaveData = getIntent();
+        Bundle getSaveBag = getSaveData.getExtras();
+        if(getSaveBag != null){
+            input_amount.setText(getSaveBag.getString("amount"));
+            input_date.setText(getSaveBag.getString("date"));
+            int typePosition = typeList.getPosition(getSaveBag.getString("type"));
+            input_type.setSelection(typePosition);
+            int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
+            input_book.setSelection(bookPosition);
+            input_payer.setText(getSaveBag.getString("payer"));
+            input_note.setText(getSaveBag.getString("note"));
+        }
 
 
         //固定支出
