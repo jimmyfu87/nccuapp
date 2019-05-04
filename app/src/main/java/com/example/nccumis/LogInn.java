@@ -16,6 +16,7 @@ public class LogInn extends AppCompatActivity {
     CheckBox checkboxLogIn;
     EditText et_passwordLogin;
     Button btn_forgetPassword;
+    Button btn_registerAgain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,17 @@ public class LogInn extends AppCompatActivity {
         checkboxLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_passwordLogin =(EditText)findViewById(R.id.et_passwordLogin);
         btn_forgetPassword=(Button)findViewById(R.id.btn_forgetPassword);
+        btn_registerAgain = (Button)findViewById(R.id.btn_registerAgain);
 
+        //切換到註冊頁面
+        btn_forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpToRegistrrr();
+            }
+        });
+
+        //切換到驗證密碼頁面
         btn_forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,6 +44,8 @@ public class LogInn extends AppCompatActivity {
             }
         });
 
+
+        //顯示隱藏密碼
         checkboxLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -45,9 +58,14 @@ public class LogInn extends AppCompatActivity {
         });
 
     }
-
+//切換到驗證密碼的頁面
     public void JumpToPasswordCheckEmail(){
         Intent intent= new Intent(LogInn.this,PasswordCheckEmail.class);
+        startActivity(intent);
+    }
+    //切換到註冊頁面
+    public void JumpToRegistrrr(){
+        Intent intent= new Intent(LogInn.this,Registerrr.class);
         startActivity(intent);
     }
 }
