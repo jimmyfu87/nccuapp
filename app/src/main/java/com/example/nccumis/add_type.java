@@ -24,7 +24,7 @@ public class add_type extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_type);
+        setContentView(R.layout.type_add);
         savedDataFromIncome = getIntent();
         saveBag = savedDataFromIncome.getExtras();
 

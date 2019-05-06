@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import java.util.Calendar;
@@ -25,6 +26,12 @@ public class add_income extends AppCompatActivity {
     private Spinner input_type;
     private Spinner input_book;
     private EditText input_note;
+
+    private RadioButton newBookBtn;
+    private RadioButton newTypeBtn;
+
+    private String[] type = {"薪水", "發票中獎","樂透中獎", "其他"};
+    private String[] book = {"現金帳本"};
 
     private EditText i_price,i_note,i_fixed,i_userid;                                             //宣告需要輸入的變數的EditText
     private String i_date,i_typeid,i_bookid;
@@ -61,9 +68,6 @@ public class add_income extends AppCompatActivity {
                 if(checkInputInfo()){
                     //到首頁
                     jumpToHome();
-                }else {
-                    //把沒填好的部分填好
-
                 }
             }
         });
@@ -93,16 +97,28 @@ public class add_income extends AppCompatActivity {
         });
 
         //類別
-        Spinner input_type = (Spinner)findViewById(R.id.type_input);
-        final String[] type = {"薪水", "發票中獎","樂透中獎", "其他","新增類別"};
+        this.newTypeBtn = (RadioButton)findViewById(R.id.newTypeBtn) ;
+        newTypeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToadd_type();
+            }
+        });
+        input_type = (Spinner)findViewById(R.id.type_input);
         ArrayAdapter<String> typeList = new ArrayAdapter<>(add_income.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
         input_type.setAdapter(typeList);
 
         //帳本
-        Spinner input_book = (Spinner)findViewById(R.id.book_input);
-        final String[] book = {"現金帳本" ,"新增帳本"};
+        this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
+        newBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToadd_type();
+            }
+        });
+        input_book = (Spinner)findViewById(R.id.book_input);
         ArrayAdapter<String> bookList = new ArrayAdapter<>(add_income.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
@@ -113,7 +129,18 @@ public class add_income extends AppCompatActivity {
         //備註
         input_note = (EditText)findViewById(R.id.note_input);
 
-
+        //從add_book 或 add_type 返回 填過的資料自動傳入
+        Intent getSaveData = getIntent();
+        Bundle getSaveBag = getSaveData.getExtras();
+        if(getSaveBag != null){
+            input_amount.setText(getSaveBag.getString("amount"));
+            input_date.setText(getSaveBag.getString("date"));
+            int typePosition = typeList.getPosition(getSaveBag.getString("type"));
+            input_type.setSelection(typePosition);
+            int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
+            input_book.setSelection(bookPosition);
+            input_note.setText(getSaveBag.getString("note"));
+        }
 
     }
 
@@ -157,6 +184,7 @@ public class add_income extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(add_income.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear++;
                 add_income.this.input_date.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));

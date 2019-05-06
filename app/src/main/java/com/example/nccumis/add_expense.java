@@ -31,6 +31,8 @@ public class add_expense extends AppCompatActivity {
     private EditText input_note;
 
     private RadioButton newBookBtn;
+    private RadioButton newTypeBtn;
+
     private Button scanInvoice;
     private Button regularExpense;
 
@@ -121,6 +123,13 @@ public class add_expense extends AppCompatActivity {
         });
 
         //類別
+        this.newTypeBtn = (RadioButton)findViewById(R.id.newTypeBtn) ;
+        newTypeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToadd_type();
+            }
+        });
         this.input_type = (Spinner)findViewById(R.id.type_input);
         input_type.setAdapter(typeList);
         //取回type的值
