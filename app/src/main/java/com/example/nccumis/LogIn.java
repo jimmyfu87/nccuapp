@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-public class LogInn extends AppCompatActivity {
+public class LogIn extends AppCompatActivity {
 
     CheckBox checkboxLogIn;
     EditText et_passwordLogin;
@@ -21,7 +21,7 @@ public class LogInn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_inn);
+        setContentView(R.layout.activity_log_in);
 
         checkboxLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_passwordLogin =(EditText)findViewById(R.id.et_passwordLogin);
@@ -60,12 +60,12 @@ public class LogInn extends AppCompatActivity {
     }
 //切換到驗證密碼的頁面
     public void JumpToPasswordCheckEmail(){
-        Intent intent= new Intent(LogInn.this,PasswordCheckEmail.class);
+        Intent intent= new Intent(LogIn.this,PasswordCheckEmail.class);
         startActivity(intent);
     }
     //切換到註冊頁面
     public void JumpToRegistrrr(){
-        Intent intent= new Intent(LogInn.this,Registerrr.class);
+        Intent intent= new Intent(LogIn.this, Register.class);
         startActivity(intent);
     }
 }

@@ -21,6 +21,9 @@ public class add_book extends AppCompatActivity {
     private Spinner input_currency;
     private Switch default_book;
 
+    private Intent savedDataFromExpense;
+    private Bundle saveBag;
+
     private String i_currencyid;
 
 
@@ -28,8 +31,8 @@ public class add_book extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_add);
-        Intent savedDataFromExpense = getIntent();
-        final Bundle saveBag = savedDataFromExpense.getExtras();
+        savedDataFromExpense = getIntent();
+        saveBag = savedDataFromExpense.getExtras();
 
 
         //帳本名稱
@@ -44,7 +47,7 @@ public class add_book extends AppCompatActivity {
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToaddExpense(saveBag);
+                jumpToaddSpend(saveBag);
             }
         });
 
@@ -63,7 +66,7 @@ public class add_book extends AppCompatActivity {
                     dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
                     dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,1);            //將資料放到資料庫
                     dbmanager.close();                                                                      //關閉資料庫
-                    jumpToaddExpense(saveBag);
+                    jumpToaddSpend(saveBag);
                 }
             }
         });
@@ -71,7 +74,7 @@ public class add_book extends AppCompatActivity {
 
         //貨幣
         //預設世界前幾常用的貨幣
-        final Spinner input_currency = (Spinner)findViewById(R.id.currency_input);
+        input_currency = (Spinner)findViewById(R.id.currency_input);
         final String[] currency = {"TWD", "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "RMB", "SEK", "NZD", "MXN", "SGD", "HDK", "KRW", "TRY", "RUB", "BRL", "INR", "ZAR", "DKK", "PLN", "NOK"};
         ArrayAdapter<String> currencyList = new ArrayAdapter<>(add_book.this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -126,7 +129,7 @@ public class add_book extends AppCompatActivity {
         return true;
     }
 
-    public void jumpToaddExpense(Bundle prelayoutData){
+    public void jumpToaddSpend(Bundle prelayoutData){
         Intent intent = new Intent(add_book.this,add_expense.class);
         intent.putExtras(prelayoutData);
         startActivity(intent);

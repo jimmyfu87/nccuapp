@@ -283,6 +283,20 @@ public class add_expense extends AppCompatActivity {
 
     }
 
+    public void jumpToadd_type(){
+        Intent intent = new Intent(add_expense.this,add_type.class);
+        Bundle saveExpenseData = new Bundle();
+        saveExpenseData.putString("amount",input_amount.getText().toString());
+        saveExpenseData.putString("date",input_date.getText().toString());
+        saveExpenseData.putString("type",input_type.getSelectedItem().toString());
+        saveExpenseData.putString("book",input_book.getSelectedItem().toString());
+        saveExpenseData.putString("payer",input_payer.getText().toString());
+        saveExpenseData.putString("note",input_note.getText().toString());
+        intent.putExtras(saveExpenseData);
+        startActivity(intent);
+
+    }
+
     public void jumpToadd_income(){
         Intent intent = new Intent(add_expense.this,add_income.class);
         startActivity(intent);

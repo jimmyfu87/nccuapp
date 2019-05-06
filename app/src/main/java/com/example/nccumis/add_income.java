@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -21,11 +20,11 @@ public class add_income extends AppCompatActivity {
     private Button newIncome;
     private Button comfirm;
 
-    private TextView input_amount;
-    private TextView input_date;
-    private TextView input_type;
-    private TextView input_book;
-    private TextView input_note;
+    private EditText input_amount;
+    private EditText input_date;
+    private Spinner input_type;
+    private Spinner input_book;
+    private EditText input_note;
 
     private EditText i_price,i_note,i_fixed,i_userid;                                             //宣告需要輸入的變數的EditText
     private String i_date,i_typeid,i_bookid;
@@ -69,10 +68,10 @@ public class add_income extends AppCompatActivity {
             }
         });
         //金額
-        input_amount = (TextView)findViewById(R.id.amount_input);
+        input_amount = (EditText)findViewById(R.id.amount_input);
 
         //日期
-        input_date = (TextView)findViewById(R.id.date_input);
+        input_date = (EditText)findViewById(R.id.date_input);
         input_date.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -112,21 +111,46 @@ public class add_income extends AppCompatActivity {
 
 
         //備註
-        input_note = (TextView)findViewById(R.id.note_input);
+        input_note = (EditText)findViewById(R.id.note_input);
 
 
 
     }
 
     //檢查輸入的值是否正確
+    //付款人沒做
     public boolean checkInputInfo(){
-        int amount = Integer.parseInt(input_amount.getText().toString());
-        if(amount < 0 ){
+        int amount = 0;
+        try
+        {
+            amount = Integer.parseInt(input_amount.getText().toString());
+        }
+        catch (NumberFormatException e)
+        {
+            // handle the exception
+            if(input_amount.getText().toString().isEmpty()){
+                input_amount.setError("輸入金額未填寫");
+            }else{
+                input_amount.setError("輸入金額太大");
+            }
+            return false;
+        }
+        if(amount < 0) {
+            input_amount.setError("輸入金額小於零");
+            return false;
+        }
+        if(input_date.getText().toString().isEmpty()){
+            input_date.setError("輸入日期有誤");
+            return false;
+        }
+        if(input_note.getText().length() > 100){
+            input_note.setError("輸入備註太長");
             return false;
         }
 
         return true;
     }
+
 
     public void showDatePickDlg() {
         Calendar calendar = Calendar.getInstance();
@@ -139,11 +163,38 @@ public class add_income extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    public void jumpToHome(){
 
-        setContentView(R.layout.home);
+    public void jumpToHome(){
+        Intent intent = new Intent(add_income.this,Home.class);
+        startActivity(intent);
+    }
+
+    public void jumpToadd_book(){
+        Intent intent = new Intent(add_income.this,add_book.class);
+        Bundle saveIncomeData = new Bundle();
+        saveIncomeData.putString("amount",input_amount.getText().toString());
+        saveIncomeData.putString("date",input_date.getText().toString());
+        saveIncomeData.putString("type",input_type.getSelectedItem().toString());
+        saveIncomeData.putString("book",input_book.getSelectedItem().toString());
+        saveIncomeData.putString("note",input_note.getText().toString());
+        intent.putExtras(saveIncomeData);
+        startActivity(intent);
 
     }
+
+    public void jumpToadd_type(){
+        Intent intent = new Intent(add_income.this,add_book.class);
+        Bundle saveIncomeData = new Bundle();
+        saveIncomeData.putString("amount",input_amount.getText().toString());
+        saveIncomeData.putString("date",input_date.getText().toString());
+        saveIncomeData.putString("type",input_type.getSelectedItem().toString());
+        saveIncomeData.putString("book",input_book.getSelectedItem().toString());
+        saveIncomeData.putString("note",input_note.getText().toString());
+        intent.putExtras(saveIncomeData);
+        startActivity(intent);
+
+    }
+
     public void jumpToadd_expense(){
         Intent intent = new Intent(add_income.this,add_expense.class);
         startActivity(intent);

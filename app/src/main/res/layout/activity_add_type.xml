@@ -2,65 +2,77 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="fill_parent" >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddType"
+    tools:context=".add_type"
     android:padding="16dp"
-    android:orientation="vertical"
+    android:orientation="vertical" >
 
-    >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="新增類別"
-        android:layout_gravity="center"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:orientation="horizontal">
 
-        <CheckBox
+        <Button
+            android:id="@+id/lastPage"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="支出"
-            android:textSize="20dp"
-            />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="收入"
-            android:textSize="20dp"
-            />
-    </LinearLayout>
-
-    <EditText
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:hint="類別名稱(最多十個字)"
-        android:maxLength="10"
-        android:inputType="text"
-        />
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
-
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="上一頁"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:layout_marginLeft="250dp"
-            android:text="確認" />
+            android:id="@+id/newBook"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="新增帳本" />
+
+        <Button
+            android:id="@+id/comfirm"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="確定" />
+
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/typeName_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="類別名稱(最多十個字)"
+            android:maxLength="10"
+            android:inputType="text"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/ExpenseOrIncome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="支出/收入" />
+
+        <Spinner
+            android:id="@+id/ExpenseOrIncome_input"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+
+    </LinearLayout>
 
 </LinearLayout>
 

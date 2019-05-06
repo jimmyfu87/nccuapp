@@ -13,7 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Registerrr extends AppCompatActivity {
+public class Register extends AppCompatActivity {
 
     private EditText et_userName ;
     private EditText et_userAccount ;
@@ -31,7 +31,7 @@ public class Registerrr extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registerrr);
+        setContentView(R.layout.activity_register);
 
         //被findViewById抓下來的type是view ,要再轉string
         et_userName = findViewById(R.id.et_userName);
