@@ -26,7 +26,7 @@ public class Dbhelper extends SQLiteOpenHelper {
                     + "In_price" + " INTEGER , "
                     + "In_date" + " text , "
                     + "Type_name"  + " text,"                            //暫用text
-                    + "Book_name"  + " INTEGER,"                         //暫用text
+                    + "Book_name"  + " text,"                         //暫用text
                     + "In_note" + " text , "
                     + "User_id" + " INTEGER " + ");";
     //帳本資料庫

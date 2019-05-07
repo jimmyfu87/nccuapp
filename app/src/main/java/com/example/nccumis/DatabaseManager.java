@@ -73,7 +73,7 @@ public class DatabaseManager {
 
     public List<Expense> fetchExpense(String starttime, String endtime) {
         Cursor Expense=database.rawQuery
-                ("select * from Expense where dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"')"+"ORDER BY  DESC",null);
+                ("select * from Expense where dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"')",null);
 
         List<Expense> Expenselist=new ArrayList<>();
         if(Expense.moveToNext()){
