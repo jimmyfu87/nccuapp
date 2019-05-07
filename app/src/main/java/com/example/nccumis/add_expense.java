@@ -285,7 +285,6 @@ public class add_expense extends AppCompatActivity {
         saveExpenseData.putString("date",input_date.getText().toString());
         saveExpenseData.putString("type",input_type.getSelectedItem().toString());
         saveExpenseData.putString("book",input_book.getSelectedItem().toString());
-        saveExpenseData.putString("payer",input_payer.getText().toString());
         saveExpenseData.putString("note",input_note.getText().toString());
         intent.putExtras(saveExpenseData);
         startActivity(intent);
@@ -299,7 +298,6 @@ public class add_expense extends AppCompatActivity {
         saveExpenseData.putString("date",input_date.getText().toString());
         saveExpenseData.putString("type",input_type.getSelectedItem().toString());
         saveExpenseData.putString("book",input_book.getSelectedItem().toString());
-        saveExpenseData.putString("payer",input_payer.getText().toString());
         saveExpenseData.putString("note",input_note.getText().toString());
         intent.putExtras(saveExpenseData);
         startActivity(intent);
