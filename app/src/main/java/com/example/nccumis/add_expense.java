@@ -188,7 +188,6 @@ public class add_expense extends AppCompatActivity {
             input_type.setSelection(typePosition);
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
             input_book.setSelection(bookPosition);
-            input_payer.setText(getSaveBag.getString("payer"));
             input_note.setText(getSaveBag.getString("note"));
         }
 
