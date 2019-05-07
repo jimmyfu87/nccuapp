@@ -46,13 +46,13 @@ public class Register extends AppCompatActivity {
          checkBoxPassword1 = findViewById(R.id.checkBoxPassword1);
          checkBoxPassword2 =  findViewById(R.id.checkBoxPassword2);
 
-         et_userName.addTextChangedListener(registerrrTextWatcher );
-        et_userAccount.addTextChangedListener(registerrrTextWatcher );
-        et_userPhone.addTextChangedListener(registerrrTextWatcher );
-        et_userEmail.addTextChangedListener(registerrrTextWatcher );
-        et_userPassword1.addTextChangedListener(registerrrTextWatcher );
-        et_userPassword2.addTextChangedListener(registerrrTextWatcher );
-        et_userBirth.addTextChangedListener(registerrrTextWatcher );
+         et_userName.addTextChangedListener(registerTextWatcher );
+        et_userAccount.addTextChangedListener(registerTextWatcher );
+        et_userPhone.addTextChangedListener(registerTextWatcher );
+        et_userEmail.addTextChangedListener(registerTextWatcher );
+        et_userPassword1.addTextChangedListener(registerTextWatcher );
+        et_userPassword2.addTextChangedListener(registerTextWatcher );
+        et_userBirth.addTextChangedListener(registerTextWatcher );
 
         btn_checkRegister.setOnClickListener(ClickIntHere);
 
@@ -80,22 +80,31 @@ public class Register extends AppCompatActivity {
    }
 
    //核對密碼
+
+
    private View.OnClickListener ClickIntHere = new View.OnClickListener() {
        @Override
        public void onClick(View v) {
-           if(et_userPassword1.getText().toString() .equals(et_userPassword2.getText().toString())){
+           if(et_userPassword1.getText().toString().isEmpty()){
+               et_wrongPassword.setText("密碼不能空白");
+           }else if(et_userPassword1.getText().toString() .equals(et_userPassword2.getText().toString())){
                et_wrongPassword.setText("密碼正確");
            }else {
                et_wrongPassword.setText("密碼不一致");
            }
+
        }
    };
+    //空白沒輸入東西的話，會警告你
 
-   //空白沒輸入東西的話，會警告你
-   private TextWatcher registerrrTextWatcher = new TextWatcher() {
+
+
+
+
+    //空白沒輸入東西的話，會警告你
+   private TextWatcher registerTextWatcher = new TextWatcher() {
        @Override
        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
        }
 
        @Override
@@ -121,5 +130,8 @@ public class Register extends AppCompatActivity {
 
 
 
-    }
+
+
+
+}
 
