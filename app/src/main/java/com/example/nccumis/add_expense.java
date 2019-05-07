@@ -38,7 +38,7 @@ public class add_expense extends AppCompatActivity {
     private Button scanInvoice;
     private Button regularExpense;
 
-//
+
     private String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
     private String[] book = {"現金帳本"};
 
