@@ -170,13 +170,13 @@ public class add_expense extends AppCompatActivity {
         });
 
         //付款人
-        input_payer = (EditText)findViewById(R.id.payer_input);
+        //input_payer = (EditText)findViewById(R.id.payer_input);
 
         //備註
         input_note = (EditText)findViewById(R.id.note_input);
 
         //掃發票
-        scanInvoice = (Button) findViewById(R.id.scanInvoice);
+        //scanInvoice = (Button) findViewById(R.id.scanInvoice);
 
         //從add_book 或 add_type 返回 填過的資料自動傳入
         Intent getSaveData = getIntent();
