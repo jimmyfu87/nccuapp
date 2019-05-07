@@ -13,7 +13,9 @@ import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.content.Intent;
 
@@ -35,6 +37,7 @@ public class add_expense extends AppCompatActivity {
 
     private Button scanInvoice;
     private Button regularExpense;
+
 
     private String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
     private String[] book = {"現金帳本"};
@@ -146,6 +149,11 @@ public class add_expense extends AppCompatActivity {
         });
 
         //帳本
+        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+        List<String> book=new ArrayList<>();
+        dbmanager.open();
+        book=dbmanager.fetchBook();           //可直接調用select_expense的資訊
+        dbmanager.close();
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override

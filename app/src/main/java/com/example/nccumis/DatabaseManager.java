@@ -70,7 +70,16 @@ public class DatabaseManager {
 //        }
 //        return cursor;
 //    }
+        public List<String> fetchBook() {
+            List<String> book = new ArrayList<>();
+            Cursor allbook=database.rawQuery
+                    ("select Book_name from Book" ,null);
 
+            while(allbook.moveToNext()){
+                book.add(allbook.getString(0));
+            }
+            return  book;
+        }
     public List<Expense> fetchExpense(String starttime, String endtime) {
         Cursor Expense=database.rawQuery
                 ("select * from Expense where dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"')",null);
