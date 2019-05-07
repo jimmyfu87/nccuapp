@@ -8,18 +8,17 @@
         android:label="nccumis"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-
-        <activity android:name=".Home"></activity>
-        <activity android:name=".add_type"></activity>
-        <activity android:name=".add_book"></activity>
-        <activity android:name=".add_expense"></activity>
-        <activity android:name=".add_income"></activity>
-        <activity android:name=".check_expense"></activity>
-        <activity android:name=".check_income"></activity>
-
+        android:theme="@style/AppTheme">
+        <activity android:name=".CountMoney"></activity>
+        <activity android:name=".Home" />
+        <activity android:name=".add_type" />
+        <activity android:name=".add_book" />
+        <activity android:name=".add_expense" />
+        <activity android:name=".add_income" />
+        <activity android:name=".check_expense" />
+        <activity android:name=".check_income" />
         <activity android:name=".PasswordCheckEmail" />
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Register" />
         <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

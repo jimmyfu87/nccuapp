@@ -32,3 +32,7 @@ dependencies {
 dependencies {
     implementation 'com.github.ChenPeiRong1997:MPAndroidChart:v3.1.0'
 }
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}

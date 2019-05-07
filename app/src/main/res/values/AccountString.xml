@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="Account">
+        <item>現金帳本</item>
+        <item>旅遊帳本</item>
+    </array>
+
+</resources>
