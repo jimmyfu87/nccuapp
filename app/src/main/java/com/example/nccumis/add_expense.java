@@ -40,8 +40,8 @@ public class add_expense extends AppCompatActivity {
     private String[] book = {"現金帳本"};
 
 
-    private EditText i_price,i_note,i_fixed,i_userid;                  //宣告需要輸入的變數的EditText
-    private String i_date,i_typeid,i_bookid;
+    private EditText i_price,i_note,i_userid;                  //宣告需要輸入的變數的EditText
+    private String i_date,i_type_name,i_book_name;
 
 
     @Override
@@ -89,7 +89,7 @@ public class add_expense extends AppCompatActivity {
                     String note=i_note.getText().toString();
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
                     dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                    dbmanager.insert_Ex(price,i_date,i_typeid,i_bookid,note,"",1);            //將資料放到資料庫
+                    dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,note,1);            //將資料放到資料庫
                     dbmanager.close();                                                                      //關閉資料庫
                     jumpToHome();
                 }
@@ -136,7 +136,7 @@ public class add_expense extends AppCompatActivity {
         input_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                i_typeid = input_type.getSelectedItem().toString();
+                i_type_name = input_type.getSelectedItem().toString();
             }
 
             @Override
@@ -160,7 +160,7 @@ public class add_expense extends AppCompatActivity {
         input_book.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                i_bookid = input_book.getSelectedItem().toString();
+                i_book_name = input_book.getSelectedItem().toString();
             }
 
             @Override

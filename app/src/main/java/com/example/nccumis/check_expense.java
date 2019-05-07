@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,6 +29,8 @@ public class check_expense extends AppCompatActivity {
     private Button switchAccount;
     private EditText dateStart_input;
     private EditText dateEnd_input;
+    private String start_date,end_date;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,12 @@ public class check_expense extends AppCompatActivity {
         switchAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                List<Expense> select_expense=new ArrayList<>();
+                dbmanager.open();
+                select_expense=dbmanager.fetchExpense(start_date,"2019-05-28");           //可直接調用select_expense的資訊
+                dbmanager.close();
+                jumpToHome();
 
             }
         });
@@ -105,7 +114,7 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear++;
-                //setdateformat(year,monthOfYear,dayOfMonth);
+                set_start_dateformat(year,monthOfYear,dayOfMonth);
                 check_expense.this.dateStart_input.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
 
             }
@@ -132,6 +141,47 @@ public class check_expense extends AppCompatActivity {
         Intent intent = new Intent(check_expense.this,Home.class);
         startActivity(intent);
     }
+    public void set_start_dateformat(int year,int month,int day){
+        String st_month;
+        String st_day;
+        if(month<10){
+            st_month=Integer.toString(month);
+            st_month="0"+st_month;
+        }
+        else{
+            st_month=Integer.toString(month);
+        }
+        if(day<10){
+            st_day=Integer.toString(day);
+            st_day="0"+st_day;
+        }
+        else{
+            st_day=Integer.toString(day);
+        }
+        start_date=year+"-"+st_month+"-"+st_day;
+    }
+    public void set_end_dateformat(int year,int month,int day){
+        String st_month;
+        String st_day;
+        if(month<10){
+            st_month=Integer.toString(month);
+            st_month="0"+st_month;
+        }
+        else{
+            st_month=Integer.toString(month);
+        }
+        if(day<10){
+            st_day=Integer.toString(day);
+            st_day="0"+st_day;
+        }
+        else{
+            st_day=Integer.toString(day);
+        }
+        end_date=year+"-"+st_month+"-"+st_day;
+    }
+
+
+
 
     //不用重拉另一個xml 資料庫傳該帳本資料進來
 //    public void jumpToAnotherBook(){
