@@ -25,20 +25,22 @@ public class check_expense extends AppCompatActivity {
     private final int startDate = -1;
     private final int endDate = 1;
 
-    private int[] getData = {98, 123, 161, 24, 52, 58, 35, 13, 78, 203, 240, 159};
-    private String[] typeName = {"Jan" , "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec"};
+    private List<Integer> getData = new ArrayList<Integer>();
+    private List<String> typeName = new ArrayList<String>();
 
     private Button lastPage;
     private Button switchAccount;
     private EditText dateStart_input;
     private EditText dateEnd_input;
     private String start_date,end_date;
+    private List<Expense> select_expense = new ArrayList<>();;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
+
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -53,12 +55,14 @@ public class check_expense extends AppCompatActivity {
         switchAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Expense 資料庫
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                List<Expense> select_expense=new ArrayList<>();
                 dbmanager.open();
-                select_expense=dbmanager.fetchExpense(start_date,"2019-05-28");           //可直接調用select_expense的資訊
+                select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
                 dbmanager.close();
-                jumpToHome();
+                setExpenseData(select_expense);
+
+
 
             }
         });
@@ -106,6 +110,7 @@ public class check_expense extends AppCompatActivity {
             }
         });
 
+
         //圖表
         setPieChart();
 
@@ -117,12 +122,13 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear++;
-                set_start_dateformat(year,monthOfYear,dayOfMonth);
                 // -1是startDate  1是EndDate
                 if(checknum == startDate){
                     check_expense.this.dateStart_input.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
+                    set_start_dateformat(year,monthOfYear,dayOfMonth);
                 }else{
                     check_expense.this.dateEnd_input.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
+                    set_end_dateformat(year,monthOfYear,dayOfMonth);
                 }
 
             }
@@ -131,11 +137,30 @@ public class check_expense extends AppCompatActivity {
     }
 
 
+    public void setExpenseData(List<Expense> select_expense){
+        int getPrice = 0;
+        String getTypeName = "";
+        int replacePosition = 0;
+        int replacePrice = 0;
+
+        for(int i = 0;i < select_expense.size();i++){
+            getTypeName = select_expense.get(i).getType_name();
+            getPrice = select_expense.get(i).getEx_price();
+            if(this.typeName.contains(getTypeName)){
+                replacePosition = this.typeName.indexOf(getTypeName);
+                replacePrice = this.getData.get(replacePosition) + getPrice;
+                this.getData.set(replacePosition, replacePrice);
+            }else{
+                this.typeName.add(getTypeName);
+                this.getData.add(getPrice);
+            }
+        }
+    }
 
     public void setPieChart(){
         List<PieEntry> pieEntries = new ArrayList<>();
-        for(int i = 0; i < getData.length; i++){
-            pieEntries.add(new PieEntry(getData[i] , typeName[i]));
+        for(int i = 0; i < getData.size(); i++){
+            pieEntries.add(new PieEntry(getData.get(i) , typeName.get(i)));
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries , "類別");
