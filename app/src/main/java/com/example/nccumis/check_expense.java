@@ -15,7 +15,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,9 +55,7 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Expense 資料庫
-                select_expense.clear();
-                getData.clear();
-                typeName.clear();
+
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
                 select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
@@ -218,6 +215,7 @@ public class check_expense extends AppCompatActivity {
         }
         end_date=year+"-"+st_month+"-"+st_day;
     }
+
 
 
 

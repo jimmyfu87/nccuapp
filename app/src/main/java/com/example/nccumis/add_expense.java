@@ -40,8 +40,10 @@ public class add_expense extends AppCompatActivity {
 
 
     private String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
-    private String[] book = {"現金帳本"};
+    private List book = new ArrayList();
 
+    public List<String> dbBookData = new ArrayList<>();
+    public List<String> dbTypeData = new ArrayList<>();
 
     private EditText i_price,i_note,i_userid;                  //宣告需要輸入的變數的EditText
     private String i_date,i_type_name,i_book_name;
@@ -56,7 +58,8 @@ public class add_expense extends AppCompatActivity {
         i_note=(EditText)findViewById(R.id.note_input);    //將note_input從View轉為EditText
 
         //Spinner ArrayAdapter
-        ArrayAdapter<String> typeList = new ArrayAdapter<>(add_expense.this,
+        this.book.add("現金帳本");
+        ArrayAdapter typeList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
         ArrayAdapter<String> bookList = new ArrayAdapter<>(add_expense.this,
@@ -149,11 +152,12 @@ public class add_expense extends AppCompatActivity {
         });
 
         //帳本
-        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        List<String> book=new ArrayList<>();
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
-        book=dbmanager.fetchBook();           //可直接調用select_expense的資訊
+        this.dbBookData = dbmanager.fetchBook();           //可直接調用select_expense的資訊
         dbmanager.close();
+        updateBook();
+
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +201,9 @@ public class add_expense extends AppCompatActivity {
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
             input_book.setSelection(bookPosition);
             input_note.setText(getSaveBag.getString("note"));
+            updateBook();
+            input_book.setAdapter(bookList);
+
         }
 
 
@@ -278,6 +285,21 @@ public class add_expense extends AppCompatActivity {
             st_day=Integer.toString(day);
         }
         i_date=year+"-"+st_month+"-"+st_day;
+    }
+
+    public void updateType(){
+
+    }
+
+    public void updateBook(){
+        for(int i = 0 ;i < dbBookData.size();i++){
+            System.out.println(dbBookData.get(i));
+            if(book.contains(dbBookData.get(i))){
+                continue;
+            }else{
+                book.add(dbBookData.get(i));
+            }
+        }
     }
 
     public void jumpToHome(){
