@@ -19,14 +19,14 @@
         />
     <EditText
         android:id="@+id/et_userAccountLogin"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="帳號"/>
 
 
     <EditText
         android:id="@+id/et_passwordLogin"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="密碼"/>
 

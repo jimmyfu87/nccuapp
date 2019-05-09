@@ -150,10 +150,10 @@ public class add_expense extends AppCompatActivity {
 
         //帳本
         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        List<String> book=new ArrayList<>();
-        dbmanager.open();
-        book=dbmanager.fetchBook();           //可直接調用select_expense的資訊
-        dbmanager.close();
+       // List<String> book=new ArrayList<>();
+        //dbmanager.open();
+        //book=dbmanager.fetchBook();           //可直接調用select_expense的資訊
+        //dbmanager.close();
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
