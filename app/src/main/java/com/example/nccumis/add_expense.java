@@ -39,10 +39,10 @@ public class add_expense extends AppCompatActivity {
     private Button regularExpense;
 
 
-    private String[] type = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他","新增類別"};
-    private List book = new ArrayList();
+    private List<String> type = new ArrayList<String>();         //傳給ArrayAdapter的參數
+    private List<String> book = new ArrayList<String>();
 
-    public List<String> dbBookData = new ArrayList<>();
+    public List<String> dbBookData = new ArrayList<>();         //接資料庫資料，Type還沒做!!!!!
     public List<String> dbTypeData = new ArrayList<>();
 
     private EditText i_price,i_note,i_userid;                  //宣告需要輸入的變數的EditText
@@ -57,8 +57,10 @@ public class add_expense extends AppCompatActivity {
         i_price=(EditText)findViewById(R.id.amount_input);  //將amount_input從View轉為EditText
         i_note=(EditText)findViewById(R.id.note_input);    //將note_input從View轉為EditText
 
-        //Spinner ArrayAdapter
-        this.book.add("現金帳本");
+        //Spinner ArrayAdapter 初始化
+        initType();
+        initBook();
+
         ArrayAdapter typeList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
@@ -151,7 +153,7 @@ public class add_expense extends AppCompatActivity {
             }
         });
 
-        //帳本
+        //帳本，已串聯Book的資料庫
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
         this.dbBookData = dbmanager.fetchBook();           //可直接調用select_expense的資訊
@@ -267,6 +269,7 @@ public class add_expense extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
+
     public void setdateformat(int year,int month,int day){
         String st_month;
         String st_day;
@@ -287,8 +290,21 @@ public class add_expense extends AppCompatActivity {
         i_date=year+"-"+st_month+"-"+st_day;
     }
 
+    //初始化類別
+    public void initType(){
+        String[] typeArr = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他"};
+        for(int i = 0; i < typeArr.length; i++){
+            this.type.add(typeArr[i]);
+        }
+    }
+
     public void updateType(){
 
+    }
+
+    //帳本初始設定
+    public void initBook() {
+        this.book.add("現金帳本");
     }
 
     public void updateBook(){

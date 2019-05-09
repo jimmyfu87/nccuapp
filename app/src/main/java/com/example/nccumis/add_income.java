@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class add_income extends AppCompatActivity {
@@ -30,8 +32,11 @@ public class add_income extends AppCompatActivity {
     private RadioButton newBookBtn;
     private RadioButton newTypeBtn;
 
-    private String[] type = {"薪水", "發票中獎","樂透中獎", "其他"};
-    private String[] book = {"現金帳本"};
+    private List<String> type = new ArrayList<String>();        //傳給ArrayAdapter的參數
+    private List<String> book = new ArrayList<String>();
+
+    public List<String> dbBookData = new ArrayList<>();         //接資料庫資料，Type還沒做!!!!!
+    public List<String> dbTypeData = new ArrayList<>();
 
     private EditText i_price,i_note,i_fixed,i_userid;                                             //宣告需要輸入的變數的EditText
     private String i_date,i_typeid,i_bookid;
@@ -105,12 +110,19 @@ public class add_income extends AppCompatActivity {
             }
         });
         input_type = (Spinner)findViewById(R.id.type_input);
+        initType();
         ArrayAdapter<String> typeList = new ArrayAdapter<>(add_income.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
         input_type.setAdapter(typeList);
 
-        //帳本
+        //帳本，已串聯Book的資料庫
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+        dbmanager.open();
+        this.dbBookData = dbmanager.fetchBook();           //可直接調用select_expense的資訊
+        dbmanager.close();
+        updateBook();
+
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +131,7 @@ public class add_income extends AppCompatActivity {
             }
         });
         input_book = (Spinner)findViewById(R.id.book_input);
+        initBook();
         ArrayAdapter<String> bookList = new ArrayAdapter<>(add_income.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
@@ -140,6 +153,8 @@ public class add_income extends AppCompatActivity {
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
             input_book.setSelection(bookPosition);
             input_note.setText(getSaveBag.getString("note"));
+            updateBook();
+            input_book.setAdapter(bookList);
         }
 
     }
@@ -191,6 +206,33 @@ public class add_income extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    //初始化類別
+    public void initType(){
+        String[] typeArr = {"薪水", "發票中獎","樂透中獎", "其他"};
+        for(int i = 0; i < typeArr.length; i++){
+            this.type.add(typeArr[i]);
+        }
+    }
+
+//    public void updateType(){
+//
+//    }
+
+    //帳本初始設定
+    public void initBook() {
+        this.book.add("現金帳本");
+    }
+
+    public void updateBook(){
+        for(int i = 0 ;i < dbBookData.size();i++){
+            System.out.println(dbBookData.get(i));
+            if(book.contains(dbBookData.get(i))){
+                continue;
+            }else{
+                book.add(dbBookData.get(i));
+            }
+        }
+    }
 
     public void jumpToHome(){
         Intent intent = new Intent(add_income.this,Home.class);
