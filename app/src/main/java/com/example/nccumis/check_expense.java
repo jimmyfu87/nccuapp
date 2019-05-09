@@ -56,6 +56,9 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Expense 資料庫
+                select_expense.clear();
+                getData.clear();
+                typeName.clear();
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
                 select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊

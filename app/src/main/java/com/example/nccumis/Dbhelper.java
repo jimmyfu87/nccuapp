@@ -41,6 +41,15 @@ public class Dbhelper extends SQLiteOpenHelper {
     static final String insert_default_book=
             "INSERT INTO " + "Book" + " (Book_name,Amount_start,Amount_remain,Currency_type,User_id) VALUES"
                     + "('現金帳本',0,0,'TWD',1);";
+    static final String insert_fake_expense=
+            "INSERT INTO " + "Expense" + " (Ex_price,Ex_date,Type_name,Book_name,Ex_note,User_id) VALUES"
+                    + "(500,'2019-05-01','投資','現金帳本','買東西',1),(1000,'2019-05-02','交通','現金帳本','買東西',1)," +
+                    "(300,'2019-05-03','早餐','現金帳本','買東西',1),(500,'2019-05-06','投資','現金帳本','買東西',1)," +
+                    "(600,'2019-05-08','衣物','現金帳本','買東西',1),(3200,'2019-05-10','娛樂','現金帳本','買東西',1)," +
+                    "(300,'2019-05-13','電話費','現金帳本','買東西',1),(500,'2019-05-16','投資','現金帳本','買東西',1)," +
+                    "(300,'2019-05-17','零食','現金帳本','買東西',1),(600,'2019-05-20','早餐','現金帳本','買東西',1)," +
+                    "(500,'2019-05-23','早餐','現金帳本','買東西',1),(700,'2019-05-28','投資','現金帳本','買東西',1);";
+
     private SQLiteDatabase db;
     //支出欄位
     static final String EX_ID = "Ex_id";
@@ -82,6 +91,7 @@ public class Dbhelper extends SQLiteOpenHelper {
             db.execSQL(create_tb2);
             db.execSQL(create_tb3);
             db.execSQL(insert_default_book);
+            db.execSQL(insert_fake_expense);
     }
 
     @Override
