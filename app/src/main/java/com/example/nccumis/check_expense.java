@@ -61,7 +61,7 @@ public class check_expense extends AppCompatActivity {
                 select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
                 dbmanager.close();
                 setExpenseData(select_expense);
-
+                setPieChart();
 
 
             }
@@ -154,6 +154,7 @@ public class check_expense extends AppCompatActivity {
                 this.typeName.add(getTypeName);
                 this.getData.add(getPrice);
             }
+            System.out.println(getTypeName+" ,"+getPrice);
         }
     }
 
