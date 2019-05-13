@@ -89,4 +89,8 @@ public class DatabaseManager {
         }
         return  Expenselist;
     }
+//    public Cursor fetchDATEinExpense(String starttime,String endtime) {
+//        return database.rawQuery
+//                ("select * from Expense where dateTime(date) between datetime('"+starttime+"') and datetime('"+endtime+"')"+"ORDER BY date DESC",null);
+//    }
 }

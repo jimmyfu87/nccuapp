@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent" >
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -60,15 +62,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:maxLength="11"
-                android:text="" />
+                android:windowSoftInputMode="stateHidden" />
 
             <EditText
                 android:id="@+id/dateEnd_input"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:maxLength="11"
-                android:text="" />
+                android:maxLength="11" />
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="查詢"
+                android:layout_gravity="left|center_vertical"/>
 
         </LinearLayout>
 
@@ -80,25 +88,29 @@
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/expense_chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
 
             </com.github.mikephil.charting.charts.PieChart>
 
 
         </LinearLayout>
-
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
-
-
-
+            <ListView
+                android:id="@+id/TypeListView"
+                android:layout_width="match_parent"
+                android:layout_height="380dp"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </ScrollView>

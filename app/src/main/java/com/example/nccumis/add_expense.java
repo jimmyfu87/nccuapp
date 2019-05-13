@@ -2,6 +2,7 @@ package com.example.nccumis;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -114,6 +115,7 @@ public class add_expense extends AppCompatActivity {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
                         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                            input_date.setInputType(InputType.TYPE_NULL);      // disable soft input
                             showDatePickDlg();
                             return true;
                         }
@@ -124,6 +126,7 @@ public class add_expense extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
+                    input_date.setInputType(InputType.TYPE_NULL);      // disable soft input
                     showDatePickDlg();
                 }
 

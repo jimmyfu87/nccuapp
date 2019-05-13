@@ -4,11 +4,14 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -16,6 +19,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -24,15 +28,29 @@ public class check_expense extends AppCompatActivity {
     private final int startDate = -1;
     private final int endDate = 1;
 
-    private List<Integer> getData = new ArrayList<Integer>();
+    private List<Integer> getPriceData = new ArrayList<Integer>();
     private List<String> typeName = new ArrayList<String>();
 
     private Button lastPage;
     private Button switchAccount;
+//    private Spinner switchAccount; 選擇帳本未做
     private EditText dateStart_input;
     private EditText dateEnd_input;
+    private Button searchButton;
     private String start_date,end_date;
-    private List<Expense> select_expense = new ArrayList<>();;
+    private int yearStart = 0;
+    private int monthStart = 0;
+    private int dayStart = 0;
+    private int yearEnd = 0;
+    private int monthEnd = 0;
+    private int dayEnd = 0;
+    private List<Expense> select_expense = new ArrayList<Expense>();
+
+    private ListView TypeListView;
+    private List<Integer> numberArray = new ArrayList<Integer>();
+    private List<String> nameArray = new ArrayList<String>();
+    private List<String> percentageArray = new ArrayList<String>();
+    private List<Integer> totalArray = new ArrayList<Integer>();
 
 
     @Override
@@ -54,15 +72,6 @@ public class check_expense extends AppCompatActivity {
         switchAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Expense 資料庫
-
-                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                dbmanager.open();
-                select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
-                dbmanager.close();
-                setExpenseData(select_expense);
-                setPieChart();
-
 
             }
         });
@@ -74,6 +83,7 @@ public class check_expense extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     showDatePickDlg(startDate);
+                    dateStart_input.setInputType(InputType.TYPE_NULL);      // disable soft input
                     return true;
                 }
                 return false;
@@ -84,6 +94,7 @@ public class check_expense extends AppCompatActivity {
             public void onFocusChange(View view, boolean b) {
                 if (b) {
                     showDatePickDlg(startDate);
+                    dateStart_input.setInputType(InputType.TYPE_NULL);        // disable soft input
                 }
 
             }
@@ -95,6 +106,7 @@ public class check_expense extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     showDatePickDlg(endDate);
+                    dateEnd_input.setInputType(InputType.TYPE_NULL);        // disable soft input
                     return true;
                 }
                 return false;
@@ -104,16 +116,39 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    showDatePickDlg(1);
+                    showDatePickDlg(endDate);
+                    dateEnd_input.setInputType(InputType.TYPE_NULL);        // disable soft input
                 }
 
             }
         });
 
+        // 搜尋按鈕
+        this.searchButton = (Button) findViewById(R.id.search_btn);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkDateInput()){
+                    //Expense 資料庫
+                    clearList();
+                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                    dbmanager.open();
+                    select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
+                    dbmanager.close();
+                    setExpenseData(select_expense);
+                    setList();
+                    setPieChart();
+                }
+            }
+        });
 
         //圖表
+        setExpenseData(select_expense);
         setPieChart();
 
+        //ListView 類別項目、類別名稱、類別佔總額%、類別金額
+        TypeListView = (ListView)findViewById(R.id.TypeListView);
+        setList();
     }
 
     public void showDatePickDlg(final int checknum) {
@@ -130,7 +165,7 @@ public class check_expense extends AppCompatActivity {
                     check_expense.this.dateEnd_input.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
                     set_end_dateformat(year,monthOfYear,dayOfMonth);
                 }
-
+                setdateInfo(checknum,year,monthOfYear,dayOfMonth);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
@@ -148,20 +183,72 @@ public class check_expense extends AppCompatActivity {
             getPrice = select_expense.get(i).getEx_price();
             if(this.typeName.contains(getTypeName)){
                 replacePosition = this.typeName.indexOf(getTypeName);
-                replacePrice = this.getData.get(replacePosition) + getPrice;
-                this.getData.set(replacePosition, replacePrice);
+                replacePrice = this.getPriceData.get(replacePosition) + getPrice;
+                this.getPriceData.set(replacePosition, replacePrice);
             }else{
                 this.typeName.add(getTypeName);
-                this.getData.add(getPrice);
+                this.getPriceData.add(getPrice);
             }
-            System.out.println(getTypeName+" ,"+getPrice);
+            //System.out.println(getTypeName+" ,"+getPriceData);
         }
+    }
+
+    //統計前先清除List內的所有元素
+    public void clearList(){
+        this.select_expense.clear();
+        this.getPriceData.clear();
+        this.typeName.clear();
+        this.numberArray.clear();
+        this.nameArray.clear();
+        this.percentageArray.clear();
+        this.totalArray.clear();
+    }
+
+    //指定期間的支出總金額
+    public int countSelectDateTotalPrice(List<Integer> getPriceData){
+        //計算前先歸零
+        int totalPrice = 0;
+        for(int i = 0; i < getPriceData.size(); i++){
+            totalPrice += getPriceData.get(i);
+        }
+        return totalPrice;
+    }
+
+    //計算該類別佔總額幾%
+    public double countPercentage(double priceOfType , double total){
+        if(total==0){
+            return 0;
+        }
+        //System.out.println(priceOfType+", "+total+", "+priceOfType/total);
+        return priceOfType/total*100;
+    }
+
+    public void initListData(){
+        for(int i = 0; i < this.getPriceData.size();i++){
+            int index = i+1;
+            this.numberArray.add(index);
+            this.nameArray.add(this.typeName.get(i));
+            int selectDateTotalPrice = countSelectDateTotalPrice(this.getPriceData);
+            double percentage = countPercentage(this.getPriceData.get(i), selectDateTotalPrice);
+            DecimalFormat df = new DecimalFormat("##.0");
+            percentage = Double.parseDouble(df.format(percentage));
+            //System.out.println(selectDateTotalPrice+" ,"+percentage);
+            this.percentageArray.add(percentage +" %");
+            this.totalArray.add(this.getPriceData.get(i));
+        }
+        //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
+    }
+
+    public void setList(){
+        initListData();
+        ExpenseListAdapter Ex_adapter = new ExpenseListAdapter(this, this.numberArray, this.nameArray, this.percentageArray, this.totalArray);
+        TypeListView.setAdapter(Ex_adapter);
     }
 
     public void setPieChart(){
         List<PieEntry> pieEntries = new ArrayList<>();
-        for(int i = 0; i < getData.size(); i++){
-            pieEntries.add(new PieEntry(getData.get(i) , typeName.get(i)));
+        for(int i = 0; i < getPriceData.size(); i++){
+            pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries , "類別");
@@ -171,6 +258,31 @@ public class check_expense extends AppCompatActivity {
         PieChart expenseChart = (PieChart) findViewById(R.id.expense_chart);
         expenseChart.setData(data);
         expenseChart.invalidate();
+        expenseChart.setCenterText("Total:\n"+countSelectDateTotalPrice(this.getPriceData));
+        expenseChart.setCenterTextSize(20);
+    }
+
+    //暫存日期
+    public void setdateInfo(int startOrEnd, int year, int month, int day){
+        if(startOrEnd==this.startDate){
+            this.yearStart = year;
+            this.monthStart = month;
+            this.dayStart = day;
+        }else{
+            this.yearEnd = year;
+            this.monthEnd = month;
+            this.dayEnd = day;
+        }
+    }
+
+    //檢查輸入日期是否有誤
+    public boolean checkDateInput(){
+        if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
+            this.dateEnd_input.setError("結束日期小於開始日期");
+            return false;
+        }
+        this.dateEnd_input.setError(null);
+        return true;
     }
 
     public void jumpToHome(){

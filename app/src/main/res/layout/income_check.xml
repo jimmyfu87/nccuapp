@@ -70,6 +70,14 @@
                 android:maxLength="11"
                 android:text="" />
 
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="查詢"
+                android:layout_gravity="left|center_vertical"/>
+
         </LinearLayout>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -80,22 +88,30 @@
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/income_chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
 
             </com.github.mikephil.charting.charts.PieChart>
 
 
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <ListView
+                    android:id="@+id/TypeListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="380dp"
+                    android:layout_marginTop="10dp" />
 
-
-
-
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </ScrollView>
