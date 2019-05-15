@@ -97,7 +97,6 @@ public class DatabaseManager {
             }
         }
         result=result+");";
-        System.out.println(result);
         Cursor Expense=database.rawQuery
                 (result,null);
         List<Expense> Expenselist=new ArrayList<>();
@@ -106,6 +105,19 @@ public class DatabaseManager {
         }
         return  Expenselist;
     }
+    public Cursor fetchExpenseWithbook_cursor(String starttime, String endtime, List<String> booklist) {
+        String result="select distinct * from Expense where (dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"'))"+" AND( "+"Book_name="+"'"+booklist.get(0)+"'";
+        if(booklist.size()>1){
+            for(int i=1;i<booklist.size();i++) {
+                result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
+            }
+        }
+        result=result+");";
+        Cursor Expense=database.rawQuery
+                (result,null);
+        return  Expense;
+    }
+
 //    public Cursor fetchDATEinExpense(String starttime,String endtime) {
 //        return database.rawQuery
 //                ("select * from Expense where dateTime(date) between datetime('"+starttime+"') and datetime('"+endtime+"')"+"ORDER BY date DESC",null);
