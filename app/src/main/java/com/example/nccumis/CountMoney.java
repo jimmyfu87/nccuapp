@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -22,6 +23,7 @@ public class CountMoney extends AppCompatActivity {
     TextView income;
     TextView spend;
     TextView total;
+    Button btn_checkCount;
 
 
 
@@ -36,6 +38,15 @@ public class CountMoney extends AppCompatActivity {
         income =(TextView)findViewById(R.id.income);
         spend =(TextView)findViewById(R.id.spend);
         total =(TextView)findViewById(R.id.total);
+        btn_checkCount=(Button)findViewById(R.id.btn_checkCount);
+
+        //計算
+        btn_checkCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
 
