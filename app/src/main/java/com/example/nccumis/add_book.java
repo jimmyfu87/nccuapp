@@ -109,8 +109,10 @@ public class add_book extends AppCompatActivity {
             // handle the exception
             if(input_startBudget.getText().toString().isEmpty()){
                 input_startBudget.setError("起始金額未填寫");
+                return false;
             }else{
                 input_startBudget.setError("起始金額太大");
+                return false;
             }
 
         }

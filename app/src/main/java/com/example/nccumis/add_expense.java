@@ -312,7 +312,7 @@ public class add_expense extends AppCompatActivity {
 
     public void updateBook(){
         for(int i = 0 ;i < dbBookData.size();i++){
-            System.out.println(dbBookData.get(i));
+            //System.out.println(dbBookData.get(i));
             if(book.contains(dbBookData.get(i))){
                 continue;
             }else{

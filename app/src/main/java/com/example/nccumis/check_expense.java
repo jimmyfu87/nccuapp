@@ -1,7 +1,10 @@
 package com.example.nccumis;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -12,12 +15,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -28,12 +31,23 @@ public class check_expense extends AppCompatActivity {
     private final int startDate = -1;
     private final int endDate = 1;
 
+    //預設25種
+    private static final int[] COLORFUL_COLORS = {
+            Color.rgb(193, 37, 82), Color.rgb(255, 102, 0), Color.rgb(245, 199, 0), Color.rgb(106, 150, 31),
+            Color.rgb(179, 100, 53),Color.rgb(207, 248, 246), Color.rgb(148, 212, 212), Color.rgb(136, 180, 187),
+            Color.rgb(118, 174, 175), Color.rgb(42, 109, 130),Color.rgb(217, 80, 138), Color.rgb(254, 149, 7),
+            Color.rgb(254, 247, 120), Color.rgb(106, 167, 134),Color.rgb(53, 194, 209),Color.rgb(64, 89, 128),
+            Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),Color.rgb(191, 134, 134), Color.rgb(179, 48, 80),
+            Color.rgb(192, 255, 140), Color.rgb(255, 247, 140), Color.rgb(255, 208, 140), Color.rgb(140, 234, 255),
+            Color.rgb(255, 140, 157)
+    };
+
+
     private List<Integer> getPriceData = new ArrayList<Integer>();
     private List<String> typeName = new ArrayList<String>();
 
     private Button lastPage;
     private Button switchAccount;
-//    private Spinner switchAccount; 選擇帳本未做
     private EditText dateStart_input;
     private EditText dateEnd_input;
     private Button searchButton;
@@ -44,6 +58,7 @@ public class check_expense extends AppCompatActivity {
     private int yearEnd = 0;
     private int monthEnd = 0;
     private int dayEnd = 0;
+
     private List<Expense> select_expense = new ArrayList<Expense>();
 
     private ListView TypeListView;
@@ -52,6 +67,9 @@ public class check_expense extends AppCompatActivity {
     private List<String> percentageArray = new ArrayList<String>();
     private List<Integer> totalArray = new ArrayList<Integer>();
 
+    private int singleChoiceIndex;
+    private List<String> bookArray = new ArrayList<String>();
+    private List<String> chooseBooks = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +90,7 @@ public class check_expense extends AppCompatActivity {
         switchAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                singleDialogEvent();
             }
         });
 
@@ -171,6 +189,24 @@ public class check_expense extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    private void singleDialogEvent(){
+        new AlertDialog.Builder(check_expense.this)
+                .setSingleChoiceItems(bookArray.toArray(new String[bookArray.size()]), singleChoiceIndex,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                singleChoiceIndex = which;
+                            }
+                        })
+                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(check_expense.this, "你選擇的是"+bookArray.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 
     public void setExpenseData(List<Expense> select_expense){
         int getPrice = 0;
@@ -185,11 +221,23 @@ public class check_expense extends AppCompatActivity {
                 replacePosition = this.typeName.indexOf(getTypeName);
                 replacePrice = this.getPriceData.get(replacePosition) + getPrice;
                 this.getPriceData.set(replacePosition, replacePrice);
-            }else{
+            } else{
                 this.typeName.add(getTypeName);
                 this.getPriceData.add(getPrice);
             }
             //System.out.println(getTypeName+" ,"+getPriceData);
+        }
+    }
+
+    public void setBookArray(){
+        String getBookName = "";
+        for(int i = 0;i < select_expense.size();i++){
+            getBookName = select_expense.get(i).getBook_name();
+            if(this.bookArray.contains(getBookName)){
+                continue;
+            }else {
+                this.bookArray.add(getBookName);
+            }
         }
     }
 
@@ -252,7 +300,7 @@ public class check_expense extends AppCompatActivity {
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries , "類別");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setColors(this.COLORFUL_COLORS);
         PieData data = new PieData(dataSet);
 
         PieChart expenseChart = (PieChart) findViewById(R.id.expense_chart);
@@ -284,6 +332,7 @@ public class check_expense extends AppCompatActivity {
         this.dateEnd_input.setError(null);
         return true;
     }
+
 
     public void jumpToHome(){
         Intent intent = new Intent(check_expense.this,Home.class);

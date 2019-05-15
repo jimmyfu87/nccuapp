@@ -36,8 +36,8 @@ public class add_income extends AppCompatActivity {
     private List<String> type = new ArrayList<String>();        //傳給ArrayAdapter的參數
     private List<String> book = new ArrayList<String>();
 
-    public List<String> dbBookData = new ArrayList<>();         //接資料庫資料，Type還沒做!!!!!
-    public List<String> dbTypeData = new ArrayList<>();
+    public List<String> dbBookData = new ArrayList<String>();         //接資料庫資料，Type還沒做!!!!!
+    public List<String> dbTypeData = new ArrayList<String>();
 
     private EditText i_price,i_note,i_fixed,i_userid;                                             //宣告需要輸入的變數的EditText
     private String i_date,i_typeid,i_bookid;
@@ -47,6 +47,17 @@ public class add_income extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.income_add);
+
+        //Spinner ArrayAdapter 初始化
+        initType();
+        initBook();
+
+        ArrayAdapter typeList = new ArrayAdapter<String>(add_income.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                type);
+        ArrayAdapter<String> bookList = new ArrayAdapter<String>(add_income.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                book);
 
         //不儲存回首頁
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -113,10 +124,6 @@ public class add_income extends AppCompatActivity {
             }
         });
         input_type = (Spinner)findViewById(R.id.type_input);
-        initType();
-        ArrayAdapter<String> typeList = new ArrayAdapter<>(add_income.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                type);
         input_type.setAdapter(typeList);
 
         //帳本，已串聯Book的資料庫
@@ -134,10 +141,6 @@ public class add_income extends AppCompatActivity {
             }
         });
         input_book = (Spinner)findViewById(R.id.book_input);
-        initBook();
-        ArrayAdapter<String> bookList = new ArrayAdapter<>(add_income.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                book);
         input_book.setAdapter(bookList);
 
 
@@ -228,7 +231,7 @@ public class add_income extends AppCompatActivity {
 
     public void updateBook(){
         for(int i = 0 ;i < dbBookData.size();i++){
-            System.out.println(dbBookData.get(i));
+            //System.out.println(dbBookData.get(i));
             if(book.contains(dbBookData.get(i))){
                 continue;
             }else{
