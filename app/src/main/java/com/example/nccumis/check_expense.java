@@ -151,7 +151,12 @@ public class check_expense extends AppCompatActivity {
                     clearList();
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                     dbmanager.open();
-                    select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
+                   // select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
+                    List<String> lst=new ArrayList<>();
+                    lst.add("現金帳本");
+                    lst.add("支票帳本");
+                    lst.add("美金帳本");
+                    select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,lst);
                     dbmanager.close();
                     setExpenseData(select_expense);
                     setList();
