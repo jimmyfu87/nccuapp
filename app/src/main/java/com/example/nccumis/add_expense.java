@@ -139,6 +139,7 @@ public class add_expense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToadd_type();
+                newTypeBtn.setChecked(false);
             }
         });
         this.input_type = (Spinner)findViewById(R.id.type_input);
@@ -168,6 +169,7 @@ public class add_expense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToadd_book();
+                newBookBtn.setChecked(false);
             }
         });
         this.input_book = (Spinner)findViewById(R.id.book_input);

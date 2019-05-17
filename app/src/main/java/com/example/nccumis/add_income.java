@@ -121,6 +121,7 @@ public class add_income extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToadd_type();
+                newTypeBtn.setChecked(false);
             }
         });
         input_type = (Spinner)findViewById(R.id.type_input);
@@ -138,6 +139,7 @@ public class add_income extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToadd_type();
+                newBookBtn.setChecked(false);
             }
         });
         input_book = (Spinner)findViewById(R.id.book_input);
