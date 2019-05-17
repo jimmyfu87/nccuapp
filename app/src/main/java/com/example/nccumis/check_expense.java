@@ -16,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -70,9 +69,8 @@ public class check_expense extends AppCompatActivity {
     private List<String> percentageArray = new ArrayList<String>();
     private List<Integer> totalArray = new ArrayList<Integer>();
 
-    private int singleChoiceIndex;
     private List<String> bookArray = new ArrayList<String>();
-    private List<String> chooseBooks = new ArrayList<String>();
+    private List<String> selectBooks = new ArrayList<String>();
 
 
     private String dateinStart = "";
@@ -83,7 +81,6 @@ public class check_expense extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
-        autoSetFirstandEndMonth();
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +95,8 @@ public class check_expense extends AppCompatActivity {
         switchAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                singleDialogEvent();
+                setBookArray();
+                multiDialogEvent();
             }
         });
 
@@ -160,15 +158,16 @@ public class check_expense extends AppCompatActivity {
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                     dbmanager.open();
                    // select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
-                    List<String> lst=new ArrayList<>();
-                    lst.add("現金帳本");
-                    lst.add("支票帳本");
-                    lst.add("美金帳本");
-                    select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,lst);
+//                    List<String> lst=new ArrayList<>();
+//                    lst.add("現金帳本");
+//                    lst.add("支票帳本");
+//                    lst.add("美金帳本");
+                    setBookArray();
+                    setListViewHeightBasedOnChildren(TypeListView);
+                    select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
                     dbmanager.close();
                     setExpenseData(select_expense);
                     setList();
-                    setListViewHeightBasedOnChildren(TypeListView);
                     setPieChart();
                 }
             }
@@ -181,6 +180,7 @@ public class check_expense extends AppCompatActivity {
         //ListView 類別項目、類別名稱、類別佔總額%、類別金額
         TypeListView = (ListView)findViewById(R.id.TypeListView);
         setList();
+        setBookArray();
         setListViewHeightBasedOnChildren(TypeListView);
     }
 
@@ -204,54 +204,46 @@ public class check_expense extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void singleDialogEvent(){
+    private void multiDialogEvent(){
+        final List<Boolean> checkedStatusList = new ArrayList<>();
+        for(String s : bookArray){
+            checkedStatusList.add(false);
+        }
         new AlertDialog.Builder(check_expense.this)
-                .setSingleChoiceItems(bookArray.toArray(new String[bookArray.size()]), singleChoiceIndex,
-                        new DialogInterface.OnClickListener() {
+                .setMultiChoiceItems(bookArray.toArray(new String[bookArray.size()]), new boolean[bookArray.size()],
+                        new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                singleChoiceIndex = which;
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                checkedStatusList.set(which, isChecked);
                             }
                         })
-                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(check_expense.this, "你選擇的是"+bookArray.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+
+                        StringBuilder sb = new StringBuilder();
+                        boolean isEmpty = true;
+                        for(int i = 0; i < checkedStatusList.size(); i++){
+                            if(checkedStatusList.get(i)){
+                                sb.append(bookArray.get(i));
+                                sb.append(" ");
+                                selectBooks.add(bookArray.get(i));
+                                System.out.println(bookArray.get(i));
+                                isEmpty = false;
+                            }
+                        }
+                        if(!isEmpty){
+                            Toast.makeText(check_expense.this, "你選擇的是"+sb.toString(), Toast.LENGTH_SHORT).show();
+                            for(String s : bookArray){
+                                checkedStatusList.add(false);
+                            }
+                        } else{
+                            Toast.makeText(check_expense.this, "請勾選項目", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 })
                 .show();
-    }
-///////////////////////////
-    public void autoSetFirstandEndMonth(){
-        List<String> oddMonth = new ArrayList<String>();
-        oddMonth.add("1");
-        oddMonth.add("3");
-        oddMonth.add("5");
-        oddMonth.add("7");
-        oddMonth.add("8");
-        oddMonth.add("11");
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        String year = Integer.toString(cal.get(Calendar.YEAR));
-        String month = Integer.toString(cal.get(Calendar.MONTH) +1);
-
-        this.dateinStart = year+"-"+month+"-"+1;
-        if(month == "2"){
-            int intYear = Integer.parseInt(year);
-            if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
-                this.dateinEnd = year+"-"+month+"-"+29;
-            }else {
-                this.dateinEnd = year+"-"+month+"-"+28;
-            }
-        }else if(oddMonth.contains(month)){
-            this.dateinEnd = year+"-"+month+"-"+31;
-        }else {
-            this.dateinEnd = year+"-"+month+"-"+30;
-        }
-
-        //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
     public void setExpenseData(List<Expense> select_expense){
@@ -276,15 +268,11 @@ public class check_expense extends AppCompatActivity {
     }
 
     public void setBookArray(){
-        String getBookName = "";
-        for(int i = 0;i < select_expense.size();i++){
-            getBookName = select_expense.get(i).getBook_name();
-            if(this.bookArray.contains(getBookName)){
-                continue;
-            }else {
-                this.bookArray.add(getBookName);
-            }
-        }
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+        dbmanager.open();
+        this.bookArray = dbmanager.fetchBook();           //可直接調用select_expense的資訊
+        dbmanager.close();
+        System.out.println(this.bookArray.size());
     }
 
     //統計前先清除List內的所有元素
@@ -395,6 +383,38 @@ public class check_expense extends AppCompatActivity {
         }
     }
 
+    ///////////For Home Page////////////////
+    public void autoSetFirstandEndMonth(){
+        List<String> oddMonth = new ArrayList<String>();
+        oddMonth.add("1");
+        oddMonth.add("3");
+        oddMonth.add("5");
+        oddMonth.add("7");
+        oddMonth.add("8");
+        oddMonth.add("11");
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        String year = Integer.toString(cal.get(Calendar.YEAR));
+        String month = Integer.toString(cal.get(Calendar.MONTH) +1);
+
+        this.dateinStart = year+"-"+month+"-"+1;
+        if(month == "2"){
+            int intYear = Integer.parseInt(year);
+            if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
+                this.dateinEnd = year+"-"+month+"-"+29;
+            }else {
+                this.dateinEnd = year+"-"+month+"-"+28;
+            }
+        }else if(oddMonth.contains(month)){
+            this.dateinEnd = year+"-"+month+"-"+31;
+        }else {
+            this.dateinEnd = year+"-"+month+"-"+30;
+        }
+
+        //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
+    }
+
     //檢查輸入日期是否有誤
     public boolean checkDateInput(){
         if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
@@ -404,7 +424,6 @@ public class check_expense extends AppCompatActivity {
         this.dateEnd_input.setError(null);
         return true;
     }
-
 
 
     public void jumpToHome(){
