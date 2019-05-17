@@ -75,7 +75,8 @@ public class check_expense extends AppCompatActivity {
 
     private String dateinStart = "";
     private String dateinEnd = "";
-
+    private boolean[] checked ;
+    private  String[] checking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class check_expense extends AppCompatActivity {
         //一開始預設統計所有帳本資料
         setBookArray();
         initSelectBooks();
-
+        checked=new boolean[bookArray.size()];
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -204,16 +205,16 @@ public class check_expense extends AppCompatActivity {
 
     private void multiDialogEvent(){
         this.selectBooks.clear();
-        final List<Boolean> checkedStatusList = new ArrayList<>();
-        for(String s : bookArray){
-            checkedStatusList.add(false);
-        }
+//        final List<Boolean> checkedStatusList = new ArrayList<>();
+//        for(String s : bookArray){
+//            checkedStatusList.add(false);
+//        }
         new AlertDialog.Builder(check_expense.this)
-                .setMultiChoiceItems(bookArray.toArray(new String[bookArray.size()]), new boolean[bookArray.size()],
+                .setMultiChoiceItems(bookArray.toArray(new String[bookArray.size()]), checked,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                checkedStatusList.set(which, isChecked);
+                                //checkedStatusList.set(which, isChecked);
                             }
                         })
                 .setPositiveButton("確認", new DialogInterface.OnClickListener() {
@@ -222,8 +223,8 @@ public class check_expense extends AppCompatActivity {
 
                         StringBuilder sb = new StringBuilder();
                         boolean isEmpty = true;
-                        for(int i = 0; i < checkedStatusList.size(); i++){
-                            if(checkedStatusList.get(i)){
+                        for(int i = 0; i < checked.length; i++){
+                            if(checked[i]){
                                 sb.append(bookArray.get(i));
                                 sb.append(" ");
                                 selectBooks.add(bookArray.get(i));
@@ -233,9 +234,9 @@ public class check_expense extends AppCompatActivity {
                         }
                         if(!isEmpty){
                             Toast.makeText(check_expense.this, "你選擇的是"+sb.toString(), Toast.LENGTH_SHORT).show();
-                            for(String s : bookArray){
-                                checkedStatusList.add(false);
-                            }
+//                            for(String s : bookArray){
+//                                checkedStatusList.add(false);
+//                            }
                         } else{
                             initSelectBooks();
                             Toast.makeText(check_expense.this, "請勾選項目，系統已自動返回預設(統計所有帳本)", Toast.LENGTH_SHORT).show();
