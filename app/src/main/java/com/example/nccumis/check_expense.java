@@ -81,6 +81,10 @@ public class check_expense extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
+        //一開始預設統計所有帳本資料
+        setBookArray();
+        initSelectBooks();
+
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +99,6 @@ public class check_expense extends AppCompatActivity {
         switchAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setBookArray();
                 multiDialogEvent();
             }
         });
@@ -158,16 +161,12 @@ public class check_expense extends AppCompatActivity {
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                     dbmanager.open();
                    // select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
-//                    List<String> lst=new ArrayList<>();
-//                    lst.add("現金帳本");
-//                    lst.add("支票帳本");
-//                    lst.add("美金帳本");
-                    setBookArray();
-                    setListViewHeightBasedOnChildren(TypeListView);
+                    //System.out.println("Size of select books"+selectBooks.size());
                     select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
                     dbmanager.close();
                     setExpenseData(select_expense);
                     setList();
+                    setListViewHeightBasedOnChildren(TypeListView);
                     setPieChart();
                 }
             }
@@ -180,7 +179,6 @@ public class check_expense extends AppCompatActivity {
         //ListView 類別項目、類別名稱、類別佔總額%、類別金額
         TypeListView = (ListView)findViewById(R.id.TypeListView);
         setList();
-        setBookArray();
         setListViewHeightBasedOnChildren(TypeListView);
     }
 
@@ -205,6 +203,7 @@ public class check_expense extends AppCompatActivity {
     }
 
     private void multiDialogEvent(){
+        this.selectBooks.clear();
         final List<Boolean> checkedStatusList = new ArrayList<>();
         for(String s : bookArray){
             checkedStatusList.add(false);
@@ -228,7 +227,7 @@ public class check_expense extends AppCompatActivity {
                                 sb.append(bookArray.get(i));
                                 sb.append(" ");
                                 selectBooks.add(bookArray.get(i));
-                                System.out.println(bookArray.get(i));
+                                //System.out.println("Here"+bookArray.get(i));
                                 isEmpty = false;
                             }
                         }
@@ -238,7 +237,8 @@ public class check_expense extends AppCompatActivity {
                                 checkedStatusList.add(false);
                             }
                         } else{
-                            Toast.makeText(check_expense.this, "請勾選項目", Toast.LENGTH_SHORT).show();
+                            initSelectBooks();
+                            Toast.makeText(check_expense.this, "請勾選項目，系統已自動返回預設(統計所有帳本)", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -272,7 +272,11 @@ public class check_expense extends AppCompatActivity {
         dbmanager.open();
         this.bookArray = dbmanager.fetchBook();           //可直接調用select_expense的資訊
         dbmanager.close();
-        System.out.println(this.bookArray.size());
+    }
+    public void initSelectBooks(){
+        for(int i = 0; i < bookArray.size(); i++) {
+            this.selectBooks.add(bookArray.get(i));
+        }
     }
 
     //統計前先清除List內的所有元素
