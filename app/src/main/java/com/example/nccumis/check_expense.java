@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class check_expense extends AppCompatActivity {
@@ -71,11 +74,16 @@ public class check_expense extends AppCompatActivity {
     private List<String> bookArray = new ArrayList<String>();
     private List<String> chooseBooks = new ArrayList<String>();
 
+
+    private String dateinStart = "";
+    private String dateinEnd = "";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
-
+        autoSetFirstandEndMonth();
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +168,7 @@ public class check_expense extends AppCompatActivity {
                     dbmanager.close();
                     setExpenseData(select_expense);
                     setList();
+                    setListViewHeightBasedOnChildren(TypeListView);
                     setPieChart();
                 }
             }
@@ -172,6 +181,7 @@ public class check_expense extends AppCompatActivity {
         //ListView 類別項目、類別名稱、類別佔總額%、類別金額
         TypeListView = (ListView)findViewById(R.id.TypeListView);
         setList();
+        setListViewHeightBasedOnChildren(TypeListView);
     }
 
     public void showDatePickDlg(final int checknum) {
@@ -211,6 +221,37 @@ public class check_expense extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+///////////////////////////
+    public void autoSetFirstandEndMonth(){
+        List<String> oddMonth = new ArrayList<String>();
+        oddMonth.add("1");
+        oddMonth.add("3");
+        oddMonth.add("5");
+        oddMonth.add("7");
+        oddMonth.add("8");
+        oddMonth.add("11");
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        String year = Integer.toString(cal.get(Calendar.YEAR));
+        String month = Integer.toString(cal.get(Calendar.MONTH) +1);
+
+        this.dateinStart = year+"-"+month+"-"+1;
+        if(month == "2"){
+            int intYear = Integer.parseInt(year);
+            if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
+                this.dateinEnd = year+"-"+month+"-"+29;
+            }else {
+                this.dateinEnd = year+"-"+month+"-"+28;
+            }
+        }else if(oddMonth.contains(month)){
+            this.dateinEnd = year+"-"+month+"-"+31;
+        }else {
+            this.dateinEnd = year+"-"+month+"-"+30;
+        }
+
+        //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
     public void setExpenseData(List<Expense> select_expense){
@@ -298,6 +339,32 @@ public class check_expense extends AppCompatActivity {
         TypeListView.setAdapter(Ex_adapter);
     }
 
+    /**
+     * 動態設定ListView的高度
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) {
+            return;
+        }
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
+
     public void setPieChart(){
         List<PieEntry> pieEntries = new ArrayList<>();
         for(int i = 0; i < getPriceData.size(); i++){
@@ -339,10 +406,12 @@ public class check_expense extends AppCompatActivity {
     }
 
 
+
     public void jumpToHome(){
         Intent intent = new Intent(check_expense.this,Home.class);
         startActivity(intent);
     }
+
     public void set_start_dateformat(int year,int month,int day){
         String st_month;
         String st_day;
