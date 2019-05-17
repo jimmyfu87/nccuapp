@@ -22,6 +22,7 @@ import android.content.Intent;
 
 
 public class add_expense extends AppCompatActivity {
+    private static final int expense = -1;
     private Button lastPage;
     private Button newExpense;
     private Button comfirm;
@@ -349,6 +350,7 @@ public class add_expense extends AppCompatActivity {
         saveExpenseData.putString("type",input_type.getSelectedItem().toString());
         saveExpenseData.putString("book",input_book.getSelectedItem().toString());
         saveExpenseData.putString("note",input_note.getText().toString());
+        saveExpenseData.putInt("FromExpenseOrIncome",expense);
         intent.putExtras(saveExpenseData);
         startActivity(intent);
 

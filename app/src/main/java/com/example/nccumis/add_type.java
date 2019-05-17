@@ -18,15 +18,18 @@ public class add_type extends AppCompatActivity {
     private EditText input_typeName;
     private Spinner input_ExpenseOrIncome;
 
-    private Intent savedDataFromIncome;
+    private Intent savedDataFromSpend;
     private Bundle saveBag;
+    private int JumpToWhere = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.type_add);
-        savedDataFromIncome = getIntent();
-        saveBag = savedDataFromIncome.getExtras();
+        savedDataFromSpend = getIntent();
+        saveBag = savedDataFromSpend.getExtras();
+        JumpToWhere = saveBag.getInt("FromExpenseOrIncome");
+        saveBag.remove("FromExpenseOrIncome");
 
         //不儲存回 新增支出 或 新增收入
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -98,8 +101,15 @@ public class add_type extends AppCompatActivity {
     }
 
     public void jumpToaddSpend(Bundle prelayoutData) {
-        Intent intent = new Intent(add_type.this, add_expense.class);
-        intent.putExtras(prelayoutData);
-        startActivity(intent);
+        //確定jump回哪裡
+        if(this.JumpToWhere == add_income.income){
+            Intent intent = new Intent(add_type.this, add_income.class);
+            intent.putExtras(prelayoutData);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(add_type.this, add_expense.class);
+            intent.putExtras(prelayoutData);
+            startActivity(intent);
+        }
     }
 }

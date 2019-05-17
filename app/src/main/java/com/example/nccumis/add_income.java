@@ -20,6 +20,7 @@ import java.util.List;
 
 
 public class add_income extends AppCompatActivity {
+    public static final int income = 1;
     private Button lastPage;
     private Button newIncome;
     private Button comfirm;
@@ -268,6 +269,7 @@ public class add_income extends AppCompatActivity {
         saveIncomeData.putString("type",input_type.getSelectedItem().toString());
         saveIncomeData.putString("book",input_book.getSelectedItem().toString());
         saveIncomeData.putString("note",input_note.getText().toString());
+        saveIncomeData.putInt("FromExpenseOrIncome",income);
         intent.putExtras(saveIncomeData);
         startActivity(intent);
 

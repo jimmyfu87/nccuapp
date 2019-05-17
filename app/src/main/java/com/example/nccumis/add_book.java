@@ -23,6 +23,7 @@ public class add_book extends AppCompatActivity {
 
     private Intent savedDataFromExpense;
     private Bundle saveBag;
+    private int JumpToWhere = 0;
 
     private String i_currencyid;
 
@@ -33,7 +34,8 @@ public class add_book extends AppCompatActivity {
         setContentView(R.layout.book_add);
         savedDataFromExpense = getIntent();
         saveBag = savedDataFromExpense.getExtras();
-
+        JumpToWhere = saveBag.getInt("FromExpenseOrIncome");
+        saveBag.remove("FromExpenseOrIncome");
 
         //帳本名稱
         input_bookName = (EditText) findViewById(R.id.bookName_input);
@@ -132,8 +134,15 @@ public class add_book extends AppCompatActivity {
     }
 
     public void jumpToaddSpend(Bundle prelayoutData){
-        Intent intent = new Intent(add_book.this,add_expense.class);
-        intent.putExtras(prelayoutData);
-        startActivity(intent);
+        //確定jump回哪裡
+        if(this.JumpToWhere == add_income.income){
+            Intent intent = new Intent(add_book.this, add_income.class);
+            intent.putExtras(prelayoutData);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(add_book.this, add_expense.class);
+            intent.putExtras(prelayoutData);
+            startActivity(intent);
+        }
     }
 }
