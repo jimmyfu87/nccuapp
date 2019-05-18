@@ -105,8 +105,8 @@ public class DatabaseManager {
         }
         return  Expenselist;
     }
-    public Cursor fetchExpenseWithbook_cursor(String starttime, String endtime, List<String> booklist) {
-        String result="select distinct * from Expense where (dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"'))"+" AND( "+"Book_name="+"'"+booklist.get(0)+"'";
+    public List<Expense> fetchExpenseWithbookandtype(String starttime, String endtime, List<String> booklist,String type) {
+        String result="select distinct * from Expense where (dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"'))"+" AND(Type_name='"+type+"') AND( "+"Book_name="+"'"+booklist.get(0)+"'";
         if(booklist.size()>1){
             for(int i=1;i<booklist.size();i++) {
                 result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
@@ -115,7 +115,11 @@ public class DatabaseManager {
         result=result+");";
         Cursor Expense=database.rawQuery
                 (result,null);
-        return  Expense;
+        List<Expense> Expenselist=new ArrayList<>();
+        while (Expense.moveToNext()){
+            Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5),Expense.getInt(6)));
+        }
+        return  Expenselist;
     }
 
 //    public Cursor fetchDATEinExpense(String starttime,String endtime) {
