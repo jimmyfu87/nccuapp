@@ -19,11 +19,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -55,6 +53,8 @@ public class check_expense extends AppCompatActivity {
     private EditText dateStart_input;
     private EditText dateEnd_input;
     private Button searchButton;
+    private Button searchthisMonth;
+    private Button searchthisYear;
     private String start_date,end_date;
     private int yearStart = 0;
     private int monthStart = 0;
@@ -74,9 +74,6 @@ public class check_expense extends AppCompatActivity {
     private List<String> bookArray = new ArrayList<String>();
     private List<String> selectBooks = new ArrayList<String>();
 
-
-    private String dateinStart = "";
-    private String dateinEnd = "";
     private boolean[] checked ;
     private  String[] checking;
 
@@ -172,6 +169,43 @@ public class check_expense extends AppCompatActivity {
                     setListViewHeightBasedOnChildren(TypeListView);
                     setPieChart();
                 }
+            }
+        });
+        //搜尋本月
+        searchthisMonth = (Button)findViewById(R.id.searchThisMonth_btn);
+        searchthisMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                autoSetDateForMonthSearch();
+                //Expense 資料庫
+                clearList();
+                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                dbmanager.open();
+                select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
+                dbmanager.close();
+                setExpenseData(select_expense);
+                setList();
+                setListViewHeightBasedOnChildren(TypeListView);
+                setPieChart();
+            }
+        });
+
+        //搜尋本年
+        searchthisYear = (Button)findViewById(R.id.searchThisYear_btn);
+        searchthisYear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                autoSetDateForYearSearch();
+                //Expense 資料庫
+                clearList();
+                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                dbmanager.open();
+                select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
+                dbmanager.close();
+                setExpenseData(select_expense);
+                setList();
+                setListViewHeightBasedOnChildren(TypeListView);
+                setPieChart();
             }
         });
 
@@ -408,8 +442,8 @@ public class check_expense extends AppCompatActivity {
         }
     }
 
-    ///////////For Home Page////////////////
-    public void autoSetFirstandEndMonth(){
+    //根據當月自動設起訖日期
+    public void autoSetDateForMonthSearch(){
         List<String> oddMonth = new ArrayList<String>();
         oddMonth.add("1");
         oddMonth.add("3");
@@ -423,21 +457,42 @@ public class check_expense extends AppCompatActivity {
         String year = Integer.toString(cal.get(Calendar.YEAR));
         String month = Integer.toString(cal.get(Calendar.MONTH) +1);
 
-        this.dateinStart = year+"-"+month+"-"+1;
+        this.dateStart_input.setText(year + "年" + month + "月" + 1+"日");
+        set_start_dateformat(Integer.parseInt(year),Integer.parseInt(month),1);
+
         if(month == "2"){
             int intYear = Integer.parseInt(year);
             if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
-                this.dateinEnd = year+"-"+month+"-"+29;
+                this.dateEnd_input.setText(year+"年"+month+"月"+29+"日");
+                set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),29);
+
             }else {
-                this.dateinEnd = year+"-"+month+"-"+28;
+                this.dateEnd_input.setText(year+"年"+month+"月"+28+"日");
+                set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),28);
             }
         }else if(oddMonth.contains(month)){
-            this.dateinEnd = year+"-"+month+"-"+31;
+            this.dateEnd_input.setText(year+"年"+month+"月"+31+"日");
+            set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),31);
         }else {
-            this.dateinEnd = year+"-"+month+"-"+30;
+            this.dateEnd_input.setText(year+"年"+month+"月"+30+"日");
+            set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),30);
         }
 
         //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
+    }
+
+    //根據當年自動設起訖日期
+    public void autoSetDateForYearSearch(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        String year = Integer.toString(cal.get(Calendar.YEAR));
+
+        this.dateStart_input.setText(year + "年" + 1 + "月" + 1+"日");
+        set_end_dateformat(Integer.parseInt(year),1,1);
+
+        this.dateEnd_input.setText(year + "年" + 12 + "月" + 31+"日");
+        set_end_dateformat(Integer.parseInt(year),12,31);
+
     }
 
     //檢查輸入日期是否有誤
@@ -494,14 +549,4 @@ public class check_expense extends AppCompatActivity {
         }
         end_date=year+"-"+st_month+"-"+st_day;
     }
-
-
-
-
-
-    //不用重拉另一個xml 資料庫傳該帳本資料進來
-//    public void jumpToAnotherBook(){
-//        Intent intent = new Intent(check_expense.this,Home.class);
-//        startActivity(intent);
-//    }
 }
