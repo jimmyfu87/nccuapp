@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 
 public class CountMoney extends AppCompatActivity {
-    Spinner spin_account;
-    EditText date_start;
-    EditText date_end;
-    String startEnd_date;
-    TextView income;
-    TextView spend;
-    TextView total;
-    Button btn_checkCount;
+    private Spinner spin_account;
+    private EditText date_start;
+    private EditText date_end;
+    private String startEnd_date;
+    private TextView income;
+    private TextView spend;
+    private TextView total;
+    private Button btn_checkCount;
 
 
 
