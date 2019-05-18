@@ -93,6 +93,14 @@
 
             </com.github.mikephil.charting.charts.PieChart>
 
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/expense_chart2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+            </com.github.mikephil.charting.charts.PieChart>
+
 
         </LinearLayout>
 

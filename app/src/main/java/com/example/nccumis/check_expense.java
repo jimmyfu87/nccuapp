@@ -19,9 +19,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -36,8 +38,8 @@ public class check_expense extends AppCompatActivity {
     //預設25種
     private static final int[] COLORFUL_COLORS = {
             Color.rgb(193, 37, 82), Color.rgb(255, 102, 0), Color.rgb(245, 199, 0), Color.rgb(106, 150, 31),
-            Color.rgb(179, 100, 53),Color.rgb(207, 248, 246), Color.rgb(148, 212, 212), Color.rgb(136, 180, 187),
-            Color.rgb(118, 174, 175), Color.rgb(42, 109, 130),Color.rgb(217, 80, 138), Color.rgb(254, 149, 7),
+            Color.rgb(179, 100, 53),Color.rgb(220, 200, 50), Color.rgb(60, 60, 100), Color.rgb(70, 100, 20),
+            Color.rgb(8, 10, 25), Color.rgb(42, 109, 130),Color.rgb(217, 80, 138), Color.rgb(254, 149, 7),
             Color.rgb(254, 247, 120), Color.rgb(106, 167, 134),Color.rgb(53, 194, 209),Color.rgb(64, 89, 128),
             Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),Color.rgb(191, 134, 134), Color.rgb(179, 48, 80),
             Color.rgb(192, 255, 140), Color.rgb(255, 247, 140), Color.rgb(255, 208, 140), Color.rgb(140, 234, 255),
@@ -176,6 +178,7 @@ public class check_expense extends AppCompatActivity {
         //圖表
         setExpenseData(select_expense);
         setPieChart();
+
 
         //ListView 類別項目、類別名稱、類別佔總額%、類別金額
         TypeListView = (ListView)findViewById(R.id.TypeListView);
@@ -360,19 +363,36 @@ public class check_expense extends AppCompatActivity {
 
     public void setPieChart(){
         List<PieEntry> pieEntries = new ArrayList<>();
+//        double selectDateTotalPrice = (double)countSelectDateTotalPrice(this.getPriceData);
+//        for(int i = 0; i < getPriceData.size(); i++){
+//            if((getPriceData.get(i)/selectDateTotalPrice)<0.05)
+//                pieEntries.add(new PieEntry(getPriceData.get(i) , ""));
+//            else
+//             pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
+//
+//        }
         for(int i = 0; i < getPriceData.size(); i++){
-            pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
+             pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries , "類別");
+        dataSet.setSliceSpace(3f);           //设置饼状Item之间的间隙
+        dataSet.setValueTextSize(16f);
         dataSet.setColors(this.COLORFUL_COLORS);
         PieData data = new PieData(dataSet);
 
         PieChart expenseChart = (PieChart) findViewById(R.id.expense_chart);
+        expenseChart.getDescription().setEnabled(false);
+        expenseChart.setHighlightPerTapEnabled(true);
+        expenseChart.setEntryLabelTextSize(16f);
+        expenseChart.setRotationAngle(90);
+        expenseChart.animateXY(800, 800);
         expenseChart.setData(data);
+        expenseChart.setUsePercentValues(true);
         expenseChart.invalidate();
-        expenseChart.setCenterText("Total:\n"+countSelectDateTotalPrice(this.getPriceData));
+        expenseChart.setCenterText("Total\n"+countSelectDateTotalPrice(this.getPriceData));
         expenseChart.setCenterTextSize(20);
+
     }
 
     //暫存日期
