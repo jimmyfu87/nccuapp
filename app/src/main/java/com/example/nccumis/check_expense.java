@@ -458,26 +458,31 @@ public class check_expense extends AppCompatActivity {
         String month = Integer.toString(cal.get(Calendar.MONTH) +1);
 
         this.dateStart_input.setText(year + "年" + month + "月" + 1+"日");
+        setdateInfo(this.startDate,Integer.parseInt(year), Integer.parseInt(month),1);
         set_start_dateformat(Integer.parseInt(year),Integer.parseInt(month),1);
 
         if(month == "2"){
             int intYear = Integer.parseInt(year);
             if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
                 this.dateEnd_input.setText(year+"年"+month+"月"+29+"日");
+                setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),29);
                 set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),29);
 
             }else {
                 this.dateEnd_input.setText(year+"年"+month+"月"+28+"日");
+                setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),28);
                 set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),28);
             }
         }else if(oddMonth.contains(month)){
             this.dateEnd_input.setText(year+"年"+month+"月"+31+"日");
+            setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),31);
             set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),31);
         }else {
             this.dateEnd_input.setText(year+"年"+month+"月"+30+"日");
+            setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),30);
             set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),30);
         }
-
+        this.dateEnd_input.setError(null);
         //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
@@ -488,10 +493,14 @@ public class check_expense extends AppCompatActivity {
         String year = Integer.toString(cal.get(Calendar.YEAR));
 
         this.dateStart_input.setText(year + "年" + 1 + "月" + 1+"日");
+        setdateInfo(this.startDate,Integer.parseInt(year), 1,1);
         set_end_dateformat(Integer.parseInt(year),1,1);
 
+
         this.dateEnd_input.setText(year + "年" + 12 + "月" + 31+"日");
+        setdateInfo(this.endDate,Integer.parseInt(year), 12,28);
         set_end_dateformat(Integer.parseInt(year),12,31);
+        this.dateEnd_input.setError(null);
 
     }
 
