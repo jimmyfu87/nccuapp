@@ -494,14 +494,12 @@ public class check_expense extends AppCompatActivity {
 
         this.dateStart_input.setText(year + "年" + 1 + "月" + 1+"日");
         setdateInfo(this.startDate,Integer.parseInt(year), 1,1);
-        set_end_dateformat(Integer.parseInt(year),1,1);
-
+        set_start_dateformat(Integer.parseInt(year),1,1);
 
         this.dateEnd_input.setText(year + "年" + 12 + "月" + 31+"日");
-        setdateInfo(this.endDate,Integer.parseInt(year), 12,28);
+        setdateInfo(this.endDate,Integer.parseInt(year), 12,31);
         set_end_dateformat(Integer.parseInt(year),12,31);
         this.dateEnd_input.setError(null);
-
     }
 
     //檢查輸入日期是否有誤
