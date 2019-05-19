@@ -57,30 +57,48 @@
         android:layout_gravity="center"
         android:text="登入"
         android:layout_marginTop="20dp"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:layout_gravity="center"
-        >
-    <Button
-        android:id="@+id/btn_forgetPassword"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:text="忘記密碼"
-        android:layout_marginTop="20dp"/>
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/btn_forgetPassword"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="忘記密碼" />
 
         <Button
             android:id="@+id/btn_registerAgain"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:text="我要註冊"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:text="我要註冊" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="87dp"
+        android:layout_gravity="center">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
 
     </LinearLayout>
 
 
+
+
 </LinearLayout>
+
+
 </ScrollView>

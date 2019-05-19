@@ -31,4 +31,5 @@ dependencies {
 
 dependencies {
     implementation 'com.github.ChenPeiRong1997:MPAndroidChart:v3.1.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
 }
