@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.MotionEvent;
@@ -155,7 +156,7 @@ public class check_expense extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkDateInput()){
+                if(checkDateInput(v)){
                     //Expense 資料庫
                     clearList();
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
@@ -503,9 +504,10 @@ public class check_expense extends AppCompatActivity {
     }
 
     //檢查輸入日期是否有誤
-    public boolean checkDateInput(){
+    public boolean checkDateInput(View view){
         if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
             this.dateEnd_input.setError("結束日期小於開始日期");
+            Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
             return false;
         }
         this.dateEnd_input.setError(null);
