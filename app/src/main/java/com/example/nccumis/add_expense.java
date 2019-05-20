@@ -1,5 +1,6 @@
 package com.example.nccumis;
 
+import android.app.backup.BackupManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -100,6 +101,8 @@ public class add_expense extends AppCompatActivity {
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
                     dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
                     dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,note,1);            //將資料放到資料庫
+                    BackupManager bm = new BackupManager(add_expense.this);
+                    bm.dataChanged();
                     dbmanager.close();                                                                      //關閉資料庫
                     jumpToHome();
                 }

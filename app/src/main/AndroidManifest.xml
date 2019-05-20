@@ -7,8 +7,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="nccumis"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:fullBackupContent="@xml/backup_rules"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+        <!--//backupagent key-->
+        <!--<meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" />-->
 
         <activity android:name=".Home"></activity>
         <activity android:name=".add_type"></activity>

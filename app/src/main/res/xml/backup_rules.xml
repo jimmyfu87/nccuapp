@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <full-backup-content>
+
+
+        <include domain="database" path="App.db"/>
+        <!--<include domain="database" path="getDatabasePath('App.db')"/>-->
+        <!--<include domain="database" path="getDatabasePath(App.db)"/>-->
+
+
+</full-backup-content>

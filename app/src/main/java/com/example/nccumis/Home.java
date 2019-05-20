@@ -1,5 +1,6 @@
 package com.example.nccumis;
 
+import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ public class Home extends AppCompatActivity {
     private Button addSpend;
     private Button checkSpend;
     private Button signout;
+    private Button backup;
+
     int RC_SIGN_IN=0;
     GoogleSignInClient mGoogleSignInClient;
 
@@ -26,6 +29,16 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+//        backup=(Button)findViewById(R.id.backup);
+//        backup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                BackupManager bm = new BackupManager(Home.this);
+//                bm.dataChanged();
+//                jumpToadd_expense();
+//            }
+//        });
+
 
         signout=(Button)findViewById(R.id.signout);
         signout.setOnClickListener(new View.OnClickListener() {
