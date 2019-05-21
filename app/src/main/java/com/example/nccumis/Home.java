@@ -166,7 +166,7 @@ public class Home extends AppCompatActivity {
             backUp();
         }
         else if(requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE2){
-
+            restore();
         }
         else {
             // Permission Denied
@@ -179,32 +179,33 @@ public class Home extends AppCompatActivity {
             //申请WRITE_EXTERNAL_STORAGE权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     WRITE_EXTERNAL_STORAGE_REQUEST_CODE2);
-        }
-        try {
-            File sd = Environment.getExternalStorageDirectory();
-            File data = Environment.getDataDirectory();
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String currentDBPath = "/data/com.example.nccumis/databases/App.db";
-                String backupDBPath = "App.db";
-                File currentDB = new File(data, currentDBPath);
-                File backupDB = new File(sd, backupDBPath);
-                Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                File sd = Environment.getExternalStorageDirectory();
+                File data = Environment.getDataDirectory();
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    String currentDBPath = "/data/com.example.nccumis/databases/App.db";
+                    String backupDBPath = "App.db";
+                    File currentDB = new File(data, currentDBPath);
+                    File backupDB = new File(sd, backupDBPath);
+                    Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
 
-                if (backupDB.exists()) {
-                    FileChannel src = new FileInputStream(backupDB).getChannel();
-                    FileChannel dst = new FileOutputStream(currentDB).getChannel();
-                    dst.transferFrom(src, 0, src.size());
-                    src.close();
-                    dst.close();
-                    Toast.makeText(getApplicationContext(), "Restore successful", Toast.LENGTH_SHORT).show();
+                    if (backupDB.exists()) {
+                        FileChannel src = new FileInputStream(backupDB).getChannel();
+                        FileChannel dst = new FileOutputStream(currentDB).getChannel();
+                        dst.transferFrom(src, 0, src.size());
+                        src.close();
+                        dst.close();
+                        Toast.makeText(getApplicationContext(), "Restore successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "沒有SD卡", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(getApplicationContext(), "沒有SD卡", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
