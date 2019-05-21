@@ -162,14 +162,18 @@ public class Home extends AppCompatActivity {
     }
 
     private void doNext(int requestCode, int[] grantResults) {
-        if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
-            backUp();
-        }
-        else if(requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE2){
-            restore();
+        if(grantResults[0]== PackageManager.PERMISSION_DENIED){
+            return;
         }
         else {
-            // Permission Denied
+            if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
+                backUp();
+            } else if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE2) {
+                restore();
+            } else {
+                // Permission Denied
+
+            }
         }
     }
 
