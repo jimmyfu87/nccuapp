@@ -10,7 +10,11 @@ import android.widget.Spinner;
 
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
 import android.view.MotionEvent;
 import android.widget.TextView;
 
@@ -24,6 +28,8 @@ public class CountMoney extends AppCompatActivity {
     private TextView spend;
     private TextView total;
     private Button btn_checkCount;
+
+    private String start_date;
 
 
 
@@ -41,15 +47,19 @@ public class CountMoney extends AppCompatActivity {
         btn_checkCount=(Button)findViewById(R.id.btn_checkCount);
 
         //計算
+
         btn_checkCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                List<Expense> select_expense=new ArrayList<>();
+                dbmanager.open();
+                select_expense=dbmanager.fetchExpense(start_date,"2019-05-28");           //可直接調用select_expense的資訊
+                dbmanager.close();
 
             }
+
         });
-
-
-
 
         //選擇帳本
         ArrayAdapter<CharSequence> nAdapter = ArrayAdapter.createFromResource(this,R.array.Account, android.R.layout.simple_spinner_dropdown_item);

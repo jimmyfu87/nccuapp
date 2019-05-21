@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CountMoney"></activity>
+        <activity android:name=".LogIn"></activity>
         <activity android:name=".Home" />
         <activity android:name=".add_type" />
         <activity android:name=".add_book" />
@@ -19,7 +19,7 @@
         <activity android:name=".check_income" />
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".LogIn">
+        <activity android:name=".CountMoney">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
