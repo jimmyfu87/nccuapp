@@ -168,7 +168,7 @@ public class check_expense extends AppCompatActivity {
                     setExpenseData(select_expense);
                     setList();
                     setListViewHeightBasedOnChildren(TypeListView);
-                    setPieChart();
+                    //setPieChart();
                 }
             }
         });
@@ -187,7 +187,7 @@ public class check_expense extends AppCompatActivity {
                 setExpenseData(select_expense);
                 setList();
                 setListViewHeightBasedOnChildren(TypeListView);
-                setPieChart();
+                //setPieChart();
             }
         });
 
@@ -206,13 +206,13 @@ public class check_expense extends AppCompatActivity {
                 setExpenseData(select_expense);
                 setList();
                 setListViewHeightBasedOnChildren(TypeListView);
-                setPieChart();
+  //              setPieChart();
             }
         });
 
         //圖表
         setExpenseData(select_expense);
-        setPieChart();
+        //setPieChart();
 
 
         //ListView 類別項目、類別名稱、類別佔總額%、類別金額
@@ -396,8 +396,8 @@ public class check_expense extends AppCompatActivity {
     }
 
 
-    public void setPieChart(){
-        List<PieEntry> pieEntries = new ArrayList<>();
+//    public void setPieChart(){
+//   List<PieEntry> pieEntries = new ArrayList<>();
 //        double selectDateTotalPrice = (double)countSelectDateTotalPrice(this.getPriceData);
 //        for(int i = 0; i < getPriceData.size(); i++){
 //            if((getPriceData.get(i)/selectDateTotalPrice)<0.05)
@@ -406,29 +406,29 @@ public class check_expense extends AppCompatActivity {
 //             pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
 //
 //        }
-        for(int i = 0; i < getPriceData.size(); i++){
-             pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
-        }
+//    for(int i = 0; i < getPriceData.size(); i++){
+//             pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
+//         }
 
-        PieDataSet dataSet = new PieDataSet(pieEntries , "類別");
-        dataSet.setSliceSpace(3f);           //设置饼状Item之间的间隙
-        dataSet.setValueTextSize(16f);
-        dataSet.setColors(this.COLORFUL_COLORS);
-        PieData data = new PieData(dataSet);
+ //       PieDataSet dataSet = new PieDataSet(pieEntries , "類別");
+//        dataSet.setSliceSpace(3f);           //设置饼状Item之间的间隙
+//        dataSet.setValueTextSize(16f);
+//        dataSet.setColors(this.COLORFUL_COLORS);
+ //       PieData data = new PieData(dataSet);
 
-        PieChart expenseChart = (PieChart) findViewById(R.id.expense_chart);
-        expenseChart.getDescription().setEnabled(false);
-        expenseChart.setHighlightPerTapEnabled(true);
-        expenseChart.setEntryLabelTextSize(16f);
-        expenseChart.setRotationAngle(90);
-        expenseChart.animateXY(800, 800);
-        expenseChart.setData(data);
-        expenseChart.setUsePercentValues(true);
-        expenseChart.invalidate();
-        expenseChart.setCenterText("Total\n"+countSelectDateTotalPrice(this.getPriceData));
-        expenseChart.setCenterTextSize(20);
+ //       PieChart expenseChart = (PieChart) findViewById(R.id.expense_chart);
+ //       expenseChart.getDescription().setEnabled(false);
+ //       expenseChart.setHighlightPerTapEnabled(true);
+  //      expenseChart.setEntryLabelTextSize(16f);
+  //      expenseChart.setRotationAngle(90);
+   //     expenseChart.animateXY(800, 800);
+   //     expenseChart.setData(data);
+   //     expenseChart.setUsePercentValues(true);
+   //     expenseChart.invalidate();
+   //     expenseChart.setCenterText("Total\n"+countSelectDateTotalPrice(this.getPriceData));
+   //     expenseChart.setCenterTextSize(20);
 
-    }
+   // }
 
     //暫存日期
     public void setdateInfo(int startOrEnd, int year, int month, int day){
