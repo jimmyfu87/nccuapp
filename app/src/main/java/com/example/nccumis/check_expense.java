@@ -201,6 +201,7 @@ public class check_expense extends AppCompatActivity {
                 clearList();
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
+                dbmanager.close();
                 select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
                 dbmanager.close();
                 setExpenseData(select_expense);
