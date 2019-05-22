@@ -27,8 +27,6 @@ public class check_expense_detail extends AppCompatActivity {
     private List<String> noteArray = new ArrayList<String>();
     private ArrayList<String> bookArray = new ArrayList<String>();
     private ListView DetailListView;
-    private Button fixBtn;
-    private Button deleteBtn;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +80,7 @@ public class check_expense_detail extends AppCompatActivity {
 
     public void setList(){
         initListData();
-        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
+        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(startDate, endDate,check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
         DetailListView.setAdapter(ExDetail_adapter);
     }
 

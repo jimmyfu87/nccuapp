@@ -14,7 +14,7 @@ import android.widget.Switch;
 
 public class add_book extends AppCompatActivity {
     private Button lastPage;
-    private Button comfirm;
+    private Button confirm;
 
     private EditText input_bookName;
     private EditText input_startBudget;
@@ -56,8 +56,8 @@ public class add_book extends AppCompatActivity {
 
 
         //確認
-        comfirm = (Button)findViewById(R.id.comfirm);
-        comfirm.setOnClickListener(new View.OnClickListener() {
+        confirm = (Button)findViewById(R.id.confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkInputInfo()){
@@ -136,7 +136,7 @@ public class add_book extends AppCompatActivity {
 
     public void jumpToaddSpend(Bundle prelayoutData){
         //確定jump回哪裡
-        if(this.JumpToWhere == add_income.income){
+        if(this.JumpToWhere == add_income.INCOME){
             Intent intent = new Intent(add_book.this, add_income.class);
             intent.putExtras(prelayoutData);
             startActivity(intent);

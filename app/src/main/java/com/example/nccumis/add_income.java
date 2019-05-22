@@ -20,10 +20,10 @@ import java.util.List;
 
 
 public class add_income extends AppCompatActivity {
-    public static final int income = 1;
+    public static final int INCOME = 1;
     private Button lastPage;
     private Button newIncome;
-    private Button comfirm;
+    private Button confirm;
 
     private EditText input_amount;
     private EditText input_date;
@@ -79,8 +79,8 @@ public class add_income extends AppCompatActivity {
         });
 
         //確認
-        comfirm = (Button)findViewById(R.id.comfirm);
-        comfirm.setOnClickListener(new View.OnClickListener() {
+        confirm = (Button)findViewById(R.id.confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkInputInfo()){
@@ -269,7 +269,7 @@ public class add_income extends AppCompatActivity {
         saveIncomeData.putString("type",input_type.getSelectedItem().toString());
         saveIncomeData.putString("book",input_book.getSelectedItem().toString());
         saveIncomeData.putString("note",input_note.getText().toString());
-        saveIncomeData.putInt("FromExpenseOrIncome",income);
+        saveIncomeData.putInt("FromExpenseOrIncome",INCOME);
         intent.putExtras(saveIncomeData);
         startActivity(intent);
 

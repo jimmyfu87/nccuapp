@@ -27,7 +27,7 @@ public class add_expense extends AppCompatActivity {
     private boolean detail = false;
     private Button lastPage;
     private Button newExpense;
-    private Button comfirm;
+    private Button confirm;
 
     private EditText input_amount;
     private EditText input_date;
@@ -99,21 +99,26 @@ public class add_expense extends AppCompatActivity {
         });
 
         //確認
-        comfirm = (Button)findViewById(R.id.comfirm);
-        comfirm.setOnClickListener(new View.OnClickListener() {
+        confirm = (Button)findViewById(R.id.confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkInputInfo()){
-                    //到首頁
-                    int price=Integer.parseInt(i_price.getText().toString());                               //將price轉為int
-                    String note=i_note.getText().toString();
-                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
-                    dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                    dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,note,1);            //將資料放到資料庫
-                    BackupManager bm = new BackupManager(add_expense.this);
-                    bm.dataChanged();
-                    dbmanager.close();                                                                      //關閉資料庫
-                    jumpToHome();
+                    if(detail){
+                        ////資料庫修改資料加這////
+                        jumpTocheck_expense_detail();
+                    }else{
+                        //到首頁
+                        int price=Integer.parseInt(i_price.getText().toString());                               //將price轉為int
+                        String note=i_note.getText().toString();
+                        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
+                        dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
+                        dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,note,1);            //將資料放到資料庫
+                        BackupManager bm = new BackupManager(add_expense.this);
+                        bm.dataChanged();
+                        dbmanager.close();                                                                     //關閉資料庫
+                        jumpToHome();
+                    }
                 }
             }
         });

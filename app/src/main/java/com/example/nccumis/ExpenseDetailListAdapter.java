@@ -17,7 +17,8 @@ import java.util.List;
 
 public class ExpenseDetailListAdapter extends ArrayAdapter {
     //to reference the Activity
-    private final int DETAIL = 1;
+    private String saveDetailStartdate;
+    private String saveDetailEnddate;
     private final Activity context;
     private final List<Integer> numberArray;
     private final List<String> dateArray;
@@ -29,10 +30,11 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
     private Button deleteBtn;
 
     //, Button fixParam, Button deleteParam
-    public ExpenseDetailListAdapter(Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
+    public ExpenseDetailListAdapter(String saveDetailStartdate, String saveDetailEnddate, Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
 
         super(context, R.layout.detail_listview_row, dateArrayParam);
-
+        this.saveDetailStartdate = saveDetailStartdate;
+        this.saveDetailEnddate = saveDetailEnddate;
         this.context=context;
         this.numberArray = numberArrayParam;
         this.dateArray = dateArrayParam;
@@ -95,8 +97,8 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
         saveExpenseData.putString("type", typeName);
         saveExpenseData.putString("book", dateArray.get(position));
         saveExpenseData.putString("note", noteArray.get(position));
-        saveExpenseData.putString("saveDetailStartdate",dateArray.get(0));
-        saveExpenseData.putString("saveDetailEnddate",dateArray.get(dateArray.size()-1));
+        saveExpenseData.putString("saveDetailStartdate",saveDetailStartdate);
+        saveExpenseData.putString("saveDetailEnddate",saveDetailEnddate);
         saveExpenseData.putStringArrayList("saveDetailBooksArray",bookArray);
         intent.putExtras(saveExpenseData);
         activity.startActivity(intent);
