@@ -199,8 +199,9 @@ public class LogIn extends AppCompatActivity {
                     // The DriveServiceHelper encapsulates all REST API and SAF functionality.
                     // Its instantiation is required before handling any onClick actions.
                    DriveServiceHelper mDriveServiceHelper = new DriveServiceHelper(googleDriveService);
-                        mDriveServiceHelper.queryFiles();
-                        Toast.makeText(LogIn.this, "儲存成功", Toast.LENGTH_SHORT).show();
+
+                    mDriveServiceHelper.restore();
+                    Toast.makeText(LogIn.this, "儲存成功", Toast.LENGTH_SHORT).show();
 
                 })
                 .addOnFailureListener(exception -> {

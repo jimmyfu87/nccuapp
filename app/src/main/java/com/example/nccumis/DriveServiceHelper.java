@@ -5,6 +5,7 @@ import com.google.api.services.drive.Drive;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.OpenableColumns;
@@ -18,11 +19,15 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.Collections;
 import java.util.concurrent.Executor;
@@ -35,29 +40,40 @@ import java.util.concurrent.Executors;
 public class DriveServiceHelper {
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
     private final Drive mDriveService;
+    public static String TYPE_GOOGLE_DRIVE_FILE = "application/vnd.google-apps.file";
+    private SQLiteDatabase database;
 
     public DriveServiceHelper(Drive driveService) {
         mDriveService = driveService;
     }
-    public Task<Void> saveFile(String fileId, String name, String content) {
+//    public Task<Void> saveFile() {
+//        return Tasks.call(mExecutor, () -> {
+//            java.io.File data = Environment.getDataDirectory();
+//            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
+//            File fileMetadata = new File();
+//            fileMetadata.setName("App.db");
+//            java.io.File filePath = new java.io.File(currentDBPath);
+//            FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
+//            File file = mDriveService.files().create(fileMetadata, mediaContent)
+//                    .setFields("id")
+//                    .execute();
+//            System.out.println("File ID: " + file.getId());
+//            return  null;
+//        });
+//    }
+    public Task<Void> restore() {
         return Tasks.call(mExecutor, () -> {
             java.io.File data = Environment.getDataDirectory();
-            String currentDBPath = "/data/com.example.nccumis/databases/App.db";
-            java.io.File currentDB = new java.io.File(data, currentDBPath);
-            FileChannel src = new FileInputStream(currentDB).getChannel();
-            src.close();
-            // Create a File containing any metadata changes.
-            File metadata = new File().setName(name);
-
-            // Convert content to an AbstractInputStreamContent instance.
-            ByteArrayContent contentStream = ByteArrayContent.fromString("text/plain", content);
-
-            // Update the metadata and contents.
-            mDriveService.files().update(fileId, metadata, contentStream).execute();
-            return null;
-        });
-    }
-
+            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
+            File fileMetadata = new File();
+            fileMetadata.setName("App.db");
+            java.io.File filePath = new java.io.File(currentDBPath);
+            String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
+            OutputStream outputStream = new FileOutputStream(currentDBPath);
+            mDriveService.files().get(fileId).executeMediaAndDownloadTo(outputStream);
+            return  null;
+    });
+}
 
 
 }
