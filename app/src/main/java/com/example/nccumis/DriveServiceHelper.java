@@ -3,11 +3,14 @@ package com.example.nccumis;
 import com.google.api.client.http.FileContent;
 import com.google.api.services.drive.Drive;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
+import android.content.SharedPreferences;
 import android.provider.OpenableColumns;
 import android.support.v4.util.Pair;
 import android.widget.Toast;
@@ -33,6 +36,8 @@ import java.util.Collections;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * A utility for performing read/write operations on Drive files via the REST API and opening a
  * file picker UI via Storage Access Framework.
@@ -40,40 +45,57 @@ import java.util.concurrent.Executors;
 public class DriveServiceHelper {
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
     private final Drive mDriveService;
-    public static String TYPE_GOOGLE_DRIVE_FILE = "application/vnd.google-apps.file";
-    private SQLiteDatabase database;
+    public  String fileId;
+    public SharedPreferences setting;
 
     public DriveServiceHelper(Drive driveService) {
         mDriveService = driveService;
     }
-//    public Task<Void> saveFile() {
-//        return Tasks.call(mExecutor, () -> {
-//            java.io.File data = Environment.getDataDirectory();
-//            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
-//            File fileMetadata = new File();
-//            fileMetadata.setName("App.db");
-//            java.io.File filePath = new java.io.File(currentDBPath);
-//            FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
-//            File file = mDriveService.files().create(fileMetadata, mediaContent)
-//                    .setFields("id")
-//                    .execute();
-//            System.out.println("File ID: " + file.getId());
-//            return  null;
-//        });
-//    }
-    public Task<Void> restore() {
+    public Task<Void> createFile() {
         return Tasks.call(mExecutor, () -> {
             java.io.File data = Environment.getDataDirectory();
             String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
             File fileMetadata = new File();
             fileMetadata.setName("App.db");
             java.io.File filePath = new java.io.File(currentDBPath);
-            String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
+            FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
+            File file = mDriveService.files().create(fileMetadata, mediaContent)
+                    .setFields("id")
+                    .execute();
+            System.out.println("File id is:"+file.getId());
+            return null;
+        });
+    }
+    public Task<Void> restore(String fileid) {
+        return Tasks.call(mExecutor, () -> {
+            java.io.File data = Environment.getDataDirectory();
+            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
+            File fileMetadata = new File();
+            fileMetadata.setName("App.db");
+            java.io.File filePath = new java.io.File(currentDBPath);
+            //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
             OutputStream outputStream = new FileOutputStream(currentDBPath);
-            mDriveService.files().get(fileId).executeMediaAndDownloadTo(outputStream);
+            mDriveService.files().get(fileid).executeMediaAndDownloadTo(outputStream);
             return  null;
-    });
-}
+        });
+    }
+    public Task<Void> update(String fileid) {
+        return Tasks.call(mExecutor, () -> {
+            //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
+            java.io.File data = Environment.getDataDirectory();
+            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
+            File fileMetadata = new File();
+            fileMetadata.setName("App.db");
+            java.io.File filePath = new java.io.File(currentDBPath);
+            FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
+            mDriveService.files().update(fileid,fileMetadata,mediaContent).execute();
+            //(fileMetadata, mediaContent)
+            //.setFields("id")
+            //.execute();
+            //System.out.println("File ID: " + file.getId());
+            return  null;
+        });
+    }
 
 
 }

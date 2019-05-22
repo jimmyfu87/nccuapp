@@ -1,6 +1,7 @@
 package com.example.nccumis;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -38,7 +39,6 @@ public class LogIn extends AppCompatActivity {
     private Button btn_registerAgain;
     private Button loginHome;
     int RC_SIGN_IN=0;
-    final int REQUEST_CODE_SIGN_IN=1;
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
 
@@ -140,72 +140,125 @@ public class LogIn extends AppCompatActivity {
                 //.requestIdToken("961476906062-83aqneaf6du0u3hmpfa0bn5qe740jv6n.apps.googleusercontent.com")
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        startActivityForResult(mGoogleSignInClient.getSignInIntent(), REQUEST_CODE_SIGN_IN);
+        startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
     }
-//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-//        try {
-//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-//            // Signed in successfully, show authenticated UI.
-//            startActivity(new Intent(LogIn.this,Home.class));
-//        } catch (ApiException e) {
-//
-//            Log.w("Google signin error", "signInResult:failed code=" + e.getStatusCode());
-//            Toast.makeText(LogIn.this,"登錄失敗",Toast.LENGTH_LONG).show();
-//        }
-//    }
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-//        if (requestCode == RC_SIGN_IN) {
-//            // The Task returned from this call is always completed, no need to attach
-//            // a listener.
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            handleSignInResult(task);
-//        }
-//    }
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            // Signed in successfully, show authenticated UI.
+            startActivity(new Intent(LogIn.this,Home.class));
+        } catch (ApiException e) {
+
+            Log.w("Google signin error", "signInResult:failed code=" + e.getStatusCode());
+            Toast.makeText(LogIn.this,"登錄失敗",Toast.LENGTH_LONG).show();
+        }
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_CODE_SIGN_IN:
-                handleSignInResult(data);
-                break;
-            default:
-                break;
-        }
-
         super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
     }
-
-    private void handleSignInResult(Intent result) {
-        GoogleSignIn.getSignedInAccountFromIntent(result)
-                .addOnSuccessListener(googleAccount -> {
-                    Toast.makeText(LogIn.this, "登錄成功", Toast.LENGTH_SHORT).show();
-
-                    // Use the authenticated account to sign in to the Drive service.
-                    GoogleAccountCredential credential =
-                            GoogleAccountCredential.usingOAuth2(
-                                    this, Collections.singleton(DriveScopes.DRIVE_FILE));
-                    credential.setSelectedAccount(googleAccount.getAccount());
-                    Drive googleDriveService =
-                            new Drive.Builder(
-                                    AndroidHttp.newCompatibleTransport(),
-                                    new GsonFactory(),
-                                    credential)
-                                    .setApplicationName("nccumis")
-                                    .build();
-
-                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
-                    // Its instantiation is required before handling any onClick actions.
-                   DriveServiceHelper mDriveServiceHelper = new DriveServiceHelper(googleDriveService);
-
-                    mDriveServiceHelper.restore();
-                    Toast.makeText(LogIn.this, "儲存成功", Toast.LENGTH_SHORT).show();
-
-                })
-                .addOnFailureListener(exception -> {
-                    Toast.makeText(LogIn.this, "登錄失敗", Toast.LENGTH_SHORT).show();
-                });
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch (requestCode) {
+//            case REQUEST_CODE_SIGN_IN_create:
+//                handleSignInResult_create(data);
+//                break;
+//            case REQUEST_CODE_SIGN_IN_update:
+//                handleSignInResult_update(data);
+//            case REQUEST_CODE_SIGN_IN_restore:
+//                handleSignInResult_restore(data);
+//            default:
+//                break;
+//        }
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
+//
+//    private void handleSignInResult_create(Intent result) {
+//        GoogleSignIn.getSignedInAccountFromIntent(result)
+//                .addOnSuccessListener(googleAccount -> {
+//                    Toast.makeText(LogIn.this, "登錄成功", Toast.LENGTH_SHORT).show();
+//
+//                    // Use the authenticated account to sign in to the Drive service.
+//                    GoogleAccountCredential credential =
+//                            GoogleAccountCredential.usingOAuth2(
+//                                    this, Collections.singleton(DriveScopes.DRIVE_FILE));
+//                    credential.setSelectedAccount(googleAccount.getAccount());
+//                    Drive googleDriveService =
+//                            new Drive.Builder(
+//                                    AndroidHttp.newCompatibleTransport(),
+//                                    new GsonFactory(),
+//                                    credential)
+//                                    .setApplicationName("nccumis")
+//                                    .build();
+//
+//                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
+//                    // Its instantiation is required before handling any onClick actions.
+//                   driveServiceHelper = new DriveServiceHelper(googleDriveService);
+//                   driveServiceHelper.saveFile();
+//                   Toast.makeText(LogIn.this, "儲存成功", Toast.LENGTH_SHORT).show();
+//
+//                })
+//                .addOnFailureListener(exception -> {
+//                    Toast.makeText(LogIn.this, "登錄失敗", Toast.LENGTH_SHORT).show();
+//                });
+//    }
+//    private void handleSignInResult_restore(Intent result) {
+//        GoogleSignIn.getSignedInAccountFromIntent(result)
+//                .addOnSuccessListener(googleAccount -> {
+//                    // Use the authenticated account to sign in to the Drive service.
+//                    GoogleAccountCredential credential =
+//                            GoogleAccountCredential.usingOAuth2(
+//                                    this, Collections.singleton(DriveScopes.DRIVE_FILE));
+//                    credential.setSelectedAccount(googleAccount.getAccount());
+//                    Drive googleDriveService =
+//                            new Drive.Builder(
+//                                    AndroidHttp.newCompatibleTransport(),
+//                                    new GsonFactory(),
+//                                    credential)
+//                                    .setApplicationName("nccumis")
+//                                    .build();
+//                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
+//                    // Its instantiation is required before handling any onClick actions.
+//                    driveServiceHelper.restore();
+//                    Toast.makeText(LogIn.this, "還原成功", Toast.LENGTH_SHORT).show();
+//
+//                })
+//                .addOnFailureListener(exception -> {
+//                    Toast.makeText(LogIn.this, "登錄失敗", Toast.LENGTH_SHORT).show();
+//                });
+//    }
+//    private void handleSignInResult_update(Intent result) {
+//        GoogleSignIn.getSignedInAccountFromIntent(result)
+//                .addOnSuccessListener(googleAccount -> {
+//                    // Use the authenticated account to sign in to the Drive service.
+//                    GoogleAccountCredential credential =
+//                            GoogleAccountCredential.usingOAuth2(
+//                                    this, Collections.singleton(DriveScopes.DRIVE_FILE));
+//                    credential.setSelectedAccount(googleAccount.getAccount());
+//                    Drive googleDriveService =
+//                            new Drive.Builder(
+//                                    AndroidHttp.newCompatibleTransport(),
+//                                    new GsonFactory(),
+//                                    credential)
+//                                    .setApplicationName("nccumis")
+//                                    .build();
+//                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
+//                    // Its instantiation is required before handling any onClick actions.
+//                    driveServiceHelper.update();
+//                    Toast.makeText(LogIn.this, "更新成功", Toast.LENGTH_SHORT).show();
+//
+//                })
+//                .addOnFailureListener(exception -> {
+//                    Toast.makeText(LogIn.this, "登錄失敗", Toast.LENGTH_SHORT).show();
+//                });
+//    }
 }

@@ -40,5 +40,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="還原" />
+    <Button
+        android:id="@+id/cloud_backup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="雲端備份" />
+    <Button
+        android:id="@+id/cloud_restore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="雲端還原" />
 </LinearLayout>
 </ScrollView>
