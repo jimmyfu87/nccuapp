@@ -46,27 +46,56 @@ public class DriveServiceHelper {
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
     private final Drive mDriveService;
     public  String fileId;
-    public SharedPreferences setting;
+    public  boolean restoresucess;
 
     public DriveServiceHelper(Drive driveService) {
         mDriveService = driveService;
     }
-    public Task<Void> createFile() {
+    public Task<Void> createorupdateFile() {
         return Tasks.call(mExecutor, () -> {
+            FileList result = mDriveService.files().list()
+                    .execute();
+            for (File file : result.getFiles()) {
+                if(file.getName().equals("App.db")){
+                    java.io.File data = Environment.getDataDirectory();
+                    String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
+                    File fileMetadata = new File();
+                    fileMetadata.setName("App.db");
+                    java.io.File filePath = new java.io.File(currentDBPath);
+                    FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
+                    fileId=file.getId();
+                    mDriveService.files().update(fileId,fileMetadata,mediaContent).execute();
+                    System.out.println("更新成功");
+                    return null;
+                    }
+            }
             java.io.File data = Environment.getDataDirectory();
             String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
             File fileMetadata = new File();
             fileMetadata.setName("App.db");
             java.io.File filePath = new java.io.File(currentDBPath);
             FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
-            File file = mDriveService.files().create(fileMetadata, mediaContent)
+            mDriveService.files().create(fileMetadata, mediaContent)
                     .setFields("id")
                     .execute();
-            System.out.println("File id is:"+file.getId());
+            System.out.println("建立成功");
             return null;
         });
     }
-    public Task<Void> restore(String fileid) {
+//    public Task<Void> restore(String fileid) {
+//        return Tasks.call(mExecutor, () -> {
+//            java.io.File data = Environment.getDataDirectory();
+//            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
+//            File fileMetadata = new File();
+//            fileMetadata.setName("App.db");
+//            java.io.File filePath = new java.io.File(currentDBPath);
+//            //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
+//            OutputStream outputStream = new FileOutputStream(currentDBPath);
+//            mDriveService.files().get(fileid).executeMediaAndDownloadTo(outputStream);
+//            return  null;
+//        });
+//    }
+    public Task<Void> restore() {
         return Tasks.call(mExecutor, () -> {
             java.io.File data = Environment.getDataDirectory();
             String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
@@ -75,27 +104,43 @@ public class DriveServiceHelper {
             java.io.File filePath = new java.io.File(currentDBPath);
             //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
             OutputStream outputStream = new FileOutputStream(currentDBPath);
-            mDriveService.files().get(fileid).executeMediaAndDownloadTo(outputStream);
+            FileList result = mDriveService.files().list()
+                    .execute();
+            for (File file : result.getFiles()) {
+              if(file.getName().equals("App.db")){
+                  fileId=file.getId();
+                  mDriveService.files().get(fileId).executeMediaAndDownloadTo(outputStream);
+              }
+            }
             return  null;
         });
     }
-    public Task<Void> update(String fileid) {
-        return Tasks.call(mExecutor, () -> {
-            //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
-            java.io.File data = Environment.getDataDirectory();
-            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
-            File fileMetadata = new File();
-            fileMetadata.setName("App.db");
-            java.io.File filePath = new java.io.File(currentDBPath);
-            FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
-            mDriveService.files().update(fileid,fileMetadata,mediaContent).execute();
-            //(fileMetadata, mediaContent)
-            //.setFields("id")
-            //.execute();
-            //System.out.println("File ID: " + file.getId());
-            return  null;
-        });
+//    public Task<Void> update() {
+//        return Tasks.call(mExecutor, () -> {
+//            //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
+//            java.io.File data = Environment.getDataDirectory();
+//            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
+//            File fileMetadata = new File();
+//            fileMetadata.setName("App.db");
+//            java.io.File filePath = new java.io.File(currentDBPath);
+//            FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
+//            FileList result = mDriveService.files().list()
+//                    .execute();
+//            for (File file : result.getFiles()) {
+//                if(file.getName().equals("App.db")){
+//                    fileId=file.getId();
+//                    mDriveService.files().update(fileId,fileMetadata,mediaContent).execute();
+//                }
+//            }
+//            //(fileMetadata, mediaContent)
+//            //.setFields("id")
+//            //.execute();
+//            //System.out.println("File ID: " + file.getId());
+//            return  null;
+//        });
+//    }
+    public boolean get_restoresuccess(){
+        return restoresucess;
     }
-
 
 }

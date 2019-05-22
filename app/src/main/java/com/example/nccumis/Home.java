@@ -52,6 +52,7 @@ public class Home extends AppCompatActivity {
     final int REQUEST_CODE_SIGN_IN_update=2;  //update
     final int REQUEST_CODE_SIGN_IN_restore=3;  //restore
     public SharedPreferences setting;
+    public  boolean isCreated=false;
 
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
@@ -67,17 +68,16 @@ public class Home extends AppCompatActivity {
         cloud_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean created=getSharedPreferences("sharepref",MODE_PRIVATE).getBoolean("Created",false);
-                if(created){
-                    signIn(REQUEST_CODE_SIGN_IN_update);
-                }
-                else {
+//                boolean created=getSharedPreferences("sharepref",MODE_PRIVATE).getBoolean("Created",false);
+//                if(isCreated){
+//                    signIn(REQUEST_CODE_SIGN_IN_update);
+//                }
+//                else {
                     signIn(REQUEST_CODE_SIGN_IN_create);
-                    SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
-                    setting.edit().putBoolean("Created",true);
-
-                }
-
+//                    SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
+//                    setting.edit().putBoolean("Created",true);
+//
+//                }
             }
         });
         cloud_restore=(Button) findViewById(R.id.cloud_restore);
@@ -268,8 +268,8 @@ public class Home extends AppCompatActivity {
             case REQUEST_CODE_SIGN_IN_create:
                 handleSignInResult_create(data);
                 break;
-            case REQUEST_CODE_SIGN_IN_update:
-                handleSignInResult_update(data);
+//            case REQUEST_CODE_SIGN_IN_update:
+//                handleSignInResult_update(data);
             case REQUEST_CODE_SIGN_IN_restore:
                 handleSignInResult_restore(data);
             default:
@@ -300,9 +300,9 @@ public class Home extends AppCompatActivity {
                     // The DriveServiceHelper encapsulates all REST API and SAF functionality.
                     // Its instantiation is required before handling any onClick actions.
                     driveServiceHelper = new DriveServiceHelper(googleDriveService);
-                    SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
-                    driveServiceHelper.createFile();
-                    Toast.makeText(Home.this, "建立成功", Toast.LENGTH_SHORT).show();
+                  //  SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
+                    driveServiceHelper.createorupdateFile();
+                    Toast.makeText(Home.this, "備份成功", Toast.LENGTH_SHORT).show();
 
                 })
                 .addOnFailureListener(exception -> {
@@ -327,42 +327,42 @@ public class Home extends AppCompatActivity {
                     // The DriveServiceHelper encapsulates all REST API and SAF functionality.
                     // Its instantiation is required before handling any onClick actions.
                     driveServiceHelper = new DriveServiceHelper(googleDriveService);
-                    String fileid=getSharedPreferences("sharepref",MODE_PRIVATE).getString("Dbfileid","0");
-                    driveServiceHelper.restore(fileid);
-                    Toast.makeText(Home.this, "還原成功", Toast.LENGTH_SHORT).show();
+//                    String fileid=getSharedPreferences("sharepref",MODE_PRIVATE).getString("Dbfileid","0");
+                    driveServiceHelper.restore();
+                    Toast.makeText(Home.this, "還原成功", Toast.LENGTH_SHORT).show();//若沒檔案仍會顯示還原成功
 
                 })
                 .addOnFailureListener(exception -> {
                     Toast.makeText(Home.this, "登錄失敗", Toast.LENGTH_SHORT).show();
                 });
     }
-    private void handleSignInResult_update(Intent result) {
-        GoogleSignIn.getSignedInAccountFromIntent(result)
-                .addOnSuccessListener(googleAccount -> {
-                    // Use the authenticated account to sign in to the Drive service.
-                    GoogleAccountCredential credential =
-                            GoogleAccountCredential.usingOAuth2(
-                                    this, Collections.singleton(DriveScopes.DRIVE_FILE));
-                    credential.setSelectedAccount(googleAccount.getAccount());
-                    Drive googleDriveService =
-                            new Drive.Builder(
-                                    AndroidHttp.newCompatibleTransport(),
-                                    new GsonFactory(),
-                                    credential)
-                                    .setApplicationName("nccumis")
-                                    .build();
-                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
-                    // Its instantiation is required before handling any onClick actions.
-                    driveServiceHelper = new DriveServiceHelper(googleDriveService);
-                    String fileid=getSharedPreferences("sharepref",MODE_PRIVATE).getString("Dbfileid","0");
-                    driveServiceHelper.update(fileid);
-                    Toast.makeText(Home.this, "更新成功", Toast.LENGTH_SHORT).show();
-
-                })
-                .addOnFailureListener(exception -> {
-                    Toast.makeText(Home.this, "登錄失敗", Toast.LENGTH_SHORT).show();
-                });
-    }
+//    private void handleSignInResult_update(Intent result) {
+//        GoogleSignIn.getSignedInAccountFromIntent(result)
+//                .addOnSuccessListener(googleAccount -> {
+//                    // Use the authenticated account to sign in to the Drive service.
+//                    GoogleAccountCredential credential =
+//                            GoogleAccountCredential.usingOAuth2(
+//                                    this, Collections.singleton(DriveScopes.DRIVE_FILE));
+//                    credential.setSelectedAccount(googleAccount.getAccount());
+//                    Drive googleDriveService =
+//                            new Drive.Builder(
+//                                    AndroidHttp.newCompatibleTransport(),
+//                                    new GsonFactory(),
+//                                    credential)
+//                                    .setApplicationName("nccumis")
+//                                    .build();
+//                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
+//                    // Its instantiation is required before handling any onClick actions.
+//                    driveServiceHelper = new DriveServiceHelper(googleDriveService);
+//                   // String fileid=getSharedPreferences("sharepref",MODE_PRIVATE).getString("Dbfileid","0");
+//                    driveServiceHelper.update();
+//                    Toast.makeText(Home.this, "更新成功", Toast.LENGTH_SHORT).show();
+//
+//                })
+//                .addOnFailureListener(exception -> {
+//                    Toast.makeText(Home.this, "登錄失敗", Toast.LENGTH_SHORT).show();
+//                });
+//    }
     private void restoreSharepref(){
         SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
         SharedPreferences.Editor editor=setting.edit();
