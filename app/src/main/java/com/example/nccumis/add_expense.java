@@ -1,9 +1,11 @@
 package com.example.nccumis;
 
 import android.app.backup.BackupManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -53,6 +55,9 @@ public class add_expense extends AppCompatActivity {
     private String saveDetailEnddate ="";
     private ArrayList<String> saveDetailBooksArray = new ArrayList<String>();
 
+    ViewPager pager;
+    ArrayList<View> pagerList;
+
     private EditText i_price,i_note,i_userid;                  //宣告需要輸入的變數的EditText
     private String i_date,i_type_name,i_book_name;
 
@@ -61,6 +66,16 @@ public class add_expense extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_add);
+
+        pager = (ViewPager) findViewById(R.id.pager);
+
+        LayoutInflater li = getLayoutInflater().from(this);
+        View v1 = li.inflate(R.layout.income_check,null);
+        pagerList = new ArrayList<View>();
+        pagerList.add(v1);
+
+        pager.setAdapter(new myViewPagerAdapter(pagerList));
+        pager.setCurrentItem(0);
 
         i_price=(EditText)findViewById(R.id.amount_input);  //將amount_input從View轉為EditText
         i_note=(EditText)findViewById(R.id.note_input);    //將note_input從View轉為EditText

@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,10 +83,23 @@ public class check_expense extends AppCompatActivity {
     private Intent getPreSavedData;
     private Bundle saveBag;
 
+    ViewPager pager;
+    ArrayList<View> pagerList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
+
+        pager = (ViewPager) findViewById(R.id.pager);
+
+        LayoutInflater li = getLayoutInflater().from(this);
+        View v1 = li.inflate(R.layout.income_check,null);
+        pagerList = new ArrayList<View>();
+        pagerList.add(v1);
+
+        pager.setAdapter(new myViewPagerAdapter(pagerList));
+        pager.setCurrentItem(0);
 
         dateStart_input = (EditText)findViewById(R.id.dateStart_input);
         dateEnd_input = (EditText)findViewById(R.id.dateEnd_input);

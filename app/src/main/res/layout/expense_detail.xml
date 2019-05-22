@@ -30,12 +30,19 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#AAAAAA"
+        android:layout_marginTop="10dp" />
+
     <TextView
         android:id="@+id/typefield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
