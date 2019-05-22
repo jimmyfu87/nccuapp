@@ -23,7 +23,8 @@ import android.content.Intent;
 
 
 public class add_expense extends AppCompatActivity {
-    private static final int expense = -1;
+    private static final int EXPENSE = -1;
+    private boolean detail = false;
     private Button lastPage;
     private Button newExpense;
     private Button comfirm;
@@ -48,6 +49,10 @@ public class add_expense extends AppCompatActivity {
     public List<String> dbBookData = new ArrayList<>();         //接資料庫資料，Type還沒做!!!!!
     public List<String> dbTypeData = new ArrayList<>();
 
+    private String saveDetailStartdate ="";
+    private String saveDetailEnddate ="";
+    private ArrayList<String> saveDetailBooksArray = new ArrayList<String>();
+
     private EditText i_price,i_note,i_userid;                  //宣告需要輸入的變數的EditText
     private String i_date,i_type_name,i_book_name;
 
@@ -71,12 +76,16 @@ public class add_expense extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
 
-        //不儲存回首頁
+        //不儲存回首頁 或 回流水帳
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToHome();
+                if(detail){
+                    jumpTocheck_expense_detail();
+                }else{
+                    jumpToHome();
+                }
             }
         });
 
@@ -205,6 +214,7 @@ public class add_expense extends AppCompatActivity {
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
         if(getSaveBag != null){
+            this.detail = getSaveBag.getBoolean("detail");
             input_amount.setText(getSaveBag.getString("amount"));
             input_date.setText(getSaveBag.getString("date"));
             int typePosition = typeList.getPosition(getSaveBag.getString("type"));
@@ -214,7 +224,11 @@ public class add_expense extends AppCompatActivity {
             input_note.setText(getSaveBag.getString("note"));
             updateBook();
             input_book.setAdapter(bookList);
-
+            if(detail){
+                saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
+                saveDetailEnddate = getSaveBag.getString("saveDetailEnddate");
+                saveDetailBooksArray = getSaveBag.getStringArrayList("saveDetailBooksArray");
+            }
         }
 
 
@@ -353,7 +367,7 @@ public class add_expense extends AppCompatActivity {
         saveExpenseData.putString("type",input_type.getSelectedItem().toString());
         saveExpenseData.putString("book",input_book.getSelectedItem().toString());
         saveExpenseData.putString("note",input_note.getText().toString());
-        saveExpenseData.putInt("FromExpenseOrIncome",expense);
+        saveExpenseData.putInt("FromExpenseOrIncome",EXPENSE);
         intent.putExtras(saveExpenseData);
         startActivity(intent);
 
@@ -364,4 +378,14 @@ public class add_expense extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void jumpTocheck_expense_detail(){
+        Intent intent = new Intent(add_expense.this, check_expense_detail.class);
+        Bundle detailData = new Bundle();
+        detailData.putString("typeName", input_type.getSelectedItem().toString());
+        detailData.putString("startDate", saveDetailStartdate);
+        detailData.putString("endDate", saveDetailEnddate);
+        detailData.putStringArrayList("selectBooks", saveDetailBooksArray);
+        intent.putExtras(detailData);
+        startActivity(intent);
+    }
 }

@@ -30,6 +30,7 @@ public class add_type extends AppCompatActivity {
         saveBag = savedDataFromSpend.getExtras();
         JumpToWhere = saveBag.getInt("FromExpenseOrIncome");
         saveBag.remove("FromExpenseOrIncome");
+        saveBag.putBoolean("detail",false);
 
         //不儲存回 新增支出 或 新增收入
         lastPage = (Button)findViewById(R.id.lastPage);

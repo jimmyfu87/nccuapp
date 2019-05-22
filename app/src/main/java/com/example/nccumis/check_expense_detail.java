@@ -25,7 +25,7 @@ public class check_expense_detail extends AppCompatActivity {
     private List<String> dateArray = new ArrayList<String>();
     private List<Integer> priceArray = new ArrayList<Integer>();
     private List<String> noteArray = new ArrayList<String>();
-    private List<String> bookArray = new ArrayList<String>();
+    private ArrayList<String> bookArray = new ArrayList<String>();
     private ListView DetailListView;
     private Button fixBtn;
     private Button deleteBtn;
@@ -48,11 +48,7 @@ public class check_expense_detail extends AppCompatActivity {
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(check_expense_detail.this, check_expense.class);
-                intent.putExtra("startDate" ,startDate);
-                intent.putExtra("endDate" , endDate);
-                intent.putExtra("selectBooks" , selectBooks);
-                startActivity(intent);
+                jumpTocheck_expense();
             }
         });
 
@@ -88,5 +84,13 @@ public class check_expense_detail extends AppCompatActivity {
         initListData();
         ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
         DetailListView.setAdapter(ExDetail_adapter);
+    }
+
+    public void jumpTocheck_expense(){
+        Intent intent = new Intent(check_expense_detail.this, check_expense.class);
+        intent.putExtra("startDate" ,startDate);
+        intent.putExtra("endDate" , endDate);
+        intent.putExtra("selectBooks" , selectBooks);
+        startActivity(intent);
     }
 }

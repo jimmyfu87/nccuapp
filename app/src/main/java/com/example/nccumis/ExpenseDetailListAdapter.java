@@ -11,23 +11,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ExpenseDetailListAdapter extends ArrayAdapter {
     //to reference the Activity
+    private final int DETAIL = 1;
     private final Activity context;
     private final List<Integer> numberArray;
     private final List<String> dateArray;
     private final List<Integer> priceArray;
     private final List<String> noteArray;
-    private final List<String> bookArray;
+    private final ArrayList<String> bookArray;
     private String typeName;
     private Button fixBtn;
     private Button deleteBtn;
 
     //, Button fixParam, Button deleteParam
-    public ExpenseDetailListAdapter(Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, List<String> bookArrayParam , String typeName){
+    public ExpenseDetailListAdapter(Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
 
         super(context, R.layout.detail_listview_row, dateArrayParam);
 
@@ -87,11 +89,15 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
     public void jumpToadd_expense(int position,Activity activity){
         Intent intent = new Intent(activity, add_expense.class);
         Bundle saveExpenseData = new Bundle();
+        saveExpenseData.putBoolean("detail",true);
         saveExpenseData.putString("amount", priceArray.get(position).toString());
         saveExpenseData.putString("date", resetDateformat(dateArray.get(position)));
         saveExpenseData.putString("type", typeName);
         saveExpenseData.putString("book", dateArray.get(position));
         saveExpenseData.putString("note", noteArray.get(position));
+        saveExpenseData.putString("saveDetailStartdate",dateArray.get(0));
+        saveExpenseData.putString("saveDetailEnddate",dateArray.get(dateArray.size()-1));
+        saveExpenseData.putStringArrayList("saveDetailBooksArray",bookArray);
         intent.putExtras(saveExpenseData);
         activity.startActivity(intent);
 

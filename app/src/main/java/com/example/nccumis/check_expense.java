@@ -32,8 +32,8 @@ import java.util.Date;
 import java.util.List;
 
 public class check_expense extends AppCompatActivity {
-    private final int startDate = -1;
-    private final int endDate = 1;
+    private final int START_DATE = -1;
+    private final int END_DATE = 1;
 
     //預設25種
     private static final int[] COLORFUL_COLORS = {
@@ -99,8 +99,8 @@ public class check_expense extends AppCompatActivity {
             end_date = saveBag.getString("endDate");
             selectBooks = saveBag.getStringArrayList("selectBooks");
 
-            dateStart_input.setText(resetDateformat(start_date));
-            dateEnd_input.setText(resetDateformat(end_date));
+            dateStart_input.setText(resetDateformat(START_DATE,start_date));
+            dateEnd_input.setText(resetDateformat(END_DATE,end_date));
 
             DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
             dbmanager.open();
@@ -146,7 +146,7 @@ public class check_expense extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    showDatePickDlg(startDate);
+                    showDatePickDlg(START_DATE);
                     dateStart_input.setInputType(InputType.TYPE_NULL);      // disable soft input
                     return true;
                 }
@@ -157,7 +157,7 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    showDatePickDlg(startDate);
+                    showDatePickDlg(START_DATE);
                     dateStart_input.setInputType(InputType.TYPE_NULL);        // disable soft input
                 }
 
@@ -168,7 +168,7 @@ public class check_expense extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    showDatePickDlg(endDate);
+                    showDatePickDlg(END_DATE);
                     dateEnd_input.setInputType(InputType.TYPE_NULL);        // disable soft input
                     return true;
                 }
@@ -179,7 +179,7 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    showDatePickDlg(endDate);
+                    showDatePickDlg(END_DATE);
                     dateEnd_input.setInputType(InputType.TYPE_NULL);        // disable soft input
                 }
 
@@ -251,7 +251,7 @@ public class check_expense extends AppCompatActivity {
         TypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                jumpToExpenseDetail(position);
+                jumpTocheck_expense_detail(position);
             }
         });
     }
@@ -263,7 +263,7 @@ public class check_expense extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear++;
                 // -1是startDate  1是EndDate
-                if(checknum == startDate){
+                if(checknum == START_DATE){
                     check_expense.this.dateStart_input.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
                     set_start_dateformat(year,monthOfYear,dayOfMonth);
                 }else{
@@ -499,7 +499,7 @@ public class check_expense extends AppCompatActivity {
 
     //暫存日期
     public void setdateInfo(int startOrEnd, int year, int month, int day){
-        if(startOrEnd==this.startDate){
+        if(startOrEnd==START_DATE){
             this.yearStart = year;
             this.monthStart = month;
             this.dayStart = day;
@@ -526,28 +526,28 @@ public class check_expense extends AppCompatActivity {
         String month = Integer.toString(cal.get(Calendar.MONTH) +1);
 
         this.dateStart_input.setText(year + "年" + month + "月" + 1+"日");
-        setdateInfo(this.startDate,Integer.parseInt(year), Integer.parseInt(month),1);
+        setdateInfo(START_DATE,Integer.parseInt(year), Integer.parseInt(month),1);
         set_start_dateformat(Integer.parseInt(year),Integer.parseInt(month),1);
 
         if(month == "2"){
             int intYear = Integer.parseInt(year);
             if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
                 this.dateEnd_input.setText(year+"年"+month+"月"+29+"日");
-                setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),29);
+                setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),29);
                 set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),29);
 
             }else {
                 this.dateEnd_input.setText(year+"年"+month+"月"+28+"日");
-                setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),28);
+                setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),28);
                 set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),28);
             }
         }else if(oddMonth.contains(month)){
             this.dateEnd_input.setText(year+"年"+month+"月"+31+"日");
-            setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),31);
+            setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),31);
             set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),31);
         }else {
             this.dateEnd_input.setText(year+"年"+month+"月"+30+"日");
-            setdateInfo(this.endDate,Integer.parseInt(year), Integer.parseInt(month),30);
+            setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),30);
             set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),30);
         }
         this.dateEnd_input.setError(null);
@@ -561,11 +561,11 @@ public class check_expense extends AppCompatActivity {
         String year = Integer.toString(cal.get(Calendar.YEAR));
 
         this.dateStart_input.setText(year + "年" + 1 + "月" + 1+"日");
-        setdateInfo(this.startDate,Integer.parseInt(year), 1,1);
+        setdateInfo(START_DATE,Integer.parseInt(year), 1,1);
         set_start_dateformat(Integer.parseInt(year),1,1);
 
         this.dateEnd_input.setText(year + "年" + 12 + "月" + 31+"日");
-        setdateInfo(this.endDate,Integer.parseInt(year), 12,31);
+        setdateInfo(END_DATE,Integer.parseInt(year), 12,31);
         set_end_dateformat(Integer.parseInt(year),12,31);
         this.dateEnd_input.setError(null);
     }
@@ -587,7 +587,7 @@ public class check_expense extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void jumpToExpenseDetail(int position){
+    public void jumpTocheck_expense_detail(int position){
         Intent intent = new Intent(check_expense.this, check_expense_detail.class);
         String typeName = nameArray.get(position);
         Bundle saveCheckExpenseData = new Bundle();
@@ -599,7 +599,7 @@ public class check_expense extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public String resetDateformat(String date){
+    public String resetDateformat(int startOrEndDate, String date){
         String resetDate = "";
         int index = 0;
 
@@ -607,10 +607,25 @@ public class check_expense extends AppCompatActivity {
             resetDate += (Integer.parseInt(str) < 10) ? str.substring(1): str;
             if(index == 0){
                 resetDate += "年";
-            }else if(index == 1){
+                if(startOrEndDate == START_DATE){
+                    this.yearStart = Integer.parseInt(str);
+                }else{
+                    this.yearEnd = Integer.parseInt(str);
+                }
+            } else if(index == 1){
                 resetDate +="月";
+                if(startOrEndDate == START_DATE){
+                    this.monthStart = Integer.parseInt(str);
+                }else{
+                    this.monthEnd = Integer.parseInt(str);
+                }
             }else if(index == 2){
                 resetDate += "日";
+                if(startOrEndDate == START_DATE){
+                    this.dayStart = Integer.parseInt(str);
+                }else{
+                    this.dayEnd = Integer.parseInt(str);
+                }
             }
             index++;
         }

@@ -36,6 +36,7 @@ public class add_book extends AppCompatActivity {
         saveBag = savedDataFromExpense.getExtras();
         JumpToWhere = saveBag.getInt("FromExpenseOrIncome");
         saveBag.remove("FromExpenseOrIncome");
+        saveBag.putBoolean("detail",false);
 
         //帳本名稱
         input_bookName = (EditText) findViewById(R.id.bookName_input);
