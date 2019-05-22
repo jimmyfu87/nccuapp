@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -45,7 +46,6 @@ public class check_expense extends AppCompatActivity {
             Color.rgb(255, 140, 157)
     };
 
-
     private List<Integer> getPriceData = new ArrayList<Integer>();
     private List<String> typeName = new ArrayList<String>();
 
@@ -73,15 +73,52 @@ public class check_expense extends AppCompatActivity {
     private List<Integer> totalArray = new ArrayList<Integer>();
 
     private List<String> bookArray = new ArrayList<String>();
-    private List<String> selectBooks = new ArrayList<String>();
+    private ArrayList<String> selectBooks = new ArrayList<String>();
 
-    private boolean[] checked ;
+    private boolean[] checked;
     private  String[] checking;
+
+    private Intent getPreSavedData;
+    private Bundle saveBag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
+
+        dateStart_input = (EditText)findViewById(R.id.dateStart_input);
+        dateEnd_input = (EditText)findViewById(R.id.dateEnd_input);
+        TypeListView = (ListView)findViewById(R.id.TypeListView);
+
+        //自動傳入存回資料
+        getPreSavedData = getIntent();
+        saveBag = getPreSavedData.getExtras();
+
+        if(saveBag != null){
+            start_date = saveBag.getString("startDate");
+            end_date = saveBag.getString("endDate");
+            selectBooks = saveBag.getStringArrayList("selectBooks");
+
+            dateStart_input.setText(resetDateformat(start_date));
+            dateEnd_input.setText(resetDateformat(end_date));
+
+            DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+            dbmanager.open();
+            select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
+            dbmanager.close();
+            setExpenseData(select_expense);
+            setList();
+            setListViewHeightBasedOnChildren(TypeListView);
+            setPieChart();
+        }else {
+            //圖表
+            setExpenseData(select_expense);
+            setPieChart();
+
+            //ListView 類別項目、類別名稱、類別佔總額%、類別金額
+            setList();
+            setListViewHeightBasedOnChildren(TypeListView);
+        }
         //一開始預設統計所有帳本資料
         setBookArray();
         initSelectBooks();
@@ -105,7 +142,6 @@ public class check_expense extends AppCompatActivity {
         });
 
         //起始日期
-        dateStart_input = (EditText)findViewById(R.id.dateStart_input);
         dateStart_input.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -128,7 +164,6 @@ public class check_expense extends AppCompatActivity {
             }
         });
         //結束日期
-        dateEnd_input = (EditText)findViewById(R.id.dateEnd_input);
         dateEnd_input.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -211,15 +246,14 @@ public class check_expense extends AppCompatActivity {
             }
         });
 
-        //圖表
-        setExpenseData(select_expense);
-        setPieChart();
 
-
-        //ListView 類別項目、類別名稱、類別佔總額%、類別金額
-        TypeListView = (ListView)findViewById(R.id.TypeListView);
-        setList();
-        setListViewHeightBasedOnChildren(TypeListView);
+        //listview 切換頁面至流水帳
+        TypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                jumpToExpenseDetail(position);
+            }
+        });
     }
 
     public void showDatePickDlg(final int checknum) {
@@ -521,6 +555,37 @@ public class check_expense extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void jumpToExpenseDetail(int position){
+        Intent intent = new Intent(check_expense.this, ExpenseDetail.class);
+        String typeName = nameArray.get(position);
+        Bundle saveCheckExpenseData = new Bundle();
+        saveCheckExpenseData.putString("typeName", typeName);
+        saveCheckExpenseData.putString("startDate", start_date);
+        saveCheckExpenseData.putString("endDate", end_date);
+        saveCheckExpenseData.putStringArrayList("selectBooks", selectBooks);
+        intent.putExtras(saveCheckExpenseData);
+        startActivity(intent);
+    }
+
+    public String resetDateformat(String date){
+        String resetDate = "";
+        int index = 0;
+
+        for(String str : date.split("-")){
+            resetDate += (Integer.parseInt(str) < 10) ? str.substring(1): str;
+            if(index == 0){
+                resetDate += "年";
+            }else if(index == 1){
+                resetDate +="月";
+            }else if(index == 2){
+                resetDate += "日";
+            }
+            index++;
+        }
+
+        return resetDate;
+    }
+
     public void set_start_dateformat(int year,int month,int day){
         String st_month;
         String st_day;
@@ -540,6 +605,7 @@ public class check_expense extends AppCompatActivity {
         }
         start_date=year+"-"+st_month+"-"+st_day;
     }
+
     public void set_end_dateformat(int year,int month,int day){
         String st_month;
         String st_day;

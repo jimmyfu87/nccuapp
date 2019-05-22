@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -89,16 +89,16 @@
                 android:text="日期" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="5"
+                android:weightSum="7"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/dateStart_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="3.3"
                     android:layout_marginTop="10dp"
                     android:maxLength="11"
                     android:windowSoftInputMode="stateHidden" />
@@ -116,7 +116,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="3.3"
                     android:maxLength="11" />
             </LinearLayout>
 
@@ -143,10 +143,10 @@
                 android:layout_marginTop="10dp">
 
             </com.github.mikephil.charting.charts.PieChart>
-
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
