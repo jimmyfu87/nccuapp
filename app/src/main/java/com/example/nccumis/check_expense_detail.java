@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpenseDetail extends AppCompatActivity {
+public class check_expense_detail extends AppCompatActivity {
     private Button lastPage;
     private TextView typeField;
     private Intent getCheckExpenseData;
@@ -48,7 +48,7 @@ public class ExpenseDetail extends AppCompatActivity {
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExpenseDetail.this, check_expense.class);
+                Intent intent = new Intent(check_expense_detail.this, check_expense.class);
                 intent.putExtra("startDate" ,startDate);
                 intent.putExtra("endDate" , endDate);
                 intent.putExtra("selectBooks" , selectBooks);
@@ -58,7 +58,7 @@ public class ExpenseDetail extends AppCompatActivity {
 
         //傳入類別名稱
         typeField = (TextView)findViewById(R.id.typefield);
-        typeField.setText(type);
+        typeField.setText(type+"流水帳");
 
         //listview
         DetailListView = (ListView)findViewById(R.id.DetailListView);
@@ -78,7 +78,7 @@ public class ExpenseDetail extends AppCompatActivity {
             this.numberArray.add(index);
             this.dateArray.add(this.expenseList.get(i).getEx_date());
             this.priceArray.add(this.expenseList.get(i).getEx_price());
-            this.noteArray.add((this.expenseList.get(i).getEx_note().isEmpty()) ? "無備注" : this.expenseList.get(i).getEx_note());
+            this.noteArray.add((this.expenseList.get(i).getEx_note().isEmpty()) ? "無備註" : this.expenseList.get(i).getEx_note());
             this.bookArray.add(this.expenseList.get(i).getBook_name());
         }
         //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
@@ -86,7 +86,7 @@ public class ExpenseDetail extends AppCompatActivity {
 
     public void setList(){
         initListData();
-        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
+        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
         DetailListView.setAdapter(ExDetail_adapter);
     }
 }

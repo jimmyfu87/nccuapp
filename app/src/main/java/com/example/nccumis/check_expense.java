@@ -47,7 +47,7 @@ public class check_expense extends AppCompatActivity {
     };
 
     private List<Integer> getPriceData = new ArrayList<Integer>();
-    private List<String> typeName = new ArrayList<String>();
+    private List<String> getTypeName = new ArrayList<String>();
 
     private Button lastPage;
     private Button switchAccount;
@@ -329,17 +329,19 @@ public class check_expense extends AppCompatActivity {
         for(int i = 0;i < select_expense.size();i++){
             getTypeName = select_expense.get(i).getType_name();
             getPrice = select_expense.get(i).getEx_price();
-            if(this.typeName.contains(getTypeName)){
-                replacePosition = this.typeName.indexOf(getTypeName);
+            if(this.getTypeName.contains(getTypeName)){
+                replacePosition = this.getTypeName.indexOf(getTypeName);
                 replacePrice = this.getPriceData.get(replacePosition) + getPrice;
                 this.getPriceData.set(replacePosition, replacePrice);
             } else{
-                this.typeName.add(getTypeName);
+                this.getTypeName.add(getTypeName);
                 this.getPriceData.add(getPrice);
             }
             //System.out.println(getTypeName+" ,"+getPriceData);
         }
     }
+
+
 
     public void setBookArray(){
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
@@ -357,7 +359,7 @@ public class check_expense extends AppCompatActivity {
     public void clearList(){
         this.select_expense.clear();
         this.getPriceData.clear();
-        this.typeName.clear();
+        this.getTypeName.clear();
         this.numberArray.clear();
         this.nameArray.clear();
         this.percentageArray.clear();
@@ -383,11 +385,40 @@ public class check_expense extends AppCompatActivity {
         return priceOfType/total*100;
     }
 
+    public void sortListData(){
+        ArrayList<Type> typelist = new ArrayList<Type>();
+        for(int i = 0; i < this.getPriceData.size(); i++){
+            typelist.add(new Type(this.getPriceData.get(i), this.getTypeName.get(i)));
+            //System.out.println(typelist.get(i).getPrice()+", "+typelist.get(i).getTypeName());
+        }
+        ArrayList<Type> sortedTypelist = new ArrayList<Type>();
+        //selection sort
+        while(!typelist.isEmpty()){
+            int index = 0;
+            for(int i = 1; i < typelist.size(); i++){
+                int largestPrice = typelist.get(0).getPrice();
+                if(largestPrice < typelist.get(i).getPrice()){
+                    largestPrice = typelist.get(i).getPrice();
+                    index = i;
+                }
+            }
+            Type type = new Type(typelist.get(index).getPrice(), typelist.get(index).getTypeName());
+            sortedTypelist.add(type);
+            typelist.remove(index);
+        }
+
+        //assgin ssortedTypelist
+        for(int i = 0; i < sortedTypelist.size(); i++){
+            this.getPriceData.set(i ,sortedTypelist.get(i).getPrice());
+            this.getTypeName.set(i ,sortedTypelist.get(i).getTypeName());
+        }
+    }
+
     public void initListData(){
         for(int i = 0; i < this.getPriceData.size();i++){
             int index = i+1;
             this.numberArray.add(index);
-            this.nameArray.add(this.typeName.get(i));
+            this.nameArray.add(this.getTypeName.get(i));
             int selectDateTotalPrice = countSelectDateTotalPrice(this.getPriceData);
             double percentage = countPercentage(this.getPriceData.get(i), selectDateTotalPrice);
             DecimalFormat df = new DecimalFormat("##.0");
@@ -400,6 +431,7 @@ public class check_expense extends AppCompatActivity {
     }
 
     public void setList(){
+        sortListData();
         initListData();
         ExpenseListAdapter Ex_adapter = new ExpenseListAdapter(this, this.numberArray, this.nameArray, this.percentageArray, this.totalArray);
         TypeListView.setAdapter(Ex_adapter);
@@ -442,7 +474,7 @@ public class check_expense extends AppCompatActivity {
 //
 //        }
         for(int i = 0; i < getPriceData.size(); i++){
-             pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
+             pieEntries.add(new PieEntry(getPriceData.get(i) , getTypeName.get(i)));
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries , "類別");
@@ -556,7 +588,7 @@ public class check_expense extends AppCompatActivity {
     }
 
     public void jumpToExpenseDetail(int position){
-        Intent intent = new Intent(check_expense.this, ExpenseDetail.class);
+        Intent intent = new Intent(check_expense.this, check_expense_detail.class);
         String typeName = nameArray.get(position);
         Bundle saveCheckExpenseData = new Bundle();
         saveCheckExpenseData.putString("typeName", typeName);
