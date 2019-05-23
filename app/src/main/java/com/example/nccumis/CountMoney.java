@@ -53,6 +53,9 @@ public class CountMoney extends AppCompatActivity {
         setBookArray();
         initSelectBooks();
 
+        //multidiolog 勾選確認欄位
+        checked=new boolean[bookArray.size()];
+
         date_start =(EditText)findViewById(R.id.date_start);
         date_end =(EditText)findViewById(R.id.date_end);
         income =(TextView)findViewById(R.id.income);
