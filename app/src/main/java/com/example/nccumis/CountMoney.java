@@ -1,5 +1,8 @@
 package com.example.nccumis;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,19 +20,29 @@ import java.util.List;
 
 import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class CountMoney extends AppCompatActivity {
+    private final int START_DATE = 1;
+    private final int END_DATE = -1;
     private Spinner spin_account;
     private EditText date_start;
     private EditText date_end;
-    private String startEnd_date;
+    private Button switchBook;
+    private String end_date;
+    private String start_date;
+    private int yearStart,monthStart,dayStart;
+    private int yearEnd,monthEnd,dayEnd;
+    private List<String> bookArray;
+    private List<String> selectBooks;
+    private List<Expense> select_expense;
+
     private TextView income;
     private TextView spend;
     private TextView total;
     private Button btn_checkCount;
-
-    private String start_date;
+    private boolean[] checked;
 
 
 
@@ -37,14 +50,15 @@ public class CountMoney extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_count_money);
-
-        Spinner notify =(Spinner)findViewById(R.id.spin_account);
+        //  抓資料庫的所有帳本
+        setBookArray();
         date_start =(EditText)findViewById(R.id.date_start);
         date_end =(EditText)findViewById(R.id.date_end);
         income =(TextView)findViewById(R.id.income);
         spend =(TextView)findViewById(R.id.spend);
         total =(TextView)findViewById(R.id.total);
         btn_checkCount=(Button)findViewById(R.id.btn_checkCount);
+        switchBook = (Button)findViewById(R.id.switchBook);
 
         //計算
 
@@ -55,28 +69,19 @@ public class CountMoney extends AppCompatActivity {
                     //Expense 資料庫
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                     dbmanager.open();
-                    select_expense=dbmanager.fetchExpenseWithbook(date_start,date_end,
-                            selectBooks);
+                    select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
                     dbmanager.close();
-                    spend.setText();
+                    spend.setText(countTotalExpensePrice());
                 }
             }
         });
-
-
-
-
-        //選擇帳本
-        ArrayAdapter<CharSequence> nAdapter = ArrayAdapter.createFromResource(this,R.array.Account, android.R.layout.simple_spinner_dropdown_item);
-        nAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        notify.setAdapter(nAdapter);
 
         //開始日期
         date_start.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    showDatePickDlg();
+                    showDatePick(START_DATE);
                     return true;
                 }
                 return false;
@@ -86,7 +91,8 @@ public class CountMoney extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    showDatePickDlg();
+                    showDatePick(START_DATE
+                    );
                 }
 
             }
@@ -96,7 +102,7 @@ public class CountMoney extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent2) {
                 if (motionEvent2.getAction() == MotionEvent.ACTION_DOWN) {
-                    showDatePick();
+                    showDatePick(END_DATE);
                     return true;
                 }
                 return false;
@@ -106,30 +112,22 @@ public class CountMoney extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean a) {
                 if (a) {
-                    showDatePick();
+                    showDatePick(END_DATE);
                 }
 
             }
         });
 
-    }
-    //開始日期
-    public void showDatePickDlg() {
-        Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(CountMoney.this, new DatePickerDialog.OnDateSetListener() {
+        //選擇帳本
+        switchBook.setOnClickListener(new View.OnClickListener() {
             @Override
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                monthOfYear++;
-                setdateformat(year,monthOfYear,dayOfMonth);
-                CountMoney.this.date_start.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
-
+            public void onClick(View v) {
+                multiDialogEvent();
             }
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
+        });
     }
     //這個是參考姵的，還沒研究好，因為他說我沒用到這個method
-    public void setdateformat(int year,int month,int day){
+    public void setStartdateformat(int year,int month,int day){
         String st_month;
         String st_day;
         if(month<10){
@@ -146,25 +144,30 @@ public class CountMoney extends AppCompatActivity {
         else{
             st_day=Integer.toString(day);
         }
-        startEnd_date=year+"-"+st_month+"-"+st_day;
+        start_date=year+"-"+st_month+"-"+st_day;
     }
 //結束日期
 
-    public void showDatePick() {
+    public void showDatePick(final int checkNum) {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(CountMoney.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear++;
-                setdateformat(year,monthOfYear,dayOfMonth);
-                CountMoney.this.date_end.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
-
+                if(checkNum == START_DATE){
+                    CountMoney.this.date_start.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
+                    setStartdateformat(year,monthOfYear,dayOfMonth);
+                }else{
+                    CountMoney.this.date_end.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
+                    setEnddateformat(year,monthOfYear,dayOfMonth);
+                }
+                setdateInfo(checkNum, year,monthOfYear,dayOfMonth);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
 
-    public void setdateformat2(int year,int month,int day){
+    public void setEnddateformat(int year,int month,int day){
         String st_month;
         String st_day;
         if(month<10){
@@ -181,18 +184,94 @@ public class CountMoney extends AppCompatActivity {
         else{
             st_day=Integer.toString(day);
         }
-        startEnd_date=year+"-"+st_month+"-"+st_day;
+        end_date=year+"-"+st_month+"-"+st_day;
+    }
+
+    //暫存日期
+    private void setdateInfo(int StartOrEndDate, int year, int month, int day){
+        if(StartOrEndDate == this.START_DATE){
+            this.yearStart = year;
+            this.monthStart = month;
+            this.dayStart = day;
+        }else{
+            this.yearEnd = year;
+            this.monthEnd = month;
+            this.dayEnd = day;
+        }
     }
 
     public boolean checkDateInput(View view){
         if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
-            this.dateEnd_input.setError("結束日期小於開始日期");
+            this.date_end.setError("結束日期小於開始日期");
             Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
             return false;
         }
-        this.dateEnd_input.setError(null);
+        this.date_end.setError(null);
         return true;
     }
 
+    public void setBookArray(){
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+        dbmanager.open();
+        this.bookArray = dbmanager.fetchBook();           //可直接調用select_expense的資訊
+        dbmanager.close();
+    }
 
+    private void multiDialogEvent(){
+        this.selectBooks.clear();
+//        final List<Boolean> checkedStatusList = new ArrayList<>();
+//        for(String s : bookArray){
+//            checkedStatusList.add(false);
+//        }
+        new AlertDialog.Builder(CountMoney.this)
+                .setMultiChoiceItems(bookArray.toArray(new String[bookArray.size()]), checked,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                //checkedStatusList.set(which, isChecked);
+                            }
+                        })
+                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        StringBuilder sb = new StringBuilder();
+                        boolean isEmpty = true;
+                        for(int i = 0; i < checked.length; i++){
+                            if(checked[i]){
+                                sb.append(bookArray.get(i));
+                                sb.append(" ");
+                                selectBooks.add(bookArray.get(i));
+                                //System.out.println("Here"+bookArray.get(i));
+                                isEmpty = false;
+                            }
+                        }
+                        if(!isEmpty){
+                            Toast.makeText(CountMoney.this, "你選擇的是"+sb.toString(), Toast.LENGTH_SHORT).show();
+//                            for(String s : bookArray){
+//                                checkedStatusList.add(false);
+//                            }
+                        } else{
+                            initSelectBooks();
+                            Toast.makeText(CountMoney.this, "請勾選項目，系統已自動返回預設(統計所有帳本)", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                })
+                .show();
+    }
+
+    public void initSelectBooks(){
+        for(int i = 0;i < this.bookArray.size(); i++){
+            this.selectBooks.add(this.bookArray.get(i));
+        }
+    }
+
+    public int countTotalExpensePrice(){
+        int total = 0;
+        for(int i = 0; i < this.select_expense.size(); i++){
+            total += this.select_expense.get(i).getEx_price();
+        }
+        return total;
+    }
 }
