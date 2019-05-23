@@ -1,42 +1,20 @@
 package com.example.nccumis;
 
-import com.google.api.client.http.FileContent;
-import com.google.api.services.drive.Drive;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Environment;
-import android.content.SharedPreferences;
-import android.provider.OpenableColumns;
-import android.support.v4.util.Pair;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.api.client.http.ByteArrayContent;
+import com.google.api.client.http.FileContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
+
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.Collections;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A utility for performing read/write operations on Drive files via the REST API and opening a
@@ -45,44 +23,58 @@ import static android.content.Context.MODE_PRIVATE;
 public class DriveServiceHelper {
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
     private final Drive mDriveService;
-    public  String fileId;
-    public  boolean restoresucess;
+    public String fileId;
+    public String folderId;
+    public boolean restoresucess;
 
     public DriveServiceHelper(Drive driveService) {
         mDriveService = driveService;
     }
+
     public Task<Void> createorupdateFile() {
         return Tasks.call(mExecutor, () -> {
             FileList result = mDriveService.files().list()
+                    .setQ("trashed = false")
                     .execute();
-            for (File file : result.getFiles()) {
-                if(file.getName().equals("App.db")){
+            //更新
+            for (File file2 : result.getFiles()) {
+                if (file2.getName().equals("App.db")) {
+                    // folderId = file2.getId();
                     java.io.File data = Environment.getDataDirectory();
                     String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
                     File fileMetadata = new File();
                     fileMetadata.setName("App.db");
                     java.io.File filePath = new java.io.File(currentDBPath);
                     FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
-                    fileId=file.getId();
-                    mDriveService.files().update(fileId,fileMetadata,mediaContent).execute();
-                    System.out.println("更新成功");
+                    mDriveService.files().update(file2.getId(), fileMetadata, mediaContent).execute();
+                    //System.out.println("更新成功");
                     return null;
-                    }
+                }
             }
+            //建立
+            File filefolderMetadata = new File();
+            filefolderMetadata.setName("購智帳備份檔(不可更動)");
+            filefolderMetadata.setMimeType("application/vnd.google-apps.folder");
+            File file = mDriveService.files().create(filefolderMetadata)
+                    .setFields("id")
+                    .execute();
+            fileId = file.getId();
             java.io.File data = Environment.getDataDirectory();
             String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
             File fileMetadata = new File();
             fileMetadata.setName("App.db");
+            fileMetadata.setParents(Collections.singletonList(fileId));
             java.io.File filePath = new java.io.File(currentDBPath);
             FileContent mediaContent = new FileContent("application/x-sqlite3", filePath);
             mDriveService.files().create(fileMetadata, mediaContent)
                     .setFields("id")
                     .execute();
-            System.out.println("建立成功");
+            //System.out.println("建立成功");
             return null;
         });
     }
-//    public Task<Void> restore(String fileid) {
+
+    //    public Task<Void> restore(String fileid) {
 //        return Tasks.call(mExecutor, () -> {
 //            java.io.File data = Environment.getDataDirectory();
 //            String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
@@ -95,7 +87,20 @@ public class DriveServiceHelper {
 //            return  null;
 //        });
 //    }
-    public Task<Void> restore() {
+//        public Task<Void> createFolder () {
+//            return Tasks.call(mExecutor, () -> {
+//                //建立
+//                File filefolderMetadata = new File();
+//                filefolderMetadata.setName("購智帳備份檔案");
+//                filefolderMetadata.setMimeType("application/vnd.google-apps.folder");
+//                File file = mDriveService.files().create(filefolderMetadata)
+//                        .setFields("id")
+//                        .execute();
+//                return null;
+//            });
+//        }
+    //還原
+    public Task<Void> restore()  {
         return Tasks.call(mExecutor, () -> {
             java.io.File data = Environment.getDataDirectory();
             String currentDBPath = "/data/data/com.example.nccumis/databases/App.db";
@@ -105,17 +110,19 @@ public class DriveServiceHelper {
             //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
             OutputStream outputStream = new FileOutputStream(currentDBPath);
             FileList result = mDriveService.files().list()
+                    .setQ("trashed = false")
                     .execute();
             for (File file : result.getFiles()) {
-              if(file.getName().equals("App.db")){
-                  fileId=file.getId();
-                  mDriveService.files().get(fileId).executeMediaAndDownloadTo(outputStream);
-              }
+                if (file.getName().equals("App.db")) {
+                    fileId = file.getId();
+                    mDriveService.files().get(fileId).executeMediaAndDownloadTo(outputStream);
+                }
             }
-            return  null;
+            return null;
         });
     }
-//    public Task<Void> update() {
+
+    //    public Task<Void> update() {
 //        return Tasks.call(mExecutor, () -> {
 //            //String fileId = "1Ah_ObNJiW83ClIxgBGiRiH4za673rlzp";
 //            java.io.File data = Environment.getDataDirectory();
@@ -139,8 +146,28 @@ public class DriveServiceHelper {
 //            return  null;
 //        });
 //    }
-    public boolean get_restoresuccess(){
-        return restoresucess;
+//    public Task<Void> deleteappdata () {
+//        return Tasks.call(mExecutor, () -> {
+//            FileList appDataFolderlist = mDriveService.files().list()
+//                    .setSpaces("appDataFolder")
+//                    .execute();
+//            for(int i=0;i<appDataFolderlist.getFiles().size();i++) {
+//                String tempid=appDataFolderlist.getFiles().get(i).getId();
+//                mDriveService.files().delete(tempid).execute();
+//            }
+//            System.out.println("移除成功");
+//            return null;
+//        });
+//    }
+    public boolean checkcontains() throws IOException {
+        FileList result = mDriveService.files().list()
+                .setQ("trashed = false")
+                .execute();
+        for (File file : result.getFiles()) {
+            if (file.getName().equals("App.db")) {
+                return true;
+            }
+        }
+        return false;
     }
-
 }

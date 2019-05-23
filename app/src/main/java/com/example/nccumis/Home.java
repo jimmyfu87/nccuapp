@@ -1,32 +1,22 @@
 package com.example.nccumis;
 
 import android.Manifest;
-import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
-import java.util.Collections;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +25,12 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+import java.util.Collections;
 
 public class Home extends AppCompatActivity {
     private Button addSpend;
@@ -186,14 +182,14 @@ public class Home extends AppCompatActivity {
                     File currentDB = new File(data, currentDBPath);
                     File backupDB = new File(sd, backupDBPath);
 
-                    Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
                     if (currentDB.exists()) {
                         FileChannel src = new FileInputStream(currentDB).getChannel();
                         FileChannel dst = new FileOutputStream(backupDB).getChannel();
                         dst.transferFrom(src, 0, src.size());
                         src.close();
                         dst.close();
-                        Toast.makeText(getApplicationContext(), "Backup is successful to SD card", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "手機內存備份成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
                     }
@@ -243,7 +239,7 @@ public class Home extends AppCompatActivity {
                     String backupDBPath = "App.db";
                     File currentDB = new File(data, currentDBPath);
                     File backupDB = new File(sd, backupDBPath);
-                    Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
 
                     if (backupDB.exists()) {
                         FileChannel src = new FileInputStream(backupDB).getChannel();
@@ -251,7 +247,7 @@ public class Home extends AppCompatActivity {
                         dst.transferFrom(src, 0, src.size());
                         src.close();
                         dst.close();
-                        Toast.makeText(getApplicationContext(), "Restore successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "手機內存還原成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
                     }
@@ -282,7 +278,7 @@ public class Home extends AppCompatActivity {
     private void handleSignInResult_create(Intent result) {
         GoogleSignIn.getSignedInAccountFromIntent(result)
                 .addOnSuccessListener(googleAccount -> {
-                    Toast.makeText(Home.this, "登錄成功", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(Home.this, "登錄成功", Toast.LENGTH_SHORT).show();
 
                     // Use the authenticated account to sign in to the Drive service.
                     GoogleAccountCredential credential =
@@ -300,7 +296,6 @@ public class Home extends AppCompatActivity {
                     // The DriveServiceHelper encapsulates all REST API and SAF functionality.
                     // Its instantiation is required before handling any onClick actions.
                     driveServiceHelper = new DriveServiceHelper(googleDriveService);
-                  //  SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
                     driveServiceHelper.createorupdateFile();
                     Toast.makeText(Home.this, "備份成功", Toast.LENGTH_SHORT).show();
 
@@ -327,7 +322,6 @@ public class Home extends AppCompatActivity {
                     // The DriveServiceHelper encapsulates all REST API and SAF functionality.
                     // Its instantiation is required before handling any onClick actions.
                     driveServiceHelper = new DriveServiceHelper(googleDriveService);
-//                    String fileid=getSharedPreferences("sharepref",MODE_PRIVATE).getString("Dbfileid","0");
                     driveServiceHelper.restore();
                     Toast.makeText(Home.this, "還原成功", Toast.LENGTH_SHORT).show();//若沒檔案仍會顯示還原成功
 
