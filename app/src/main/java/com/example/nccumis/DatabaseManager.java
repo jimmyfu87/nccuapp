@@ -50,13 +50,17 @@ public class DatabaseManager {
 
     }
 
-//    public void update(String name, String height,String weight) {
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(dbHelper.HEIGHT, height);
-//        contentValues.put(dbHelper.WEIGHT, weight);
-//        database.update(dbHelper.tb_name, contentValues, dbHelper.NAME + "=" +"'"+name+"'", null);
-//
-//    }
+    public void updateExpense(int ex_id,int ex_price,String ex_date,String type_name,String book_name,String ex_note,int user_id) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.EX_PRICE, ex_price);
+        contentValues.put(dbHelper.EX_DATE, ex_date);
+        contentValues.put(dbHelper.TYPE_NAME, type_name);
+        contentValues.put(dbHelper.BOOK_NAME, book_name);
+        contentValues.put(dbHelper.EX_NOTE, ex_note);
+        contentValues.put(dbHelper.USER_ID, user_id);
+        database.update(dbHelper.tb_name, contentValues, dbHelper.EX_ID + "=" +"'"+ex_id+"'", null);
+
+    }
 //
 //    public void delete(String name) {
 //        database.delete(dbHelper.tb_name,dbHelper.NAME + " ='" + name + "'",null);
@@ -120,5 +124,8 @@ public class DatabaseManager {
             Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5),Expense.getInt(6)));
         }
         return  Expenselist;
+    }
+    public void deleteExpense(int ex_id) {
+        database.delete(dbHelper.tb_name,dbHelper.EX_ID + " ='" + ex_id + "'",null);
     }
 }

@@ -32,7 +32,6 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
 
     //, Button fixParam, Button deleteParam
     public ExpenseDetailListAdapter(List<Integer> idArrayParam,String saveDetailStartdate, String saveDetailEnddate, Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
-
         super(context, R.layout.detail_listview_row, dateArrayParam);
         this.idArray = idArrayParam;
         this.saveDetailStartdate = saveDetailStartdate;
@@ -76,6 +75,10 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseManager dbmanager=new DatabaseManager(getContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                dbmanager.open();
+                dbmanager.deleteExpense(idArray.get(position));
+                dbmanager.close();
                 int number = numberArray.get(position);
                 idArray.remove(position);
                 numberArray.remove(position);

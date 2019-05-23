@@ -54,6 +54,8 @@ public class add_expense extends AppCompatActivity {
     private String saveDetailStartdate ="";
     private String saveDetailEnddate ="";
     private ArrayList<String> saveDetailBooksArray = new ArrayList<String>();
+    private String saveDetailDate="";
+    private int saveDetailId =0;
 
     ViewPager pager;
     ArrayList<View> pagerList;
@@ -120,6 +122,12 @@ public class add_expense extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkInputInfo()){
                     if(detail){
+                        DatabaseManager dbmanager=new DatabaseManager(getApplication());
+                        dbmanager.open();
+                        int price=Integer.parseInt(i_price.getText().toString());                               //將price轉為int
+                        String note=i_note.getText().toString();
+                        dbmanager.updateExpense(saveDetailId,price,i_date,i_type_name,i_book_name,note,1);
+                        dbmanager.close();
                         ////資料庫修改資料加這////
                         jumpTocheck_expense_detail();
                     }else{
@@ -245,10 +253,13 @@ public class add_expense extends AppCompatActivity {
             updateBook();
             input_book.setAdapter(bookList);
             if(detail){
+                saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
                 saveDetailEnddate = getSaveBag.getString("saveDetailEnddate");
                 saveDetailBooksArray = getSaveBag.getStringArrayList("saveDetailBooksArray");
+                saveDetailDate=getSaveBag.getString("date");
             }
+
         }
 
 
