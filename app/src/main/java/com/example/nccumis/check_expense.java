@@ -91,15 +91,15 @@ public class check_expense extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
 
-        pager = (ViewPager) findViewById(R.id.pager);
-
-        LayoutInflater li = getLayoutInflater().from(this);
-        View v1 = li.inflate(R.layout.income_check,null);
-        pagerList = new ArrayList<View>();
-        pagerList.add(v1);
-
-        pager.setAdapter(new myViewPagerAdapter(pagerList));
-        pager.setCurrentItem(0);
+//        pager = (ViewPager) findViewById(R.id.pager);
+//
+//        LayoutInflater li = getLayoutInflater().from(this);
+//        View v1 = li.inflate(R.layout.income_check,null);
+//        pagerList = new ArrayList<View>();
+//        pagerList.add(v1);
+//
+//        pager.setAdapter(new myViewPagerAdapter(pagerList));
+//        pager.setCurrentItem(0);
 
         dateStart_input = (EditText)findViewById(R.id.dateStart_input);
         dateEnd_input = (EditText)findViewById(R.id.dateEnd_input);
