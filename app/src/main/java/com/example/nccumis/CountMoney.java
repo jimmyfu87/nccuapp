@@ -51,15 +51,20 @@ public class CountMoney extends AppCompatActivity {
         btn_checkCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                List<Expense> select_expense=new ArrayList<>();
-                dbmanager.open();
-                select_expense=dbmanager.fetchExpense(start_date,"2019-05-28");           //可直接調用select_expense的資訊
-                dbmanager.close();
-
+                if(checkDateInput(v)){
+                    //Expense 資料庫
+                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                    dbmanager.open();
+                    select_expense=dbmanager.fetchExpenseWithbook(date_start,date_end,
+                            selectBooks);
+                    dbmanager.close();
+                    spend.setText();
+                }
             }
-
         });
+
+
+
 
         //選擇帳本
         ArrayAdapter<CharSequence> nAdapter = ArrayAdapter.createFromResource(this,R.array.Account, android.R.layout.simple_spinner_dropdown_item);
@@ -178,5 +183,16 @@ public class CountMoney extends AppCompatActivity {
         }
         startEnd_date=year+"-"+st_month+"-"+st_day;
     }
+
+    public boolean checkDateInput(View view){
+        if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
+            this.dateEnd_input.setError("結束日期小於開始日期");
+            Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+        this.dateEnd_input.setError(null);
+        return true;
+    }
+
 
 }
