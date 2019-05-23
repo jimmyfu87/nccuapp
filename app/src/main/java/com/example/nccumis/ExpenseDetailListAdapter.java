@@ -20,6 +20,7 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
     private String saveDetailStartdate;
     private String saveDetailEnddate;
     private final Activity context;
+    private final List<Integer> idArray;
     private final List<Integer> numberArray;
     private final List<String> dateArray;
     private final List<Integer> priceArray;
@@ -30,9 +31,10 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
     private Button deleteBtn;
 
     //, Button fixParam, Button deleteParam
-    public ExpenseDetailListAdapter(String saveDetailStartdate, String saveDetailEnddate, Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
+    public ExpenseDetailListAdapter(List<Integer> idArrayParam,String saveDetailStartdate, String saveDetailEnddate, Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
 
         super(context, R.layout.detail_listview_row, dateArrayParam);
+        this.idArray = idArrayParam;
         this.saveDetailStartdate = saveDetailStartdate;
         this.saveDetailEnddate = saveDetailEnddate;
         this.context=context;
@@ -75,11 +77,13 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 int number = numberArray.get(position);
+                idArray.remove(position);
                 numberArray.remove(position);
                 dateArray.remove(position);
                 priceArray.remove(position);
                 noteArray.remove(position);
                 bookArray.remove(position);
+                ///////////資料庫刪除，加這//////////////
                 notifyDataSetChanged();
                 Snackbar.make(v, "You just remove No." + number +" item", Snackbar.LENGTH_SHORT).show();
             }
@@ -92,6 +96,7 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
         Intent intent = new Intent(activity, add_expense.class);
         Bundle saveExpenseData = new Bundle();
         saveExpenseData.putBoolean("detail",true);
+        saveExpenseData.putInt("id",idArray.get(position));
         saveExpenseData.putString("amount", priceArray.get(position).toString());
         saveExpenseData.putString("date", resetDateformat(dateArray.get(position)));
         saveExpenseData.putString("type", typeName);

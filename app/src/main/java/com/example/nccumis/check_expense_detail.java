@@ -21,6 +21,7 @@ public class check_expense_detail extends AppCompatActivity {
     private String endDate;
     private ArrayList<String> selectBooks = new ArrayList<String>();
     private List<Expense> expenseList = new ArrayList<Expense>();
+    private List<Integer> idArray = new ArrayList<Integer>();
     private List<Integer> numberArray = new ArrayList<Integer>();
     private List<String> dateArray = new ArrayList<String>();
     private List<Integer> priceArray = new ArrayList<Integer>();
@@ -70,6 +71,7 @@ public class check_expense_detail extends AppCompatActivity {
         for(int i = 0; i < this.expenseList.size();i++){
             int index = i+1;
             this.numberArray.add(index);
+            this.idArray.add(this.expenseList.get(i).getEx_id());
             this.dateArray.add(this.expenseList.get(i).getEx_date());
             this.priceArray.add(this.expenseList.get(i).getEx_price());
             this.noteArray.add((this.expenseList.get(i).getEx_note().isEmpty()) ? "無備註" : this.expenseList.get(i).getEx_note());
@@ -80,7 +82,7 @@ public class check_expense_detail extends AppCompatActivity {
 
     public void setList(){
         initListData();
-        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(startDate, endDate,check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
+        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(this.idArray,startDate, endDate,check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
         DetailListView.setAdapter(ExDetail_adapter);
     }
 
