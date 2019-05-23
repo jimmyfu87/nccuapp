@@ -2,7 +2,7 @@
     <full-backup-content>
 
 
-        <include domain="database" path="App.db"/>
+        <!--<include domain="database" path="App.db"/>-->
         <!--<include domain="database" path="getDatabasePath('App.db')"/>-->
         <!--<include domain="database" path="getDatabasePath(App.db)"/>-->
 
