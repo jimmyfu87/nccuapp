@@ -19,7 +19,8 @@
         <activity android:name=".check_income" />
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".CountMoney">
+        <activity android:name=".CountMoney"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -75,6 +76,7 @@ public class CountMoney extends AppCompatActivity {
                     dbmanager.open();
                     select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
                     dbmanager.close();
+
                     spend.setText(Integer.toString(countTotalExpensePrice()));
                 }
             }
@@ -86,6 +88,7 @@ public class CountMoney extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     showDatePick(START_DATE);
+                    date_start.setInputType(InputType.TYPE_NULL);
                     return true;
                 }
                 return false;
@@ -96,6 +99,8 @@ public class CountMoney extends AppCompatActivity {
             public void onFocusChange(View view, boolean b) {
                 if (b) {
                     showDatePick(START_DATE);
+                    date_start.setInputType(InputType.TYPE_NULL);
+
                 }
 
             }
@@ -106,6 +111,8 @@ public class CountMoney extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent2) {
                 if (motionEvent2.getAction() == MotionEvent.ACTION_DOWN) {
                     showDatePick(END_DATE);
+                    date_end.setInputType(InputType.TYPE_NULL);
+
                     return true;
                 }
                 return false;
@@ -116,6 +123,8 @@ public class CountMoney extends AppCompatActivity {
             public void onFocusChange(View view, boolean a) {
                 if (a) {
                     showDatePick(END_DATE);
+                    date_end.setInputType(InputType.TYPE_NULL);
+
                 }
 
             }
@@ -207,6 +216,7 @@ public class CountMoney extends AppCompatActivity {
         if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
             this.date_end.setError("結束日期小於開始日期");
             Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
+            spend.setText("");
             return false;
         }
         this.date_end.setError(null);
