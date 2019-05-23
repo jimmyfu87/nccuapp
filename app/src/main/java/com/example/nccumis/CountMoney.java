@@ -26,7 +26,6 @@ import android.widget.Toast;
 public class CountMoney extends AppCompatActivity {
     private final int START_DATE = 1;
     private final int END_DATE = -1;
-    private Spinner spin_account;
     private EditText date_start;
     private EditText date_end;
     private Button switchBook;
@@ -34,9 +33,9 @@ public class CountMoney extends AppCompatActivity {
     private String start_date;
     private int yearStart,monthStart,dayStart;
     private int yearEnd,monthEnd,dayEnd;
-    private List<String> bookArray;
-    private List<String> selectBooks;
-    private List<Expense> select_expense;
+    private List<String> bookArray = new ArrayList<String>();
+    private List<String> selectBooks = new ArrayList<String>();
+    private List<Expense> select_expense = new ArrayList<Expense>();
 
     private TextView income;
     private TextView spend;
@@ -52,6 +51,8 @@ public class CountMoney extends AppCompatActivity {
         setContentView(R.layout.activity_count_money);
         //  抓資料庫的所有帳本
         setBookArray();
+        initSelectBooks();
+
         date_start =(EditText)findViewById(R.id.date_start);
         date_end =(EditText)findViewById(R.id.date_end);
         income =(TextView)findViewById(R.id.income);
@@ -71,7 +72,7 @@ public class CountMoney extends AppCompatActivity {
                     dbmanager.open();
                     select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
                     dbmanager.close();
-                    spend.setText(countTotalExpensePrice());
+                    spend.setText(Integer.toString(countTotalExpensePrice()));
                 }
             }
         });
@@ -91,8 +92,7 @@ public class CountMoney extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    showDatePick(START_DATE
-                    );
+                    showDatePick(START_DATE);
                 }
 
             }
