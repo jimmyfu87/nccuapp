@@ -243,7 +243,7 @@ public class add_expense extends AppCompatActivity {
         if(getSaveBag != null){
             this.detail = getSaveBag.getBoolean("detail");
             input_amount.setText(getSaveBag.getString("amount"));
-            input_date.setText(resetDateformat(getSaveBag.getString("date")));
+            input_date.setText((detail)?resetDateformat(getSaveBag.getString("date")):getSaveBag.getString("date"));
             int typePosition = typeList.getPosition(getSaveBag.getString("type"));
             input_type.setSelection(typePosition);
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
