@@ -101,7 +101,7 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
         saveExpenseData.putBoolean("detail",true);
         saveExpenseData.putInt("id",idArray.get(position));
         saveExpenseData.putString("amount", priceArray.get(position).toString());
-        saveExpenseData.putString("date", resetDateformat(dateArray.get(position)));
+        saveExpenseData.putString("date", dateArray.get(position));
         saveExpenseData.putString("type", typeName);
         saveExpenseData.putString("book", dateArray.get(position));
         saveExpenseData.putString("note", noteArray.get(position));
@@ -111,24 +111,5 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
         intent.putExtras(saveExpenseData);
         activity.startActivity(intent);
 
-    }
-
-    public String resetDateformat(String date){
-        String resetDate = "";
-        int index = 0;
-
-        for(String str : date.split("-")){
-            resetDate += (Integer.parseInt(str) < 10) ? str.substring(1): str;
-            if(index == 0){
-                resetDate += "年";
-            }else if(index == 1){
-                resetDate +="月";
-            }else if(index == 2){
-                resetDate += "日";
-            }
-            index++;
-        }
-
-        return resetDate;
     }
 }

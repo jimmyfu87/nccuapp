@@ -42,6 +42,8 @@ public class check_expense_detail extends AppCompatActivity {
         endDate = saveBag.getString("endDate");
         selectBooks = saveBag.getStringArrayList("selectBooks");
 
+        System.out.println(startDate+", "+endDate);
+
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +59,6 @@ public class check_expense_detail extends AppCompatActivity {
 
         //listview
         DetailListView = (ListView)findViewById(R.id.DetailListView);
-        setList();
 
         //Expense 資料庫 fetch 資料
         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>

@@ -126,6 +126,7 @@ public class add_expense extends AppCompatActivity {
                         dbmanager.open();
                         int price=Integer.parseInt(i_price.getText().toString());                               //將price轉為int
                         String note=i_note.getText().toString();
+                        i_date = saveDetailDate;
                         dbmanager.updateExpense(saveDetailId,price,i_date,i_type_name,i_book_name,note,1);
                         dbmanager.close();
                         ////資料庫修改資料加這////
@@ -137,8 +138,8 @@ public class add_expense extends AppCompatActivity {
                         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
                         dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
                         dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,note,1);            //將資料放到資料庫
-                        BackupManager bm = new BackupManager(add_expense.this);
-                        bm.dataChanged();
+//                        BackupManager bm = new BackupManager(add_expense.this);
+//                        bm.dataChanged();
                         dbmanager.close();                                                                     //關閉資料庫
                         jumpToHome();
                     }
@@ -244,7 +245,7 @@ public class add_expense extends AppCompatActivity {
         if(getSaveBag != null){
             this.detail = getSaveBag.getBoolean("detail");
             input_amount.setText(getSaveBag.getString("amount"));
-            input_date.setText(getSaveBag.getString("date"));
+            input_date.setText(resetDateformat(getSaveBag.getString("date")));
             int typePosition = typeList.getPosition(getSaveBag.getString("type"));
             input_type.setSelection(typePosition);
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
@@ -342,6 +343,25 @@ public class add_expense extends AppCompatActivity {
             st_day=Integer.toString(day);
         }
         i_date=year+"-"+st_month+"-"+st_day;
+    }
+
+    public String resetDateformat(String date){
+        String resetDate = "";
+        int index = 0;
+
+        for(String str : date.split("-")){
+            resetDate += (Integer.parseInt(str) < 10) ? str.substring(1): str;
+            if(index == 0){
+                resetDate += "年";
+            }else if(index == 1){
+                resetDate +="月";
+            }else if(index == 2){
+                resetDate += "日";
+            }
+            index++;
+        }
+
+        return resetDate;
     }
 
     //初始化類別
