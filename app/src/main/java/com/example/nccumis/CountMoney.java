@@ -65,7 +65,7 @@ public class CountMoney extends AppCompatActivity {
         btn_checkCount=(Button)findViewById(R.id.btn_checkCount);
         switchBook = (Button)findViewById(R.id.switchBook);
 
-        //計算
+        //拉資料庫的支出進來
 
         btn_checkCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,13 +82,15 @@ public class CountMoney extends AppCompatActivity {
             }
         });
 
+
+
         //開始日期
         date_start.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     showDatePick(START_DATE);
-                    date_start.setInputType(InputType.TYPE_NULL);
+                    date_start.setInputType(InputType.TYPE_NULL);//讓使用者無法打東西
                     return true;
                 }
                 return false;
@@ -99,7 +101,7 @@ public class CountMoney extends AppCompatActivity {
             public void onFocusChange(View view, boolean b) {
                 if (b) {
                     showDatePick(START_DATE);
-                    date_start.setInputType(InputType.TYPE_NULL);
+                    date_start.setInputType(InputType.TYPE_NULL); //讓使用者無法打東西
 
                 }
 
@@ -111,7 +113,7 @@ public class CountMoney extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent2) {
                 if (motionEvent2.getAction() == MotionEvent.ACTION_DOWN) {
                     showDatePick(END_DATE);
-                    date_end.setInputType(InputType.TYPE_NULL);
+                    date_end.setInputType(InputType.TYPE_NULL);//讓使用者無法打東西
 
                     return true;
                 }
@@ -123,7 +125,7 @@ public class CountMoney extends AppCompatActivity {
             public void onFocusChange(View view, boolean a) {
                 if (a) {
                     showDatePick(END_DATE);
-                    date_end.setInputType(InputType.TYPE_NULL);
+                    date_end.setInputType(InputType.TYPE_NULL);//讓使用者無法打東西
 
                 }
 
@@ -138,7 +140,8 @@ public class CountMoney extends AppCompatActivity {
             }
         });
     }
-    //這個是參考姵的，還沒研究好，因為他說我沒用到這個method
+
+    //把(開始日期)年月日轉換成---
     public void setStartdateformat(int year,int month,int day){
         String st_month;
         String st_day;
@@ -158,7 +161,6 @@ public class CountMoney extends AppCompatActivity {
         }
         start_date=year+"-"+st_month+"-"+st_day;
     }
-//結束日期
 
     public void showDatePick(final int checkNum) {
         Calendar calendar = Calendar.getInstance();
@@ -179,6 +181,7 @@ public class CountMoney extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    //把(結束日期)年月日轉換成---
     public void setEnddateformat(int year,int month,int day){
         String st_month;
         String st_day;
@@ -212,6 +215,7 @@ public class CountMoney extends AppCompatActivity {
         }
     }
 
+    //確認日期是否有效，可否查詢
     public boolean checkDateInput(View view){
         if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
             this.date_end.setError("結束日期小於開始日期");
@@ -223,6 +227,7 @@ public class CountMoney extends AppCompatActivity {
         return true;
     }
 
+    //拉資料庫的帳本
     public void setBookArray(){
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
@@ -230,6 +235,7 @@ public class CountMoney extends AppCompatActivity {
         dbmanager.close();
     }
 
+    //使用者選擇帳本時會跳出來的小框框
     private void multiDialogEvent(){
         this.selectBooks.clear();
 //        final List<Boolean> checkedStatusList = new ArrayList<>();
@@ -280,6 +286,7 @@ public class CountMoney extends AppCompatActivity {
         }
     }
 
+    //計算總支出
     public int countTotalExpensePrice(){
         int total = 0;
         for(int i = 0; i < this.select_expense.size(); i++){
