@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class Home extends AppCompatActivity {
     final int REQUEST_CODE_SIGN_IN_restore=3;  //restore
     public SharedPreferences setting;
     public  boolean isCreated=false;
+    private static final String TAG = "Home";
 
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
@@ -134,7 +136,7 @@ public class Home extends AppCompatActivity {
                 .requestEmail()
                 .requestScopes(new Scope(DriveScopes.DRIVE_FILE),
                         new Scope(DriveScopes.DRIVE_APPDATA))
-                //.requestIdToken("961476906062-83aqneaf6du0u3hmpfa0bn5qe740jv6n.apps.googleusercontent.com")
+                .requestIdToken("961476906062-oit2pticnu4e1lraesv1628hj3e906qn.apps.googleusercontent.com")
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         startActivityForResult(mGoogleSignInClient.getSignInIntent(), askcode);
@@ -301,6 +303,7 @@ public class Home extends AppCompatActivity {
 
                 })
                 .addOnFailureListener(exception -> {
+                    Log.e(TAG, "Unable to sign in.", exception);
                     Toast.makeText(Home.this, "登錄失敗", Toast.LENGTH_SHORT).show();
                 });
     }
