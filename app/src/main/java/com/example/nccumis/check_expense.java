@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -53,8 +54,8 @@ public class check_expense extends AppCompatActivity {
 
     private Button lastPage;
     private Button switchAccount;
-    private EditText dateStart_input;
-    private EditText dateEnd_input;
+    private TextView dateStart_input;
+    private TextView dateEnd_input;
     private Button searchButton;
     private Button searchthisMonth;
     private Button searchthisYear;
@@ -101,8 +102,8 @@ public class check_expense extends AppCompatActivity {
 //        pager.setAdapter(new myViewPagerAdapter(pagerList));
 //        pager.setCurrentItem(0);
 
-        dateStart_input = (EditText)findViewById(R.id.dateStart_input);
-        dateEnd_input = (EditText)findViewById(R.id.dateEnd_input);
+        dateStart_input = (TextView) findViewById(R.id.dateStart_input);
+        dateEnd_input = (TextView) findViewById(R.id.dateEnd_input);
         TypeListView = (ListView)findViewById(R.id.TypeListView);
 
         //自動傳入存回資料

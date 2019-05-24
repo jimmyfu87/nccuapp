@@ -100,14 +100,15 @@
                 android:weightSum="7"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/dateStart_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
                     android:layout_marginTop="10dp"
                     android:maxLength="11"
-                    android:windowSoftInputMode="stateHidden" />
+                    android:windowSoftInputMode="stateHidden"
+                    android:hint="開始日期"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -115,15 +116,16 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.1"
                     android:text="~"
-                    android:textSize="30dp" />
+                    android:textSize="20dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/dateEnd_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="3.3"
-                    android:maxLength="11" />
+                    android:maxLength="11"
+                    android:hint="  結束日期" />
             </LinearLayout>
 
             <Button
