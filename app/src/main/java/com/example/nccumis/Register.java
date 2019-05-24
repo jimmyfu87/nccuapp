@@ -66,7 +66,7 @@ public class Register extends AppCompatActivity {
 
         btn_checkRegister.setOnClickListener(ClickIntHere);
 
-//有錯誤的生日!!!!!!!!!!!!!我明天改
+//生日
         et_userBirth.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
