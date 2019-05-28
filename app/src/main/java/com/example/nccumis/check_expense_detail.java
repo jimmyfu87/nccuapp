@@ -42,7 +42,7 @@ public class check_expense_detail extends AppCompatActivity {
         endDate = saveBag.getString("endDate");
         selectBooks = saveBag.getStringArrayList("selectBooks");
 
-        System.out.println(startDate+", "+endDate);
+        //System.out.println(startDate+", "+endDate);
 
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -83,7 +83,7 @@ public class check_expense_detail extends AppCompatActivity {
 
     public void setList(){
         initListData();
-        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(this.idArray,startDate, endDate,check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
+        ExpenseDetailListAdapter ExDetail_adapter = new ExpenseDetailListAdapter(this.idArray,startDate, endDate,selectBooks,check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
         DetailListView.setAdapter(ExDetail_adapter);
     }
 

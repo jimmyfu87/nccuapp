@@ -10,14 +10,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -79,7 +77,6 @@ public class check_expense extends AppCompatActivity {
     private ArrayList<String> selectBooks = new ArrayList<String>();
 
     private boolean[] checked;
-    private  String[] checking;
 
     private Intent getPreSavedData;
     private Bundle saveBag;
@@ -113,6 +110,7 @@ public class check_expense extends AppCompatActivity {
         if(saveBag != null){
             start_date = saveBag.getString("startDate");
             end_date = saveBag.getString("endDate");
+            System.out.println("查帳："+start_date+", "+end_date);
             selectBooks = saveBag.getStringArrayList("selectBooks");
 
             dateStart_input.setText(resetDateformat(START_DATE,start_date));
@@ -121,6 +119,7 @@ public class check_expense extends AppCompatActivity {
             DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
             dbmanager.open();
             select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
+            System.out.println(select_expense.size()+", "+selectBooks.size());
             dbmanager.close();
             setExpenseData(select_expense);
             setList();
@@ -138,7 +137,7 @@ public class check_expense extends AppCompatActivity {
         //一開始預設統計所有帳本資料
         setBookArray();
         initSelectBooks();
-        checked=new boolean[bookArray.size()];
+
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +214,9 @@ public class check_expense extends AppCompatActivity {
                    // select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
                     //System.out.println("Size of select books"+selectBooks.size());
                     select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
+                    if(select_expense.isEmpty()){
+                        Snackbar.make(v,"查詢金額為零",Snackbar.LENGTH_SHORT).show();
+                    }
                     dbmanager.close();
                     setExpenseData(select_expense);
                     setList();
@@ -303,7 +305,7 @@ public class check_expense extends AppCompatActivity {
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                //checkedStatusList.set(which, isChecked);
+//                                checked.set(which, isChecked);
                             }
                         })
                 .setPositiveButton("確認", new DialogInterface.OnClickListener() {
@@ -327,6 +329,7 @@ public class check_expense extends AppCompatActivity {
 //                                checkedStatusList.add(false);
 //                            }
                         } else{
+                            setBookArray();
                             initSelectBooks();
                             Toast.makeText(check_expense.this, "請勾選項目，系統已自動返回預設(統計所有帳本)", Toast.LENGTH_SHORT).show();
                         }
@@ -364,6 +367,11 @@ public class check_expense extends AppCompatActivity {
         dbmanager.open();
         this.bookArray = dbmanager.fetchBook();           //可直接調用select_expense的資訊
         dbmanager.close();
+        this.checked = new boolean[this.bookArray.size()];
+
+        for(int i = 0; i < checked.length; i++){
+            checked[i] = true;
+        }
     }
     public void initSelectBooks(){
         for(int i = 0; i < bookArray.size(); i++) {
@@ -423,7 +431,7 @@ public class check_expense extends AppCompatActivity {
             typelist.remove(index);
         }
 
-        //assgin ssortedTypelist
+        //assgin sortedTypelist
         for(int i = 0; i < sortedTypelist.size(); i++){
             this.getPriceData.set(i ,sortedTypelist.get(i).getPrice());
             this.getTypeName.set(i ,sortedTypelist.get(i).getTypeName());
@@ -481,14 +489,6 @@ public class check_expense extends AppCompatActivity {
 
     public void setPieChart(){
         List<PieEntry> pieEntries = new ArrayList<>();
-//        double selectDateTotalPrice = (double)countSelectDateTotalPrice(this.getPriceData);
-//        for(int i = 0; i < getPriceData.size(); i++){
-//            if((getPriceData.get(i)/selectDateTotalPrice)<0.05)
-//                pieEntries.add(new PieEntry(getPriceData.get(i) , ""));
-//            else
-//             pieEntries.add(new PieEntry(getPriceData.get(i) , typeName.get(i)));
-//
-//        }
         for(int i = 0; i < getPriceData.size(); i++){
              pieEntries.add(new PieEntry(getPriceData.get(i) , getTypeName.get(i)));
         }
@@ -592,7 +592,12 @@ public class check_expense extends AppCompatActivity {
             this.dateEnd_input.setError("結束日期小於開始日期");
             Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
             return false;
+        }else if(dateStart_input.getText().toString().isEmpty()||dateEnd_input.getText().toString().isEmpty()){
+            this.dateEnd_input.setError("開始或結束日期未填寫");
+            Snackbar.make(view,"請填寫開始和結束日期",Snackbar.LENGTH_SHORT).show();
+            return false;
         }
+
         this.dateEnd_input.setError(null);
         return true;
     }

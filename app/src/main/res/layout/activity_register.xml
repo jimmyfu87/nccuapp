@@ -113,8 +113,7 @@
         android:id="@+id/et_wrongPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center" />
 
     <Button
         android:id="@+id/btn_checkRegister"
@@ -124,6 +123,12 @@
         android:layout_marginTop="30dp"
         android:text="確認"/>
 
-
+    <Button
+        android:id="@+id/btn_lastPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="返回"/>
 </LinearLayout>
 </ScrollView>

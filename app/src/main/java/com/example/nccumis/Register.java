@@ -1,5 +1,6 @@
 package com.example.nccumis;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,6 +25,7 @@ public class Register extends AppCompatActivity {
     private EditText et_userBirth ;
     private TextView et_wrongPassword;
     private Button btn_checkRegister ;
+    private Button btn_lastPage;
     private CheckBox checkBoxPassword1 ;
     private CheckBox checkBoxPassword2 ;
 
@@ -43,6 +45,7 @@ public class Register extends AppCompatActivity {
          et_wrongPassword =findViewById(R.id.et_wrongPassword);
          et_userBirth = findViewById(R.id.et_userBirth);
          btn_checkRegister =  findViewById(R.id.btn_checkRegister);
+         btn_lastPage = findViewById(R.id.btn_lastPage);
          checkBoxPassword1 = findViewById(R.id.checkBoxPassword1);
          checkBoxPassword2 =  findViewById(R.id.checkBoxPassword2);
 
@@ -75,6 +78,14 @@ public class Register extends AppCompatActivity {
                 }else{
                     et_userPassword2.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
+            }
+        });
+
+        //上一頁
+        btn_lastPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToLogIn();
             }
         });
    }
@@ -128,6 +139,9 @@ public class Register extends AppCompatActivity {
        }
    };
 
+   public void jumpToLogIn(){
+       startActivity(new Intent(Register.this, LogIn.class));
+   }
 
 
 

@@ -1,5 +1,8 @@
 package com.example.nccumis;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,8 +61,8 @@ public class add_expense extends AppCompatActivity {
     ViewPager pager;
     ArrayList<View> pagerList;
 
-    private EditText i_price,i_note,i_userid;                  //宣告需要輸入的變數的EditText
-    private String i_date,i_type_name,i_book_name;
+    private EditText i_userid;                  //宣告需要輸入的變數的EditText
+    private String i_price,i_note,i_date,i_type_name,i_book_name;
 
 
     @Override
@@ -77,8 +80,6 @@ public class add_expense extends AppCompatActivity {
 //        pager.setAdapter(new myViewPagerAdapter(pagerList));
 //        pager.setCurrentItem(0);
 
-        i_price=(EditText)findViewById(R.id.amount_input);  //將amount_input從View轉為EditText
-        i_note=(EditText)findViewById(R.id.note_input);    //將note_input從View轉為EditText
 
         //Spinner ArrayAdapter 初始化
         initType();
@@ -120,26 +121,58 @@ public class add_expense extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkInputInfo()){
                     if(detail){
-                        DatabaseManager dbmanager=new DatabaseManager(getApplication());
-                        dbmanager.open();
-                        int price=Integer.parseInt(i_price.getText().toString());                               //將price轉為int
-                        String note=i_note.getText().toString();
-                        i_date = saveDetailDate;
-                        dbmanager.updateExpense(saveDetailId,price,i_date,i_type_name,i_book_name,note,1);
-                        dbmanager.close();
-                        ////資料庫修改資料加這////
-                        jumpTocheck_expense_detail();
+                        i_price = input_amount.getText().toString();
+                        int price=Integer.parseInt(i_price);                               //將price轉為int
+                        i_note = input_note.getText().toString();
+                        new AlertDialog.Builder(add_expense.this)
+                                .setTitle("記帳資訊確認")
+                                .setMessage("金額："+i_price+"\n"+"日期："+i_date+"\n"+"類別："+i_type_name+"\n"+"帳本："+i_book_name+"\n"+"備註："+i_note)
+                                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DatabaseManager dbmanager = new DatabaseManager(getApplication());
+                                        dbmanager.open();
+                                        dbmanager.updateExpense(saveDetailId, price, i_date, i_type_name, i_book_name, i_note, 1);
+                                        dbmanager.close();
+                                        //回查帳
+                                        jumpTocheck_expense_detail();
+                                    }
+                                })
+                                .setNeutralButton("返回", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Snackbar.make(v, "返回記帳頁面", Snackbar.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .show();
                     }else{
-                        //到首頁
-                        int price=Integer.parseInt(i_price.getText().toString());                               //將price轉為int
-                        String note=i_note.getText().toString();
-                        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
-                        dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                        dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,note,1);            //將資料放到資料庫
-//                        BackupManager bm = new BackupManager(add_expense.this);
-//                        bm.dataChanged();
-                        dbmanager.close();                                                                     //關閉資料庫
-                        jumpToHome();
+                        i_price = input_amount.getText().toString();
+                        int price=Integer.parseInt(i_price);                               //將price轉為int
+                        i_note = input_note.getText().toString();
+                        new AlertDialog.Builder(add_expense.this)
+                                .setTitle("記帳資訊確認")
+                                .setMessage("金額："+i_price+"\n"+"日期："+i_date+"\n"+"類別："+i_type_name+"\n"+"帳本："+i_book_name+"\n"+"備註："+i_note)
+                                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Snackbar.make(v, "完成記帳", Snackbar.LENGTH_SHORT).show();
+                                        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
+                                        dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
+                                        dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,i_note,1);            //將資料放到資料庫
+//                                      BackupManager bm = new BackupManager(add_expense.this);
+//                                      bm.dataChanged();
+                                        dbmanager.close();                                                                     //關閉資料庫
+                                        //到首頁
+                                        jumpToHome();
+                                    }
+                                })
+                                .setNeutralButton("返回", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Snackbar.make(v, "返回記帳頁面", Snackbar.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .show();
                     }
                 }
             }
@@ -148,6 +181,8 @@ public class add_expense extends AppCompatActivity {
 
         //金額
         input_amount = (EditText)findViewById(R.id.amount_input);
+        i_price = input_amount.getText().toString();
+
 
         //日期
         input_date = (EditText)findViewById(R.id.date_input);
@@ -233,6 +268,7 @@ public class add_expense extends AppCompatActivity {
 
         //備註
         input_note = (EditText)findViewById(R.id.note_input);
+        i_note = input_note.getText().toString();
 
         //掃發票
         //scanInvoice = (Button) findViewById(R.id.scanInvoice);
@@ -243,19 +279,22 @@ public class add_expense extends AppCompatActivity {
         if(getSaveBag != null){
             this.detail = getSaveBag.getBoolean("detail");
             input_amount.setText(getSaveBag.getString("amount"));
+            i_price = getSaveBag.getString("amount");
             input_date.setText((detail)?resetDateformat(getSaveBag.getString("date")):getSaveBag.getString("date"));
+            i_date = getSaveBag.getString("date");
             int typePosition = typeList.getPosition(getSaveBag.getString("type"));
             input_type.setSelection(typePosition);
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
             input_book.setSelection(bookPosition);
             input_note.setText(getSaveBag.getString("note"));
+            i_note = getSaveBag.getString("note");
             updateBook();
             input_book.setAdapter(bookList);
             if(detail){
                 saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
                 saveDetailEnddate = getSaveBag.getString("saveDetailEnddate");
-                saveDetailBooksArray = getSaveBag.getStringArrayList("saveDetailBooksArray");
+                saveDetailBooksArray = getSaveBag.getStringArrayList("selectBooks");
                 saveDetailDate=getSaveBag.getString("date");
             }
 
