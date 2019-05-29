@@ -136,7 +136,7 @@ public class Home extends AppCompatActivity {
                 .requestEmail()
                 .requestScopes(new Scope(DriveScopes.DRIVE_FILE),
                         new Scope(DriveScopes.DRIVE_APPDATA))
-                .requestIdToken("887086177375-ukp7vglcak9hk278dvuh87p3gdgr7qjd.apps.googleusercontent.com")
+               // .requestIdToken("887086177375-ukp7vglcak9hk278dvuh87p3gdgr7qjd.apps.googleusercontent.com")
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         startActivityForResult(mGoogleSignInClient.getSignInIntent(), askcode);
