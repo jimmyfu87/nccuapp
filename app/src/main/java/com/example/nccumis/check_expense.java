@@ -20,9 +20,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.charts.LineChart;
+
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -63,6 +69,8 @@ public class check_expense extends AppCompatActivity {
     private int yearEnd = 0;
     private int monthEnd = 0;
     private int dayEnd = 0;
+    private XAxis xAxis;
+    private YAxis yAxis;
 
     private List<Expense> select_expense = new ArrayList<Expense>();
 
@@ -429,6 +437,32 @@ public class check_expense extends AppCompatActivity {
    //     expenseChart.setCenterTextSize(20);
 
    // }
+   public void setLineChart(){
+
+       LineChart expenseChart = (LineChart) findViewById(R.id.expense_chart);
+      // LineDataSet dataSet = new LineDataSet();
+       //XAxis xAxis = LineChart.getXAxis();
+
+
+
+
+
+       //dataSet.setValueTextSize(16f);
+       //dataSet.setColors(this.COLORFUL_COLORS);
+       //LineData data = new LineData(dataSet);
+
+       expenseChart.getDescription().setEnabled(false);
+       expenseChart.setHighlightPerTapEnabled(true);
+       //expenseChart.setEntryLabelTextSize(16f);
+       //expenseChart.setRotationAngle(90);
+       expenseChart.animateXY(800, 800);
+      // expenseChart.setData(data);
+       //expenseChart.setUsePercentValues(true);
+       //expenseChart.invalidate();
+       //expenseChart.setCenterText("Total\n"+countSelectDateTotalPrice(this.getPriceData));
+       //expenseChart.setCenterTextSize(20);
+
+   }
 
     //暫存日期
     public void setdateInfo(int startOrEnd, int year, int month, int day){
