@@ -25,7 +25,7 @@ public class merchandise extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_count_money);
+        setContentView(R.layout.activity_merchandise);
 
         webView =(WebView)findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());

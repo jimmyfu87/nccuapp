@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".merchandise"></activity>
+        <activity android:name=".CountMoney" android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity android:name=".LogIn" />
         <activity android:name=".Home" />
         <activity android:name=".add_type" />
@@ -23,8 +23,7 @@
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
         <activity
-            android:name=".CountMoney"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:name=".merchandise">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
