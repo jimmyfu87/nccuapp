@@ -19,7 +19,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.PieData;
@@ -28,6 +30,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 
 import java.text.DecimalFormat;
@@ -440,9 +443,23 @@ public class check_expense extends AppCompatActivity {
    public void setLineChart(){
 
        LineChart expenseChart = (LineChart) findViewById(R.id.expense_chart);
-      // LineDataSet dataSet = new LineDataSet();
-       //XAxis xAxis = LineChart.getXAxis();
+      //LineDataSet dataSet = new LineDataSet();
 
+       //XAxis xAxis =LineChart.getXAxis();
+       //YAxis yAxis = LineChart.getYAxis();
+       xAxis.setDrawAxisLine(true);
+       xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴位置
+       xAxis.setDrawGridLines(true);//不绘制网格线
+       xAxis.setDrawLabels(true);//绘制该轴标签
+       xAxis.setTextColor(Color.RED);// 设置轴标签的颜色。
+       xAxis.setTextSize(11f);//设置轴标签的文字大小。
+       xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+           public String formarvalue(float value, AxisBase axis) {
+               int i = (int) value;
+               return "数据"+i;
+           }
+       });
+       xAxis.setLabelCount(5);
 
 
 
@@ -453,12 +470,12 @@ public class check_expense extends AppCompatActivity {
 
        expenseChart.getDescription().setEnabled(false);
        expenseChart.setHighlightPerTapEnabled(true);
-       //expenseChart.setEntryLabelTextSize(16f);
+      // expenseChart.setEntryLabelTextSize(16f);
        //expenseChart.setRotationAngle(90);
        expenseChart.animateXY(800, 800);
       // expenseChart.setData(data);
        //expenseChart.setUsePercentValues(true);
-       //expenseChart.invalidate();
+       expenseChart.invalidate();
        //expenseChart.setCenterText("Total\n"+countSelectDateTotalPrice(this.getPriceData));
        //expenseChart.setCenterTextSize(20);
 
