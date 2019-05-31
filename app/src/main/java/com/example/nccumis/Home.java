@@ -118,7 +118,7 @@ public class Home extends AppCompatActivity {
         addSpend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToadd_expense();
+                jumpToadd_spend();
             }
         });
 
@@ -142,8 +142,8 @@ public class Home extends AppCompatActivity {
         startActivityForResult(mGoogleSignInClient.getSignInIntent(), askcode);
     }
 
-    public void jumpToadd_expense() {
-        Intent intent = new Intent(Home.this, add_expense.class);
+    public void jumpToadd_spend() {
+        Intent intent = new Intent(Home.this, add_spend_viewpager.class);
         startActivity(intent);
     }
 
