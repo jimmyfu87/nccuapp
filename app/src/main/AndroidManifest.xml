@@ -19,6 +19,7 @@
         <!--<meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" />-->
 
         <activity android:name=".Home"></activity>
+        <activity android:name=".add_spend_viewpager"></activity>
         <activity android:name=".add_type"></activity>
         <activity android:name=".add_book"></activity>
         <activity android:name=".add_expense"></activity>
