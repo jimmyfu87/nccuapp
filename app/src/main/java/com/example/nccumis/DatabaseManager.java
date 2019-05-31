@@ -39,6 +39,18 @@ public class DatabaseManager {
         database.insert(dbHelper.tb_name, null, contentValues);
 
     }
+    public void insert_In(int In_price,String In_date,String type_name,String book_name,String In_note,int user_id) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.IN_PRICE, In_price);
+        contentValues.put(dbHelper.IN_DATE, In_date);
+        contentValues.put(dbHelper.TYPE_NAME, type_name);
+        contentValues.put(dbHelper.BOOK_NAME, book_name);
+        contentValues.put(dbHelper.IN_NOTE, In_note);
+        contentValues.put(dbHelper.USER_ID, user_id);
+        database.insert(dbHelper.tb_name2, null, contentValues);
+
+    }
+
     public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type,int user_id) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.BOOK_NAME, book_name);
@@ -59,6 +71,18 @@ public class DatabaseManager {
         contentValues.put(dbHelper.EX_NOTE, ex_note);
         contentValues.put(dbHelper.USER_ID, user_id);
         database.update(dbHelper.tb_name, contentValues, dbHelper.EX_ID + "=" +"'"+ex_id+"'", null);
+
+    }
+
+    public void updateIncome(int In_id,int In_price,String In_date,String type_name,String book_name,String In_note,int user_id) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.IN_PRICE, In_price);
+        contentValues.put(dbHelper.IN_DATE, In_date);
+        contentValues.put(dbHelper.TYPE_NAME, type_name);
+        contentValues.put(dbHelper.BOOK_NAME, book_name);
+        contentValues.put(dbHelper.IN_NOTE, In_note);
+        contentValues.put(dbHelper.USER_ID, user_id);
+        database.update(dbHelper.tb_name2, contentValues, dbHelper.IN_ID + "=" +"'"+In_id+"'", null);
 
     }
 //
@@ -125,7 +149,54 @@ public class DatabaseManager {
         }
         return  Expenselist;
     }
+
+    public List<Income> fetchIncome(String starttime, String endtime) {
+        Cursor Income=database.rawQuery
+                ("select * from Income where dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"')",null);
+        List<Income> Incomelist=new ArrayList<>();
+        while (Income.moveToNext()){
+            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5),Income.getInt(6)));
+        }
+        return  Incomelist;
+    }
+    public List<Income> fetchIncomeWithbook(String starttime, String endtime, List<String> booklist) {
+        String result="select distinct * from Income where (dateTime(In_date) between datetime('"+starttime+"') and datetime('"+endtime+"'))"+" AND( "+"Book_name="+"'"+booklist.get(0)+"'";
+        if(booklist.size()>1){
+            for(int i=1;i<booklist.size();i++) {
+                result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
+            }
+        }
+        result=result+");";
+        Cursor Income=database.rawQuery
+                (result,null);
+        List<Income> Incomelist=new ArrayList<>();
+        while (Income.moveToNext()){
+            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5),Income.getInt(6)));
+        }
+        return  Incomelist;
+    }
+    public List<Income> fetchIncomeWithbookandtype(String starttime, String endtime, List<String> booklist,String type) {
+        String result="select distinct * from Income where (dateTime(In_date) between datetime('"+starttime+"') and datetime('"+endtime+"'))"+" AND(Type_name='"+type+"') AND( "+"Book_name="+"'"+booklist.get(0)+"'";
+        if(booklist.size()>1){
+            for(int i=1;i<booklist.size();i++) {
+                result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
+            }
+        }
+        result=result+");";
+        Cursor Income=database.rawQuery
+                (result,null);
+        List<Income> Incomelist=new ArrayList<>();
+        while (Income.moveToNext()){
+            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5),Income.getInt(6)));
+        }
+        return  Incomelist;
+    }
+
     public void deleteExpense(int ex_id) {
         database.delete(dbHelper.tb_name,dbHelper.EX_ID + " ='" + ex_id + "'",null);
+    }
+
+    public void deleteIncome(int In_id) {
+        database.delete(dbHelper.tb_name2,dbHelper.IN_ID + " ='" + In_id + "'",null);
     }
 }
