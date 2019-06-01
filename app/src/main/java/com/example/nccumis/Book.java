@@ -6,15 +6,13 @@ public class Book {
     private int Amount_start;
     private int Amount_remain;
     private String Currency_type;
-    private int User_id;
 
-    public Book(int id, String name, int amount_start, int amount_remain, String currency_type, int user_id) {
+    public Book(int id, String name, int amount_start, int amount_remain, String currency_type) {
         this.id = id;
         this.name = name;
         Amount_start = amount_start;
         Amount_remain = amount_remain;
         Currency_type = currency_type;
-        User_id = user_id;
     }
 
     public int getId() {
@@ -57,12 +55,5 @@ public class Book {
         Currency_type = currency_type;
     }
 
-    public int getUser_id() {
-        return User_id;
-    }
-
-    public void setUser_id(int user_id) {
-        User_id = user_id;
-    }
 }
 

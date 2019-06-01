@@ -7,9 +7,8 @@ public class Income {
     private  String Type_name;
     private  String Book_name;
     private  String In_note;
-    private  int User_id;
 
-    public Income(int id,int price ,String date,String typename,String bookname,String note,int user_id)
+    public Income(int id,int price ,String date,String typename,String bookname,String note)
     {
         In_id=id;
         In_price=price;
@@ -17,7 +16,6 @@ public class Income {
         Type_name=typename;
         Book_name=bookname;
         In_note=note;
-        User_id=user_id;
     }
 
     public int getIn_id() {
@@ -68,11 +66,5 @@ public class Income {
         In_note = in_note;
     }
 
-    public int getUser_id() {
-        return User_id;
-    }
 
-    public void setUser_id(int user_id) {
-        User_id = user_id;
-    }
 }

@@ -28,48 +28,33 @@ public class DatabaseManager {
     }
 
     //typeid,bookid暫用text
-    public void insert_Ex(int ex_price,String ex_date,String type_name,String book_name,String ex_note,int user_id) {
+    public void insert_Ex(int ex_price,String ex_date,String type_name,String book_name,String ex_note) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.EX_PRICE, ex_price);
         contentValues.put(dbHelper.EX_DATE, ex_date);
         contentValues.put(dbHelper.TYPE_NAME, type_name);
         contentValues.put(dbHelper.BOOK_NAME, book_name);
         contentValues.put(dbHelper.EX_NOTE, ex_note);
-        contentValues.put(dbHelper.USER_ID, user_id);
         database.insert(dbHelper.tb_name, null, contentValues);
 
     }
-    public void insert_In(int In_price,String In_date,String type_name,String book_name,String In_note,int user_id) {
+    public void insert_In(int In_price,String In_date,String type_name,String book_name,String In_note) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.IN_PRICE, In_price);
         contentValues.put(dbHelper.IN_DATE, In_date);
         contentValues.put(dbHelper.TYPE_NAME, type_name);
         contentValues.put(dbHelper.BOOK_NAME, book_name);
         contentValues.put(dbHelper.IN_NOTE, In_note);
-        contentValues.put(dbHelper.USER_ID, user_id);
         database.insert(dbHelper.tb_name2, null, contentValues);
 
     }
-
-    public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type,int user_id) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(dbHelper.BOOK_NAME, book_name);
-        contentValues.put(dbHelper.AMOUNT_START, amount_start);
-        contentValues.put(dbHelper.AMOUNT_REMAIN, amount_remain);
-        contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
-        contentValues.put(dbHelper.USER_ID, user_id);
-        database.insert(dbHelper.tb_name3, null, contentValues);
-
-    }
-
-    public void updateExpense(int ex_id,int ex_price,String ex_date,String type_name,String book_name,String ex_note,int user_id) {
+    public void updateExpense(int ex_id,int ex_price,String ex_date,String type_name,String book_name,String ex_note) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.EX_PRICE, ex_price);
         contentValues.put(dbHelper.EX_DATE, ex_date);
         contentValues.put(dbHelper.TYPE_NAME, type_name);
         contentValues.put(dbHelper.BOOK_NAME, book_name);
         contentValues.put(dbHelper.EX_NOTE, ex_note);
-        contentValues.put(dbHelper.USER_ID, user_id);
         database.update(dbHelper.tb_name, contentValues, dbHelper.EX_ID + "=" +"'"+ex_id+"'", null);
 
     }
@@ -86,22 +71,12 @@ public class DatabaseManager {
 //        }
 //        return cursor;
 //    }
-        public List<String> fetchBook() {
-            List<String> book = new ArrayList<>();
-            Cursor allbook=database.rawQuery
-                    ("select Book_name from Book" ,null);
-
-            while(allbook.moveToNext()){
-                book.add(allbook.getString(0));
-            }
-            return  book;
-        }
     public List<Expense> fetchExpense(String starttime, String endtime) {
         Cursor Expense=database.rawQuery
                 ("select * from Expense where dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"')",null);
         List<Expense> Expenselist=new ArrayList<>();
         while (Expense.moveToNext()){
-            Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5),Expense.getInt(6)));
+            Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5)));
         }
         return  Expenselist;
     }
@@ -117,7 +92,7 @@ public class DatabaseManager {
                 (result,null);
         List<Expense> Expenselist=new ArrayList<>();
         while (Expense.moveToNext()){
-            Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5),Expense.getInt(6)));
+            Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5)));
         }
         return  Expenselist;
     }
@@ -133,7 +108,7 @@ public class DatabaseManager {
                 (result,null);
         List<Expense> Expenselist=new ArrayList<>();
         while (Expense.moveToNext()){
-            Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5),Expense.getInt(6)));
+            Expenselist.add(new Expense(Expense.getInt(0),Expense.getInt(1),Expense.getString(2),Expense.getString(3),Expense.getString(4),Expense.getString(5)));
         }
         return  Expenselist;
     }
@@ -143,7 +118,7 @@ public class DatabaseManager {
                 ("select * from Income where dateTime(Ex_date) between datetime('"+starttime+"') and datetime('"+endtime+"')",null);
         List<Income> Incomelist=new ArrayList<>();
         while (Income.moveToNext()){
-            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5),Income.getInt(6)));
+            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5)));
         }
         return  Incomelist;
     }
@@ -159,7 +134,7 @@ public class DatabaseManager {
                 (result,null);
         List<Income> Incomelist=new ArrayList<>();
         while (Income.moveToNext()){
-            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5),Income.getInt(6)));
+            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5)));
         }
         return  Incomelist;
     }
@@ -175,7 +150,7 @@ public class DatabaseManager {
                 (result,null);
         List<Income> Incomelist=new ArrayList<>();
         while (Income.moveToNext()){
-            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5),Income.getInt(6)));
+            Incomelist.add(new Income(Income.getInt(0),Income.getInt(1),Income.getString(2),Income.getString(3),Income.getString(4),Income.getString(5)));
         }
         return  Incomelist;
     }
@@ -186,23 +161,6 @@ public class DatabaseManager {
 
     public void deleteIncome(int In_id) {
         database.delete(dbHelper.tb_name2,dbHelper.IN_ID + " ='" + In_id + "'",null);
-    }
-    public List<Book> fetchBookallattribute(List<String> booklist){
-        String result="select distinct * from book where "+"Book_name="+"'"+booklist.get(0)+"'";
-        if(booklist.size()>1){
-            for(int i=1;i<booklist.size();i++) {
-                result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
-            }
-        }
-        result=result+");";
-        Cursor Books=database.rawQuery
-                (result,null);
-        List<Book> Booklist=new ArrayList<>();
-        while (Books.moveToNext()){
-            Booklist.add(new Book(Books.getInt(0),Books.getString(1),Books.getInt(2),Books.getInt(3),Books.getString(4),Books.getInt(5)));
-        }
-        return  Booklist;
-
     }
     public void insert_Type(String type_name,String ExorIn) {
         ContentValues contentValues = new ContentValues();
@@ -237,15 +195,51 @@ public class DatabaseManager {
     public void deleteType(int type_id) {
         database.delete(dbHelper.tb_name4,dbHelper.TYPE_ID + " ='" + type_id + "'",null);
     }
-    public void updateBook(int book_id,String book_name,int amount_start,int amount_remain,String currency_type,int user_id) {
+
+    public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.BOOK_NAME, book_name);
         contentValues.put(dbHelper.AMOUNT_START, amount_start);
         contentValues.put(dbHelper.AMOUNT_REMAIN, amount_remain);
         contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
-        contentValues.put(dbHelper.USER_ID, user_id);
+        database.insert(dbHelper.tb_name3, null, contentValues);
+
+    }
+    public List<String> fetchBook() {
+        List<String> book = new ArrayList<>();
+        Cursor allbook=database.rawQuery
+                ("select Book_name from Book" ,null);
+
+        while(allbook.moveToNext()){
+            book.add(allbook.getString(0));
+        }
+        return  book;
+    }
+
+    public void updateBook(int book_id,String book_name,int amount_start,int amount_remain,String currency_type) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.BOOK_NAME, book_name);
+        contentValues.put(dbHelper.AMOUNT_START, amount_start);
+        contentValues.put(dbHelper.AMOUNT_REMAIN, amount_remain);
+        contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
         database.update(dbHelper.tb_name3, contentValues, dbHelper.BOOK_ID + "=" +"'"+book_id+"'", null);
 
+    }
+    public List<Book> fetchBookallattribute(List<String> booklist){
+        String result="select distinct * from book where "+"Book_name="+"'"+booklist.get(0)+"'";
+        if(booklist.size()>1){
+            for(int i=1;i<booklist.size();i++) {
+                result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
+            }
+        }
+        result=result+");";
+        Cursor Books=database.rawQuery
+                (result,null);
+        List<Book> Booklist=new ArrayList<>();
+        while (Books.moveToNext()){
+            Booklist.add(new Book(Books.getInt(0),Books.getString(1),Books.getInt(2),Books.getInt(3),Books.getString(4)));
+        }
+        return  Booklist;
     }
     public void deleteBook(int book_id) {
         database.delete(dbHelper.tb_name3,dbHelper.BOOK_ID + " ='" + book_id + "'",null);

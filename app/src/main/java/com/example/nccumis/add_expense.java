@@ -132,7 +132,7 @@ public class add_expense extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         DatabaseManager dbmanager = new DatabaseManager(getApplication());
                                         dbmanager.open();
-                                        dbmanager.updateExpense(saveDetailId, price, i_date, i_type_name, i_book_name, i_note, 1);
+                                        dbmanager.updateExpense(saveDetailId, price, i_date, i_type_name, i_book_name, i_note);
                                         dbmanager.close();
                                         //回查帳
                                         jumpTocheck_expense_detail();
@@ -158,7 +158,7 @@ public class add_expense extends AppCompatActivity {
                                         Snackbar.make(v, "完成記帳", Snackbar.LENGTH_SHORT).show();
                                         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
                                         dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                                        dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,i_note,1);            //將資料放到資料庫
+                                        dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,i_note);            //將資料放到資料庫
 //                                      BackupManager bm = new BackupManager(add_expense.this);
 //                                      bm.dataChanged();
                                         dbmanager.close();                                                                     //關閉資料庫
