@@ -9,6 +9,17 @@ public class Income {
     private  String In_note;
     private  int User_id;
 
+    public Income(int id,int price ,String date,String typename,String bookname,String note,int user_id)
+    {
+        In_id=id;
+        In_price=price;
+        In_date=date;
+        Type_name=typename;
+        Book_name=bookname;
+        In_note=note;
+        User_id=user_id;
+    }
+
     public int getIn_id() {
         return In_id;
     }

@@ -143,7 +143,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void jumpToadd_spend() {
-        Intent intent = new Intent(Home.this, add_spend_viewpager.class);
+        Intent intent = new Intent(Home.this, add_expense.class);
         startActivity(intent);
     }
 
