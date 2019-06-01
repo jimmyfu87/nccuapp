@@ -128,4 +128,68 @@ public class DatabaseManager {
     public void deleteExpense(int ex_id) {
         database.delete(dbHelper.tb_name,dbHelper.EX_ID + " ='" + ex_id + "'",null);
     }
+    public List<Book> fetchBookallattribute(List<String> booklist){
+        String result="select distinct * from book where "+"Book_name="+"'"+booklist.get(0)+"'";
+        if(booklist.size()>1){
+            for(int i=1;i<booklist.size();i++) {
+                result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
+            }
+        }
+        result=result+");";
+        Cursor Books=database.rawQuery
+                (result,null);
+        List<Book> Booklist=new ArrayList<>();
+        while (Books.moveToNext()){
+            Booklist.add(new Book(Books.getInt(0),Books.getString(1),Books.getInt(2),Books.getInt(3),Books.getString(4),Books.getInt(5)));
+        }
+        return  Booklist;
+
+    }
+    public void insert_Type(String type_name,String ExorIn) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.TYPE_NAME, type_name);
+        contentValues.put(dbHelper.EXPENSEORINCOME ,ExorIn);
+        database.insert(dbHelper.tb_name4, null, contentValues);
+
+    }
+    public List<Type> fetchType(String ExpenseOrIncome) {
+        List<Type> typelist = new ArrayList<>();
+        if(ExpenseOrIncome.equals("Expense")){
+            String result="select * from Type WHERE ExpenseorIncome='Expense'";
+        }
+        else if(ExpenseOrIncome.equals("Income")){
+            String result="select * from Type WHERE ExpenseorIncome='Income'";
+        }
+        Cursor alltype=database.rawQuery
+                ("select * from Type" ,null);
+
+        while(alltype.moveToNext()){
+            typelist.add(new Type(alltype.getInt(0),alltype.getString(1),alltype.getString(2)));
+        }
+        return typelist;
+    }
+    public void updateType(int type_id,String type_name,String ExorIn) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.TYPE_NAME, type_name);
+        contentValues.put(dbHelper.EXPENSEORINCOME, ExorIn);
+        database.update(dbHelper.tb_name4, contentValues, dbHelper.TYPE_ID + "=" +"'"+type_id+"'", null);
+
+    }
+    public void deleteType(int type_id) {
+        database.delete(dbHelper.tb_name4,dbHelper.TYPE_ID + " ='" + type_id + "'",null);
+    }
+    public void updateBook(int book_id,String book_name,int amount_start,int amount_remain,String currency_type,int user_id) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.BOOK_NAME, book_name);
+        contentValues.put(dbHelper.AMOUNT_START, amount_start);
+        contentValues.put(dbHelper.AMOUNT_REMAIN, amount_remain);
+        contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
+        contentValues.put(dbHelper.USER_ID, user_id);
+        database.update(dbHelper.tb_name3, contentValues, dbHelper.BOOK_ID + "=" +"'"+book_id+"'", null);
+
+    }
+    public void deleteBook(int book_id) {
+        database.delete(dbHelper.tb_name3,dbHelper.BOOK_ID + " ='" + book_id + "'",null);
+    }
+
 }

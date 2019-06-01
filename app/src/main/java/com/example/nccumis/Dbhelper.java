@@ -10,6 +10,7 @@ public class Dbhelper extends SQLiteOpenHelper {
     static final String tb_name="Expense";
     static final String tb_name2="Income";
     static final String tb_name3="Book";
+    static final String tb_name4="Type";
     static final String create_tb=
             "CREATE TABLE IF NOT EXISTS " + "Expense" + " ("
             + "Ex_id" + " INTEGER primary key autoincrement, " //支出id
@@ -38,6 +39,11 @@ public class Dbhelper extends SQLiteOpenHelper {
                     + "Amount_remain" + " INTEGER , "
                     + "Currency_type" + " text , "
                     + "User_id" + " INTEGER " + ");";
+    static final String create_tb4=
+            "CREATE TABLE IF NOT EXISTS " + "Type" + " ("
+                    + "Type_id" + " INTEGER primary key autoincrement, "
+                    + "Type_name" + " text , "
+                    + "ExpenseorIncome" + " text " + ");";
     static final String insert_default_book=
             "INSERT INTO " + "Book" + " (Book_name,Amount_start,Amount_remain,Currency_type,User_id) VALUES"
                     + "('現金帳本',0,0,'TWD',1)"+ ",('美金帳本',0,0,'TWD',1)"+",('支票帳本',0,0,'TWD',1);";
@@ -77,6 +83,11 @@ public class Dbhelper extends SQLiteOpenHelper {
     static final String CURRENCY_TYPE = "Currency_type";
 //    static final String USER_ID = "User_id";
 
+    //類別欄位
+    static final String TYPE_ID = "Type_id";
+    //    static final String TYPE_NAME = "Type_name";
+    static final String EXPENSEORINCOME= "ExpenseorIncome";
+
 
 
     Dbhelper(Context c) {
@@ -90,6 +101,7 @@ public class Dbhelper extends SQLiteOpenHelper {
             db.execSQL(create_tb);
             db.execSQL(create_tb2);
             db.execSQL(create_tb3);
+            db.execSQL(create_tb4);
             db.execSQL(insert_default_book);
             db.execSQL(insert_fake_expense);
     }

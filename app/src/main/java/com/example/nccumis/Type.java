@@ -4,6 +4,7 @@ public class Type {
     private int id;
     private int price;
     private String typeName;
+    private String ExpenseorIncome;
 
     public Type(int id, int price, String typeName){
         this.id = id;
@@ -14,6 +15,11 @@ public class Type {
     public Type(int price, String typeName){
         this.price = price;
         this.typeName = typeName;
+    }
+    public Type(int id,String name,String ExorIn){
+        this.id=id;
+        this.typeName=name;
+        this.ExpenseorIncome=ExorIn;
     }
 
     public void setId(int id) {
@@ -39,4 +45,13 @@ public class Type {
     public String getTypeName() {
         return typeName;
     }
+
+    public void setExpenseorIncome(String ExorIn){
+        this.ExpenseorIncome=ExorIn;
+    }
+    public String getExpenseorIncome(){
+        return ExpenseorIncome;
+    }
+
+
 }
