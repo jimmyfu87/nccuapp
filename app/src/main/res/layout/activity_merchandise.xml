@@ -5,53 +5,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".merchandise"
     android:padding="16dp"
     android:orientation="vertical"
+
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+   >
         <Button
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="回上頁"
             />
         <Button
-            android:layout_marginLeft="173dp"
+            
+            android:layout_gravity="right"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="網購首頁"/>
 
-    </LinearLayout>
+</LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="400dp">
     </WebView>
+</LinearLayout>
 
-    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <Button
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:text="一銀回饋資訊"
-        android:layout_marginLeft="90dp"/>
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="加入許願池"
-        android:layout_marginLeft="5dp"
-        />
+        android:layout_gravity="center"        />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="加入許願池"
+            android:layout_marginLeft="5dp"
+            />
+
+
 
     </LinearLayout>
 

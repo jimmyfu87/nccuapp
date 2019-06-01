@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nccumis">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CountMoney" android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity android:name=".OnlineShopping"></activity>
+        <activity
+            android:name=".CountMoney"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".LogIn" />
         <activity android:name=".Home" />
         <activity android:name=".add_type" />
@@ -22,8 +25,7 @@
         <activity android:name=".check_income" />
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity
-            android:name=".merchandise">
+        <activity android:name=".merchandise">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
