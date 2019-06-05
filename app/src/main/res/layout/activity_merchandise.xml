@@ -27,7 +27,8 @@
             android:layout_gravity="right"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="網購首頁"/>
+            android:text="網購首頁"
+            android:layout_marginLeft="40dp"/>
 
 </LinearLayout>
 
@@ -38,7 +39,7 @@
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="600dp">
     </WebView>
 </LinearLayout>
 
