@@ -21,10 +21,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -222,6 +227,7 @@ public class check_expense extends AppCompatActivity {
                     setList();
                     setListViewHeightBasedOnChildren(TypeListView);
                     setPieChart();
+                    setLineChart();
                 }
             }
         });
@@ -241,6 +247,7 @@ public class check_expense extends AppCompatActivity {
                 setList();
                 setListViewHeightBasedOnChildren(TypeListView);
                 setPieChart();
+                setLineChart();
             }
         });
 
@@ -261,6 +268,7 @@ public class check_expense extends AppCompatActivity {
                 setList();
                 setListViewHeightBasedOnChildren(TypeListView);
                 setPieChart();
+                setLineChart();
             }
         });
 
@@ -512,6 +520,39 @@ public class check_expense extends AppCompatActivity {
         expenseChart.setCenterTextSize(20);
 
     }
+
+    public void setLineChart(){
+        LineChart lineChart = (LineChart) findViewById(R.id.linechart);
+
+        lineChart.setEnabled(true);
+        lineChart.setScaleEnabled(false);
+
+        ArrayList<Entry> values = new ArrayList<Entry>();
+        values.add(new Entry(0, 60f));
+        values.add(new Entry(1, 50f));
+        values.add(new Entry(2, 70f));
+        values.add(new Entry(3, 30f));
+        values.add(new Entry(4, 50f));
+        values.add(new Entry(5, 60f));
+        values.add(new Entry(6, 65f));
+//        setLineChartValue(values);
+
+        LineDataSet set1 = new LineDataSet(values, "Data Set 1");
+        set1.setFillAlpha(110);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(set1);
+
+        LineData data = new LineData(dataSets);
+
+        lineChart.setData(data);
+    }
+
+    //設定折線圖的x,y值
+    public void setLineChartValue(ArrayList<Entry> values){
+        
+    }
+
 
     //暫存日期
     public void setdateInfo(int startOrEnd, int year, int month, int day){

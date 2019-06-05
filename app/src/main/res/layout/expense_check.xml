@@ -151,7 +151,23 @@
                 android:layout_marginTop="10dp">
 
             </com.github.mikephil.charting.charts.PieChart>
+
         </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/linechart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+            </com.github.mikephil.charting.charts.LineChart>
+        </LinearLayout>
+
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
