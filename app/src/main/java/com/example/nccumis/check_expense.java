@@ -461,7 +461,7 @@ public class check_expense extends AppCompatActivity {
         }
         //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
-
+//
     public void setList(){
         sortListData();
         initListData();
