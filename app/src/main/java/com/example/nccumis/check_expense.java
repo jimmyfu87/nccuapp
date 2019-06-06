@@ -51,6 +51,7 @@ public class check_expense extends AppCompatActivity {
             Color.rgb(192, 255, 140), Color.rgb(255, 247, 140), Color.rgb(255, 208, 140), Color.rgb(140, 234, 255),
             Color.rgb(255, 140, 157)
     };
+    private List<String> oddMonth = new ArrayList<String>();
 
     private List<Integer> getPriceData = new ArrayList<Integer>();
     private List<String> getTypeName = new ArrayList<String>();
@@ -69,6 +70,7 @@ public class check_expense extends AppCompatActivity {
     private int yearEnd = 0;
     private int monthEnd = 0;
     private int dayEnd = 0;
+    private String lineChartName;
 
     private List<Expense> select_expense = new ArrayList<Expense>();
 
@@ -93,6 +95,7 @@ public class check_expense extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
+        initOddMonth();
 
 //        pager = (ViewPager) findViewById(R.id.pager);
 //
@@ -130,6 +133,7 @@ public class check_expense extends AppCompatActivity {
             setList();
             setListViewHeightBasedOnChildren(TypeListView);
             setPieChart();
+            setLineChart();
         }else {
             //圖表
             setExpenseData(select_expense);
@@ -281,6 +285,15 @@ public class check_expense extends AppCompatActivity {
             }
         });
     }
+    public void initOddMonth(){
+        oddMonth.add("1");
+        oddMonth.add("3");
+        oddMonth.add("5");
+        oddMonth.add("7");
+        oddMonth.add("8");
+        oddMonth.add("10");
+        oddMonth.add("12");
+    }
 
     public void showDatePickDlg(final int checknum) {
         Calendar calendar = Calendar.getInstance();
@@ -291,10 +304,10 @@ public class check_expense extends AppCompatActivity {
                 // -1是startDate  1是EndDate
                 if(checknum == START_DATE){
                     check_expense.this.dateStart_input.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
-                    set_start_dateformat(year,monthOfYear,dayOfMonth);
+                    start_date = set_dateformat(year,monthOfYear,dayOfMonth);
                 }else{
                     check_expense.this.dateEnd_input.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
-                    set_end_dateformat(year,monthOfYear,dayOfMonth);
+                    end_date = set_dateformat(year,monthOfYear,dayOfMonth);
                 }
                 setdateInfo(checknum,year,monthOfYear,dayOfMonth);
             }
@@ -528,29 +541,97 @@ public class check_expense extends AppCompatActivity {
         lineChart.setScaleEnabled(false);
 
         ArrayList<Entry> values = new ArrayList<Entry>();
-        values.add(new Entry(0, 60f));
-        values.add(new Entry(1, 50f));
-        values.add(new Entry(2, 70f));
-        values.add(new Entry(3, 30f));
-        values.add(new Entry(4, 50f));
-        values.add(new Entry(5, 60f));
-        values.add(new Entry(6, 65f));
-//        setLineChartValue(values);
+        setLineChartValue(values);
 
-        LineDataSet set1 = new LineDataSet(values, "Data Set 1");
-        set1.setFillAlpha(110);
+        LineDataSet set = new LineDataSet(values, this.lineChartName);
+        set.setFillAlpha(110);
+        set.setLineWidth(3f);
+        set.setValueTextSize(12f);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(set1);
+        dataSets.add(set);
 
         LineData data = new LineData(dataSets);
 
         lineChart.setData(data);
     }
-
     //設定折線圖的x,y值
     public void setLineChartValue(ArrayList<Entry> values){
-        
+        //x軸以年、月、天 為間隔
+        String xSpace = (this.yearEnd - this.yearStart > 0) ? "year" :((this.monthEnd - this.monthStart > 0)? "month" : "day");
+        switch (xSpace){
+            case "year":
+                for(int i = this.yearStart; i <= this.yearEnd; i++){
+                    int countMoneyPerYear = 0;
+                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                    dbmanager.open();
+                    dbmanager.close();
+                    List<Expense> Ex_list = new ArrayList<Expense>();
+                    String s_date = set_dateformat(i,1,1);
+                    String e_date = set_dateformat(i,12,31);
+                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
+                    dbmanager.close();
+                    for(int j = 0; j < Ex_list.size(); j++){
+                        countMoneyPerYear += Ex_list.get(j).getEx_price();
+                    }
+                    values.add(new Entry(i,countMoneyPerYear));
+//                    System.out.println("year:"+i +", "+countMoneyPerYear);
+                }
+                this.lineChartName = this.yearStart +"~"+ this.yearEnd + "年支出";
+                break;
+            case "month":
+                for(int i = this.monthStart; i <= this.monthEnd; i++){
+                    int countMoneyPerMonth = 0;
+                    int endDay = 0;
+                    if(i == 2){
+                        if((this.yearStart % 4 == 0 && this.yearStart % 100 != 0) || (this.yearStart % 400 == 0 && this.yearStart % 3200 != 0)){
+                            endDay = 29;
+                        }else{
+                            endDay = 28;
+                        }
+                    }else if(oddMonth.contains(Integer.toString(i))){
+                        endDay = 31;
+                    }else {
+                        endDay = 30;
+                    }
+//                    System.out.println("月天數"+endDay);
+                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                    dbmanager.open();
+                    dbmanager.close();
+                    List<Expense> Ex_list = new ArrayList<Expense>();
+                    String s_date = set_dateformat(this.yearStart,i,1);
+                    String e_date = set_dateformat(this.yearStart,i,endDay);
+                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
+                    dbmanager.close();
+                    for(int j = 0; j < Ex_list.size(); j++){
+                        countMoneyPerMonth += Ex_list.get(j).getEx_price();
+                    }
+                    values.add(new Entry(i,countMoneyPerMonth));
+//                    System.out.println("month:"+i +", "+countMoneyPerMonth);
+                }
+                this.lineChartName = this.yearStart+"/" + this.monthStart +"~"+ this.yearEnd+"/"+this.monthEnd+ "月支出";
+                break;
+            case "day":
+                for(int i = this.dayStart; i <= this.dayEnd; i++){
+                    int countMoneyPerDay = 0;
+                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                    dbmanager.open();
+                    dbmanager.close();
+                    List<Expense> Ex_list = new ArrayList<Expense>();
+                    String s_date = set_dateformat(this.yearStart,this.monthStart,i);
+                    String e_date = set_dateformat(this.yearStart,this.monthStart,i);
+                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
+                    dbmanager.close();
+                    for(int j = 0; j < Ex_list.size(); j++){
+                        countMoneyPerDay += Ex_list.get(j).getEx_price();
+                    }
+                    values.add(new Entry(i,countMoneyPerDay));
+//                    System.out.println("day:"+i +", "+countMoneyPerDay);
+
+                }
+                this.lineChartName = this.yearStart+"/" + this.monthStart+"/" + this.dayStart +"~"+ this.yearEnd+"/" + this.monthEnd+"/" + this.dayEnd + "日支出";
+                break;
+        }
     }
 
 
@@ -569,14 +650,6 @@ public class check_expense extends AppCompatActivity {
 
     //根據當月自動設起訖日期
     public void autoSetDateForMonthSearch(){
-        List<String> oddMonth = new ArrayList<String>();
-        oddMonth.add("1");
-        oddMonth.add("3");
-        oddMonth.add("5");
-        oddMonth.add("7");
-        oddMonth.add("8");
-        oddMonth.add("11");
-
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         String year = Integer.toString(cal.get(Calendar.YEAR));
@@ -584,28 +657,28 @@ public class check_expense extends AppCompatActivity {
 
         this.dateStart_input.setText(year + "年" + month + "月" + 1+"日");
         setdateInfo(START_DATE,Integer.parseInt(year), Integer.parseInt(month),1);
-        set_start_dateformat(Integer.parseInt(year),Integer.parseInt(month),1);
+        start_date = set_dateformat(Integer.parseInt(year),Integer.parseInt(month),1);
 
         if(month == "2"){
             int intYear = Integer.parseInt(year);
             if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
                 this.dateEnd_input.setText(year+"年"+month+"月"+29+"日");
                 setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),29);
-                set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),29);
+                end_date = set_dateformat(Integer.parseInt(year),Integer.parseInt(month),29);
 
             }else {
                 this.dateEnd_input.setText(year+"年"+month+"月"+28+"日");
                 setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),28);
-                set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),28);
+                end_date = set_dateformat(Integer.parseInt(year),Integer.parseInt(month),28);
             }
         }else if(oddMonth.contains(month)){
             this.dateEnd_input.setText(year+"年"+month+"月"+31+"日");
             setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),31);
-            set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),31);
+            end_date = set_dateformat(Integer.parseInt(year),Integer.parseInt(month),31);
         }else {
             this.dateEnd_input.setText(year+"年"+month+"月"+30+"日");
             setdateInfo(END_DATE,Integer.parseInt(year), Integer.parseInt(month),30);
-            set_end_dateformat(Integer.parseInt(year),Integer.parseInt(month),30);
+            end_date = set_dateformat(Integer.parseInt(year),Integer.parseInt(month),30);
         }
         this.dateEnd_input.setError(null);
         //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
@@ -619,17 +692,17 @@ public class check_expense extends AppCompatActivity {
 
         this.dateStart_input.setText(year + "年" + 1 + "月" + 1+"日");
         setdateInfo(START_DATE,Integer.parseInt(year), 1,1);
-        set_start_dateformat(Integer.parseInt(year),1,1);
+        start_date = set_dateformat(Integer.parseInt(year),1,1);
 
         this.dateEnd_input.setText(year + "年" + 12 + "月" + 31+"日");
         setdateInfo(END_DATE,Integer.parseInt(year), 12,31);
-        set_end_dateformat(Integer.parseInt(year),12,31);
+        end_date = set_dateformat(Integer.parseInt(year),12,31);
         this.dateEnd_input.setError(null);
     }
 
     //檢查輸入日期是否有誤
     public boolean checkDateInput(View view){
-        if(this.yearStart > this.yearEnd || this.monthStart > monthEnd || this.dayStart > dayEnd){
+        if(this.yearStart > this.yearEnd || (this.yearStart < this.yearEnd && this.monthStart > monthEnd) || (this.yearStart < this.yearEnd && this.monthStart < monthEnd && this.dayStart > dayEnd)){
             this.dateEnd_input.setError("結束日期小於開始日期");
             Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
             return false;
@@ -695,7 +768,7 @@ public class check_expense extends AppCompatActivity {
         return resetDate;
     }
 
-    public void set_start_dateformat(int year,int month,int day){
+    public String set_dateformat(int year,int month,int day){
         String st_month;
         String st_day;
         if(month<10){
@@ -712,26 +785,7 @@ public class check_expense extends AppCompatActivity {
         else{
             st_day=Integer.toString(day);
         }
-        start_date=year+"-"+st_month+"-"+st_day;
-    }
 
-    public void set_end_dateformat(int year,int month,int day){
-        String st_month;
-        String st_day;
-        if(month<10){
-            st_month=Integer.toString(month);
-            st_month="0"+st_month;
-        }
-        else{
-            st_month=Integer.toString(month);
-        }
-        if(day<10){
-            st_day=Integer.toString(day);
-            st_day="0"+st_day;
-        }
-        else{
-            st_day=Integer.toString(day);
-        }
-        end_date=year+"-"+st_month+"-"+st_day;
+        return year+"-"+st_month+"-"+st_day;
     }
 }
