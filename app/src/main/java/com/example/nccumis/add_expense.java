@@ -217,6 +217,7 @@ public class add_expense extends AppCompatActivity {
         });
         this.input_type = (Spinner)findViewById(R.id.type_input);
         input_type.setAdapter(typeList);
+
         //取回type的值
         input_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -229,6 +230,7 @@ public class add_expense extends AppCompatActivity {
 
             }
         });
+
 
         //帳本，已串聯Book的資料庫
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;

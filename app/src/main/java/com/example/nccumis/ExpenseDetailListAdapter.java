@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//流水帳
 public class ExpenseDetailListAdapter extends ArrayAdapter {
     //to reference the Activity
     private String saveDetailStartdate;

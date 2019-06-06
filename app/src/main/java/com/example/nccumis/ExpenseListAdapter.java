@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+//查帳下面的
 public class ExpenseListAdapter extends ArrayAdapter {
     //to reference the Activity
     private final Activity context;

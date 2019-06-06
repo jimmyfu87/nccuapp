@@ -1,12 +1,16 @@
 package com.example.nccumis;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,6 +25,7 @@ import java.util.List;
 
 public class add_income extends AppCompatActivity {
     public static final int INCOME = 1;
+    private boolean detail = false;
     private Button lastPage;
     private Button newIncome;
     private Button confirm;
@@ -37,11 +42,16 @@ public class add_income extends AppCompatActivity {
     private List<String> type = new ArrayList<String>();        //傳給ArrayAdapter的參數
     private List<String> book = new ArrayList<String>();
 
-    public List<String> dbBookData = new ArrayList<String>();         //接資料庫資料，Type還沒做!!!!!
-    public List<String> dbTypeData = new ArrayList<String>();
+    public List<Type> dbTypeData = new ArrayList<Type>();   //接資料庫資料
 
-    private EditText i_price,i_note,i_fixed,i_userid;                                             //宣告需要輸入的變數的EditText
-    private String i_date,i_typeid,i_bookid;
+    private String saveDetailStartdate ="";
+    private String saveDetailEnddate ="";
+    private ArrayList<String> saveDetailBooksArray = new ArrayList<String>();
+    private String saveDetailDate="";
+    private int saveDetailId =0;
+
+    private EditText i_userid;                  //宣告需要輸入的變數的EditText
+    private String i_price,i_note,i_date,i_type_name,i_book_name;
 
 
     @Override
@@ -50,8 +60,8 @@ public class add_income extends AppCompatActivity {
         setContentView(R.layout.income_add);
 
         //Spinner ArrayAdapter 初始化
-        initType();
-        initBook();
+        updateType();
+        updateBook();
 
         ArrayAdapter typeList = new ArrayAdapter<String>(add_income.this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -60,12 +70,16 @@ public class add_income extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
 
-        //不儲存回首頁
+        //不儲存回首頁 或 回流水帳
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToHome();
+                if(detail){
+//                    jumpTocheck_expense_detail();
+                }else{
+                    jumpToHome();
+                }
             }
         });
 
@@ -84,13 +98,66 @@ public class add_income extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkInputInfo()){
-                    //到首頁
-                    jumpToHome();
+                    if(detail){
+                        i_price = input_amount.getText().toString();
+                        int price=Integer.parseInt(i_price);                               //將price轉為int
+                        i_note = input_note.getText().toString();
+                        new AlertDialog.Builder(add_income.this)
+                                .setTitle("記帳資訊確認")
+                                .setMessage("金額："+i_price+"\n"+"日期："+i_date+"\n"+"類別："+i_type_name+"\n"+"帳本："+i_book_name+"\n"+"備註："+i_note)
+                                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DatabaseManager dbmanager = new DatabaseManager(getApplication());
+                                        dbmanager.open();
+                                        dbmanager.updateExpense(saveDetailId, price, i_date, i_type_name, i_book_name, i_note);
+                                        dbmanager.close();
+                                        //回查帳
+//                                        jumpTocheck_income_detail();
+                                    }
+                                })
+                                .setNeutralButton("返回", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Snackbar.make(v, "返回記帳頁面", Snackbar.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .show();
+                    }else{
+                        i_price = input_amount.getText().toString();
+                        int price=Integer.parseInt(i_price);                               //將price轉為int
+                        i_note = input_note.getText().toString();
+                        new AlertDialog.Builder(add_income.this)
+                                .setTitle("記帳資訊確認")
+                                .setMessage("金額："+i_price+"\n"+"日期："+i_date+"\n"+"類別："+i_type_name+"\n"+"帳本："+i_book_name+"\n"+"備註："+i_note)
+                                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Snackbar.make(v, "完成記帳", Snackbar.LENGTH_SHORT).show();
+                                        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
+                                        dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
+                                        dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,i_note);            //將資料放到資料庫
+//                                      BackupManager bm = new BackupManager(add_expense.this);
+//                                      bm.dataChanged();
+                                        dbmanager.close();                                                                     //關閉資料庫
+                                        //到首頁
+                                        jumpToHome();
+                                    }
+                                })
+                                .setNeutralButton("返回", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Snackbar.make(v, "返回記帳頁面", Snackbar.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .show();
+                    }
                 }
             }
         });
         //金額
         input_amount = (EditText)findViewById(R.id.amount_input);
+        i_price = input_amount.getText().toString();
 
         //日期
         input_date = (EditText)findViewById(R.id.date_input);
@@ -128,13 +195,21 @@ public class add_income extends AppCompatActivity {
         input_type = (Spinner)findViewById(R.id.type_input);
         input_type.setAdapter(typeList);
 
-        //帳本，已串聯Book的資料庫
-        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        dbmanager.open();
-        this.dbBookData = dbmanager.fetchBook();           //可直接調用select_expense的資訊
-        dbmanager.close();
-        updateBook();
+        //取回type的值
+        input_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                i_type_name = input_type.getSelectedItem().toString();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        //帳本，已串聯Book的資料庫
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,24 +221,50 @@ public class add_income extends AppCompatActivity {
         input_book = (Spinner)findViewById(R.id.book_input);
         input_book.setAdapter(bookList);
 
+        //取回book的值
+        input_book.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                i_book_name = input_book.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         //備註
         input_note = (EditText)findViewById(R.id.note_input);
+        i_note = input_note.getText().toString();
 
         //從add_book 或 add_type 返回 填過的資料自動傳入
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
         if(getSaveBag != null){
+            this.detail = getSaveBag.getBoolean("detail");
             input_amount.setText(getSaveBag.getString("amount"));
-            input_date.setText(getSaveBag.getString("date"));
+            i_price = getSaveBag.getString("amount");
+            input_date.setText((detail)?resetDateformat(getSaveBag.getString("date")):getSaveBag.getString("date"));
+            i_date = getSaveBag.getString("date");
             int typePosition = typeList.getPosition(getSaveBag.getString("type"));
             input_type.setSelection(typePosition);
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
             input_book.setSelection(bookPosition);
             input_note.setText(getSaveBag.getString("note"));
+            i_note = getSaveBag.getString("note");
             updateBook();
+            updateType();
             input_book.setAdapter(bookList);
+            if(detail){
+                saveDetailId=getSaveBag.getInt("id");
+                saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
+                saveDetailEnddate = getSaveBag.getString("saveDetailEnddate");
+                saveDetailBooksArray = getSaveBag.getStringArrayList("selectBooks");
+                saveDetailDate=getSaveBag.getString("date");
+            }
+
         }
 
     }
@@ -215,32 +316,61 @@ public class add_income extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    //初始化類別
-    public void initType(){
-        String[] typeArr = {"薪水", "投資" ,"發票中獎","樂透中獎", "其他"};
-        for(int i = 0; i < typeArr.length; i++){
-            this.type.add(typeArr[i]);
+    public void setdateformat(int year,int month,int day){
+        String st_month;
+        String st_day;
+        if(month<10){
+            st_month=Integer.toString(month);
+            st_month="0"+st_month;
+        }
+        else{
+            st_month=Integer.toString(month);
+        }
+        if(day<10){
+            st_day=Integer.toString(day);
+            st_day="0"+st_day;
+        }
+        else{
+            st_day=Integer.toString(day);
+        }
+        i_date=year+"-"+st_month+"-"+st_day;
+    }
+
+    public String resetDateformat(String date){
+        String resetDate = "";
+        int index = 0;
+
+        for(String str : date.split("-")){
+            resetDate += (Integer.parseInt(str) < 10) ? str.substring(1): str;
+            if(index == 0){
+                resetDate += "年";
+            }else if(index == 1){
+                resetDate +="月";
+            }else if(index == 2){
+                resetDate += "日";
+            }
+            index++;
+        }
+
+        return resetDate;
+    }
+
+    public void updateType(){
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+        dbmanager.open();
+        this.dbTypeData = dbmanager.fetchType("Expense");
+        dbmanager.close();
+        for(int i = 0; i < this.dbTypeData.size(); i++){
+            this.type.add(dbTypeData.get(i).getTypeName());
         }
     }
 
-//    public void updateType(){
-//
-//    }
-
-    //帳本初始設定
-    public void initBook() {
-        this.book.add("現金帳本");
-    }
 
     public void updateBook(){
-        for(int i = 0 ;i < dbBookData.size();i++){
-            //System.out.println(dbBookData.get(i));
-            if(book.contains(dbBookData.get(i))){
-                continue;
-            }else{
-                book.add(dbBookData.get(i));
-            }
-        }
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+        dbmanager.open();
+        this.book = dbmanager.fetchBook();
+        dbmanager.close();
     }
 
     public void jumpToHome(){
@@ -279,4 +409,15 @@ public class add_income extends AppCompatActivity {
         Intent intent = new Intent(add_income.this,add_expense.class);
         startActivity(intent);
     }
+
+//    public void jumpTocheck_income_detail(){
+//        Intent intent = new Intent(add_income.this, check_income_detail.class);
+//        Bundle detailData = new Bundle();
+//        detailData.putString("typeName", input_type.getSelectedItem().toString());
+//        detailData.putString("startDate", saveDetailStartdate);
+//        detailData.putString("endDate", saveDetailEnddate);
+//        detailData.putStringArrayList("selectBooks", saveDetailBooksArray);
+//        intent.putExtras(detailData);
+//        startActivity(intent);
+//    }
 }
