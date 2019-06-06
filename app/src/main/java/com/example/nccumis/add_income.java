@@ -217,7 +217,7 @@ public class add_income extends AppCompatActivity {
 
     //初始化類別
     public void initType(){
-        String[] typeArr = {"薪水", "發票中獎","樂透中獎", "其他"};
+        String[] typeArr = {"薪水", "投資" ,"發票中獎","樂透中獎", "其他"};
         for(int i = 0; i < typeArr.length; i++){
             this.type.add(typeArr[i]);
         }

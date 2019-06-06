@@ -53,7 +53,7 @@ public class Dbhelper extends SQLiteOpenHelper {
                     +",('其他','Expense');";
     static final String insert_default_income_type=
             "INSERT INTO " + "Type" + " (Type_name,ExpenseorIncome) VALUES"
-                    + "('薪水','Income')"+ ",('投資','Income')"+ ",('投資','Income')"+ ",('樂透中獎','Income')"+ ",('發票中獎','Income')"
+                    + "('薪水','Income')"+ ",('投資','Income')"+ ",('樂透中獎','Income')"+ ",('發票中獎','Income')"
                     +",('其他','Income');";
     static final String insert_fake_expense=
             "INSERT INTO " + "Expense" + " (Ex_price,Ex_date,Type_name,Book_name,Ex_note) VALUES"
@@ -63,6 +63,15 @@ public class Dbhelper extends SQLiteOpenHelper {
                     "(300,'2019-05-13','電話費','現金帳本','買東西'),(500,'2019-05-16','投資','購物帳本','買東西')," +
                     "(300,'2019-05-17','零食','現金帳本','買東西'),(600,'2019-05-20','早餐','現金帳本','買東西')," +
                     "(500,'2019-05-23','早餐','現金帳本','買東西'),(700,'2019-05-28','投資','旅遊帳本','買東西');";
+
+//    static final String insert_fake_income=
+//            "INSERT INTO " + "Income" + " (In_price,In_date,Type_name,Book_name,In_note) VALUES"
+//                    + "(500,'2019-05-01','投資','現金帳本','買東西'),(1000,'2019-05-02','交通','購物帳本','買東西')," +
+//                    "(300,'2019-05-03','早餐','現金帳本','買東西'),(500,'2019-05-06','投資','現金帳本','買東西')," +
+//                    "(600,'2019-05-08','衣物','旅遊帳本','買東西'),(3200,'2019-05-10','娛樂','現金帳本','買東西')," +
+//                    "(300,'2019-05-13','電話費','現金帳本','買東西'),(500,'2019-05-16','投資','購物帳本','買東西')," +
+//                    "(300,'2019-05-17','零食','現金帳本','買東西'),(600,'2019-05-20','早餐','現金帳本','買東西')," +
+//                    "(500,'2019-05-23','早餐','現金帳本','買東西'),(700,'2019-05-28','投資','旅遊帳本','買東西');";
 
     private SQLiteDatabase db;
     //支出欄位

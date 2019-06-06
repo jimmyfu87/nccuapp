@@ -36,21 +36,19 @@ public class add_expense extends AppCompatActivity {
     private EditText input_date;
     private Spinner input_type;
     private Spinner input_book;                          //改成final才能使用
-    private EditText input_payer;
     private EditText input_note;
 
     private RadioButton newBookBtn;
     private RadioButton newTypeBtn;
 
-    private Button scanInvoice;
-    private Button regularExpense;
+//    private Button scanInvoice;
+//    private Button regularExpense;
 
 
     private List<String> type = new ArrayList<String>();         //傳給ArrayAdapter的參數
     private List<String> book = new ArrayList<String>();
 
-    public List<String> dbBookData = new ArrayList<>();         //接資料庫資料，Type還沒做!!!!!
-    public List<String> dbTypeData = new ArrayList<>();
+    public List<Type> dbTypeData = new ArrayList<>();    //接資料庫資料
 
     private String saveDetailStartdate ="";
     private String saveDetailEnddate ="";
@@ -82,8 +80,8 @@ public class add_expense extends AppCompatActivity {
 
 
         //Spinner ArrayAdapter 初始化
-        initType();
-        initBook();
+        updateType();
+        updateBook();
 
         ArrayAdapter typeList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -233,12 +231,6 @@ public class add_expense extends AppCompatActivity {
         });
 
         //帳本，已串聯Book的資料庫
-        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        dbmanager.open();
-        this.dbBookData = dbmanager.fetchBook();           //可直接調用select_expense的資訊
-        dbmanager.close();
-        updateBook();
-
         this.newBookBtn = (RadioButton)findViewById(R.id.newBookBtn) ;
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -289,6 +281,7 @@ public class add_expense extends AppCompatActivity {
             input_note.setText(getSaveBag.getString("note"));
             i_note = getSaveBag.getString("note");
             updateBook();
+            updateType();
             input_book.setAdapter(bookList);
             if(detail){
                 saveDetailId=getSaveBag.getInt("id");
@@ -401,32 +394,23 @@ public class add_expense extends AppCompatActivity {
         return resetDate;
     }
 
-    //初始化類別
-    public void initType(){
-        String[] typeArr = {"早餐", "午餐", "晚餐", "飲料", "零食", "交通", "投資", "醫療", "衣物", "日用品", "禮品", "購物", "娛樂", "水電費", "電話費", "房租", "其他"};
-        for(int i = 0; i < typeArr.length; i++){
-            this.type.add(typeArr[i]);
-        }
-    }
 
     public void updateType(){
-
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+        dbmanager.open();
+        this.dbTypeData = dbmanager.fetchType("Expense");
+        dbmanager.close();
+        for(int i = 0; i < this.dbTypeData.size(); i++){
+            this.type.add(dbTypeData.get(i).getTypeName());
+        }
     }
 
-    //帳本初始設定
-    public void initBook() {
-        this.book.add("現金帳本");
-    }
 
     public void updateBook(){
-        for(int i = 0 ;i < dbBookData.size();i++){
-            //System.out.println(dbBookData.get(i));
-            if(book.contains(dbBookData.get(i))){
-                continue;
-            }else{
-                book.add(dbBookData.get(i));
-            }
-        }
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+        dbmanager.open();
+        this.book = dbmanager.fetchBook();
+        dbmanager.close();
     }
 
     public void jumpToHome(){
