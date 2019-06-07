@@ -358,7 +358,7 @@ public class add_income extends AppCompatActivity {
     public void updateType(){
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
         dbmanager.open();
-        this.dbTypeData = dbmanager.fetchType("Expense");
+        this.dbTypeData = dbmanager.fetchType("Income");
         dbmanager.close();
         for(int i = 0; i < this.dbTypeData.size(); i++){
             this.type.add(dbTypeData.get(i).getTypeName());

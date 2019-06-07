@@ -171,14 +171,15 @@ public class DatabaseManager {
     }
     public List<Type> fetchType(String ExpenseOrIncome) {
         List<Type> typelist = new ArrayList<>();
+        String result="";
         if(ExpenseOrIncome.equals("Expense")){
-            String result="select * from Type WHERE ExpenseorIncome='Expense'";
+            result="select * from Type WHERE ExpenseorIncome='Expense'";
         }
         else if(ExpenseOrIncome.equals("Income")){
-            String result="select * from Type WHERE ExpenseorIncome='Income'";
+            result="select * from Type WHERE ExpenseorIncome='Income'";
         }
         Cursor alltype=database.rawQuery
-                ("select * from Type" ,null);
+                (result ,null);
 
         while(alltype.moveToNext()){
             typelist.add(new Type(alltype.getInt(0),alltype.getString(1),alltype.getString(2)));
