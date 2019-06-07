@@ -42,7 +42,8 @@ public class add_income extends AppCompatActivity {
     private List<String> type = new ArrayList<String>();        //傳給ArrayAdapter的參數
     private List<String> book = new ArrayList<String>();
 
-    public List<Type> dbTypeData = new ArrayList<Type>();   //接資料庫資料
+    public List<Type> dbTypeData = new ArrayList<Type>();
+    public List<String> dbBookData = new ArrayList<String>();     //接資料庫資料
 
     private String saveDetailStartdate ="";
     private String saveDetailEnddate ="";
@@ -76,7 +77,7 @@ public class add_income extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(detail){
-//                    jumpTocheck_expense_detail();
+                    jumpTocheck_income_detail();
                 }else{
                     jumpToHome();
                 }
@@ -110,10 +111,10 @@ public class add_income extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         DatabaseManager dbmanager = new DatabaseManager(getApplication());
                                         dbmanager.open();
-                                        dbmanager.updateExpense(saveDetailId, price, i_date, i_type_name, i_book_name, i_note);
+                                        dbmanager.updateIncome(saveDetailId, price, i_date, i_type_name, i_book_name, i_note);
                                         dbmanager.close();
                                         //回查帳
-//                                        jumpTocheck_income_detail();
+                                        jumpTocheck_income_detail();
                                     }
                                 })
                                 .setNeutralButton("返回", new DialogInterface.OnClickListener() {
@@ -136,7 +137,7 @@ public class add_income extends AppCompatActivity {
                                         Snackbar.make(v, "完成記帳", Snackbar.LENGTH_SHORT).show();
                                         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
                                         dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                                        dbmanager.insert_Ex(price,i_date,i_type_name,i_book_name,i_note);            //將資料放到資料庫
+                                        dbmanager.insert_In(price,i_date,i_type_name,i_book_name,i_note);            //將資料放到資料庫
 //                                      BackupManager bm = new BackupManager(add_expense.this);
 //                                      bm.dataChanged();
                                         dbmanager.close();                                                                     //關閉資料庫
@@ -214,7 +215,7 @@ public class add_income extends AppCompatActivity {
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToadd_type();
+                jumpToadd_book();
                 newBookBtn.setChecked(false);
             }
         });
@@ -257,6 +258,7 @@ public class add_income extends AppCompatActivity {
             updateBook();
             updateType();
             input_book.setAdapter(bookList);
+            input_type.setAdapter(typeList);
             if(detail){
                 saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
@@ -361,7 +363,11 @@ public class add_income extends AppCompatActivity {
         this.dbTypeData = dbmanager.fetchType("Income");
         dbmanager.close();
         for(int i = 0; i < this.dbTypeData.size(); i++){
-            this.type.add(dbTypeData.get(i).getTypeName());
+            if(type.contains(this.dbTypeData.get(i).getTypeName())){
+                continue;
+            }else{
+                this.type.add(dbTypeData.get(i).getTypeName());
+            }
         }
     }
 
@@ -369,8 +375,15 @@ public class add_income extends AppCompatActivity {
     public void updateBook(){
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
         dbmanager.open();
-        this.book = dbmanager.fetchBook();
+        this.dbBookData = dbmanager.fetchBook();
         dbmanager.close();
+        for(int i = 0; i<dbBookData.size(); i++){
+            if(book.contains(dbBookData.get(i))){
+                continue;
+            }else{
+                this.book.add(dbBookData.get(i));
+            }
+        }
     }
 
     public void jumpToHome(){
@@ -392,7 +405,7 @@ public class add_income extends AppCompatActivity {
     }
 
     public void jumpToadd_type(){
-        Intent intent = new Intent(add_income.this,add_book.class);
+        Intent intent = new Intent(add_income.this,add_type.class);
         Bundle saveIncomeData = new Bundle();
         saveIncomeData.putString("amount",input_amount.getText().toString());
         saveIncomeData.putString("date",input_date.getText().toString());
@@ -410,14 +423,14 @@ public class add_income extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void jumpTocheck_income_detail(){
-//        Intent intent = new Intent(add_income.this, check_income_detail.class);
-//        Bundle detailData = new Bundle();
-//        detailData.putString("typeName", input_type.getSelectedItem().toString());
-//        detailData.putString("startDate", saveDetailStartdate);
-//        detailData.putString("endDate", saveDetailEnddate);
-//        detailData.putStringArrayList("selectBooks", saveDetailBooksArray);
-//        intent.putExtras(detailData);
-//        startActivity(intent);
-//    }
+    public void jumpTocheck_income_detail(){
+        Intent intent = new Intent(add_income.this, check_income_detail.class);
+        Bundle detailData = new Bundle();
+        detailData.putString("typeName", input_type.getSelectedItem().toString());
+        detailData.putString("startDate", saveDetailStartdate);
+        detailData.putString("endDate", saveDetailEnddate);
+        detailData.putStringArrayList("selectBooks", saveDetailBooksArray);
+        intent.putExtras(detailData);
+        startActivity(intent);
+    }
 }

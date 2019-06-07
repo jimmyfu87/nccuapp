@@ -18,8 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 //流水帳
-public class ExpenseDetailListAdapter extends ArrayAdapter {
+public class ExpenseIncomeDetailListAdapter extends ArrayAdapter {
     //to reference the Activity
+    private String ExpeneseOrIncome;
     private String saveDetailStartdate;
     private String saveDetailEnddate;
     private ArrayList<String> selectBooks;
@@ -35,8 +36,9 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
     private Button deleteBtn;
 
     //, Button fixParam, Button deleteParam
-    public ExpenseDetailListAdapter(List<Integer> idArrayParam,String saveDetailStartdate, String saveDetailEnddate, ArrayList<String> selectBooksParam, Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
+    public ExpenseIncomeDetailListAdapter(String ExpenseOrIncome, List<Integer> idArrayParam, String saveDetailStartdate, String saveDetailEnddate, ArrayList<String> selectBooksParam, Activity context, List<Integer> numberArrayParam, List<String> dateArrayParam, List<Integer> priceArrayParam, List<String> noteArrayParam, ArrayList<String> bookArrayParam , String typeName){
         super(context, R.layout.detail_listview_row, dateArrayParam);
+        this.ExpeneseOrIncome = ExpenseOrIncome;
         this.idArray = idArrayParam;
         this.saveDetailStartdate = saveDetailStartdate;
         this.saveDetailEnddate = saveDetailEnddate;
@@ -73,7 +75,11 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToadd_expense(position, context);
+                if(ExpeneseOrIncome.equals("Expense")){
+                    jumpToadd_expense(position, context);
+                }else{
+                    jumpToadd_income(position, context);
+                }
             }
         });
 
@@ -88,7 +94,11 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
                             public void onClick(DialogInterface dialog, int which) {
                                 DatabaseManager dbmanager=new DatabaseManager(getContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                                 dbmanager.open();
-                                dbmanager.deleteExpense(idArray.get(position));
+                                if(ExpeneseOrIncome.equals("Expense")){
+                                    dbmanager.deleteExpense(idArray.get(position));
+                                }else{
+                                    dbmanager.deleteIncome(idArray.get(position));
+                                }
                                 dbmanager.close();
                                 int number = numberArray.get(position);
                                 idArray.remove(position);
@@ -130,6 +140,24 @@ public class ExpenseDetailListAdapter extends ArrayAdapter {
         saveExpenseData.putString("saveDetailEnddate",saveDetailEnddate);
         saveExpenseData.putStringArrayList("selectBooks",selectBooks);
         intent.putExtras(saveExpenseData);
+        activity.startActivity(intent);
+
+    }
+
+    public void jumpToadd_income(int position,Activity activity){
+        Intent intent = new Intent(activity, add_income.class);
+        Bundle saveIncomeData = new Bundle();
+        saveIncomeData.putBoolean("detail",true);
+        saveIncomeData.putInt("id",idArray.get(position));
+        saveIncomeData.putString("amount", priceArray.get(position).toString());
+        saveIncomeData.putString("date", dateArray.get(position));
+        saveIncomeData.putString("type", typeName);
+        saveIncomeData.putString("book", dateArray.get(position));
+        saveIncomeData.putString("note", noteArray.get(position));
+        saveIncomeData.putString("saveDetailStartdate",saveDetailStartdate);
+        saveIncomeData.putString("saveDetailEnddate",saveDetailEnddate);
+        saveIncomeData.putStringArrayList("selectBooks",selectBooks);
+        intent.putExtras(saveIncomeData);
         activity.startActivity(intent);
 
     }

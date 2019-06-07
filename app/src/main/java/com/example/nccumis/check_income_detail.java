@@ -11,16 +11,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class check_expense_detail extends AppCompatActivity {
+public class check_income_detail extends AppCompatActivity {
     private Button lastPage;
     private TextView typeField;
-    private Intent getCheckExpenseData;
+    private Intent getCheckIncomeData;
     private Bundle saveBag;
     private String type = "";
     private String startDate;
     private String endDate;
     private ArrayList<String> selectBooks = new ArrayList<String>();
-    private List<Expense> expenseList = new ArrayList<Expense>();
+    private List<Income> incomeList = new ArrayList<Income>();
     private List<Integer> idArray = new ArrayList<Integer>();
     private List<Integer> numberArray = new ArrayList<Integer>();
     private List<String> dateArray = new ArrayList<String>();
@@ -29,27 +29,24 @@ public class check_expense_detail extends AppCompatActivity {
     private ArrayList<String> bookArray = new ArrayList<String>();
     private ListView DetailListView;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.expense_detail);
+        setContentView(R.layout.income_detail);
 
         //get typeName,startDate,endDate,selectBook
-        getCheckExpenseData = getIntent();
-        saveBag = getCheckExpenseData.getExtras();
+        getCheckIncomeData = getIntent();
+        saveBag = getCheckIncomeData.getExtras();
         type = saveBag.getString("typeName");
         startDate = saveBag.getString("startDate");
         endDate = saveBag.getString("endDate");
         selectBooks = saveBag.getStringArrayList("selectBooks");
-
-        //System.out.println(startDate+", "+endDate);
 
         //上一頁
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpTocheck_expense();
+                jumpTocheck_income();
             }
         });
 
@@ -60,38 +57,39 @@ public class check_expense_detail extends AppCompatActivity {
         //listview
         DetailListView = (ListView)findViewById(R.id.DetailListView);
 
-        //Expense 資料庫 fetch 資料
+        //Income 資料庫 fetch 資料
         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
-        expenseList=dbmanager.fetchExpenseWithbookandtype(startDate,endDate,selectBooks,type);
+        incomeList=dbmanager.fetchIncomeWithbookandtype(startDate,endDate,selectBooks,type);
         dbmanager.close();
         setList();
     }
 
     public void initListData(){
-        for(int i = 0; i < this.expenseList.size();i++){
+        for(int i = 0; i < this.incomeList.size();i++){
             int index = i+1;
             this.numberArray.add(index);
-            this.idArray.add(this.expenseList.get(i).getEx_id());
-            this.dateArray.add(this.expenseList.get(i).getEx_date());
-            this.priceArray.add(this.expenseList.get(i).getEx_price());
-            this.noteArray.add((this.expenseList.get(i).getEx_note().isEmpty()) ? "無備註" : this.expenseList.get(i).getEx_note());
-            this.bookArray.add(this.expenseList.get(i).getBook_name());
+            this.idArray.add(this.incomeList.get(i).getIn_id());
+            this.dateArray.add(this.incomeList.get(i).getIn_date());
+            this.priceArray.add(this.incomeList.get(i).getIn_price());
+            this.noteArray.add((this.incomeList.get(i).getIn_note().isEmpty()) ? "無備註" : this.incomeList.get(i).getIn_note());
+            this.bookArray.add(this.incomeList.get(i).getBook_name());
         }
         //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
 
     public void setList(){
         initListData();
-        ExpenseIncomeDetailListAdapter ExDetail_adapter = new ExpenseIncomeDetailListAdapter("Expense",this.idArray,startDate, endDate,selectBooks,check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
-        DetailListView.setAdapter(ExDetail_adapter);
+        ExpenseIncomeDetailListAdapter InDetail_adapter = new ExpenseIncomeDetailListAdapter("Income",this.idArray,startDate, endDate,selectBooks,check_income_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
+        DetailListView.setAdapter(InDetail_adapter);
     }
 
-    public void jumpTocheck_expense(){
-        Intent intent = new Intent(check_expense_detail.this, check_expense.class);
+    public void jumpTocheck_income(){
+        Intent intent = new Intent(check_income_detail.this, check_income.class);
         intent.putExtra("startDate" ,startDate);
         intent.putExtra("endDate" , endDate);
         intent.putExtra("selectBooks" , selectBooks);
         startActivity(intent);
     }
+
 }

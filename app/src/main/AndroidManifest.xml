@@ -31,6 +31,7 @@
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity android:name=".check_expense_detail"></activity>
+        <activity android:name=".check_income_detail"></activity>
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register"></activity>
         <activity android:name=".LogIn">

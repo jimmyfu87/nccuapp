@@ -22,6 +22,10 @@ public class add_type extends AppCompatActivity {
     private Bundle saveBag;
     private int JumpToWhere = 0;
 
+    private String i_typeName="";
+    private String i_expenseOrincome="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +53,11 @@ public class add_type extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkInputInfo()){
                     //到下一頁
-                    /////////資料庫的東西//////////
-//                    String i_bookName=input_bookName.getText().toString();
-//                    int i_startBudget=Integer.parseInt(input_startBudget.getText().toString());
-//                    int i_remain=i_startBudget;
-//                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
-//                    dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-//                    dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,1);            //將資料放到資料庫
-//                    dbmanager.close();                                                                      //關閉資料庫
+                    i_typeName = input_typeName.getText().toString();
+                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
+                    dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
+                    dbmanager.insert_Type(i_typeName,i_expenseOrincome);            //將資料放到資料庫
+                    dbmanager.close();                                                                      //關閉資料庫
                     jumpToaddSpend(saveBag);
                 }
             }
@@ -66,8 +67,8 @@ public class add_type extends AppCompatActivity {
         //帳本名稱
         input_typeName = (EditText) findViewById(R.id.typeName_input);
 
-        //貨幣
-        //預設世界前幾常用的貨幣
+
+        //收入或支出
         input_ExpenseOrIncome = (Spinner)findViewById(R.id.ExpenseOrIncome_input);
         final String[] ExpenseOrIncomeArr = {"支出", "收入" };
         ArrayAdapter<String> ExpenseOrIncomeList = new ArrayAdapter<>(add_type.this,
@@ -77,8 +78,7 @@ public class add_type extends AppCompatActivity {
         input_ExpenseOrIncome.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /////////////////資料庫的東西/////////////////////
-                //i_currencyid = input_currency.getSelectedItem().toString();
+                i_expenseOrincome = input_ExpenseOrIncome.getSelectedItem().toString().equals("支出") ? "Expense" : "Income" ;
             }
 
             @Override

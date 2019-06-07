@@ -63,6 +63,7 @@ public class check_expense extends AppCompatActivity {
     private Button searchButton;
     private Button searchthisMonth;
     private Button searchthisYear;
+    private Button checkExpense;
     private String start_date,end_date;
     private int yearStart = 0;
     private int monthStart = 0;
@@ -153,6 +154,14 @@ public class check_expense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToHome();
+            }
+        });
+
+        checkExpense = (Button)findViewById(R.id.checkExpense);
+        checkExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpTocheck_income();
             }
         });
 
@@ -478,7 +487,7 @@ public class check_expense extends AppCompatActivity {
     public void setList(){
         sortListData();
         initListData();
-        ExpenseListAdapter Ex_adapter = new ExpenseListAdapter(this, this.numberArray, this.nameArray, this.percentageArray, this.totalArray);
+        ExpenseIncomeListAdapter Ex_adapter = new ExpenseIncomeListAdapter(this, this.numberArray, this.nameArray, this.percentageArray, this.totalArray);
         TypeListView.setAdapter(Ex_adapter);
     }
 
@@ -535,7 +544,7 @@ public class check_expense extends AppCompatActivity {
     }
 
     public void setLineChart(){
-        LineChart lineChart = (LineChart) findViewById(R.id.linechart);
+        LineChart lineChart = (LineChart) findViewById(R.id.Exlinechart);
 
         lineChart.setEnabled(true);
         lineChart.setScaleEnabled(false);
@@ -732,6 +741,10 @@ public class check_expense extends AppCompatActivity {
         saveCheckExpenseData.putStringArrayList("selectBooks", selectBooks);
         intent.putExtras(saveCheckExpenseData);
         startActivity(intent);
+    }
+
+    public void jumpTocheck_income(){
+        startActivity(new Intent(check_expense.this, check_income.class));
     }
 
     public String resetDateformat(int startOrEndDate, String date){

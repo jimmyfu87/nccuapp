@@ -58,6 +58,17 @@ public class DatabaseManager {
         database.update(dbHelper.tb_name, contentValues, dbHelper.EX_ID + "=" +"'"+ex_id+"'", null);
 
     }
+
+    public void updateIncome(int in_id,int in_price,String in_date,String type_name,String book_name,String in_note) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.IN_PRICE, in_price);
+        contentValues.put(dbHelper.IN_DATE, in_date);
+        contentValues.put(dbHelper.TYPE_NAME, type_name);
+        contentValues.put(dbHelper.BOOK_NAME, book_name);
+        contentValues.put(dbHelper.IN_NOTE, in_note);
+        database.update(dbHelper.tb_name2, contentValues, dbHelper.IN_ID + "=" +"'"+in_id+"'", null);
+
+    }
 //
 //    public void delete(String name) {
 //        database.delete(dbHelper.tb_name,dbHelper.NAME + " ='" + name + "'",null);

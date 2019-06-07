@@ -48,7 +48,8 @@ public class add_expense extends AppCompatActivity {
     private List<String> type = new ArrayList<String>();         //傳給ArrayAdapter的參數
     private List<String> book = new ArrayList<String>();
 
-    public List<Type> dbTypeData = new ArrayList<>();    //接資料庫資料
+    public List<Type> dbTypeData = new ArrayList<>();
+    public List<String> dbBookData = new ArrayList<>();       //接資料庫資料
 
     private String saveDetailStartdate ="";
     private String saveDetailEnddate ="";
@@ -83,6 +84,9 @@ public class add_expense extends AppCompatActivity {
         updateType();
         updateBook();
 
+        for(int i = 0; i < type.size(); i++){
+            System.out.println(type.get(i));
+        }
         ArrayAdapter typeList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
@@ -285,6 +289,7 @@ public class add_expense extends AppCompatActivity {
             updateBook();
             updateType();
             input_book.setAdapter(bookList);
+            input_type.setAdapter(typeList);
             if(detail){
                 saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
@@ -403,7 +408,11 @@ public class add_expense extends AppCompatActivity {
         this.dbTypeData = dbmanager.fetchType("Expense");
         dbmanager.close();
         for(int i = 0; i < this.dbTypeData.size(); i++){
-            this.type.add(dbTypeData.get(i).getTypeName());
+            if(type.contains(this.dbTypeData.get(i).getTypeName())){
+                continue;
+            }else{
+                this.type.add(dbTypeData.get(i).getTypeName());
+            }
         }
     }
 
@@ -411,8 +420,15 @@ public class add_expense extends AppCompatActivity {
     public void updateBook(){
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
         dbmanager.open();
-        this.book = dbmanager.fetchBook();
+        this.dbBookData = dbmanager.fetchBook();
         dbmanager.close();
+        for(int i = 0; i<dbBookData.size(); i++){
+            if(book.contains(dbBookData.get(i))){
+                continue;
+            }else{
+                this.book.add(dbBookData.get(i));
+            }
+        }
     }
 
     public void jumpToHome(){
