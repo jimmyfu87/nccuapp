@@ -62,6 +62,7 @@ public class Home extends AppCompatActivity {
         restoreSharepref();
         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
+        dbmanager.close();
         cloud_backup=(Button) findViewById(R.id.cloud_backup);
         cloud_backup.setOnClickListener(new View.OnClickListener() {
             @Override
