@@ -69,5 +69,12 @@
         android:layout_gravity="center"
         android:text="Google雲端還原"
         android:textAllCaps="false" />
+    <Button
+        android:id="@+id/update_remain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="更新殘餘"
+        android:textAllCaps="false" />
 </LinearLayout>
 </ScrollView>

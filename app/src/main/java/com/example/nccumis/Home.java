@@ -72,9 +72,8 @@ public class Home extends AppCompatActivity {
         dbmanager.open();
         select_expense=dbmanager.fetchExpense(dateinStart,dateinEnd);           //可直接調用select_expense的資訊
         dbmanager.close();
-
-
         setContentView(R.layout.home);
+
         restoreSharepref();
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();

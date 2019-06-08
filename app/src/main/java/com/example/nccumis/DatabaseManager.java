@@ -238,13 +238,16 @@ public class DatabaseManager {
 
     }
     public List<Book> fetchBookallattribute(List<String> booklist){
+        for(int i=0;i<booklist.size();i++){
+            update_book_remain_amount(booklist.get(i));
+        }
         String result="select distinct * from book where "+"Book_name="+"'"+booklist.get(0)+"'";
         if(booklist.size()>1){
             for(int i=1;i<booklist.size();i++) {
                 result = result + " OR " + "Book_name='"+booklist.get(i)+"'";
             }
         }
-        result=result+");";
+        result=result+";";
         Cursor Books=database.rawQuery
                 (result,null);
         List<Book> Booklist=new ArrayList<>();
@@ -255,6 +258,34 @@ public class DatabaseManager {
     }
     public void deleteBook(int book_id) {
         database.delete(dbHelper.tb_name3,dbHelper.BOOK_ID + " ='" + book_id + "'",null);
+    }
+    public void update_book_remain_amount(String book_name){
+        String income_query="select In_price from Income where "+"Book_name="+"'"+book_name+"'"+";";
+        String expense_query="select Ex_price from Expense where "+"Book_name="+"'"+book_name+"'"+";";
+        String start_query="select Amount_start from Book where "+"Book_name="+"'"+book_name+"'"+";";
+
+        Cursor start_amount=database.rawQuery(start_query,null);
+        Cursor Income=database.rawQuery(income_query,null);
+        Cursor Expense=database.rawQuery(expense_query,null);
+        int total_start_amount=0;
+        int total_income=0;
+        int total_expense=0;
+        int total_remain_amount=0;
+        while (start_amount.moveToNext()){
+            total_start_amount=total_start_amount+start_amount.getInt(0);
+        }
+        while (Income.moveToNext()){
+            total_income=total_income+Income.getInt(0);
+        }
+        while (Expense.moveToNext()){
+            total_expense=total_expense+Expense.getInt(0);
+        }
+        total_remain_amount=total_start_amount+total_income-total_expense;
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.AMOUNT_REMAIN, total_remain_amount);
+        database.update(dbHelper.tb_name3, contentValues, dbHelper.BOOK_NAME + "=" +"'"+book_name+"'", null);
+
     }
 
 }
