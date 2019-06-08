@@ -1,18 +1,25 @@
 package com.example.nccumis;
 
 import android.content.Intent;
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+
+
+
+import java.util.Calendar;
 
 public class Register extends AppCompatActivity {
 
@@ -28,6 +35,8 @@ public class Register extends AppCompatActivity {
     private Button btn_lastPage;
     private CheckBox checkBoxPassword1 ;
     private CheckBox checkBoxPassword2 ;
+
+    private String BirthDate;
 
 
     @Override
@@ -58,6 +67,31 @@ public class Register extends AppCompatActivity {
         et_userBirth.addTextChangedListener(registerTextWatcher );
 
         btn_checkRegister.setOnClickListener(ClickIntHere);
+
+//生日
+        et_userBirth.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    showDatePickDlg();
+                    return true;
+                }
+                return false;
+            }
+        });
+        et_userBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    showDatePickDlg();
+                }
+
+            }
+        });
+
+
+
+
 
         //讓密碼顯示的打勾框框
         checkBoxPassword1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -90,7 +124,44 @@ public class Register extends AppCompatActivity {
         });
    }
 
-   //核對密碼
+    private void showDatePickDlg() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(Register.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear++;
+                setdateformat(year,monthOfYear,dayOfMonth);
+                Register.this.et_userBirth.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
+
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+
+    }
+
+
+    public void setdateformat(int year,int month,int day){
+        String st_month;
+        String st_day;
+        if(month<10){
+            st_month=Integer.toString(month);
+            st_month="0"+st_month;
+        }
+        else{
+            st_month=Integer.toString(month);
+        }
+        if(day<10){
+            st_day=Integer.toString(day);
+            st_day="0"+st_day;
+        }
+        else{
+            st_day=Integer.toString(day);
+        }
+        BirthDate=year+"-"+st_month+"-"+st_day;
+    }
+
+
+    //核對密碼
 
 
    private View.OnClickListener ClickIntHere = new View.OnClickListener() {
@@ -106,10 +177,7 @@ public class Register extends AppCompatActivity {
 
        }
    };
-    //空白沒輸入東西的話，會警告你
-
-
-
+    //生日
 
 
     //空白沒輸入東西的話，會警告你

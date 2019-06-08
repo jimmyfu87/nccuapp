@@ -106,8 +106,8 @@
         android:id="@+id/et_userBirth"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="生日(西元 年-月-日)"
-        android:inputType="date"/>
+        android:hint="生日"
+        />
 
     <TextView
         android:id="@+id/et_wrongPassword"

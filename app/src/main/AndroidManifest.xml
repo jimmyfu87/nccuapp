@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +21,7 @@
 
         <activity android:name=".Home"></activity>
         <activity android:name=".add_spend_viewpager"></activity>
+
         <activity android:name=".add_type"></activity>
         <activity android:name=".add_book"></activity>
         <activity android:name=".add_expense"></activity>
@@ -32,8 +34,15 @@
         </activity>
         <activity android:name=".check_expense_detail"></activity>
         <activity android:name=".check_income_detail"></activity>
+        <activity
+            android:name=".CountMoney"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity android:name=".OnlineShopping"></activity>
+        <activity android:name=".merchandise" />
+
         <activity android:name=".PasswordCheckEmail" />
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Register" />
         <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
