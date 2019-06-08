@@ -32,13 +32,13 @@
         <activity android:name=".check_income"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
-        <activity android:name=".check_expense_detail"></activity>
-        <activity android:name=".check_income_detail"></activity>
+        <activity android:name=".check_expense_detail"/>
+        <activity android:name=".check_income_detail"/>
         <activity
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <activity android:name=".OnlineShopping"></activity>
+        <activity android:name=".OnlineShopping"/>
         <activity android:name=".merchandise" />
 
         <activity android:name=".PasswordCheckEmail" />
@@ -46,7 +46,6 @@
         <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

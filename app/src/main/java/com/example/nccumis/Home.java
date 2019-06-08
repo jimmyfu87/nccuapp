@@ -76,7 +76,7 @@ public class Home extends AppCompatActivity {
 
         setContentView(R.layout.home);
         restoreSharepref();
-        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+        dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
         dbmanager.close();
         cloud_backup=(Button) findViewById(R.id.cloud_backup);
@@ -385,7 +385,7 @@ public class Home extends AppCompatActivity {
         editor.putBoolean("Created",false);
         editor.commit();
     }
-}
+
 
 
 
