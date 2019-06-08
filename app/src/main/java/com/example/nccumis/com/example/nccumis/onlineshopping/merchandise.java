@@ -1,4 +1,4 @@
-package com.example.nccumis;
+package com.example.nccumis.com.example.nccumis.onlineshopping;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.DatePicker;
 import java.util.Calendar;
 import android.view.MotionEvent;
 import android.widget.TextView;
+
+import com.example.nccumis.R;
 
 
 public class merchandise extends AppCompatActivity {
