@@ -1,5 +1,7 @@
 package com.example.nccumis;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,13 +26,18 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LogIn extends AppCompatActivity {
 
     private CheckBox checkboxLogIn;
+    private EditText et_userAccountLogin;
     private EditText et_passwordLogin;
     private Button btn_forgetPassword;
     private Button btn_registerAgain;
     private Button loginHome;
+
     int RC_SIGN_IN=0;
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
@@ -46,8 +56,8 @@ public class LogIn extends AppCompatActivity {
                 signIn();
             }
         });
-
         checkboxLogIn = (CheckBox)findViewById(R.id.checkLogIn);
+        et_userAccountLogin=(EditText)findViewById(R.id.et_userAccountLogin);
         et_passwordLogin =(EditText)findViewById(R.id.et_passwordLogin);
         btn_forgetPassword=(Button)findViewById(R.id.btn_forgetPassword);
         btn_registerAgain = (Button)findViewById(R.id.btn_registerAgain);
@@ -86,8 +96,48 @@ public class LogIn extends AppCompatActivity {
         loginHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String member_id=et_userAccountLogin.getText().toString();
+                final String member_password=et_passwordLogin.getText().toString();
                 if(checkAccountPassword()){
-                    jumpToHome();
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                //這裡可能會需要
+                                System.out.println(response);
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
+
+                                if (success) {
+                                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(LogIn.this);
+                                    builder.setMessage("登入成功")
+                                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent intent = new Intent(LogIn.this, Home.class);
+                                                    LogIn.this.startActivity(intent);
+                                                }
+                                            })
+                                            .create()
+                                            .show();
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LogIn.this);
+                                    builder.setMessage("登入失敗")
+                                            .setNegativeButton("再來一次", null)
+                                            .create()
+                                            .show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+
+                    LoginRequest loginRequest = new LoginRequest(member_id, member_password, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(LogIn.this);
+                    queue.add(loginRequest);
+                   // jumpToHome();
                 }
             }
         });
