@@ -1,50 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nccumis">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="nccumis"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:fullBackupContent="@xml/backup_rules"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--//backupagent key-->
-        <!--<meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" />-->
-
-        <activity android:name=".Home"></activity>
-        <activity android:name=".add_spend_viewpager"></activity>
-
-        <activity android:name=".add_type"></activity>
-        <activity android:name=".add_book"></activity>
-        <activity android:name=".add_expense"></activity>
-        <activity android:name=".add_income"></activity>
-        <activity android:name=".check_expense"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".check_income"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".check_expense_detail"/>
-        <activity android:name=".check_income_detail"/>
+        <!-- //backupagent key -->
+        <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
+        <activity android:name=".Home" />
+        <activity android:name=".add_spend_viewpager" />
+        <activity android:name=".add_type" />
+        <activity android:name=".add_book" />
+        <activity android:name=".add_expense" />
+        <activity android:name=".add_income" />
+        <activity
+            android:name=".check_expense"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".check_income"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".check_expense_detail" />
+        <activity android:name=".check_income_detail" />
         <activity
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/>
-
+        <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
         <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
