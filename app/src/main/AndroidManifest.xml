@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
-        <activity android:name=".Home" />
+        <activity android:name=".LogIn" />
         <activity android:name=".add_spend_viewpager" />
         <activity android:name=".add_type" />
         <activity android:name=".add_book" />
@@ -38,7 +38,7 @@
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".LogIn">
+        <activity android:name=".Home">
 
         </activity>
         <activity android:name=".MainActivity2">   <intent-filter>

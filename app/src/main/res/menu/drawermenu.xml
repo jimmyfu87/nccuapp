@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/homepage" android:title="首頁" />
-    <item android:id="@+id/settings" android:title="設定" />
+    <item android:id="@+id/phone_copy" android:title="手機內存備份" />
+    <item android:id="@+id/phone_reset" android:title="手機內存還原" />
+    <item android:id="@+id/cloud_copy" android:title="Google雲端備份" />
+    <item android:id="@+id/cloud_reset" android:title="Google雲端還原" />
+    <item android:id="@+id/login" android:title="登入" />
+    <item android:id="@+id/register" android:title="註冊" />
     <item android:id="@+id/logout" android:title="登出" />
-    <item android:id="@+id/cloud" android:title="雲端備份" />
+
+
 
 </menu>

@@ -11,19 +11,24 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home);
+
         toolbar = findViewById(R.id.head_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("購智帳");
-        drawerLayout = findViewById(R.id.drawer);
+        getSupportActionBar().setTitle("首頁");
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);	    }
 
@@ -31,10 +36,8 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.homepage){
-            Toast.makeText(this,"首頁",Toast.LENGTH_LONG).show();
-        }
-        DrawerLayout drawer = findViewById(R.id.drawer);
+
+        DrawerLayout drawer =(DrawerLayout) findViewById(R.id.drawer);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
