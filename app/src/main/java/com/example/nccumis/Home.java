@@ -7,10 +7,16 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -38,7 +44,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private Button addSpend;
     private Button checkSpend;
     private Button signout;
@@ -62,6 +68,10 @@ public class Home extends AppCompatActivity {
     private  String dateinStart;
     private String dateinEnd;
 
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +82,19 @@ public class Home extends AppCompatActivity {
         dbmanager.open();
         select_expense=dbmanager.fetchExpense(dateinStart,dateinEnd);           //可直接調用select_expense的資訊
         dbmanager.close();
-        setContentView(R.layout.home);
+        setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.head_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("首頁");
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         restoreSharepref();
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
@@ -420,5 +442,17 @@ public class Home extends AppCompatActivity {
         //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        DrawerLayout drawer =(DrawerLayout) findViewById(R.id.drawer);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
 }
 
