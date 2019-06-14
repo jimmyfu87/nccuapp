@@ -711,7 +711,7 @@ public class check_expense extends AppCompatActivity {
 
     //檢查輸入日期是否有誤
     public boolean checkDateInput(View view){
-        if(this.yearStart > this.yearEnd || (this.yearStart < this.yearEnd && this.monthStart > monthEnd) || (this.yearStart < this.yearEnd && this.monthStart < monthEnd && this.dayStart > dayEnd)){
+        if(this.yearStart > this.yearEnd || (this.yearStart <= this.yearEnd && this.monthStart > monthEnd) || (this.yearStart <= this.yearEnd && this.monthStart <= monthEnd && this.dayStart > dayEnd)){
             this.dateEnd_input.setError("結束日期小於開始日期");
             Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
             return false;

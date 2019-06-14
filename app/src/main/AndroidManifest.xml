@@ -35,14 +35,14 @@
         <activity android:name=".check_expense_detail"/>
         <activity android:name=".check_income_detail"/>
         <activity
-            android:name=".CountMoney"
+            android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/>
 
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".LogIn">
+        <activity android:name=".CountMoney">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

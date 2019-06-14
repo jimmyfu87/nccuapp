@@ -217,7 +217,7 @@ public class CountMoney extends AppCompatActivity {
 
     //確認日期是否有效，可否查詢
     public boolean checkDateInput(View view){
-        if(this.yearStart > this.yearEnd || (this.yearStart < this.yearEnd && this.monthStart > monthEnd) || (this.yearStart < this.yearEnd && this.monthStart < monthEnd && this.dayStart > dayEnd)){
+        if(this.yearStart > this.yearEnd || (this.yearStart <= this.yearEnd && this.monthStart > monthEnd) || (this.yearStart <= this.yearEnd && this.monthStart <= monthEnd && this.dayStart > dayEnd)){
             this.date_end.setError("結束日期小於開始日期");
             Snackbar.make(view,"結束日期小於開始日期，請重新修改",Snackbar.LENGTH_SHORT).show();
             return false;
