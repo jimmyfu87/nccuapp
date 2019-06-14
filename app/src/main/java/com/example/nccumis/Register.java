@@ -1,7 +1,9 @@
 package com.example.nccumis;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.DatePickerDialog;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +20,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+//import com.google.android.gms.common.api.Response;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -29,6 +41,7 @@ public class Register extends AppCompatActivity {
     private EditText et_userEmail ;
     private EditText et_userPassword1 ;
     private EditText et_userPassword2 ;
+    private EditText et_usernumber;
     private EditText et_userBirth ;
     private TextView et_wrongPassword;
     private Button btn_checkRegister ;
@@ -52,6 +65,7 @@ public class Register extends AppCompatActivity {
          et_userPassword1 = findViewById(R.id.et_userPassword1);
          et_userPassword2 = findViewById(R.id.et_userPassword2);
          et_wrongPassword =findViewById(R.id.et_wrongPassword);
+         et_usernumber=findViewById(R.id.et_userNumber);
          et_userBirth = findViewById(R.id.et_userBirth);
          btn_checkRegister =  findViewById(R.id.btn_checkRegister);
          btn_lastPage = findViewById(R.id.btn_lastPage);
@@ -167,10 +181,52 @@ public class Register extends AppCompatActivity {
    private View.OnClickListener ClickIntHere = new View.OnClickListener() {
        @Override
        public void onClick(View v) {
+           final String member_name=et_userName.getText().toString();
+           final String member_id=et_userAccount.getText().toString();
+           final String member_phone=et_userPhone.getText().toString();
+           final String member_email=et_userEmail.getText().toString();
+           final String member_password=et_userPassword1.getText().toString();
+           final String member_personal_id=et_usernumber.getText().toString();
+           final String member_birthday=BirthDate;
            if(et_userPassword1.getText().toString().isEmpty()){
                et_wrongPassword.setText("密碼不能空白");
            }else if(et_userPassword1.getText().toString() .equals(et_userPassword2.getText().toString())){
                et_wrongPassword.setText("密碼正確");
+               Response.Listener<String> responseListener = new Response.Listener<String>() {
+                   @Override
+                   public void onResponse(String response) {
+                        System.out.println(response);
+                       try {
+                           JSONObject jsonResponse = new JSONObject(response);
+                           boolean success = jsonResponse.getBoolean("success");
+                           if (success) {
+                               AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                               builder.setMessage("註冊成功")
+                                       .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(DialogInterface dialog, int which) {
+                                               Intent intent = new Intent(Register.this, LogIn.class);
+                                               Register.this.startActivity(intent);
+                                           }
+                                       })
+                                       .create()
+                                       .show();
+
+                           } else {
+                               AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                               builder.setMessage("註冊失敗，此帳號已有人註冊")
+                                       .setPositiveButton("知道了", null)
+                                       .create()
+                                       .show();
+                           }
+                       } catch (JSONException e) {
+                           e.printStackTrace();
+                       }
+                   }
+               };
+               RegisterRequest registerRequest = new RegisterRequest(member_name,member_id, member_phone,member_email,member_password,member_personal_id,member_birthday,responseListener);
+               RequestQueue queue = Volley.newRequestQueue(Register.this);
+               queue.add(registerRequest);
            }else {
                et_wrongPassword.setText("密碼不一致");
            }

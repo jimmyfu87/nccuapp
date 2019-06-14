@@ -19,7 +19,7 @@
         <!--//backupagent key-->
         <!--<meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" />-->
 
-        <activity android:name=".Home"></activity>
+        <activity android:name=".CountMoney"></activity>
         <activity android:name=".add_spend_viewpager"></activity>
 
         <activity android:name=".add_type"></activity>
@@ -42,7 +42,8 @@
 
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".CountMoney">
+
+            <activity android:name=".Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
