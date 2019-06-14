@@ -39,7 +39,6 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/>
-        <activity android:name=".com.example.nccumis.onlineshopping.merchandise" />
 
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />

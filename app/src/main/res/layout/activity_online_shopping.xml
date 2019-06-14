@@ -18,7 +18,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="上一頁"
+        android:text="回上頁"
         />
 
     <TextView
@@ -28,6 +28,11 @@
         android:textSize="30dp"
         android:layout_marginLeft="70dp"
         />
+    <Button
+        android:layout_marginLeft="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="網購首頁"/>
 </LinearLayout>
     <WebView
         android:id="@+id/OnlineShopping_webView"
@@ -35,13 +40,25 @@
         android:layout_height="600dp">
     </WebView>
 
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
         <Button
+            android:id="@+id/btn_FirstBankDiscount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="一銀回饋資訊"
             android:layout_gravity="center"
+            android:layout_marginLeft="135dp"
            />
+        <Button
+            android:id="@+id/btn_addInCart"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加入許願池"/>
 
+       </LinearLayout>
 
 </LinearLayout>
 
