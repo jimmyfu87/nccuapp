@@ -21,4 +21,49 @@
         android:layout_gravity="start"
         app:menu="@menu/drawermenu">
     </android.support.design.widget.NavigationView>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp">
+        <Button
+            android:id="@+id/addSpend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="記帳" />
+
+        <Button
+            android:id="@+id/checkSpend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="查帳" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="500dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已用:" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="剩餘:"/>
+
+    </LinearLayout>
+    <ProgressBar
+        android:layout_marginTop="520dp"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+
+
 </android.support.v4.widget.DrawerLayout>
