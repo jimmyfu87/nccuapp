@@ -31,6 +31,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
         addSpend = (Button) findViewById(R.id.addSpend);
         addSpend.setOnClickListener(new View.OnClickListener() {

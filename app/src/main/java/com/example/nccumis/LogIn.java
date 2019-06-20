@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 
 public class LogIn extends AppCompatActivity {
 
+
+
     private CheckBox checkboxLogIn;
     private EditText et_passwordLogin;
     private Button btn_forgetPassword;
@@ -31,6 +33,8 @@ public class LogIn extends AppCompatActivity {
     int RC_SIGN_IN=0;
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +125,7 @@ public class LogIn extends AppCompatActivity {
         Intent intent = new Intent(LogIn.this,Home.class);
         startActivity(intent);
     }
+
 
     private void signIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
