@@ -8,30 +8,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_lastPage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btn_lastPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="回上頁" />
+        android:text="回上頁" />
 
-        <TextView
-            android:id="@+id/ecommerceName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:layout_weight="10" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/ecommerceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/discountDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:layout_weight="10" />
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"/>
 </LinearLayout>
 </ScrollView>

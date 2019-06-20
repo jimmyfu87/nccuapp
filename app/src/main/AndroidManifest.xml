@@ -36,12 +36,12 @@
         <activity android:name=".check_income_detail"/>
         <activity android:name=".Home"/>
 
+        <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" />
+        <!--<activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/>-->
+
         <activity
             android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <!--<activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/>-->
-
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
 

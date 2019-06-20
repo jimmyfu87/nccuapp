@@ -14,28 +14,29 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity=""
     android:orientation="horizontal">
     <Button
         android:id="@+id/btn_lastPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="回上頁"
+        android:layout_weight="1"
         />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="商城"
+        android:text="購物平台"
         android:textSize="30dp"
-        android:layout_marginLeft="70dp"
-        />
+        android:layout_weight="1"/>
     <Button
         android:id="@+id/btn_webHome"
-        android:layout_marginLeft="70dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="網購首頁"/>
+        android:text="網購首頁"
+        android:layout_weight="1"/>
 </LinearLayout>
     <WebView
         android:id="@+id/OnlineShopping_webView"
@@ -51,13 +52,13 @@
                android:id="@+id/btn_webPrePage"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="<---"
+               android:text="Pre"
                android:layout_weight="1"/>
            <Button
                android:id="@+id/btn_webNextPage"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="--->"
+               android:text="Next"
                android:layout_weight="1"/>
         <Button
             android:id="@+id/btn_FirstBankDiscount"

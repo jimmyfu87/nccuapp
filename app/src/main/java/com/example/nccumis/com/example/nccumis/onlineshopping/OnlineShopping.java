@@ -9,7 +9,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
-import com.example.nccumis.Home;
 import com.example.nccumis.R;
 
 
@@ -75,7 +74,7 @@ public class OnlineShopping extends AppCompatActivity {
 
         //webview
         getWebName = "Momo";
-        getWebHomeURL = "https://shopee.tw/"; //此行的URL會根據使用者上一頁點的優惠店家而決定，目前先測試Momo
+        getWebHomeURL = "https://www.momoshop.com.tw/main/Main.jsp?cid=mtab&oid=logo&mdiv=1000100000-bt_0_199_01-bt_0_199_01_P1_1_e1&ctype=B"; //此行的URL會根據使用者上一頁點的優惠店家而決定，目前先測試Momo購物網
 
         OnlineShopping_webView = (WebView) findViewById(R.id.OnlineShopping_webView);
         OnlineShopping_webView.setWebViewClient(new WebViewClient());
@@ -86,7 +85,7 @@ public class OnlineShopping extends AppCompatActivity {
         btn_FirstBankDiscount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                jumpToFirstBankDiscountPage();
+                jumpToFirstBankDiscountPage();
             }
         });
 
@@ -101,6 +100,17 @@ public class OnlineShopping extends AppCompatActivity {
             }
         });
 
+        //檢查是否從firstbankDiscount回來
+        Intent getSaveData = getIntent();
+        Bundle getSaveBag = getSaveData.getExtras();
+        if(getSaveBag != null){
+            getWebHomeURL = getSaveBag.getString("webHomeURL");
+            getWebName = getSaveBag.getString("webName");
+
+            OnlineShopping_webView.loadUrl(getSaveBag.getString("webURL"));
+            WebSettings webSettings = OnlineShopping_webView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+        }
     }
 
     @Override
@@ -129,10 +139,11 @@ public class OnlineShopping extends AppCompatActivity {
 
     private void jumpToFirstBankDiscountPage(){
         Intent intent = new Intent(OnlineShopping.this, firstBankDiscount.class);
-        Bundle savedWebName = new Bundle();
-        savedWebName.putString("webName", getWebName);
-        ///////還要加入別的/////////
-        intent.putExtras(savedWebName);
+        Bundle savedWebData = new Bundle();
+        savedWebData.putString("webName", getWebName);
+        savedWebData.putString("webURL", getCurrentWebURL());
+        savedWebData.putString("webHomeURL", getWebHomeURL);
+        intent.putExtras(savedWebData);
         startActivity(intent);
     }
 }
