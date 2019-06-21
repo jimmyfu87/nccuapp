@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:text="當月預算"/>
     <EditText
+        android:id="@+id/et_predictAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="請輸入首頁當月預算總金額"/>
