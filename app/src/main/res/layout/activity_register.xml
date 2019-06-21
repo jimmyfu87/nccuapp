@@ -34,10 +34,10 @@
         android:id="@+id/et_userAccount"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="帳號名稱(輸入20英文字內)"
+        android:hint="帳號名稱(英文或數字，20字以內)"
         android:inputType="text"
         android:maxLength="20"
-        android:digits="ZXCVBNMASDFGHJKLQWERTYUIOPzxcvbnmasdfghjklqwertyuiop"
+        android:digits="1234567890ZXCVBNMASDFGHJKLQWERTYUIOPzxcvbnmasdfghjklqwertyuiop"
         />
 
     <EditText
