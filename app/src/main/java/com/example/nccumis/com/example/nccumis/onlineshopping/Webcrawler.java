@@ -59,6 +59,12 @@ public class Webcrawler extends AppCompatActivity {
                             } else {
                                 edition = 2;
                             }
+                            if(!title.contains("momoshop.com.tw/goods")){
+                                name.setText("未知品名");
+                                price.setText("未知價格");
+                                Toast.makeText(getApplicationContext(), "無法解析", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             //System.out.println(edition);
                             switch (edition) {
                                 //行動版
