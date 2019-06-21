@@ -95,6 +95,7 @@ public class OnlineShopping extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String currentWebURL = getCurrentWebURL();//給你們爬蟲的URL
+                jumpToDemo(currentWebURL);
                 ///////////////爬蟲加這之後//////////////////
 
             }
@@ -143,6 +144,13 @@ public class OnlineShopping extends AppCompatActivity {
         savedWebData.putString("webName", getWebName);
         savedWebData.putString("webURL", getCurrentWebURL());
         savedWebData.putString("webHomeURL", getWebHomeURL);
+        intent.putExtras(savedWebData);
+        startActivity(intent);
+    }
+    private void jumpToDemo(String urldemo){
+        Intent intent = new Intent(OnlineShopping.this, Webcrawler.class);
+        Bundle savedWebData = new Bundle();
+        savedWebData.putString("webURL",urldemo);
         intent.putExtras(savedWebData);
         startActivity(intent);
     }
