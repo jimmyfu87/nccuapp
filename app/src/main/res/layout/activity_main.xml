@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity2">
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,13 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/drawermenu">
-    </android.support.design.widget.NavigationView>
+
     <LinearLayout
         android:gravity="center"
         android:layout_width="wrap_content"
@@ -46,24 +42,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="500dp">
+        <ProgressBar
+            android:layout_marginTop="520dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="已用:" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:text="剩餘:"/>
 
     </LinearLayout>
-    <ProgressBar
-        android:layout_marginTop="520dp"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
 
-
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawermenu">
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
