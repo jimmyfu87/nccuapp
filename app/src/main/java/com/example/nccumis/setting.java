@@ -12,6 +12,10 @@ public class setting extends AppCompatActivity {
     private CheckBox ckbox_GLORY;
     private CheckBox ckbox_Green;
     private CheckBox ckbox_Wonderful;
+    private EditText et_Wonderful;
+    private EditText et_GREEN;
+    private EditText et_GLORY;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,9 @@ public class setting extends AppCompatActivity {
         ckbox_GLORY =(CheckBox)findViewById(R.id.ckbox_GLORY);
         ckbox_Green =(CheckBox)findViewById(R.id.ckbox_Green);
         ckbox_Wonderful=(CheckBox)findViewById(R.id.ckbox_Wonderful);
-
+        et_GLORY =(EditText)findViewById(R.id.et_GLORY);
+        et_GREEN =(EditText)findViewById(R.id.et_GREEN);
+        et_Wonderful =(EditText)findViewById(R.id.et_Wonderful);
 
     }
 }
