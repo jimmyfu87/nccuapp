@@ -119,7 +119,7 @@ public class Register extends AppCompatActivity {
         btn_lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToLogIn();
+                jumpToHome();
             }
         });
    }
@@ -207,8 +207,8 @@ public class Register extends AppCompatActivity {
        }
    };
 
-   public void jumpToLogIn(){
-       startActivity(new Intent(Register.this, LogIn.class));
+   public void jumpToHome(){
+       startActivity(new Intent(Register.this, MainActivity2.class));
    }
 
 
