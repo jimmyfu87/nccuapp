@@ -3,6 +3,7 @@ package com.example.nccumis;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
@@ -109,6 +110,10 @@ public class LogIn extends AppCompatActivity {
                                 boolean success = jsonResponse.getBoolean("success");
 
                                 if (success) {
+                                    SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("member_id",member_id);
+                                    editor.commit(); //提交
                                     android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(LogIn.this);
                                     builder.setMessage("登入成功")
                                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
