@@ -91,12 +91,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
-
-
     </LinearLayout>
 
-
-
+    <Button
+        android:id="@+id/btn_backToHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="回上頁"/>
 
 </LinearLayout>
 

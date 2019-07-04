@@ -30,6 +30,7 @@ public class LogIn extends AppCompatActivity {
     private Button btn_forgetPassword;
     private Button btn_registerAgain;
     private Button loginHome;
+    private Button btn_backToHome;
     int RC_SIGN_IN=0;
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
@@ -56,6 +57,15 @@ public class LogIn extends AppCompatActivity {
         btn_forgetPassword=(Button)findViewById(R.id.btn_forgetPassword);
         btn_registerAgain = (Button)findViewById(R.id.btn_registerAgain);
         loginHome = (Button) findViewById(R.id.loginHome);
+        btn_backToHome =(Button)findViewById(R.id.btn_backToHome);
+
+        //回上頁
+        btn_backToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToHome();
+            }
+        });
 
         //切換到註冊頁面
         btn_registerAgain.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +132,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void jumpToHome(){
-        Intent intent = new Intent(LogIn.this,Home.class);
+        Intent intent = new Intent(LogIn.this,MainActivity2.class);
         startActivity(intent);
     }
 
@@ -255,4 +265,5 @@ public class LogIn extends AppCompatActivity {
 //                    Toast.makeText(LogIn.this, "登錄失敗", Toast.LENGTH_SHORT).show();
 //                });
 //    }
+
 }
