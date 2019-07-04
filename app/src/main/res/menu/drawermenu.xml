@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/homepage" android:title="首頁" />
-    <item android:id="@+id/settings" android:title="設定" />
+    <item android:id="@+id/setting" android:title="設定" />
     <item android:id="@+id/login" android:title="登入" />
     <item android:id="@+id/logout" android:title="登出" />
     <item android:id="@+id/register" android:title="註冊" />

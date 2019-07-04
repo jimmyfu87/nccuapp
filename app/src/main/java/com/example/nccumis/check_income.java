@@ -720,7 +720,7 @@ public class check_income extends AppCompatActivity {
     }
 
     public void jumpToHome(){
-        Intent intent = new Intent(check_income.this,Home.class);
+        Intent intent = new Intent(check_income.this,MainActivity2.class);
         startActivity(intent);
     }
 
