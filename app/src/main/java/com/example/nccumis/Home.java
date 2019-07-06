@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -61,6 +62,7 @@ public class Home extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private  String dateinStart;
     private String dateinEnd;
+    private TextView member_id;
 
 
     @Override
@@ -124,6 +126,10 @@ public class Home extends AppCompatActivity {
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sp = getSharedPreferences("User",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.clear();
+                editor.commit();
                 signOut();
             }
 
@@ -147,6 +153,11 @@ public class Home extends AppCompatActivity {
                 jumpTocheck_expense();
             }
         });
+        //取得帳號
+        member_id=(TextView)findViewById(R.id.member_id);
+        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        member_id.setText(sp.getString("member_id",null));
     }
     private void signIn(int askcode) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
