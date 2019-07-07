@@ -31,8 +31,9 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView = findViewById(R.id.nav_view);
-
         navigationView.setNavigationItemSelectedListener(this);
+
+        //到記帳
         addSpend = (Button) findViewById(R.id.addSpend);
         addSpend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +53,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
 
     }
 
-
+//點擊左側菜單的動作
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
         int id = item.getItemId();
@@ -68,23 +69,16 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
-
-
-
-
-
-
-
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
     }
-
+//到記帳
     public void jumpToadd_spend() {
         Intent intent = new Intent(MainActivity2.this, add_expense.class);
         startActivity(intent);
     }
-
+//到查帳
     public void jumpTocheck_expense() {
         Intent intent = new Intent(MainActivity2.this, check_expense.class);
         startActivity(intent);
