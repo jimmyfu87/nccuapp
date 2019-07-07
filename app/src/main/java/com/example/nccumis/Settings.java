@@ -6,7 +6,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 
-public class setting extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
 
     private EditText et_predictAmount;
     private CheckBox ckbox_GLORY;
@@ -20,7 +20,7 @@ public class setting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting);
+        setContentView(R.layout.activity_settings);
 
         et_predictAmount =(EditText)findViewById(R.id.et_predictAmount);
         ckbox_GLORY =(CheckBox)findViewById(R.id.ckbox_GLORY);

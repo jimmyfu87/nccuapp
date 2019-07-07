@@ -63,6 +63,9 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         }else if(id == R.id.login){
             Intent intent = new Intent(MainActivity2.this,LogIn.class);
             startActivity(intent);
+        }else if(id == R.id.setting){
+            Intent intent = new Intent(MainActivity2.this,Settings.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = findViewById(R.id.drawer);
         drawer.closeDrawer(GravityCompat.START);
