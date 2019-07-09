@@ -23,10 +23,8 @@
         <activity android:name=".add_spend_viewpager" />
         <activity android:name=".add_type" />
         <activity android:name=".add_book" />
-        <activity android:name=".add_expense"/>
-        <activity android:name=".add_income"/>
-        <activity android:name=".LogIn" />
-
+        <activity android:name=".add_expense" />
+        <activity android:name=".add_income" />
         <activity
             android:name=".check_expense"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
@@ -35,11 +33,16 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity android:name=".check_expense_detail" />
         <activity android:name=".check_income_detail" />
-        <!--<activity android:name=".Home" />-->
+        <activity android:name=".Home" />
         <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/> -->
 
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
+        <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
+        <activity android:name=".com.example.nccumis.onlineshopping.Desirepool"/>
+        <activity
+            android:name=".LogIn"
+            android:windowSoftInputMode="stateAlwaysHidden">
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/>
         <activity android:name=".com.example.nccumis.onlineshopping.ecommerce1"/>
 

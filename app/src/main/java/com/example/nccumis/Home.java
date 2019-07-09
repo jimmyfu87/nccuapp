@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nccumis.com.example.nccumis.onlineshopping.ecommerce1;
+import com.example.nccumis.com.example.nccumis.onlineshopping.Desirepool;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -48,7 +49,7 @@ public class Home extends AppCompatActivity {
     private Button restore;
     private Button cloud_backup;
     private Button cloud_restore;
-    private Button wishpool;
+    private Button pool;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 127;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE2 = 128;
     private boolean created=false;
@@ -78,6 +79,14 @@ public class Home extends AppCompatActivity {
         dbmanager.close();
         setContentView(R.layout.home);
 
+        pool=(Button) findViewById(R.id.pool);
+        pool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, Desirepool.class);
+                startActivity(intent);
+            }
+        });
         restoreSharepref();
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
