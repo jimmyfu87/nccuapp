@@ -20,12 +20,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <ProgressBar
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="100dp"
+            android:id="@+id/pb1"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="300dp"
             android:layout_height="100dp"
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
     </LinearLayout>
 
 
@@ -48,6 +52,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="查帳" />
+
+        <Button
+            android:id="@+id/shopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="購物" />
     </LinearLayout>
 
 

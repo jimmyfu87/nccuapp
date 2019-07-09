@@ -16,6 +16,7 @@ import android.widget.Toast;
 public class MainActivity2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private Button addSpend;
     private Button checkSpend;
+    private Button shopping;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -51,9 +52,17 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
             }
         });
 
+        //到爬蟲
+        shopping =(Button) findViewById(R.id.shopping);
+        shopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { jumpToshopping();}
+
+        });
+
     }
 
-//點擊左側菜單的動作
+    //點擊左側菜單的動作
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
         int id = item.getItemId();
@@ -85,5 +94,8 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
     public void jumpTocheck_expense() {
         Intent intent = new Intent(MainActivity2.this, check_expense.class);
         startActivity(intent);
+    }
+//到爬蟲
+    public void jumpToshopping() {
     }
 }
