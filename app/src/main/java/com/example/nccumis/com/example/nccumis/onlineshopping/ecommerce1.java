@@ -35,8 +35,6 @@ import java.util.Map;
 
 public class ecommerce1 extends AppCompatActivity {
     private static RequestQueue requestQueue;
-    private List<Product> productlist=new ArrayList<Product>();
-
 
     private Button lastPage;
     private TextView ecommerceName;
@@ -46,7 +44,7 @@ public class ecommerce1 extends AppCompatActivity {
     private TextView recommendcreditcard;
     private List wishpoolCreditcardDiscount;
     private List<String> discountDetailArray;
-    private List wishpoolproductList;
+    private List<Product> productlist=new ArrayList<Product>();
     private  List<Integer> pictureArray;    //還沒弄
     private  List<String> nameArray;
     private  List<Integer> priceArray;
@@ -54,6 +52,25 @@ public class ecommerce1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ecommerce1);
+
+        lastPage = (Button)findViewById(R.id.lastPage);
+        lastPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToHome();
+            }
+        });
+
+        ecommerceName = (TextView)findViewById(R.id.ecommerceName);
+        ecommerceName.setText("Momo購物網");//之後從資料庫抓電商名稱
+
+        //信用卡優惠
+        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
+        CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+//        setList();
+        setListViewHeightBasedOnChildren(CreditCardListView);
+        //商品優惠
+        ProductListView = (ListView)findViewById(R.id.ProductListView);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -81,6 +98,9 @@ public class ecommerce1 extends AppCompatActivity {
 //                                    System.out.println(productlist.get(i).getMember_id());
 //                                    System.out.println(productlist.get(i).getChannel_name());
 //                                }
+
+                        setProductList();
+                        setListViewHeightBasedOnChildren(ProductListView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -106,28 +126,6 @@ public class ecommerce1 extends AppCompatActivity {
         ecommerce1.GetallproductRequest getRequest = new ecommerce1.GetallproductRequest(sp.getString("member_id",null),"Momo",responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
-
-        lastPage = (Button)findViewById(R.id.lastPage);
-        lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToHome();
-            }
-        });
-
-        ecommerceName = (TextView)findViewById(R.id.ecommerceName);
-        ecommerceName.setText("Momo購物網");//之後從資料庫抓電商名稱
-
-        //信用卡優惠
-        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
-        CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//        setList();
-        setListViewHeightBasedOnChildren(CreditCardListView);
-        //商品優惠
-        ProductListView = (ListView)findViewById(R.id.ProductListView);
-        setProductList();
-        setListViewHeightBasedOnChildren(ProductListView);
-
 
         //計算後的總價
         totalPrice = findViewById(R.id.totalPrice);
@@ -176,9 +174,6 @@ public class ecommerce1 extends AppCompatActivity {
 //    }
 
         public void initProductList(){
-        if(productlist.isEmpty()){
-            return;
-        }
         for(int i = 0; i < this.productlist.size();i++){
             if(this.productlist.get(i).getChannel_name().equals("Momo")){
                 this.nameArray.add(this.productlist.get(i).getProduct_name());
