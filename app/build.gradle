@@ -72,3 +72,9 @@ dependencies {
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
 }
+
+dependencies {
+    implementation 'com.r0adkll:slidableactivity:2.0.6'
+}
+
+

@@ -3,10 +3,12 @@ package com.example.nccumis;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.GestureDetector;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,6 +25,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.content.Intent;
+
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrInterface;
 
 
 public class add_expense extends AppCompatActivity {
@@ -63,12 +68,13 @@ public class add_expense extends AppCompatActivity {
     private EditText i_userid;                  //宣告需要輸入的變數的EditText
     private String i_price,i_note,i_date,i_type_name,i_book_name;
 
-
+    private GestureDetectorCompat geatureObject;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_add);
 
+        geatureObject = new GestureDetectorCompat(this, new LearnGesture());
 //        pager = (ViewPager) findViewById(R.id.pager);
 //
 //        LayoutInflater li = getLayoutInflater().from(this);
@@ -314,6 +320,26 @@ public class add_expense extends AppCompatActivity {
 //        });
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.geatureObject.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
+            if(event2.getX() > event1.getX()){
+                Intent intent = new Intent(add_expense.this, add_income.class);
+                finish();
+                startActivity(intent);
+            }
+            return true;
+        }
+
+    }
+
     //檢查輸入的值是否正確
     //付款人沒做
     public boolean checkInputInfo(){
@@ -478,4 +504,5 @@ public class add_expense extends AppCompatActivity {
         intent.putExtras(detailData);
         startActivity(intent);
     }
+
 }

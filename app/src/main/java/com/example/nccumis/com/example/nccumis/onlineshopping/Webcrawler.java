@@ -20,7 +20,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Webcrawler extends AppCompatActivity {
-
     private Bundle saveBag;
     private Intent getPreSavedData;
     private String inputurl;
@@ -28,6 +27,7 @@ public class Webcrawler extends AppCompatActivity {
     private TextView name;
     private TextView price;
     final Document[] doc = new Document[1];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

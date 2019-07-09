@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nccumis.com.example.nccumis.onlineshopping.ecommerce1;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -47,6 +48,7 @@ public class Home extends AppCompatActivity {
     private Button restore;
     private Button cloud_backup;
     private Button cloud_restore;
+    private Button wishpool;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 127;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE2 = 128;
     private boolean created=false;
@@ -153,6 +155,16 @@ public class Home extends AppCompatActivity {
                 jumpTocheck_expense();
             }
         });
+
+        //到許願池（目前只有momo購物網)
+        wishpool = (Button)findViewById(R.id.wishpool);
+        wishpool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToecommerce1();
+            }
+        });
+
         //取得帳號
         member_id=(TextView)findViewById(R.id.member_id);
         SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
@@ -178,6 +190,10 @@ public class Home extends AppCompatActivity {
     public void jumpTocheck_expense() {
         Intent intent = new Intent(Home.this, check_expense.class);
         startActivity(intent);
+    }
+
+    public void jumpToecommerce1(){
+        startActivity(new Intent(Home.this, ecommerce1.class));
     }
 
     private void signOut() {

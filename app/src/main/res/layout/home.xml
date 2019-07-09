@@ -61,6 +61,13 @@
         android:layout_gravity="center"
         android:text="查帳" />
     <Button
+        android:id="@+id/wishpool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="許願池" />
+
+    <Button
         android:id="@+id/signout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

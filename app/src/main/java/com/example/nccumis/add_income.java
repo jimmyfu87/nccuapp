@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +19,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrInterface;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,10 +60,15 @@ public class add_income extends AppCompatActivity {
     private String i_price,i_note,i_date,i_type_name,i_book_name;
 
 
+    private GestureDetectorCompat geatureObject;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.income_add);
+
+        geatureObject = new GestureDetectorCompat(this, new LearnGesture());
 
         //Spinner ArrayAdapter 初始化
         updateType();
@@ -267,6 +277,26 @@ public class add_income extends AppCompatActivity {
                 saveDetailDate=getSaveBag.getString("date");
             }
 
+        }
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.geatureObject.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
+            if(event2.getX() < event1.getX()){
+                Intent intent = new Intent(add_income.this, add_expense.class);
+                finish();
+                startActivity(intent);
+            }
+            return true;
         }
 
     }
