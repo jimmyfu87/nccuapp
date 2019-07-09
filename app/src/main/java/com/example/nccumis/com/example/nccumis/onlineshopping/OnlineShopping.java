@@ -1,6 +1,9 @@
 package com.example.nccumis.com.example.nccumis.onlineshopping;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +11,29 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.nccumis.LogIn;
 import com.example.nccumis.R;
+import com.example.nccumis.Register;
+import com.example.nccumis.RegisterRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class OnlineShopping extends AppCompatActivity {
@@ -22,6 +46,9 @@ public class OnlineShopping extends AppCompatActivity {
     private Button btn_webNextPage;
     private Button btn_FirstBankDiscount;
     private Button btn_addInCart;
+    final Document[] doc = new Document[1];
+    private RequestQueue queue;
+    private String member_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +122,8 @@ public class OnlineShopping extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String currentWebURL = getCurrentWebURL();//給你們爬蟲的URL
-                jumpToDemo(currentWebURL);
+                webcrawl(currentWebURL);
+                //jumpToDemo(currentWebURL);
                 ///////////////爬蟲加這之後//////////////////
 
             }
@@ -153,5 +181,144 @@ public class OnlineShopping extends AppCompatActivity {
         savedWebData.putString("webURL",urldemo);
         intent.putExtras(savedWebData);
         startActivity(intent);
+    }
+    public void webcrawl(String inputurl){
+        queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, inputurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            doc[0] = Jsoup.parse(response);
+                            Elements title = doc[0].getElementsByTag("title");
+                            String titles = "";
+                            int edition = 0;
+                            String sb = "";
+                            String sb2 = "";
+                            for (Element element : title) {
+                                titles = titles + element;
+                                //System.out.println(titles);
+                            }
+
+                            if (titles.contains("momo購物網行動版")) {
+                                edition = 1;
+                            } else {
+                                edition = 2;
+                            }
+                            if(!inputurl.contains("momoshop.com.tw/goods")){
+                                Toast.makeText(getApplicationContext(), "無法解析", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            //System.out.println(edition);
+                            switch (edition) {
+                                //行動版
+                                case 1:
+                                    Elements element2 = doc[0].getElementsByTag("title");
+                                    for (Element element : element2) {
+                                        sb = sb + element;
+                                        sb = sb.replace("<title>", "");
+                                        sb = sb.replace("</title>", "");
+                                        sb = sb.replace("- momo購物網行動版", "");
+                                    }
+                                    Elements elements3 = doc[0].getElementsByClass("priceArea").first().getElementsByTag("b");
+                                    for (Element element : elements3) {
+                                        sb2 = sb2 + element;
+                                        sb2 = sb2.replace("<b>", "");
+                                        sb2 = sb2.replace("</b>", "");
+                                    }
+                                    InsertIntoDatabase(sb,sb2,inputurl,"Momo");
+                                    break;
+                                //電腦版
+                                case 2:
+                                    Elements element4 = doc[0].getElementsByTag("title");
+                                    for (Element element : element4) {
+                                        sb = "";
+                                        sb = sb + element;
+                                        sb = sb.replace("<title>", "");
+                                        sb = sb.replace("</title>", "");
+                                        sb = sb.replace("-momo購物網", "");
+                                    }
+                                    Elements elements5 = doc[0].getElementsByClass("special").first().getElementsByTag("span");
+                                    for (Element element : elements5) {
+                                        sb2 = "";
+                                        sb2 = sb2 + element;
+                                        sb2 = sb2.replace("<span>", "");
+                                        sb2 = sb2.replace("</span>", "");
+                                    }
+                                    InsertIntoDatabase(sb,sb2,inputurl,"Momo");
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "無法解析", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        queue.add(stringRequest);
+
+    }
+    public void InsertIntoDatabase(String product_name,String product_price,String product_url,String channel_name){
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
+                        builder.setMessage("成功加入許願池")
+                                .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .create()
+                                .show();
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
+                        builder.setMessage("加入許願池失敗")
+                                .setPositiveButton("知道了", null)
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        member_id=sp.getString("member_id",null);
+        AddtopoolRequest addtopoolRequest = new AddtopoolRequest(product_name,product_price, product_url,member_id,channel_name,responseListener);
+        RequestQueue queue = Volley.newRequestQueue(OnlineShopping.this);
+        queue.add(addtopoolRequest);
+
+    }
+    public class AddtopoolRequest extends StringRequest {
+        private static final String Addtopool_REQUEST_URL="https://nccugo105306.000webhostapp.com/Addtopool.php";
+        private Map<String,String> params;
+
+        public AddtopoolRequest(String product_name,String product_price, String product_url,String member_id,String channel_name, Response.Listener<String> listener){
+            super(Method.POST, Addtopool_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("product_name", product_name);
+            params.put("product_price", product_price);
+            params.put("product_url",  product_url);
+            params.put("member_id",member_id );
+            params.put("channel_name", channel_name);
+        }
+
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+
+
     }
 }
