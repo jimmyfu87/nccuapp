@@ -50,6 +50,7 @@ public class Home extends AppCompatActivity {
     private Button cloud_backup;
     private Button cloud_restore;
     private Button pool;
+    private Button wishpool;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 127;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE2 = 128;
     private boolean created=false;
