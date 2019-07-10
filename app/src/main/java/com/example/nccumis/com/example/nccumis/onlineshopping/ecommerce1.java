@@ -45,9 +45,10 @@ public class ecommerce1 extends AppCompatActivity {
     private List wishpoolCreditcardDiscount;
     private List<String> discountDetailArray;
     private  List<Integer> pictureArray;    //還沒弄
-    private  List<String> nameArray;
-    private  List<Integer> priceArray;
+    private  List<String> nameArray=new ArrayList<>();
+    private  List<Integer> priceArray=new ArrayList<>();
     private List<Product> productlist=new ArrayList<Product>();
+    private JSONArray array=new JSONArray();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +57,10 @@ public class ecommerce1 extends AppCompatActivity {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 if(!response.equals("NoValue")){
                     try {
-                        JSONArray array = new JSONArray(response);
+                        array = new JSONArray(response);
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
@@ -73,6 +75,7 @@ public class ecommerce1 extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
                 else{
                     //這邊是發現許願池是空的處理方式，要改可以改
