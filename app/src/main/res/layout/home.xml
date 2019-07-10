@@ -59,6 +59,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="查帳" />
+
+    <Button
+        android:id="@+id/onlineShopping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="優惠商城"/>
+
     <Button
         android:id="@+id/wishpool"
         android:layout_width="wrap_content"

@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nccumis.com.example.nccumis.onlineshopping.OnlineShopping;
 import com.example.nccumis.com.example.nccumis.onlineshopping.ecommerce1;
-import com.example.nccumis.com.example.nccumis.onlineshopping.Desirepool;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -50,6 +50,7 @@ public class Home extends AppCompatActivity {
     private Button cloud_backup;
     private Button cloud_restore;
     private Button wishpool;
+    private Button onlineShopping;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 127;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE2 = 128;
     private boolean created=false;
@@ -157,6 +158,14 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        //到網購商城（momo購物網）
+        onlineShopping = (Button)findViewById(R.id.onlineShopping);
+        onlineShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToOnlineShopping();
+            }
+        });
         //到許願池（目前只有momo購物網)
         wishpool = (Button)findViewById(R.id.wishpool);
         wishpool.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +205,11 @@ public class Home extends AppCompatActivity {
     public void jumpToecommerce1(){
         startActivity(new Intent(Home.this, ecommerce1.class));
     }
+
+    public void jumpToOnlineShopping(){
+        startActivity(new Intent(Home.this, OnlineShopping.class));
+    }
+
 
     private void signOut() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

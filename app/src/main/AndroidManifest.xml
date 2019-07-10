@@ -39,8 +39,6 @@
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
-        <activity android:name=".com.example.nccumis.onlineshopping.Desirepool"/>
-
         <activity android:name=".com.example.nccumis.onlineshopping.ecommerce1"/>
 
         <activity
