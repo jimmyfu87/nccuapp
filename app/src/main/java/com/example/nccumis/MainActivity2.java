@@ -117,6 +117,41 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         }else if(id == R.id.register){
             Intent intent = new Intent(MainActivity2.this,Register.class);
             startActivity(intent);
+        }else if(id == R.id.phoneBackup){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                //申请WRITE_EXTERNAL_STORAGE权限
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+            }
+            else {
+                try {
+                    File sd = Environment.getExternalStorageDirectory();
+                    File data = Environment.getDataDirectory();
+                    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                        String currentDBPath = "/data/com.example.nccumis/databases/App.db";
+                        String backupDBPath = "App.db";
+                        File currentDB = new File(data, currentDBPath);
+                        File backupDB = new File(sd, backupDBPath);
+
+                        //Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
+                        if (currentDB.exists()) {
+                            FileChannel src = new FileInputStream(currentDB).getChannel();
+                            FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                            dst.transferFrom(src, 0, src.size());
+                            src.close();
+                            dst.close();
+                            Toast.makeText(getApplicationContext(), "手機內存備份成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "沒有SD卡", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }else if(id == R.id.phone_restore){
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
