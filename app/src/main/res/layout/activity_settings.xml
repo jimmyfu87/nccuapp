@@ -21,20 +21,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="當月預算"/>
+            android:text="當月預算"
+            android:textSize="20dp"
+           />
         <EditText
             android:id="@+id/et_predictAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="請輸入首頁當月預算總金額"/>
+            android:hint="請輸入首頁當月預算總金額"
+            android:textSize="14dp"
+            android:digits="0123456789"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="請勾選您擁有的信用卡"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textSize="20dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
             <CheckBox
                 android:id="@+id/ckbox_GLORY"
                 android:layout_width="wrap_content"
@@ -50,7 +56,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="輸入卡號，方便自動記帳"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:textSize="14dp"
+                android:digits="0123456789-"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -69,7 +77,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="輸入卡號，方便自動記帳"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:textSize="14dp"
+                android:digits="0123456789-"/>
         </LinearLayout>
 
         <LinearLayout
@@ -89,9 +99,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="輸入卡號，方便自動記帳"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:textSize="14dp"
+                android:digits="0123456789-"/>
         </LinearLayout>
 
-
+<Button
+    android:id="@+id/btn_setToHome"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:text="回上頁"/>
     </LinearLayout>
 </ScrollView>
