@@ -39,7 +39,7 @@
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
-        <activity android:name=".com.example.nccumis.onlineshopping.ecommerce1"/>
+        <activity android:name=".com.example.nccumis.onlineshopping.wishpool_momo"/>
 
         <activity
                 android:name=".Home"

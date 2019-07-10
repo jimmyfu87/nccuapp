@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nccumis.com.example.nccumis.onlineshopping.OnlineShopping;
-import com.example.nccumis.com.example.nccumis.onlineshopping.ecommerce1;
+import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_momo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -203,7 +203,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void jumpToecommerce1(){
-        startActivity(new Intent(Home.this, ecommerce1.class));
+        startActivity(new Intent(Home.this, wishpool_momo.class));
     }
 
     public void jumpToOnlineShopping(){

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +11,13 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.nccumis.ExpenseIncomeDetailListAdapter;
 import com.example.nccumis.Home;
 import com.example.nccumis.R;
-import com.example.nccumis.add_expense;
-import com.example.nccumis.check_expense_detail;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ecommerce1 extends AppCompatActivity {
+public class wishpool_momo extends AppCompatActivity {
     private static RequestQueue requestQueue;
 
     private Button lastPage;
@@ -108,13 +103,13 @@ public class ecommerce1 extends AppCompatActivity {
                 }
                 else{
                     //這邊是發現許願池是空的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ecommerce1.this);
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
                     builder.setMessage("沒有商品")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(ecommerce1.this, Home.class);
-                                    ecommerce1.this.startActivity(intent);
+                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
+                                    wishpool_momo.this.startActivity(intent);
                                 }
                             })
                             .create()
@@ -124,7 +119,7 @@ public class ecommerce1 extends AppCompatActivity {
         };
         SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        ecommerce1.GetallproductRequest getRequest = new ecommerce1.GetallproductRequest(sp.getString("member_id",null),"Momo",responseListener);
+        wishpool_momo.GetallproductRequest getRequest = new wishpool_momo.GetallproductRequest(sp.getString("member_id",null),"Momo",responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
@@ -208,7 +203,7 @@ public class ecommerce1 extends AppCompatActivity {
 
     public void setProductList(){
         initProductList();
-        productListAdapter productlist_adapter = new productListAdapter(ecommerce1.this, nameArray , priceArray);
+        productListAdapter productlist_adapter = new productListAdapter(wishpool_momo.this, nameArray , priceArray);
         ProductListView.setAdapter(productlist_adapter);
     }
 
@@ -248,7 +243,7 @@ public class ecommerce1 extends AppCompatActivity {
     }
 
     public void jumpToHome(){
-        Intent intent = new Intent(ecommerce1.this, Home.class);
+        Intent intent = new Intent(wishpool_momo.this, Home.class);
         startActivity(intent);
     }
 }
