@@ -46,13 +46,6 @@
         android:layout_height="35dp"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
     <Button
-        android:id="@+id/pool"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="許願池"
-        android:textAllCaps="false" />
-    <Button
         android:id="@+id/addSpend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

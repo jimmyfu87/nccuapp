@@ -44,10 +44,11 @@ public class ecommerce1 extends AppCompatActivity {
     private TextView recommendcreditcard;
     private List wishpoolCreditcardDiscount;
     private List<String> discountDetailArray;
-    private List<Product> productlist=new ArrayList<Product>();
     private  List<Integer> pictureArray;    //還沒弄
-    private  List<String> nameArray;
-    private  List<Integer> priceArray;
+    private  List<String> nameArray=new ArrayList<>();
+    private  List<Integer> priceArray=new ArrayList<>();
+    private List<Product> productlist=new ArrayList<Product>();
+    private JSONArray array=new JSONArray();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +127,28 @@ public class ecommerce1 extends AppCompatActivity {
         ecommerce1.GetallproductRequest getRequest = new ecommerce1.GetallproductRequest(sp.getString("member_id",null),"Momo",responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
+
+        lastPage = (Button)findViewById(R.id.lastPage);
+        lastPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToHome();
+            }
+        });
+
+        ecommerceName = (TextView)findViewById(R.id.ecommerceName);
+        ecommerceName.setText("Momo購物網");//之後從資料庫抓電商名稱
+
+        //信用卡優惠
+        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
+        CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+//        setList();
+        setListViewHeightBasedOnChildren(CreditCardListView);
+        //商品優惠
+        ProductListView = (ListView)findViewById(R.id.ProductListView);
+        setProductList();
+        setListViewHeightBasedOnChildren(ProductListView);
+
 
         //計算後的總價
         totalPrice = findViewById(R.id.totalPrice);

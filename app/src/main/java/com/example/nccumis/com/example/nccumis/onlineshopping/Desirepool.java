@@ -53,7 +53,7 @@ public class Desirepool extends AppCompatActivity {
                                     productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name));
                                     //拿productlist去調用，包含登入使用者的所有product
                                 }
-                                //下面是取值方式可以參考，不用就可以刪掉
+//                                下面是取值方式可以參考，不用就可以刪掉
 //                                for (int i = 0; i < productlist.size(); i++) {
 //                                    System.out.println(productlist.get(i).getId());
 //                                    System.out.println(productlist.get(i).getProduct_name());
