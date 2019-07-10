@@ -226,6 +226,9 @@ public class OnlineShopping extends AppCompatActivity {
                                         sb2 = sb2.replace("<b>", "");
                                         sb2 = sb2.replace("</b>", "");
                                     }
+                                    if(sb2.contains(",")){
+                                        sb2.replaceAll(",","");
+                                    }
                                     InsertIntoDatabase(sb,sb2,inputurl,"Momo");
                                     break;
                                 //電腦版
@@ -244,6 +247,9 @@ public class OnlineShopping extends AppCompatActivity {
                                         sb2 = sb2 + element;
                                         sb2 = sb2.replace("<span>", "");
                                         sb2 = sb2.replace("</span>", "");
+                                    }
+                                    if(sb2.contains(",")){
+                                        sb2.replaceAll(",","");
                                     }
                                     InsertIntoDatabase(sb,sb2,inputurl,"Momo");
                                     break;

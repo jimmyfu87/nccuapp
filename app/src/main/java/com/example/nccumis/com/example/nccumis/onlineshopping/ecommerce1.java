@@ -35,8 +35,6 @@ import java.util.Map;
 
 public class ecommerce1 extends AppCompatActivity {
     private static RequestQueue requestQueue;
-    private List<Product> productlist=new ArrayList<Product>();
-
 
     private Button lastPage;
     private TextView ecommerceName;
@@ -46,10 +44,10 @@ public class ecommerce1 extends AppCompatActivity {
     private TextView recommendcreditcard;
     private List wishpoolCreditcardDiscount;
     private List<String> discountDetailArray;
-    private List wishpoolproductList;
     private  List<Integer> pictureArray;    //還沒弄
     private  List<String> nameArray;
     private  List<Integer> priceArray;
+    private List<Product> productlist=new ArrayList<Product>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +70,6 @@ public class ecommerce1 extends AppCompatActivity {
                             productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name));
                             //拿productlist去調用，包含登入使用者的所有product
                         }
-                        //下面是取值方式可以參考，不用就可以刪掉
-//                                for (int i = 0; i < productlist.size(); i++) {
-//                                    System.out.println(productlist.get(i).getId());
-//                                    System.out.println(productlist.get(i).getProduct_name());
-//                                    System.out.println(productlist.get(i).getProduct_price());
-//                                    System.out.println(productlist.get(i).getProduct_url());
-//                                    System.out.println(productlist.get(i).getMember_id());
-//                                    System.out.println(productlist.get(i).getChannel_name());
-//                                }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

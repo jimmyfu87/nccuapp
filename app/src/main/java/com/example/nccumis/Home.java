@@ -49,7 +49,6 @@ public class Home extends AppCompatActivity {
     private Button restore;
     private Button cloud_backup;
     private Button cloud_restore;
-    private Button pool;
     private Button wishpool;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 127;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE2 = 128;
@@ -80,14 +79,6 @@ public class Home extends AppCompatActivity {
         dbmanager.close();
         setContentView(R.layout.home);
 
-        pool=(Button) findViewById(R.id.pool);
-        pool.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home.this, Desirepool.class);
-                startActivity(intent);
-            }
-        });
         restoreSharepref();
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
