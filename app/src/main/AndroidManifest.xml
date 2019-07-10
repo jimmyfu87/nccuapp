@@ -44,10 +44,10 @@
         <activity android:name=".com.example.nccumis.onlineshopping.ecommerce1"/>
 
         <activity
-                android:name=".LogIn"
+                android:name=".Home"
                 android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".Home"
+            android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

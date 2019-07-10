@@ -69,7 +69,7 @@ public class ecommerce1 extends AppCompatActivity {
         CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
         CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 //        setList();
-        setListViewHeightBasedOnChildren(CreditCardListView);
+//        setListViewHeightBasedOnChildren(CreditCardListView);
         //商品優惠
         ProductListView = (ListView)findViewById(R.id.ProductListView);
 
@@ -101,7 +101,7 @@ public class ecommerce1 extends AppCompatActivity {
 //                                }
 
                         setProductList();
-                        setListViewHeightBasedOnChildren(ProductListView);
+//                        setListViewHeightBasedOnChildren(ProductListView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -143,11 +143,11 @@ public class ecommerce1 extends AppCompatActivity {
         CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
         CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 //        setList();
-        setListViewHeightBasedOnChildren(CreditCardListView);
+//        setListViewHeightBasedOnChildren(CreditCardListView);
         //商品優惠
         ProductListView = (ListView)findViewById(R.id.ProductListView);
         setProductList();
-        setListViewHeightBasedOnChildren(ProductListView);
+//        setListViewHeightBasedOnChildren(ProductListView);
 
 
         //計算後的總價
