@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class wishpool_momo extends AppCompatActivity {
     private static RequestQueue requestQueue;
-
+    private static int finalprice = 0;
     private Button lastPage;
     private TextView ecommerceName;
     private ListView CreditCardListView;
@@ -148,6 +148,7 @@ public class wishpool_momo extends AppCompatActivity {
         //計算後的總價
         totalPrice = findViewById(R.id.totalPrice);
 //        countTotalPrice();
+        totalPrice.setText("目前勾選金額:"+totalPrice.toString());
 
         //推薦信用卡
         recommendcreditcard = findViewById(R.id.recommendcreditcard);
@@ -210,11 +211,12 @@ public class wishpool_momo extends AppCompatActivity {
 
 
     //計算總額
-    public int countTotalPrice(){
-        int price = 0;
+    public static void addFinalPrice(int para){
+        finalprice += para;
+    }
 
-
-        return price;
+    public static void minusFinalPrice(int para){
+        finalprice -= para;
     }
 
     /**

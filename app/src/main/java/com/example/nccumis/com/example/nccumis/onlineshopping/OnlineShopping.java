@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.nccumis.Home;
 import com.example.nccumis.LogIn;
 import com.example.nccumis.R;
 import com.example.nccumis.Register;
@@ -61,6 +62,7 @@ public class OnlineShopping extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                jumpToLastPage();
+                jumpToHome();
             }
         });
 
@@ -165,6 +167,11 @@ public class OnlineShopping extends AppCompatActivity {
 //    public void jumpToLastPage(){
 //        startActivity(new Intent(OnlineShopping.this, discountEcommerce.class));
 //    }
+
+    public void jumpToHome(){
+        startActivity(new Intent(OnlineShopping.this, Home.class));
+
+    }
 
     private void jumpToFirstBankDiscountPage(){
         Intent intent = new Intent(OnlineShopping.this, firstBankDiscount.class);

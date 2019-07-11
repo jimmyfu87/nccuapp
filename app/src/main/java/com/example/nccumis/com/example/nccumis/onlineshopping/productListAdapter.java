@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nccumis.R;
 
@@ -40,6 +42,34 @@ public class productListAdapter extends ArrayAdapter {
         TextView nameTextField = (TextView) rowView.findViewById(R.id.name);
         TextView priceTextField = (TextView) rowView.findViewById(R.id.price);
         check = (CheckBox) rowView.findViewById(R.id.check);
+//        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                Toast.makeText(context, isChecked + "", Toast.LENGTH_SHORT).show();
+//                wishpool_momo.setFinalPrice(priceArray.get(position));
+//            }
+//        });
+
+        check.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                //判斷CheckBox是否有勾選，同mCheckBox.isChecked()
+                if(isChecked)
+                {
+                    //CheckBox狀態 : 已勾選
+                    Toast.makeText(context, isChecked + "", Toast.LENGTH_SHORT).show();
+                    wishpool_momo.addFinalPrice(priceArray.get(position));
+                }
+                else
+                {
+                    //CheckBox狀態 : 未勾選
+                    Toast.makeText(context, isChecked + "", Toast.LENGTH_SHORT).show();
+                    wishpool_momo.minusFinalPrice(priceArray.get(position));
+                }
+            }
+        });
 
         //this code sets the values of the objects to values from the arrays
 //        pictureTextField.setText(pictureArray.get(position).toString());
