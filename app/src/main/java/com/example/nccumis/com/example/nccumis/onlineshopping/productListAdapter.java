@@ -59,13 +59,13 @@ public class productListAdapter extends ArrayAdapter {
                 if(isChecked)
                 {
                     //CheckBox狀態 : 已勾選
-                    Toast.makeText(context, isChecked + "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, nameArray.get(position) +" checked status is "+isChecked + "", Toast.LENGTH_SHORT).show();
                     wishpool_momo.addFinalPrice(priceArray.get(position));
                 }
                 else
                 {
                     //CheckBox狀態 : 未勾選
-                    Toast.makeText(context, isChecked + "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, nameArray.get(position) +" checked status is "+isChecked + "", Toast.LENGTH_SHORT).show();
                     wishpool_momo.minusFinalPrice(priceArray.get(position));
                 }
             }
