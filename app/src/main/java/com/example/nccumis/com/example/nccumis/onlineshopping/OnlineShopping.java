@@ -235,9 +235,8 @@ public class OnlineShopping extends AppCompatActivity {
                                         sb2 = sb2.replace("<b>", "");
                                         sb2 = sb2.replace("</b>", "");
                                     }
-                                    if(sb2.contains(",")){
-                                        sb2.replaceAll(",","");
-                                    }
+
+                                    sb2=sb2.replace(",","");//移除價錢的逗號
                                     InsertIntoDatabase(sb,sb2,inputurl,"Momo");
                                     break;
                                 //電腦版
@@ -257,9 +256,8 @@ public class OnlineShopping extends AppCompatActivity {
                                         sb2 = sb2.replace("<span>", "");
                                         sb2 = sb2.replace("</span>", "");
                                     }
-                                    if(sb2.contains(",")){
-                                        sb2.replaceAll(",","");
-                                    }
+
+                                    sb2=sb2.replace(",","");//移除價錢的逗號
                                     InsertIntoDatabase(sb,sb2,inputurl,"Momo");
                                     break;
                             }
