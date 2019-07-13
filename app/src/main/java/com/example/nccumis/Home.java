@@ -102,47 +102,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
         dbmanager.close();
-        cloud_backup=(Button) findViewById(R.id.cloud_backup);
-        cloud_backup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                boolean created=getSharedPreferences("sharepref",MODE_PRIVATE).getBoolean("Created",false);
-//                if(isCreated){
-//                    signIn(REQUEST_CODE_SIGN_IN_update);
-//                }
-//                else {
-                    signIn(REQUEST_CODE_SIGN_IN_create);
-//                    SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
-//                    setting.edit().putBoolean("Created",true);
-//
-//                }
-            }
-        });
-        cloud_restore=(Button) findViewById(R.id.cloud_restore);
-        cloud_restore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn(REQUEST_CODE_SIGN_IN_restore);
-            }
-        });
-        backup = (Button) findViewById(R.id.backup);
-        backup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                BackupManager bm = new BackupManager(Home.this);
-//                bm.dataChanged();
-//                jumpToadd_expense();
-//                  checkpermission();
-                backUp();
-            }
-        });
-        restore=(Button) findViewById(R.id.restore);
-        restore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                restore();
-            }
-        });
+
+
 
         //到帳本管理
         jumpToBook =(Button)findViewById(R.id.jumpToBook);
