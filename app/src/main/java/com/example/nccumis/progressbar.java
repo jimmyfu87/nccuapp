@@ -21,7 +21,7 @@ public class progressbar  extends AppCompatActivity {
     int progress = 0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         pb1 = (ProgressBar) findViewById(R.id.pb1);
