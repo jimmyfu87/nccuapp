@@ -65,7 +65,7 @@ public class productListAdapter extends ArrayAdapter {
                 else
                 {
                     //CheckBox狀態 : 未勾選
-                    Toast.makeText(context, nameArray.get(position) +" checked status is "+isChecked + "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, nameArray.get(position) +" checked statussher is "+isChecked + "", Toast.LENGTH_SHORT).show();
                     wishpool_momo.minusFinalPrice(priceArray.get(position));
                 }
             }

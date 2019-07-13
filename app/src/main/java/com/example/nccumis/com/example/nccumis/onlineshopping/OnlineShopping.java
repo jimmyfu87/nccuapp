@@ -141,6 +141,8 @@ public class OnlineShopping extends AppCompatActivity {
             OnlineShopping_webView.loadUrl(getSaveBag.getString("webURL"));
             WebSettings webSettings = OnlineShopping_webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
+            OnlineShopping_webView.setVerticalScrollBarEnabled(true);
+            OnlineShopping_webView.setHorizontalScrollBarEnabled(true);
         }
     }
 

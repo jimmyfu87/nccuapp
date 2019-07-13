@@ -47,7 +47,7 @@ public class wishpool_momo extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ecommerce1);
+        setContentView(R.layout.activity_wishpool_momo);
 
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {

@@ -34,27 +34,27 @@ public class creditcardListAdapter extends ArrayAdapter {
 
         //this code gets references to objects in the listview_row.xml file
         TextView discountDetailTextField = (TextView) rowView.findViewById(R.id.discountDetail);
-        check = (CheckBox) rowView.findViewById(R.id.check);
+//        check = (CheckBox) rowView.findViewById(R.id.check);
 
         //this code sets the values of the objects to values from the arrays
         discountDetailTextField.setText(discountDetailArray.get(position));
 
-        check.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                //判斷CheckBox是否有勾選，同mCheckBox.isChecked()
-                if(isChecked)
-                {
-                    //CheckBox狀態 : 已勾選
-                }
-                else
-                {
-                    //CheckBox狀態 : 未勾選
-                }
-            }
-        });
+//        check.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener()
+//        {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+//            {
+//                //判斷CheckBox是否有勾選，同mCheckBox.isChecked()
+//                if(isChecked)
+//                {
+//                    //CheckBox狀態 : 已勾選
+//                }
+//                else
+//                {
+//                    //CheckBox狀態 : 未勾選
+//                }
+//            }
+//        });
 
         return rowView;
 
