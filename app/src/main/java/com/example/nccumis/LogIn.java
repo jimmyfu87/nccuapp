@@ -151,7 +151,7 @@ public class LogIn extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
-            startActivity(new Intent(LogIn.this,Home.class));
+            startActivity(new Intent(LogIn.this,MainActivity2.class));
         } catch (ApiException e) {
             Log.w("Google signin error", "signInResult:failed code=" + e.getStatusCode());
             Toast.makeText(LogIn.this,"登錄失敗",Toast.LENGTH_LONG).show();
