@@ -16,21 +16,6 @@
             android:text="設定"
             android:layout_gravity="center"/>
 
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="當月預算"
-            android:textSize="20dp"
-           />
-        <EditText
-            android:id="@+id/et_predictAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="請輸入首頁當月預算總金額"
-            android:textSize="14dp"
-            android:digits="0123456789"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

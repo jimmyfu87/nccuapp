@@ -26,7 +26,6 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        et_predictAmount =(EditText)findViewById(R.id.et_predictAmount);
         ckbox_GLORY =(CheckBox)findViewById(R.id.ckbox_GLORY);
         ckbox_Green =(CheckBox)findViewById(R.id.ckbox_Green);
         ckbox_Wonderful=(CheckBox)findViewById(R.id.ckbox_Wonderful);

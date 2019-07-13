@@ -16,8 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Settings"></activity>
-        <!-- //backupagent key -->
+        <activity android:name=".BookManage"></activity>
+        <activity android:name=".Settings" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <activity android:name=".Home" />
         <activity android:name=".add_spend_viewpager" />
@@ -39,7 +39,7 @@
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".LogIn"></activity>
+        <activity android:name=".LogIn" />
         <activity android:name=".MainActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

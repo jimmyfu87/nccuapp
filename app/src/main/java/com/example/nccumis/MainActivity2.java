@@ -59,6 +59,7 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
     public  DriveServiceHelper driveServiceHelper;
     private static final String TAG = "MainActivity2";
     public  boolean isCreated=false;
+    private Button jumpToBook;
 
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
@@ -87,6 +88,15 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
         dbmanager.close();
+
+        //到帳本管理
+        jumpToBook =(Button)findViewById(R.id.jumpToBook);
+        jumpToBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToBookManage();
+            }
+        });
 
         //到記帳
         addSpend = (Button) findViewById(R.id.addSpend);
@@ -141,6 +151,9 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
                     });
         }else if(id == R.id.register){
             Intent intent = new Intent(MainActivity2.this,Register.class);
+            startActivity(intent);
+        }else if(id == R.id.bookManagement){
+            Intent intent = new Intent(MainActivity2.this,BookManage.class);
             startActivity(intent);
         }else if(id == R.id.cloudBackup){
             signIn(REQUEST_CODE_SIGN_IN_create);
@@ -333,7 +346,14 @@ public class MainActivity2 extends AppCompatActivity implements NavigationView.O
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
     }
-//到記帳
+    //到帳本管理
+    public void jumpToBookManage() {
+        Intent intent = new Intent(MainActivity2.this, BookManage.class);
+        startActivity(intent);
+    }
+
+
+    //到記帳
     public void jumpToadd_spend() {
         Intent intent = new Intent(MainActivity2.this, add_expense.class);
         startActivity(intent);
