@@ -387,7 +387,7 @@ public class add_income extends AppCompatActivity {
     }
 
     public void jumpToHome(){
-        Intent intent = new Intent(add_income.this,MainActivity2.class);
+        Intent intent = new Intent(add_income.this,Home.class);
         startActivity(intent);
     }
 

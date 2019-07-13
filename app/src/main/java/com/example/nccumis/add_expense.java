@@ -432,7 +432,7 @@ public class add_expense extends AppCompatActivity {
     }
 
     public void jumpToHome(){
-        Intent intent = new Intent(add_expense.this,MainActivity2.class);
+        Intent intent = new Intent(add_expense.this,Home.class);
         startActivity(intent);
     }
 

@@ -208,7 +208,7 @@ public class Register extends AppCompatActivity {
    };
 
    public void jumpToHome(){
-       startActivity(new Intent(Register.this, MainActivity2.class));
+       startActivity(new Intent(Register.this,Home.class));
    }
 
 

@@ -727,7 +727,7 @@ public class check_expense extends AppCompatActivity {
 
 
     public void jumpToHome(){
-        Intent intent = new Intent(check_expense.this,MainActivity2.class);
+        Intent intent = new Intent(check_expense.this,Home.class);
         startActivity(intent);
     }
 

@@ -43,7 +43,7 @@ public class Settings extends AppCompatActivity {
 
     }
     public void fromSettingsToHome(){
-        Intent intent = new Intent(Settings.this,MainActivity2.class);
+        Intent intent = new Intent(Settings.this,Home.class);
         startActivity(intent);
     }
 
