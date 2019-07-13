@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nccumis.com.example.nccumis.onlineshopping.OnlineShopping;
+import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_momo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -131,6 +133,23 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View v) {
                 jumpTocheck_expense();
+            }
+        });
+
+        //到購物商城
+        onlineShopping = (Button) findViewById(R.id.onlineshopping);
+        onlineShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToOnlineShopping();
+            }
+        });
+        //到許願池
+        wishpool = (Button) findViewById(R.id.wishpool);
+        wishpool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToWishpool();
             }
         });
     }
@@ -374,10 +393,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Intent intent = new Intent(Home.this, check_expense.class);
         startActivity(intent);
     }
-    //到爬蟲
-    public void jumpToshopping() {
+    //到購物商城
+    public void jumpToOnlineShopping() {
+        startActivity(new Intent(Home.this, OnlineShopping.class));
     }
-
+    //到許願池
+    public void jumpToWishpool() {
+        startActivity(new Intent(Home.this, wishpool_momo.class));
+    }
 
 
     public void autoSetFirstandEndMonth(){
