@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -62,7 +63,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private boolean created=false;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 127;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE2 = 128;
-    private boolean created=false;
     public  DriveServiceHelper driveServiceHelper;
     final int REQUEST_CODE_SIGN_IN_create=1;  //create
     final int REQUEST_CODE_SIGN_IN_update=2;  //update
@@ -99,7 +99,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         select_expense=dbmanager.fetchExpense(dateinStart,dateinEnd);           //可直接調用select_expense的資訊
         dbmanager.close();
 
-        restoreSharepref();
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
         dbmanager.close();
@@ -173,16 +172,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 jumpTocheck_expense();
             }
         });
-    }
-    private void signIn(int askcode) {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestScopes(new Scope(DriveScopes.DRIVE_FILE),
-                        new Scope(DriveScopes.DRIVE_APPDATA))
-               // .requestIdToken("887086177375-ukp7vglcak9hk278dvuh87p3gdgr7qjd.apps.googleusercontent.com")
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        startActivityForResult(mGoogleSignInClient.getSignInIntent(), askcode);
     }
 
     //點擊左側菜單的動作
