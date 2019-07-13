@@ -32,16 +32,21 @@ import org.json.JSONObject;
 
 public class LogIn extends AppCompatActivity {
 
+
+
     private CheckBox checkboxLogIn;
     private EditText et_userAccountLogin;
     private EditText et_passwordLogin;
     private Button btn_forgetPassword;
     private Button btn_registerAgain;
     private Button loginHome;
+    private Button btn_backToHome;
 
     int RC_SIGN_IN=0;
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
+
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +62,22 @@ public class LogIn extends AppCompatActivity {
                 signIn();
             }
         });
+
         checkboxLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_userAccountLogin=(EditText)findViewById(R.id.et_userAccountLogin);
         et_passwordLogin =(EditText)findViewById(R.id.et_passwordLogin);
         btn_forgetPassword=(Button)findViewById(R.id.btn_forgetPassword);
         btn_registerAgain = (Button)findViewById(R.id.btn_registerAgain);
         loginHome = (Button) findViewById(R.id.loginHome);
+        btn_backToHome =(Button)findViewById(R.id.btn_backToHome);
+
+        //回上頁
+        btn_backToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToHome();
+            }
+        });
 
         //切換到註冊頁面
         btn_registerAgain.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +191,7 @@ public class LogIn extends AppCompatActivity {
         Intent intent = new Intent(LogIn.this,Home.class);
         startActivity(intent);
     }
+
 
     private void signIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

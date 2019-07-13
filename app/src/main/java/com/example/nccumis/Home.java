@@ -7,17 +7,20 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nccumis.com.example.nccumis.onlineshopping.OnlineShopping;
-import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_momo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -38,10 +41,11 @@ import java.util.Collections;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private Button addSpend;
     private Button checkSpend;
     private Button signout;
@@ -51,6 +55,11 @@ public class Home extends AppCompatActivity {
     private Button cloud_restore;
     private Button wishpool;
     private Button onlineShopping;
+    private Button shopping;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private boolean created=false;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 127;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE2 = 128;
     private boolean created=false;
@@ -59,8 +68,9 @@ public class Home extends AppCompatActivity {
     final int REQUEST_CODE_SIGN_IN_update=2;  //update
     final int REQUEST_CODE_SIGN_IN_restore=3;  //restore
     public SharedPreferences setting;
-    public  boolean isCreated=false;
     private static final String TAG = "Home";
+    public  boolean isCreated=false;
+    private Button jumpToBook;
 
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
@@ -72,13 +82,22 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.home);
+        toolbar = findViewById(R.id.head_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("購智帳");
+        drawerLayout = findViewById(R.id.drawer);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         autoSetFirstandEndMonth();
         DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         List<Expense> select_expense=new ArrayList<>();
         dbmanager.open();
         select_expense=dbmanager.fetchExpense(dateinStart,dateinEnd);           //可直接調用select_expense的資訊
         dbmanager.close();
-        setContentView(R.layout.home);
 
         restoreSharepref();
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
@@ -126,15 +145,12 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        signout = (Button) findViewById(R.id.signout);
-        signout.setOnClickListener(new View.OnClickListener() {
+        //到帳本管理
+        jumpToBook =(Button)findViewById(R.id.jumpToBook);
+        jumpToBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp = getSharedPreferences("User",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.clear();
-                editor.commit();
-                signOut();
+                jumpToBookManage();
             }
 
         });
@@ -157,29 +173,6 @@ public class Home extends AppCompatActivity {
                 jumpTocheck_expense();
             }
         });
-
-        //到網購商城（momo購物網）
-        onlineShopping = (Button)findViewById(R.id.onlineShopping);
-        onlineShopping.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToOnlineShopping();
-            }
-        });
-        //到許願池（目前只有momo購物網)
-        wishpool = (Button)findViewById(R.id.wishpool);
-        wishpool.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToecommerce1();
-            }
-        });
-
-        //取得帳號
-        member_id=(TextView)findViewById(R.id.member_id);
-        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        member_id.setText(sp.getString("member_id",null));
     }
     private void signIn(int askcode) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -192,40 +185,115 @@ public class Home extends AppCompatActivity {
         startActivityForResult(mGoogleSignInClient.getSignInIntent(), askcode);
     }
 
-    public void jumpToadd_spend() {
-        Intent intent = new Intent(Home.this, add_expense.class);
-        startActivity(intent);
+    //點擊左側菜單的動作
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.setting){
+            Intent intent = new Intent(Home.this,Settings.class);
+            startActivity(intent);
+        }else if(id == R.id.login){
+            Intent intent = new Intent(Home.this,LogIn.class);
+            startActivity(intent);
+        }else if(id == R.id.logout){
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
+            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+            mGoogleSignInClient.signOut()
+                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            startActivity(new Intent(Home.this, LogIn.class));
+                            // ...
+                        }
+                    });
+        }else if(id == R.id.register){
+            Intent intent = new Intent(Home.this,Register.class);
+            startActivity(intent);
+        }else if(id == R.id.bookManagement){
+            Intent intent = new Intent(Home.this,BookManage.class);
+            startActivity(intent);
+        }else if(id == R.id.cloudBackup){
+            signIn(REQUEST_CODE_SIGN_IN_create);
+        }else if(id == R.id.cloudreturn){
+            signIn(REQUEST_CODE_SIGN_IN_restore);
+        }else if(id == R.id.phoneBackup){
+            backUp();
+        }else if(id == R.id.phone_restore){
+            restore();
+        }
+        DrawerLayout drawer = findViewById(R.id.drawer);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
-
-    public void jumpTocheck_expense() {
-        Intent intent = new Intent(Home.this, check_expense.class);
-        startActivity(intent);
-    }
-
-    public void jumpToecommerce1(){
-        startActivity(new Intent(Home.this, wishpool_momo.class));
-    }
-
-    public void jumpToOnlineShopping(){
-        startActivity(new Intent(Home.this, OnlineShopping.class));
-    }
-
-
-    private void signOut() {
+    private void signIn(int askcode) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestScopes(new Scope(DriveScopes.DRIVE_FILE),
+                        new Scope(DriveScopes.DRIVE_APPDATA))
+                // .requestIdToken("887086177375-ukp7vglcak9hk278dvuh87p3gdgr7qjd.apps.googleusercontent.com")
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        startActivity(new Intent(Home.this, LogIn.class));
-                        // ...
-                    }
-                });
+        startActivityForResult(mGoogleSignInClient.getSignInIntent(), askcode);
     }
 
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        doNext(requestCode, grantResults);
+    }
+    private void doNext(int requestCode, int[] grantResults) {
+        if(grantResults[0]== PackageManager.PERMISSION_DENIED){
+            return;
+        }
+        else {
+            if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
+                backUp();
+            } else if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE2) {
+                restore();
+            } else {
+                // Permission Denied
+
+            }
+        }
+    }
+    public void restore() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        }
+        else {
+            try {
+                File sd = Environment.getExternalStorageDirectory();
+                File data = Environment.getDataDirectory();
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    String currentDBPath = "/data/com.example.nccumis/databases/App.db";
+                    String backupDBPath = "App.db";
+                    File currentDB = new File(data, currentDBPath);
+                    File backupDB = new File(sd, backupDBPath);
+
+                    //Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
+
+                    if (backupDB.exists()) {
+                        FileChannel src = new FileInputStream(backupDB).getChannel();
+                        FileChannel dst = new FileOutputStream(currentDB).getChannel();
+                        dst.transferFrom(src, 0, src.size());
+                        src.close();
+                        dst.close();
+                        Toast.makeText(getApplicationContext(), "手機內存還原成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "沒有SD卡", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void backUp() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -251,64 +319,6 @@ public class Home extends AppCompatActivity {
                         src.close();
                         dst.close();
                         Toast.makeText(getApplicationContext(), "手機內存備份成功", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "沒有SD卡", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        doNext(requestCode, grantResults);
-    }
-
-    private void doNext(int requestCode, int[] grantResults) {
-        if(grantResults[0]== PackageManager.PERMISSION_DENIED){
-            return;
-        }
-        else {
-            if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
-                backUp();
-            } else if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE2) {
-                restore();
-            } else {
-                // Permission Denied
-
-            }
-        }
-    }
-
-    public void restore() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE2);
-        } else {
-            try {
-                File sd = Environment.getExternalStorageDirectory();
-                File data = Environment.getDataDirectory();
-                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    String currentDBPath = "/data/com.example.nccumis/databases/App.db";
-                    String backupDBPath = "App.db";
-                    File currentDB = new File(data, currentDBPath);
-                    File backupDB = new File(sd, backupDBPath);
-                    //Toast.makeText(getApplicationContext(), "File Set", Toast.LENGTH_SHORT).show();
-
-                    if (backupDB.exists()) {
-                        FileChannel src = new FileInputStream(backupDB).getChannel();
-                        FileChannel dst = new FileOutputStream(currentDB).getChannel();
-                        dst.transferFrom(src, 0, src.size());
-                        src.close();
-                        dst.close();
-                        Toast.makeText(getApplicationContext(), "手機內存還原成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Not exists", Toast.LENGTH_SHORT).show();
                     }
@@ -392,41 +402,31 @@ public class Home extends AppCompatActivity {
                     Toast.makeText(Home.this, "登錄失敗", Toast.LENGTH_SHORT).show();
                 });
     }
-//    private void handleSignInResult_update(Intent result) {
-//        GoogleSignIn.getSignedInAccountFromIntent(result)
-//                .addOnSuccessListener(googleAccount -> {
-//                    // Use the authenticated account to sign in to the Drive service.
-//                    GoogleAccountCredential credential =
-//                            GoogleAccountCredential.usingOAuth2(
-//                                    this, Collections.singleton(DriveScopes.DRIVE_FILE));
-//                    credential.setSelectedAccount(googleAccount.getAccount());
-//                    Drive googleDriveService =
-//                            new Drive.Builder(
-//                                    AndroidHttp.newCompatibleTransport(),
-//                                    new GsonFactory(),
-//                                    credential)
-//                                    .setApplicationName("nccumis")
-//                                    .build();
-//                    // The DriveServiceHelper encapsulates all REST API and SAF functionality.
-//                    // Its instantiation is required before handling any onClick actions.
-//                    driveServiceHelper = new DriveServiceHelper(googleDriveService);
-//                   // String fileid=getSharedPreferences("sharepref",MODE_PRIVATE).getString("Dbfileid","0");
-//                    driveServiceHelper.update();
-//                    Toast.makeText(Home.this, "更新成功", Toast.LENGTH_SHORT).show();
-//
-//                })
-//                .addOnFailureListener(exception -> {
-//                    Toast.makeText(Home.this, "登錄失敗", Toast.LENGTH_SHORT).show();
-//                });
-//    }
-    private void restoreSharepref(){
-        SharedPreferences setting=getSharedPreferences("sharepref",MODE_PRIVATE);
-        SharedPreferences.Editor editor=setting.edit();
-        editor.putString("Dbfileid","0");
-        editor.putBoolean("Created",false);
-        editor.commit();
+
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+    //到帳本管理
+    public void jumpToBookManage() {
+        Intent intent = new Intent(Home.this, BookManage.class);
+        startActivity(intent);
     }
 
+
+    //到記帳
+    public void jumpToadd_spend() {
+        Intent intent = new Intent(Home.this, add_expense.class);
+        startActivity(intent);
+    }
+    //到查帳
+    public void jumpTocheck_expense() {
+        Intent intent = new Intent(Home.this, check_expense.class);
+        startActivity(intent);
+    }
+    //到爬蟲
+    public void jumpToshopping() {
+    }
 
 
 
