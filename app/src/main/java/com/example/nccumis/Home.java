@@ -105,8 +105,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         dbmanager.open();
         dbmanager.close();
 
-
-
         //到帳本管理
         jumpToBook =(Button)findViewById(R.id.jumpToBook);
         jumpToBook.setOnClickListener(new View.OnClickListener() {
