@@ -17,7 +17,7 @@ public class Income {
         Book_name=bookname;
         In_note=note;
     }
-
+//
     public int getIn_id() {
         return In_id;
     }
