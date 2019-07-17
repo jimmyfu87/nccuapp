@@ -19,6 +19,7 @@ public class Settings extends AppCompatActivity {
     private EditText et_GREEN;
     private EditText et_GLORY;
     private Button btn_setToHome;
+    private Button password_change;
 
 
     @Override
@@ -33,6 +34,19 @@ public class Settings extends AppCompatActivity {
         et_GREEN =(EditText)findViewById(R.id.et_GREEN);
         et_Wonderful =(EditText)findViewById(R.id.et_Wonderful);
         btn_setToHome =(Button)findViewById(R.id.btn_setToHome);
+        password_change=(Button)findViewById(R.id.password_change) ;
+
+        password_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gopasswordchange();
+            }
+
+            public void gopasswordchange() {
+                Intent intent = new Intent(Settings.this,password_change.class);
+                startActivity(intent);
+            }
+        });
 
         btn_setToHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,5 +61,8 @@ public class Settings extends AppCompatActivity {
         startActivity(intent);
     }
 
+
 }
+
+
 
