@@ -17,15 +17,45 @@
         android:text="帳本管理"
         android:layout_gravity="center"
         android:textSize="17dp"/>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="您目前所擁有的帳本 :"
-        />
-    <RadioButton
-        android:id="@+id/newBookBtn"
-        android:layout_width="200dp"
+        android:text="選擇匯入之帳本"/>
+
+        <Spinner
+            android:id="@+id/book_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_showBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="顯示所有帳本"/>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/BookList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_newBook"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="新增帳本"
