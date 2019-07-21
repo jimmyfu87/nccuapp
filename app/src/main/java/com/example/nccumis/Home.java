@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -80,17 +81,17 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private Spinner spn_homeBook;
     private SQLiteDatabase database;
     private boolean detail = false;
-    private List<String> book = new ArrayList<String>();
     private int saveDetailId =0;
 
 
 
     private String i_price,i_note,i_date,i_type_name,i_book_name;
+    private List<String> book = new ArrayList<String>();
     public List<String> dbBookData = new ArrayList<String>();     //接資料庫資料
 
 
 
-
+private
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
     private  String dateinStart;
@@ -122,6 +123,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         dbmanager.open();
         dbmanager.close();
 
+        //Spinner ArrayAdapter 初始化
+        updateBook();
+
+        ArrayAdapter<String> bookList = new ArrayAdapter<String>(Home.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                book);
+
         spn_homeBook=(Spinner)findViewById(R.id.spn_homeBook);
         spn_homeBook.setAdapter(bookList);
 
@@ -148,8 +156,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             updateBook();
             spn_homeBook.setAdapter(bookList);
         }
-
-
 
         //到帳本管理
         jumpToBook =(Button)findViewById(R.id.jumpToBook);
