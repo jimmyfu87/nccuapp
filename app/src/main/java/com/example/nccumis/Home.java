@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -18,7 +20,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +77,19 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private static final String TAG = "Home";
     public  boolean isCreated=false;
     private Button jumpToBook;
+    private Spinner spn_homeBook;
+    private SQLiteDatabase database;
+    private boolean detail = false;
+    private List<String> book = new ArrayList<String>();
+    private int saveDetailId =0;
+
+
+
+    private String i_price,i_note,i_date,i_type_name,i_book_name;
+    public List<String> dbBookData = new ArrayList<String>();     //接資料庫資料
+
+
+
 
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
@@ -104,6 +121,35 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
         dbmanager.close();
+
+        spn_homeBook=(Spinner)findViewById(R.id.spn_homeBook);
+        spn_homeBook.setAdapter(bookList);
+
+        //取回book的值
+        spn_homeBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                i_book_name = spn_homeBook.getSelectedItem().toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        //從add_book 或 add_type 返回 填過的資料自動傳入
+        Intent getSaveData = getIntent();
+        Bundle getSaveBag = getSaveData.getExtras();
+        if(getSaveBag != null) {
+            this.detail = getSaveBag.getBoolean("detail");
+            i_price = getSaveBag.getString("amount");
+            i_date = getSaveBag.getString("date");
+            int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
+            spn_homeBook.setSelection(bookPosition);
+            i_note = getSaveBag.getString("note");
+            updateBook();
+            spn_homeBook.setAdapter(bookList);
+        }
+
+
 
         //到帳本管理
         jumpToBook =(Button)findViewById(R.id.jumpToBook);
@@ -432,6 +478,22 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
+
+    public void updateBook(){
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+        dbmanager.open();
+        this.dbBookData = dbmanager.fetchBook();
+        dbmanager.close();
+        for(int i = 0; i<dbBookData.size(); i++){
+            if(book.contains(dbBookData.get(i))){
+                continue;
+            }else{
+                this.book.add(dbBookData.get(i));
+            }
+        }
+    }
+
+
 
 }
 

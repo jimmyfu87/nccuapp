@@ -44,6 +44,22 @@
             android:layout_height="wrap_content"
             android:text="帳本管理"/>
     </LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="200dp"
+    android:layout_marginLeft="200dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="選擇匯入之帳本"/>
+    <Spinner
+        android:id="@+id/spn_homeBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Spinner>
+  </LinearLayout>
 
     <LinearLayout
         android:gravity="center"

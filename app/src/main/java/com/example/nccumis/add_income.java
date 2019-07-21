@@ -238,13 +238,11 @@ public class add_income extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 i_book_name = input_book.getSelectedItem().toString();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
 
         //備註
         input_note = (EditText)findViewById(R.id.note_input);
@@ -445,7 +443,6 @@ public class add_income extends AppCompatActivity {
         saveIncomeData.putInt("FromExpenseOrIncome",INCOME);
         intent.putExtras(saveIncomeData);
         startActivity(intent);
-
     }
 
     public void jumpToadd_expense(){
@@ -463,4 +460,5 @@ public class add_income extends AppCompatActivity {
         intent.putExtras(detailData);
         startActivity(intent);
     }
+
 }
