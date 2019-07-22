@@ -20,7 +20,7 @@ public class Settings extends AppCompatActivity {
     private EditText et_GLORY;
     private Button btn_setToHome;
     private Button password_change;
-    private Button book_management;
+
 
 
     @Override
@@ -28,27 +28,27 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ckbox_GLORY =(CheckBox)findViewById(R.id.ckbox_GLORY);
-        ckbox_Green =(CheckBox)findViewById(R.id.ckbox_Green);
-        ckbox_Wonderful=(CheckBox)findViewById(R.id.ckbox_Wonderful);
-        et_GLORY =(EditText)findViewById(R.id.et_GLORY);
-        et_GREEN =(EditText)findViewById(R.id.et_GREEN);
-        et_Wonderful =(EditText)findViewById(R.id.et_Wonderful);
-        btn_setToHome =(Button)findViewById(R.id.btn_setToHome);
-        book_management=(Button)findViewById(R.id.book_management) ;
-        password_change=(Button)findViewById(R.id.password_change) ;
+        ckbox_GLORY = (CheckBox) findViewById(R.id.ckbox_GLORY);
+        ckbox_Green = (CheckBox) findViewById(R.id.ckbox_Green);
+        ckbox_Wonderful = (CheckBox) findViewById(R.id.ckbox_Wonderful);
+        et_GLORY = (EditText) findViewById(R.id.et_GLORY);
+        et_GREEN = (EditText) findViewById(R.id.et_GREEN);
+        et_Wonderful = (EditText) findViewById(R.id.et_Wonderful);
+        btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
+        password_change = (Button) findViewById(R.id.password_change);
 
 
         password_change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gopasswordchange();
+                passwordchange();
             }
 
-            public void gopasswordchange() {
-                Intent intent = new Intent(Settings.this,password_change.class);
+            public void passwordchange() {
+                Intent intent = new Intent(Settings.this, password_change.class);
                 startActivity(intent);
             }
+
         });
 
         btn_setToHome.setOnClickListener(new View.OnClickListener() {
@@ -56,29 +56,15 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 fromSettingsToHome();
             }
-        });
 
-        book_management.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gobookmanagement();
-            }
-            public void gobookmanagement(){
-                Intent intent = new Intent(Settings.this,BookManage.class);
+            public void fromSettingsToHome() {
+                Intent intent = new Intent(Settings.this, Home.class);
                 startActivity(intent);
             }
         });
 
 
     }
-    public void fromSettingsToHome(){
-        Intent intent = new Intent(Settings.this,Home.class);
-        startActivity(intent);
-    }
-
-
-
-
 }
 
 

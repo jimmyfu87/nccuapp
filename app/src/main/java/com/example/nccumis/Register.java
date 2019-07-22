@@ -23,9 +23,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 //import com.google.android.gms.common.api.Response;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 
 
 import org.json.JSONException;
@@ -67,7 +65,7 @@ public class Register extends AppCompatActivity {
          et_wrongPassword =findViewById(R.id.et_wrongPassword);
          et_usernumber=findViewById(R.id.et_userNumber);
          et_userBirth = findViewById(R.id.et_userBirth);
-         btn_checkRegister =  findViewById(R.id.btn_checkRegister);
+         btn_checkRegister =  findViewById(R.id.btn_confirm);
          btn_lastPage = findViewById(R.id.btn_lastPage);
          checkBoxPassword1 = findViewById(R.id.checkBoxPassword1);
          checkBoxPassword2 =  findViewById(R.id.checkBoxPassword2);

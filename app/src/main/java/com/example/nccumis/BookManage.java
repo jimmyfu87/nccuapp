@@ -25,7 +25,7 @@ public class BookManage extends AppCompatActivity {
         btn_showBook=(Button)findViewById(R.id.btn_showBook);
         BookList=(ListView) findViewById(R.id.BookList);
 
-        this.btn_newBook = (RadioButton)findViewById(R.id.book_management);
+        this.btn_newBook = (RadioButton)findViewById(R.id.btn_newBook);
         btn_newBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
