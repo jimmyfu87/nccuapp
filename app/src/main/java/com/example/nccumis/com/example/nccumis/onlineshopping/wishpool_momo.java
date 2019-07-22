@@ -122,8 +122,61 @@ public class wishpool_momo extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
-        //信用卡優惠活動
+        //信用卡
         Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("NoValue")){
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String activity_name = jsonObject.getString("activity_name");
+                            String channel_name = jsonObject.getString("channel_name");
+                            String cardtype_name = jsonObject.getString("cardtype_name");
+                            int Minimum_pay = jsonObject.getInt("Minimum_pay");
+                            double Discount_ratio = jsonObject.getDouble("Discount_ratio");
+                            int Discount_limit = jsonObject.getInt("Discount_limit");
+                            int Discount_money = jsonObject.getInt("Discount_money");
+                            String Start_time = jsonObject.getString("Start_time");
+                            String End_time = jsonObject.getString("End_time");
+                            String Remarks = jsonObject.getString("Remarks");
+                            if(Discount_money==0){
+                                longactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
+                            }
+                            else{
+                                shortactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //這邊是發現許願池是空的處理方式，要改可以改
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    builder.setMessage("沒有商品")
+                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
+                                    wishpool_momo.this.startActivity(intent);
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+            }
+        };
+        SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sp2.edit();
+        GetactivityRequest getactivityRequest = new GetactivityRequest(sp2.getString("member_id",null),"Momo",responseListener2);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(getactivityRequest);
+
+        //信用卡優惠活動
+        Response.Listener<String> responseListener3 = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(!response.equals("NoValue")){
@@ -196,10 +249,10 @@ public class wishpool_momo extends AppCompatActivity {
                 }
             }
         };
-        SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
-        SharedPreferences.Editor editor2 = sp2.edit();
+        SharedPreferences sp3 = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor3 = sp3.edit();
         GetactivityRequest getactivityRequest = new GetactivityRequest(sp2.getString("member_id",null),"Momo",responseListener2);
-        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue3 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
 
         //信用卡優惠listview
