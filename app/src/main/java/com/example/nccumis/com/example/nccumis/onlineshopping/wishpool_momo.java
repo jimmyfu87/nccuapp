@@ -211,7 +211,8 @@ public class wishpool_momo extends AppCompatActivity {
 
         //計算後的總價
         totalPrice = (TextView)findViewById(R.id.totalPrice);
-        totalPrice.setText("目前勾選金額: "+isCheckedprice);
+        totalPrice.setText("最終結算金額: \n"+0 +"(所有勾選商品金額)" +
+                " - " + 0 +"(長期優惠) - " + 0 +"(短期優惠) \n\t= " + 0);
 
         //推薦信用卡
         recommendcreditcard = (TextView)findViewById(R.id.recommendcreditcard);
