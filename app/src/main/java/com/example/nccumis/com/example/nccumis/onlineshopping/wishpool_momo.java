@@ -31,21 +31,23 @@ import java.util.Map;
 public class wishpool_momo extends AppCompatActivity {
     private static RequestQueue requestQueue;
     private static RequestQueue requestQueue2;
-    private static int finalprice = 0;
     private Button lastPage;
     private TextView ecommerceName;
-    private ListView CreditCardListView;
+//    private ListView CreditCardListView;
     private ListView ProductListView;
-    private TextView totalPrice;
+    private static TextView totalPrice;
+    private static int isCheckedprice = 0;
+    private static int longactivity_discount = 0;
+    private static int shortactivity_discount = 0;
     private TextView recommendcreditcard;
-    private List wishpoolCreditcardDiscount;
-    private List<String> discountDetailArray;
-    private  List<Integer> pictureArray;    //還沒弄
+    private  List<Integer> pictureArray= new ArrayList<>();    //還沒弄
     private  List<String> nameArray=new ArrayList<>();
     private  List<Integer> priceArray=new ArrayList<>();
     private List<Product> productlist=new ArrayList<Product>();
-    private List<Activity> longactivitylist=new ArrayList<Activity>();
-    private List<Activity> shortactivitylist=new ArrayList<Activity>();
+    protected static List<String> discountDetailArray =new ArrayList<>();
+    protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
+    private static List<Activity> longactivitylist=new ArrayList<Activity>();
+    private static List<Activity> shortactivitylist=new ArrayList<Activity>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +64,7 @@ public class wishpool_momo extends AppCompatActivity {
         ecommerceName = (TextView)findViewById(R.id.ecommerceName);
         ecommerceName.setText("Momo購物網");//之後從資料庫抓電商名稱
 
-        //信用卡優惠
-        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
-        CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//        setList();
-//        setListViewHeightBasedOnChildren(CreditCardListView);
-        //商品優惠
+        //商品列表
         ProductListView = (ListView)findViewById(R.id.ProductListView);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -98,7 +95,7 @@ public class wishpool_momo extends AppCompatActivity {
 //                                }
 
                         setProductList();
-//                        setListViewHeightBasedOnChildren(ProductListView);
+                        setListViewHeightBasedOnChildren(ProductListView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -125,37 +122,7 @@ public class wishpool_momo extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
-        lastPage = (Button)findViewById(R.id.lastPage);
-        lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToHome();
-            }
-        });
-
-        ecommerceName = (TextView)findViewById(R.id.ecommerceName);
-        ecommerceName.setText("Momo購物網");//之後從資料庫抓電商名稱
-
-        //信用卡優惠
-        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
-        CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//        setList();
-//        setListViewHeightBasedOnChildren(CreditCardListView);
-        //商品優惠
-        ProductListView = (ListView)findViewById(R.id.ProductListView);
-        setProductList();
-//        setListViewHeightBasedOnChildren(ProductListView);
-
-
-        //計算後的總價
-        totalPrice = findViewById(R.id.totalPrice);
-//        countTotalPrice();
-        totalPrice.setText("目前勾選金額:"+totalPrice.toString());
-
-        //推薦信用卡
-        recommendcreditcard = findViewById(R.id.recommendcreditcard);
-
-        //優惠活動
+        //信用卡優惠活動
         Response.Listener<String> responseListener2 = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -207,6 +174,8 @@ public class wishpool_momo extends AppCompatActivity {
 //                        System.out.println(shortactivitylist.get(0).getEnd_time());
 //                        System.out.println(shortactivitylist.get(0).getRemarks());
 
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -232,6 +201,20 @@ public class wishpool_momo extends AppCompatActivity {
         GetactivityRequest getactivityRequest = new GetactivityRequest(sp2.getString("member_id",null),"Momo",responseListener2);
         RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
+
+        //信用卡優惠listview
+//        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
+//        CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+//        setCreditCardDiscountList();
+//        setListViewHeightBasedOnChildren(CreditCardListView);
+
+
+        //計算後的總價
+        totalPrice = (TextView)findViewById(R.id.totalPrice);
+        totalPrice.setText("目前勾選金額: "+isCheckedprice);
+
+        //推薦信用卡
+        recommendcreditcard = (TextView)findViewById(R.id.recommendcreditcard);
 
     }
 
@@ -287,7 +270,7 @@ public class wishpool_momo extends AppCompatActivity {
 //        DetailListView.setAdapter(ExDetail_adapter);
 //    }
 
-        public void initProductList(){
+    public void initProductList(){
         for(int i = 0; i < this.productlist.size();i++){
             if(this.productlist.get(i).getChannel_name().equals("Momo")){
                 this.nameArray.add(this.productlist.get(i).getProduct_name());
@@ -303,15 +286,63 @@ public class wishpool_momo extends AppCompatActivity {
         ProductListView.setAdapter(productlist_adapter);
     }
 
+    //長期&短期 優惠活動 各別擇一 （可能優惠最多0~2種）
+    public static void initCreditCardDiscountList(){
+        longactivity_discount = 0;
+        shortactivity_discount = 0;
+        int longactivity_position = 0;
+        int shortactivity_position = 0;
 
+        for(int i = 0; i < longactivitylist.size();i++){
+            if(longactivitylist.get(i).getChannel_name().equals("Momo")){
+                int longactivity_discount_temp = 0;
+                if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
+                    longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
+                }else {
+                    longactivity_discount_temp = longactivitylist.get(i).getDiscount_limit();
+                }
+                if(longactivity_discount_temp > longactivity_discount){
+                    longactivity_discount = longactivity_discount_temp;
+                    longactivity_position = i;
+                }
+            }
+        }
+//        if(longactivity_discount > 0){
+//            discountDetailArray.add(longactivitylist.get(longactivity_position).getRemarks());
+//            LONG_OR_SHORT_ACTIVITYArray.add("LONG_ACTIVITY");
+//        }
 
-    //計算總額
-    public static void addFinalPrice(int para){
-        finalprice += para;
+        for(int i = 0; i < shortactivitylist.size();i++){
+            if(shortactivitylist.get(i).getChannel_name().equals("Momo")){
+                int shortactivity_discount_temp = 0;
+                if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
+                    shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
+                }
+                if(shortactivity_discount_temp > shortactivity_discount){
+                    shortactivity_discount = shortactivity_discount_temp;
+                    shortactivity_position = i;
+                }
+            }
+        }
+//        if(shortactivity_discount > 0){
+//            discountDetailArray.add(shortactivitylist.get(shortactivity_position).getRemarks());
+//            LONG_OR_SHORT_ACTIVITYArray.add("SHORT_ACTIVITY");
+//        }
     }
 
-    public static void minusFinalPrice(int para){
-        finalprice -= para;
+//    public void setCreditCardDiscountList(){
+//        initCreditCardDiscountList();
+//        creditcardListAdapter creditcardList_adapter = new creditcardListAdapter(wishpool_momo.this, LONG_OR_SHORT_ACTIVITYArray, discountDetailArray);
+//        CreditCardListView.setAdapter(creditcardList_adapter);
+//    }
+
+    //傳入總額
+    public static void setisCheckedPrice(int para){
+        isCheckedprice = para;
+        initCreditCardDiscountList();
+        int totalPriceData = isCheckedprice - longactivity_discount - shortactivity_discount;
+        totalPrice.setText("最終結算金額: \n"+isCheckedprice +"(所有勾選商品金額)" +
+                " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
     }
 
     /**

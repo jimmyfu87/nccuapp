@@ -16,15 +16,16 @@ import java.util.List;
 public class creditcardListAdapter extends ArrayAdapter {
     //to reference the Activity
     private final Activity context;
+    private final List<String> LONG_OR_SHORT_ACTIVITYArray;
     private final List<String> discountDetailArray;
-    private CheckBox check;
 
 
-    public creditcardListAdapter(Activity context,List<String> discountDetailArrayParam){
+    public creditcardListAdapter(Activity context,List<String> LONG_OR_SHORT_Param,List<String> discountDetailArrayParam){
 
         super(context, R.layout.creditcarddiscount_listview_row);
 
-        this.context=context;
+        this.context = context;
+        this.LONG_OR_SHORT_ACTIVITYArray = LONG_OR_SHORT_Param;
         this.discountDetailArray = discountDetailArrayParam;
     }
 
