@@ -50,7 +50,6 @@ public class wishpool_momo extends AppCompatActivity {
     private static List<Activity> longactivitylist=new ArrayList<Activity>();
     private static List<Activity> shortactivitylist=new ArrayList<Activity>();
     private static List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
-    private String cardtypename="Wonderful星璨卡";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,46 +125,46 @@ public class wishpool_momo extends AppCompatActivity {
         requestQueue.add(getRequest);
 
         //取得使用者擁有的信用卡
-        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(!response.equals("NoValue")){
-                    try {
-                        JSONArray array = new JSONArray(response);
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            int id = jsonObject.getInt("id");
-                            String cardtype_name = jsonObject.getString("cardtype_name");
-                            owncardtypelist.add(new Cardtype(id, cardtype_name));
-                            //拿owncardtypelist去調用
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    //發現使用者沒有信用卡的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
-                    builder.setMessage("使用者沒有信用卡")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
-                                    wishpool_momo.this.startActivity(intent);
-                                }
-                            })
-                            .create()
-                            .show();
-                }
-            }
-        };
-        SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
-        SharedPreferences.Editor editor2 = sp2.edit();
-        GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
-        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(getcardRequest);
+//        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                if(!response.equals("NoValue")){
+//                    try {
+//                        JSONArray array = new JSONArray(response);
+//                        for (int i = 0; i < array.length(); i++) {
+//                            JSONObject jsonObject = array.getJSONObject(i);
+//                            int id = jsonObject.getInt("id");
+//                            String cardtype_name = jsonObject.getString("cardtype_name");
+//                            owncardtypelist.add(new Cardtype(id, cardtype_name));
+//                            //拿owncardtypelist去調用
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                else{
+//                    //發現使用者沒有信用卡的處理方式，要改可以改
+//                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+//                    builder.setMessage("使用者沒有信用卡")
+//                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
+//                                    wishpool_momo.this.startActivity(intent);
+//                                }
+//                            })
+//                            .create()
+//                            .show();
+//                }
+//            }
+//        };
+//        SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
+//        SharedPreferences.Editor editor2 = sp2.edit();
+//        GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
+//        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
+//        requestQueue.add(getcardRequest);
 
-        //信用卡優惠活動
+        //取得信用卡優惠活動(不根據使用者有的卡片)
         Response.Listener<String> responseListener3 = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -242,7 +241,7 @@ public class wishpool_momo extends AppCompatActivity {
         SharedPreferences sp3 = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
         //選擇的卡片名稱存在cardtypename
-        GetactivityRequest getactivityRequest = new GetactivityRequest(sp3.getString("member_id",null),"Momo",cardtypename,responseListener3);
+        GetactivityRequest getactivityRequest = new GetactivityRequest(sp3.getString("member_id",null),"Momo",responseListener3);
         RequestQueue requestQueue3 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
 
@@ -282,12 +281,11 @@ public class wishpool_momo extends AppCompatActivity {
         private static final String Getactivity_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getactivity.php";
         private Map<String, String> params;
         //
-        public GetactivityRequest(String member_id, String channel_name, String cardtype_name,Response.Listener<String> listener) {
+        public GetactivityRequest(String member_id, String channel_name,Response.Listener<String> listener) {
             super(Method.POST, Getactivity_REQUEST_URL, listener, null);
             params = new HashMap<>();
             params.put("member_id", member_id);
             params.put("channel_name", channel_name);
-            params.put("cardtype_name", cardtype_name);
         }
         @Override
         public Map<String, String> getParams() {
