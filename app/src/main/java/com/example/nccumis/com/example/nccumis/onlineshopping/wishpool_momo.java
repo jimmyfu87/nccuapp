@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.nccumis.Cardtype;
 import com.example.nccumis.Home;
 import com.example.nccumis.R;
 
@@ -48,6 +49,8 @@ public class wishpool_momo extends AppCompatActivity {
     protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
     private static List<Activity> longactivitylist=new ArrayList<Activity>();
     private static List<Activity> shortactivitylist=new ArrayList<Activity>();
+    private static List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
+    private String cardtypename="Wonderful星璨卡";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +125,7 @@ public class wishpool_momo extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
-        //信用卡
+        //取得使用者擁有的信用卡
         Response.Listener<String> responseListener2 = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -132,31 +135,18 @@ public class wishpool_momo extends AppCompatActivity {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
-                            String activity_name = jsonObject.getString("activity_name");
-                            String channel_name = jsonObject.getString("channel_name");
                             String cardtype_name = jsonObject.getString("cardtype_name");
-                            int Minimum_pay = jsonObject.getInt("Minimum_pay");
-                            double Discount_ratio = jsonObject.getDouble("Discount_ratio");
-                            int Discount_limit = jsonObject.getInt("Discount_limit");
-                            int Discount_money = jsonObject.getInt("Discount_money");
-                            String Start_time = jsonObject.getString("Start_time");
-                            String End_time = jsonObject.getString("End_time");
-                            String Remarks = jsonObject.getString("Remarks");
-                            if(Discount_money==0){
-                                longactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
-                            }
-                            else{
-                                shortactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
-                            }
+                            owncardtypelist.add(new Cardtype(id, cardtype_name));
+                            //拿owncardtypelist去調用
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
                 else{
-                    //這邊是發現許願池是空的處理方式，要改可以改
+                    //發現使用者沒有信用卡的處理方式，要改可以改
                     android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
-                    builder.setMessage("沒有商品")
+                    builder.setMessage("使用者沒有信用卡")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -171,9 +161,9 @@ public class wishpool_momo extends AppCompatActivity {
         };
         SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor2 = sp2.edit();
-        GetactivityRequest getactivityRequest = new GetactivityRequest(sp2.getString("member_id",null),"Momo",responseListener2);
+        GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
         RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(getactivityRequest);
+        requestQueue.add(getcardRequest);
 
         //信用卡優惠活動
         Response.Listener<String> responseListener3 = new Response.Listener<String>() {
@@ -234,9 +224,9 @@ public class wishpool_momo extends AppCompatActivity {
                     }
                 }
                 else{
-                    //這邊是發現許願池是空的處理方式，要改可以改
+                    //發現沒有匹配活動的處理方式，要改可以改
                     android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
-                    builder.setMessage("沒有商品")
+                    builder.setMessage("沒有適合的優惠活動")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -251,7 +241,8 @@ public class wishpool_momo extends AppCompatActivity {
         };
         SharedPreferences sp3 = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
-        GetactivityRequest getactivityRequest = new GetactivityRequest(sp2.getString("member_id",null),"Momo",responseListener2);
+        //選擇的卡片名稱存在cardtypename
+        GetactivityRequest getactivityRequest = new GetactivityRequest(sp3.getString("member_id",null),"Momo",cardtypename,responseListener3);
         RequestQueue requestQueue3 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
 
@@ -291,11 +282,26 @@ public class wishpool_momo extends AppCompatActivity {
         private static final String Getactivity_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getactivity.php";
         private Map<String, String> params;
         //
-        public GetactivityRequest(String member_id, String channel_name, Response.Listener<String> listener) {
+        public GetactivityRequest(String member_id, String channel_name, String cardtype_name,Response.Listener<String> listener) {
             super(Method.POST, Getactivity_REQUEST_URL, listener, null);
             params = new HashMap<>();
             params.put("member_id", member_id);
             params.put("channel_name", channel_name);
+            params.put("cardtype_name", cardtype_name);
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+    public class GetcardRequest extends StringRequest {
+        private static final String Getcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getcard.php";
+        private Map<String, String> params;
+        //
+        public GetcardRequest(String member_id, Response.Listener<String> listener) {
+            super(Method.POST, Getcard_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("member_id", member_id);
         }
         @Override
         public Map<String, String> getParams() {
