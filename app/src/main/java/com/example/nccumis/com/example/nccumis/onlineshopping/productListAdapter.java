@@ -24,6 +24,7 @@ public class productListAdapter extends ArrayAdapter {
     //to reference the Activity
     private final Activity context;
 //    private final List<Integer> pictureArray;   //  還沒弄
+    private final List<Integer> idArray;
     private final List<String> nameArray;
     private final List<Integer> priceArray;
     private List<Boolean> isCheckArray;
@@ -32,12 +33,13 @@ public class productListAdapter extends ArrayAdapter {
     private int sizeOfList;
 
 
-    public productListAdapter(Activity context, List<String> nameArrayParam, List<Integer> priceArrayParam){
+    public productListAdapter(Activity context,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam){
 
         super(context, R.layout.product_listview_row, nameArrayParam);
 
         this.context=context;
 //        this.pictureArray = pictureArrayParam;
+        this.idArray = idArrayParam;
         this.nameArray = nameArrayParam;
         this.priceArray = priceArrayParam;
         this.isCheckArray = new ArrayList<Boolean>();
@@ -53,6 +55,7 @@ public class productListAdapter extends ArrayAdapter {
 
         //this code gets references to objects in the listview_row.xml file
 //        TextView pictureTextField = (TextView) rowView.findViewById(R.id.picture);
+        TextView idTextField = (TextView)rowView.findViewById(R.id.id);
         TextView nameTextField = (TextView) rowView.findViewById(R.id.name);
         TextView priceTextField = (TextView) rowView.findViewById(R.id.price);
         check = (CheckBox) rowView.findViewById(R.id.check);
@@ -97,12 +100,14 @@ public class productListAdapter extends ArrayAdapter {
                         .setPositiveButton("是", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String name = nameArray.get(position); //要刪除的product name
+                                String delete_name = nameArray.get(position);   //要刪除的product name
+                                int delete_id = idArray.get(position);      //要刪除的product id
                                 ///////////資料庫刪除，加這//////////////
+                                idArray.remove(position);
                                 nameArray.remove(position);
                                 priceArray.remove(position);
                                 notifyDataSetChanged();
-                                Snackbar.make(v, "You just remove No." + name +" item", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
                                 wishpool_momo.setListViewHeightBasedOnChildren(wishpool_momo.ProductListView);
                             }
                         })

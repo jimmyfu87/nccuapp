@@ -46,6 +46,7 @@ public class wishpool_momo extends AppCompatActivity {
     private static int shortactivity_discount = 0;
     private TextView recommendcreditcard;
     private  List<Integer> pictureArray= new ArrayList<>();    //還沒弄
+    private List<Integer> idArray = new ArrayList<Integer>();
     private  List<String> nameArray=new ArrayList<>();
     private  List<Integer> priceArray=new ArrayList<>();
     private List<Product> productlist=new ArrayList<Product>();
@@ -55,7 +56,7 @@ public class wishpool_momo extends AppCompatActivity {
     private static List<Activity> shortactivitylist=new ArrayList<Activity>();
     private static List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
     private static List<String> owncardnamelist = new ArrayList<String>();
-    private static int singleChoiceIndex;
+    private static int singleChoiceIndex = 0;   //預設選擇第一張卡
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class wishpool_momo extends AppCompatActivity {
                 if(!response.equals("NoValue")){
                     try {
                         JSONArray array = new JSONArray(response);
+                        productlist.clear();
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
@@ -145,6 +147,7 @@ public class wishpool_momo extends AppCompatActivity {
                 if(!response.equals("NoValue")){
                     try {
                         JSONArray array = new JSONArray(response);
+                        owncardtypelist.clear();
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
@@ -152,7 +155,7 @@ public class wishpool_momo extends AppCompatActivity {
                             owncardtypelist.add(new Cardtype(id, cardtype_name));
                             //拿owncardtypelist去調用
                         }
-                        setowncardnamelist();   //丟進alertdialog的參數
+                        set_owncardnamelist();   //丟進alertdialog 的 String list
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -186,6 +189,8 @@ public class wishpool_momo extends AppCompatActivity {
                 if(!response.equals("NoValue")){
                     try {
                         JSONArray array = new JSONArray(response);
+                        longactivitylist.clear();
+                        shortactivitylist.clear();
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
@@ -325,6 +330,7 @@ public class wishpool_momo extends AppCompatActivity {
     public void initProductList(){
         for(int i = 0; i < this.productlist.size();i++){
             if(this.productlist.get(i).getChannel_name().equals("Momo")){
+                this.idArray.add(this.productlist.get(i).getId());
                 this.nameArray.add(this.productlist.get(i).getProduct_name());
                 this.priceArray.add(Integer.parseInt(this.productlist.get(i).getProduct_price()));
             }
@@ -334,7 +340,7 @@ public class wishpool_momo extends AppCompatActivity {
 
     public void setProductList(){
         initProductList();
-        productListAdapter productlist_adapter = new productListAdapter(wishpool_momo.this, nameArray , priceArray);
+        productListAdapter productlist_adapter = new productListAdapter(wishpool_momo.this, idArray ,nameArray , priceArray);
         ProductListView.setAdapter(productlist_adapter);
     }
 
@@ -357,6 +363,7 @@ public class wishpool_momo extends AppCompatActivity {
                     longactivity_discount = longactivity_discount_temp;
                     longactivity_position = i;
                 }
+
             }
         }
 //        if(longactivity_discount > 0){
@@ -397,10 +404,94 @@ public class wishpool_momo extends AppCompatActivity {
                 " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
     }
 
-    public void setowncardnamelist(){
-        for(int i = 0; i < this.owncardtypelist.size(); i++){
-            this.owncardnamelist.add(this.owncardtypelist.get(i).getCardtype_name());
+    //改了勾選信用卡後更新總額
+    public static void updatePrice(){
+        initCreditCardDiscountList();
+        int totalPriceData = isCheckedprice - longactivity_discount - shortactivity_discount;
+        totalPrice.setText("最終結算金額: \n"+isCheckedprice +"(所有勾選商品金額)" +
+                " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
+    }
+
+    //抓取要丟進alertdialog的選單 && 沒依照優惠程度排序
+    public void set_owncardnamelist(){
+        this.owncardnamelist.clear();   //歸零list
+
+        for(int i = 0; i < owncardtypelist.size(); i++){
+            owncardnamelist.add((owncardtypelist.get(i)).getCardtype_name());
         }
+    }
+
+    //抓取要丟進alertdialog的選單 && 依照優惠程度排序
+    public void setandsort_owncardnamelist(){
+        this.owncardnamelist.clear();   //歸零list
+
+        List<Cardtype> tempowncardtypelist = new ArrayList<Cardtype>();
+        tempowncardtypelist = owncardtypelist;  //  暫存cardtypelist 做 selection sort
+
+        while (tempowncardtypelist.size() != 0){
+            this.owncardnamelist.add(getLargestDiscountCardName(tempowncardtypelist));
+            tempowncardtypelist.remove(getLargestDiscountCardName(tempowncardtypelist));
+        }
+    }
+
+    //算出cardtypelist中最優惠的卡
+    public String getLargestDiscountCardName(List<Cardtype> tempowncardtypelist){
+        int discountMax = 0;
+        int discountMaxPosition = 0;
+        int totalPriceinProductList = countProductListTotalPrice();
+
+        int discountlongMax = 0;
+        int discountshortMax = 0;
+
+        for(int i = 0; i < tempowncardtypelist.size(); i++){
+            String getcardtypeName = tempowncardtypelist.get(i).getCardtype_name();
+            for(int j = 0; j < longactivitylist.size();j++){
+                Activity getlongactivity = longactivitylist.get(j);
+                if(getlongactivity.getChannel_name().equals("Momo") && getlongactivity.getCardtype_name().equals(getcardtypeName)){
+                    int longactivity_discount_temp = 0;
+                    if(getlongactivity.getDiscount_limit() > totalPriceinProductList*getlongactivity.getDiscount_ratio() ){
+                        longactivity_discount_temp = Double.valueOf(totalPriceinProductList*getlongactivity.getDiscount_ratio()).intValue();
+                    }else {
+                        longactivity_discount_temp = getlongactivity.getDiscount_limit();
+                    }
+                    if(longactivity_discount_temp > discountlongMax){
+                        discountlongMax = longactivity_discount_temp;
+                    }
+
+                }
+            }
+
+            for(int j = 0; j < shortactivitylist.size();j++){
+                Activity getshortactivity = shortactivitylist.get(j);
+                if(getshortactivity.getChannel_name().equals("Momo") && getshortactivity.getCardtype_name().equals(getcardtypeName)){
+                    int shortactivity_discount_temp = 0;
+                    if(totalPriceinProductList > getshortactivity.getMinimum_pay()){
+                        shortactivity_discount_temp = getshortactivity.getDiscount_money();
+                    }
+                    if(shortactivity_discount_temp > discountshortMax){
+                        discountshortMax = shortactivity_discount_temp;
+                    }
+                }
+            }
+
+            if(discountlongMax + discountshortMax > discountMax){
+                discountMax = discountlongMax + discountshortMax;
+                discountMaxPosition = i;
+            }
+
+            discountlongMax = 0;
+            discountshortMax = 0;
+        }
+        return tempowncardtypelist.get(discountMaxPosition).getCardtype_name();
+    }
+
+    //算出productlist中商品的總額
+    public int countProductListTotalPrice(){
+        int totalprice = 0;
+        for(int i = 0; i < productlist.size(); i++){
+            totalprice += Integer.parseInt(productlist.get(i).getProduct_price());
+        }
+        return totalprice;
     }
 
     public void singleDialogEvent(){
@@ -415,6 +506,7 @@ public class wishpool_momo extends AppCompatActivity {
                 .setPositiveButton("確認", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        updatePrice();
                         Toast.makeText(wishpool_momo.this, "你選擇的是"+owncardnamelist.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
