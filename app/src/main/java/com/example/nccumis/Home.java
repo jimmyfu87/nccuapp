@@ -121,7 +121,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         navigationView.setNavigationItemSelectedListener(this);
         autoSetFirstandEndMonth();
 
+
+        PB_left=(TextView)findViewById(R.id.PB_left);
+        PB=(ProgressBar)findViewById(R.id.PB);
         PB_expense =(TextView)findViewById(R.id.PB_expense);
+
         //Spinner ArrayAdapter 初始化
         updateBook();
 
@@ -163,9 +167,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 //        expense.setText(Integer.toString(countTotalExpensePrice())); //支出
 //        income.setText(Integer.toString(countTotalIncomePrice()));  //收入
 //        remain.setText(Integer.toString(countRemain()));    //期間花費餘額
-
-
-
 
         //從add_book 或 add_type 返回 填過的資料自動傳入
         Intent getSaveData = getIntent();
