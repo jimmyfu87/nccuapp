@@ -39,7 +39,6 @@ public class wishpool_momo extends AppCompatActivity {
     private Button changeCard;
 //    private ListView CreditCardListView;
 
-    private boolean[] checked;
     protected static ListView ProductListView;
     private static TextView totalPrice;
     private static int isCheckedprice = 0;
@@ -54,8 +53,9 @@ public class wishpool_momo extends AppCompatActivity {
     protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
     private static List<Activity> longactivitylist=new ArrayList<Activity>();
     private static List<Activity> shortactivitylist=new ArrayList<Activity>();
-    private List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
-//    private int singleChoiceIndex;
+    private static List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
+    private static List<String> owncardnamelist = new ArrayList<String>();
+    private static int singleChoiceIndex;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +76,7 @@ public class wishpool_momo extends AppCompatActivity {
         changeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                singleDialogEvent();
+                singleDialogEvent();
             }
         });
 
@@ -139,44 +139,45 @@ public class wishpool_momo extends AppCompatActivity {
         requestQueue.add(getRequest);
 
         //取得使用者擁有的信用卡
-//        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                if(!response.equals("NoValue")){
-//                    try {
-//                        JSONArray array = new JSONArray(response);
-//                        for (int i = 0; i < array.length(); i++) {
-//                            JSONObject jsonObject = array.getJSONObject(i);
-//                            int id = jsonObject.getInt("id");
-//                            String cardtype_name = jsonObject.getString("cardtype_name");
-//                            owncardtypelist.add(new Cardtype(id, cardtype_name));
-//                            //拿owncardtypelist去調用
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                else{
-//                    //發現使用者沒有信用卡的處理方式，要改可以改
-//                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
-//                    builder.setMessage("使用者沒有信用卡")
-//                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
-//                                    wishpool_momo.this.startActivity(intent);
-//                                }
-//                            })
-//                            .create()
-//                            .show();
-//                }
-//            }
-//        };
-//        SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
-//        SharedPreferences.Editor editor2 = sp2.edit();
-//        GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
-//        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
-//        requestQueue.add(getcardRequest);
+        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("NoValue")){
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String cardtype_name = jsonObject.getString("cardtype_name");
+                            owncardtypelist.add(new Cardtype(id, cardtype_name));
+                            //拿owncardtypelist去調用
+                        }
+                        setowncardnamelist();   //丟進alertdialog的參數
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //發現使用者沒有信用卡的處理方式，要改可以改
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    builder.setMessage("使用者沒有信用卡")
+                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
+                                    wishpool_momo.this.startActivity(intent);
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+            }
+        };
+        SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sp2.edit();
+        GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(getcardRequest);
 
         //取得信用卡優惠活動(不根據使用者有的卡片)
         Response.Listener<String> responseListener3 = new Response.Listener<String>() {
@@ -345,7 +346,7 @@ public class wishpool_momo extends AppCompatActivity {
         int shortactivity_position = 0;
 
         for(int i = 0; i < longactivitylist.size();i++){
-            if(longactivitylist.get(i).getChannel_name().equals("Momo")){
+            if(longactivitylist.get(i).getChannel_name().equals("Momo") && longactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
                 int longactivity_discount_temp = 0;
                 if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
                     longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
@@ -396,24 +397,30 @@ public class wishpool_momo extends AppCompatActivity {
                 " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
     }
 
-//    private void singleDialogEvent(){
-//        new AlertDialog.Builder(wishpool_momo.this)
-//                .setSingleChoiceItems(owncardtypelist.toArray(new String[owncardtypelist.size()]), singleChoiceIndex,
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                singleChoiceIndex = which;
-//                            }
-//                        })
-//                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Toast.makeText(wishpool_momo.this, "你選擇的是"+owncardtypelist.get(singleChoiceIndex).getCardtype_name(), Toast.LENGTH_SHORT).show();
-//                        dialog.dismiss();
-//                    }
-//                })
-//                .show();
-//    }
+    public void setowncardnamelist(){
+        for(int i = 0; i < this.owncardtypelist.size(); i++){
+            this.owncardnamelist.add(this.owncardtypelist.get(i).getCardtype_name());
+        }
+    }
+
+    public void singleDialogEvent(){
+        new AlertDialog.Builder(wishpool_momo.this)
+                .setSingleChoiceItems(owncardnamelist.toArray(new String[owncardnamelist.size()]), singleChoiceIndex,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                singleChoiceIndex = which;
+                            }
+                        })
+                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(wishpool_momo.this, "你選擇的是"+owncardnamelist.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 
     /**
      * 動態設定ListView的高度
