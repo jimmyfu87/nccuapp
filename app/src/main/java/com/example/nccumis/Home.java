@@ -95,12 +95,16 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private List<String> selectBooks = new ArrayList<String>();
     private List<Expense> select_expense = new ArrayList<Expense>();
     private List<Income> select_income = new ArrayList<Income>();
+    private List<Book> select_BookAttribute = new ArrayList<Book>();
 
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
     private  String dateinStart;
     private String dateinEnd;
     private TextView member_id;
+    private int startBudget = 0;
+    private int expense = 0;
+    private int income = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,30 +120,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         autoSetFirstandEndMonth();
-        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        List<Expense> select_expense=new ArrayList<>();
-        dbmanager.open();
-        select_expense=dbmanager.fetchExpense(dateinStart,dateinEnd);           //可直接調用select_expense的資訊
-        dbmanager.close();
-
-        dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        dbmanager.open();
-        dbmanager.close();
 
         PB_expense =(TextView)findViewById(R.id.PB_expense);
-
-        if(spn_homeBook.getId()){
-            DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-            dbmanager.open();
-            select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
-            select_income=dbmanager.fetchIncomeWithbook(start_date,end_date,selectBooks);
-            dbmanager.close();
-            expense.setText(Integer.toString(countTotalExpensePrice())); //支出
-            income.setText(Integer.toString(countTotalIncomePrice()));  //收入
-            remain.setText(Integer.toString(countRemain()));    //期間花費餘額
-
-        }
-
         //Spinner ArrayAdapter 初始化
         updateBook();
 
@@ -155,11 +137,36 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 i_book_name = spn_homeBook.getSelectedItem().toString();
+                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                dbmanager.open();
+                select_expense=dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBooks);
+                select_income=dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBooks);
+                select_BookAttribute = dbmanager.fetchBookallattribute(book);
+                dbmanager.close();
+
+                for(int i = 0; i < select_BookAttribute.size(); i++){
+                    if(select_BookAttribute.get(i).getName().equals(i_book_name)){
+                        startBudget = select_BookAttribute.get(i).getAmount_start();
+                    }
+                }
+                countExpenseAndIncome();
+                PB_expense.setText(Integer.toString(expense));
+                PB_left.setText(Integer.toString(startBudget-expense+income));
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+
+//        expense.setText(Integer.toString(countTotalExpensePrice())); //支出
+//        income.setText(Integer.toString(countTotalIncomePrice()));  //收入
+//        remain.setText(Integer.toString(countRemain()));    //期間花費餘額
+
+
+
+
         //從add_book 或 add_type 返回 填過的資料自動傳入
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
@@ -522,12 +529,20 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         }
     }
     //計算該帳本預算占幾%
-    public double AccountPercentage(double expense , double startBudget){
-        if(startBudget==0){
-            return 0;
+    public double countPercentage(){
+        return expense/(startBudget+income)*100;
+    }
+
+    public void countExpenseAndIncome(){
+        expense = 0;
+        income = 0;
+        for(int i = 0; i < select_expense.size();i++){
+            expense += select_expense.get(i).getEx_price();
         }
-        //System.out.println(priceOfType+", "+total+", "+priceOfType/total);
-        return expense/startBudget*100;
+        for(int i= 0; i<select_income.size();i++){
+            income += select_income.get(i).getIn_price();
+        }
+
     }
 
 }
