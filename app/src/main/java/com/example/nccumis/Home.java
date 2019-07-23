@@ -123,8 +123,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
         PB_left=(TextView)findViewById(R.id.PB_left);
-        PB=(ProgressBar)findViewById(R.id.PB);
         PB_expense =(TextView)findViewById(R.id.PB_expense);
+        PB=(ProgressBar)findViewById(R.id.PB);
+        PB.setMax(100);
+        PB.setProgress(double.class(countPercentage()))
 
         //Spinner ArrayAdapter 初始化
         updateBook();
