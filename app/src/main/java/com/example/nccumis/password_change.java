@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class password_change extends AppCompatActivity {
+public class password_change<ModifyPswActivity> extends AppCompatActivity {
     private Button btn_lastPage;
     private Button btn_confirm;
     private EditText ex_password;
@@ -48,15 +49,29 @@ public class password_change extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (ex_password.getText().toString().isEmpty()) ;
-                et_wrongPassword.setText("請輸入舊密碼");
-                if(new_password.getText().toString().isEmpty()) ;
-                et_wrongPassword.setText("輸入新密碼");
-                if (check_password.getText().toString().isEmpty()) ;
-                et_wrongPassword.setText("確認新密碼");
-                if (new_password.getText().toString().equals(check_password.getText().toString())) ;
-               Intent intent = new Intent(password_change.this, Settings.class);
-               startActivity(intent);
+
+                if (ex_password.getText().toString().isEmpty() && new_password.getText().toString().isEmpty() && check_password.getText().toString().isEmpty()) {
+                    et_wrongPassword.setText("請趕快填空格");
+                }else if(new_password.getText().toString().isEmpty()){
+                    et_wrongPassword.setText("輸入新密碼");
+                }else if(check_password.getText().toString().isEmpty()) {
+                    et_wrongPassword.setText("確認新密碼");
+                }else if(ex_password.getText().toString().equals("12345") && new_password.getText().toString().isEmpty()){
+                    et_wrongPassword.setText("輸入新密碼");
+                }else if(ex_password.getText().toString().isEmpty() && new_password.getText().toString().equals(check_password.getText().toString())){
+                    et_wrongPassword.setText("請輸入舊密碼");
+               // }else if(ex_password.getText().toString().isEmpty() && new_password.getText().toString().isEmpty() && check_password.getText().toString().isEmpty()) {
+                   // et_wrongPassword.setText("趕快填空格!!!");
+                }else if(ex_password.getText().toString().equals("12345") && !new_password.getText().toString().equals(check_password.getText().toString())){
+                    et_wrongPassword.setText("請盡速確認密碼");
+                }else if(!ex_password.getText().toString().equals("12345") && new_password.getText().toString().equals(check_password.getText().toString())){
+                    et_wrongPassword.setText("舊密碼錯誤");
+                }
+                else if (ex_password.getText().toString().equals("12345") && new_password.getText().toString().equals(check_password.getText().toString())) {
+                    Intent intent = new Intent(password_change.this, Settings.class);
+                    startActivity(intent);
+                    Toast.makeText(password_change.this,"密碼已更新",Toast.LENGTH_SHORT).show();
+                }
 
             }
 
