@@ -78,7 +78,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public SharedPreferences setting;
     private static final String TAG = "Home";
     public  boolean isCreated=false;
-    private Button jumpToBook;
     private Spinner spn_homeBook;
     private SQLiteDatabase database;
     private boolean detail = false;
@@ -126,7 +125,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         PB_expense =(TextView)findViewById(R.id.PB_expense);
         PB=(ProgressBar)findViewById(R.id.PB);
         PB.setMax(100);
-        PB.setProgress(double.class(countPercentage()))
+        PB.setProgress(10);
+//        PB.setProgress(double.class(countPercentage()))
+
 
         //Spinner ArrayAdapter 初始化
         updateBook();
@@ -145,8 +146,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 i_book_name = spn_homeBook.getSelectedItem().toString();
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
-                select_expense=dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBooks);
-                select_income=dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBooks);
+//                select_expense=dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBooks);
+//                select_income=dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBooks);
                 select_BookAttribute = dbmanager.fetchBookallattribute(book);
                 dbmanager.close();
 
@@ -190,15 +191,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-        //到帳本管理
-        jumpToBook =(Button)findViewById(R.id.jumpToBook);
-        jumpToBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToBookManage();
-            }
 
-        });
 
 
         //到記帳
