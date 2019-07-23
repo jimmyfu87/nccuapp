@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,22 +83,24 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private SQLiteDatabase database;
     private boolean detail = false;
     private int saveDetailId =0;
-
-
+    private ProgressBar PB;
+    private TextView PB_expense;
+    private TextView PB_left;
 
     private String i_price,i_note,i_date,i_type_name,i_book_name;
     private List<String> book = new ArrayList<String>();
-    public List<String> dbBookData = new ArrayList<String>();     //接資料庫資料
+    public List<String> dbBookData = new ArrayList<String>();//接資料庫資料
+    private List<Integer> getPriceData = new ArrayList<Integer>();
+    private List<String> bookArray = new ArrayList<String>();
+    private List<String> selectBooks = new ArrayList<String>();
+    private List<Expense> select_expense = new ArrayList<Expense>();
+    private List<Income> select_income = new ArrayList<Income>();
 
-
-
-private
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
     private  String dateinStart;
     private String dateinEnd;
     private TextView member_id;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,20 @@ private
         dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
         dbmanager.close();
+
+        PB_expense =(TextView)findViewById(R.id.PB_expense);
+
+        if(spn_homeBook.getId()){
+            DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+            dbmanager.open();
+            select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
+            select_income=dbmanager.fetchIncomeWithbook(start_date,end_date,selectBooks);
+            dbmanager.close();
+            expense.setText(Integer.toString(countTotalExpensePrice())); //支出
+            income.setText(Integer.toString(countTotalIncomePrice()));  //收入
+            remain.setText(Integer.toString(countRemain()));    //期間花費餘額
+
+        }
 
         //Spinner ArrayAdapter 初始化
         updateBook();
@@ -156,6 +173,12 @@ private
             updateBook();
             spn_homeBook.setAdapter(bookList);
         }
+
+        //進度條抓帳本資料
+        PB=(ProgressBar)findViewById(R.id.PB);
+        PB.getMax();
+
+
 
         //到帳本管理
         jumpToBook =(Button)findViewById(R.id.jumpToBook);
@@ -498,8 +521,14 @@ private
             }
         }
     }
-
-
+    //計算該帳本預算占幾%
+    public double AccountPercentage(double expense , double startBudget){
+        if(startBudget==0){
+            return 0;
+        }
+        //System.out.println(priceOfType+", "+total+", "+priceOfType/total);
+        return expense/startBudget*100;
+    }
 
 }
 
