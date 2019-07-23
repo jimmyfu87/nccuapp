@@ -365,7 +365,7 @@ public class wishpool_momo extends AppCompatActivity {
 //        }
 
         for(int i = 0; i < shortactivitylist.size();i++){
-            if(shortactivitylist.get(i).getChannel_name().equals("Momo")){
+            if(shortactivitylist.get(i).getChannel_name().equals("Momo")&& shortactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
                 int shortactivity_discount_temp = 0;
                 if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
                     shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
