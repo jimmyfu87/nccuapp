@@ -103,6 +103,7 @@ public class productListAdapter extends ArrayAdapter {
                                 priceArray.remove(position);
                                 notifyDataSetChanged();
                                 Snackbar.make(v, "You just remove No." + name +" item", Snackbar.LENGTH_SHORT).show();
+                                wishpool_momo.setListViewHeightBasedOnChildren(wishpool_momo.ProductListView);
                             }
                         })
                         .setNegativeButton("否", new DialogInterface.OnClickListener() {

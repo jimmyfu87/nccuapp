@@ -1,5 +1,6 @@
 package com.example.nccumis.com.example.nccumis.onlineshopping;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,8 +36,11 @@ public class wishpool_momo extends AppCompatActivity {
     private static RequestQueue requestQueue2;
     private Button lastPage;
     private TextView ecommerceName;
+    private Button changeCard;
 //    private ListView CreditCardListView;
-    private ListView ProductListView;
+
+    private boolean[] checked;
+    protected static ListView ProductListView;
     private static TextView totalPrice;
     private static int isCheckedprice = 0;
     private static int longactivity_discount = 0;
@@ -49,7 +54,8 @@ public class wishpool_momo extends AppCompatActivity {
     protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
     private static List<Activity> longactivitylist=new ArrayList<Activity>();
     private static List<Activity> shortactivitylist=new ArrayList<Activity>();
-    private static List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
+    private List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
+//    private int singleChoiceIndex;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +71,14 @@ public class wishpool_momo extends AppCompatActivity {
 
         ecommerceName = (TextView)findViewById(R.id.ecommerceName);
         ecommerceName.setText("Momo購物網");//之後從資料庫抓電商名稱
+
+        changeCard = (Button)findViewById(R.id.changeCard);
+        changeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                singleDialogEvent();
+            }
+        });
 
         //商品列表
         ProductListView = (ListView)findViewById(R.id.ProductListView);
@@ -307,27 +321,6 @@ public class wishpool_momo extends AppCompatActivity {
         }
     }
 
-
-
-//    public void initCreditCardListData(){
-//        for(int i = 0; i < this.expenseList.size();i++){
-//            int index = i+1;
-//            this.numberArray.add(index);
-//            this.idArray.add(this.expenseList.get(i).getEx_id());
-//            this.dateArray.add(this.expenseList.get(i).getEx_date());
-//            this.priceArray.add(this.expenseList.get(i).getEx_price());
-//            this.noteArray.add((this.expenseList.get(i).getEx_note().isEmpty()) ? "無備註" : this.expenseList.get(i).getEx_note());
-//            this.bookArray.add(this.expenseList.get(i).getBook_name());
-//        }
-//        //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
-//    }
-//
-//    public void setCreditCardList(){
-//        initListData();
-//        ExpenseIncomeDetailListAdapter ExDetail_adapter = new ExpenseIncomeDetailListAdapter("Expense",this.idArray,startDate, endDate,selectBooks, check_expense_detail.this, this.numberArray, this.dateArray, this.priceArray, this.noteArray,this.bookArray,this.type);
-//        DetailListView.setAdapter(ExDetail_adapter);
-//    }
-
     public void initProductList(){
         for(int i = 0; i < this.productlist.size();i++){
             if(this.productlist.get(i).getChannel_name().equals("Momo")){
@@ -402,6 +395,25 @@ public class wishpool_momo extends AppCompatActivity {
         totalPrice.setText("最終結算金額: \n"+isCheckedprice +"(所有勾選商品金額)" +
                 " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
     }
+
+//    private void singleDialogEvent(){
+//        new AlertDialog.Builder(wishpool_momo.this)
+//                .setSingleChoiceItems(owncardtypelist.toArray(new String[owncardtypelist.size()]), singleChoiceIndex,
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                singleChoiceIndex = which;
+//                            }
+//                        })
+//                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Toast.makeText(wishpool_momo.this, "你選擇的是"+owncardtypelist.get(singleChoiceIndex).getCardtype_name(), Toast.LENGTH_SHORT).show();
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .show();
+//    }
 
     /**
      * 動態設定ListView的高度
