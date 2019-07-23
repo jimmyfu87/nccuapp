@@ -40,7 +40,7 @@
     <WebView
         android:id="@+id/OnlineShopping_webView"
         android:layout_width="match_parent"
-        android:layout_height="600dp">
+        android:layout_height="match_parent">
     </WebView>
 
        <LinearLayout

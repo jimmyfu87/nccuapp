@@ -106,6 +106,7 @@ public class OnlineShopping extends AppCompatActivity {
         getWebHomeURL = "https://www.momoshop.com.tw/main/Main.jsp?cid=mtab&oid=logo&mdiv=1000100000-bt_0_199_01-bt_0_199_01_P1_1_e1&ctype=B"; //此行的URL會根據使用者上一頁點的優惠店家而決定，目前先測試Momo購物網
 
         OnlineShopping_webView = (WebView) findViewById(R.id.OnlineShopping_webView);
+        OnlineShopping_webView.setVerticalScrollBarEnabled(true);
         OnlineShopping_webView.setWebViewClient(new WebViewClient());
         jumpToWebHome();
 
