@@ -124,21 +124,17 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         PB_expense =(TextView)findViewById(R.id.PB_expense);
         PB=(ProgressBar)findViewById(R.id.PB);
         PB.setMax(100);
-        PB.setProgress(10);
-//        PB.setProgress(double.class(countPercentage()))
+        PB.setProgress(Math.round(countPercentage()));
 
 
         //Spinner ArrayAdapter 初始化
         initBook();     //抓所有資料庫的帳本名稱
 
         ArrayAdapter<String> bookList = new ArrayAdapter<String>(Home.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                dbBookData);
+                android.R.layout.simple_spinner_dropdown_item, dbBookData);
 
         spn_homeBook=(Spinner)findViewById(R.id.spn_homeBook);
         spn_homeBook.setAdapter(bookList);
-
-
 
         //取回book的值
         spn_homeBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -540,8 +536,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
     //計算該帳本預算占幾%
-    public double countPercentage(){
-        return expense/(startBudget+income)*100;
+    public float countPercentage(){
+        System.out.println("百分比 " +expense/(startBudget+income));
+        if(startBudget+income == 0){
+            return 100.0f;
+        }
+        return (expense/(startBudget+income))*100;
     }
 
     public void countExpenseAndIncome(){
@@ -557,4 +557,3 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
 }
-
