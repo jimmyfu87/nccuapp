@@ -3,6 +3,8 @@ package com.example.nccumis.com.example.nccumis.onlineshopping;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,25 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.nccumis.DatabaseManager;
+import com.example.nccumis.LogIn;
 import com.example.nccumis.R;
+import com.example.nccumis.Register;
+import com.example.nccumis.RegisterRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class productListAdapter extends ArrayAdapter {
     //to reference the Activity
@@ -31,6 +47,7 @@ public class productListAdapter extends ArrayAdapter {
     private CheckBox check;
     private Button deleteBtn;
     private int sizeOfList;
+    private SharedPreferences sp;
 
 
     public productListAdapter(Activity context,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam){
@@ -103,12 +120,33 @@ public class productListAdapter extends ArrayAdapter {
                                 String delete_name = nameArray.get(position);   //要刪除的product name
                                 int delete_id = idArray.get(position);      //要刪除的product id
                                 ///////////資料庫刪除，加這//////////////
-                                idArray.remove(position);
-                                nameArray.remove(position);
-                                priceArray.remove(position);
-                                notifyDataSetChanged();
-                                Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
-                                wishpool_momo.setListViewHeightBasedOnChildren(wishpool_momo.ProductListView);
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        System.out.println(response);
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if (success) {
+                                                idArray.remove(position);
+                                                nameArray.remove(position);
+                                                priceArray.remove(position);
+                                                notifyDataSetChanged();
+                                                Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
+                                                wishpool_momo.setListViewHeightBasedOnChildren(wishpool_momo.ProductListView);
+
+                                            } else {
+                                                Snackbar.make(v, "刪除失敗", Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                DeleteproductRequest deleteproductRequest = new DeleteproductRequest(String.valueOf(delete_id),responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(getContext());
+                                queue.add(deleteproductRequest);
+
                             }
                         })
                         .setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -136,5 +174,19 @@ public class productListAdapter extends ArrayAdapter {
             }
         }
         return finalPrice;
+    }
+    public class DeleteproductRequest extends StringRequest {
+        private static final String Deleteproduct_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Deleteproduct.php";
+        private Map<String, String> params;
+        //
+        public DeleteproductRequest(String id,Response.Listener<String> listener) {
+            super(Method.POST, Deleteproduct_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("id", id);//product_id
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }
