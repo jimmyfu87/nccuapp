@@ -87,11 +87,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private TextView PB_left;
 
     private String i_price,i_note,i_date,i_type_name,i_book_name;
-    private List<String> book = new ArrayList<String>();
+    private List<String> selectBook = new ArrayList<String>();//要查的帳本
     public List<String> dbBookData = new ArrayList<String>();//接資料庫資料
     private List<Integer> getPriceData = new ArrayList<Integer>();
     private List<String> bookArray = new ArrayList<String>();
-    private List<String> selectBooks = new ArrayList<String>();
     private List<Expense> select_expense = new ArrayList<Expense>();
     private List<Income> select_income = new ArrayList<Income>();
     private List<Book> select_BookAttribute = new ArrayList<Book>();
@@ -130,25 +129,29 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
         //Spinner ArrayAdapter 初始化
-        updateBook();
+        initBook();     //抓所有資料庫的帳本名稱
 
         ArrayAdapter<String> bookList = new ArrayAdapter<String>(Home.this,
                 android.R.layout.simple_spinner_dropdown_item,
-                book);
+                dbBookData);
 
         spn_homeBook=(Spinner)findViewById(R.id.spn_homeBook);
         spn_homeBook.setAdapter(bookList);
+
+
 
         //取回book的值
         spn_homeBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 i_book_name = spn_homeBook.getSelectedItem().toString();
+                setBook(i_book_name);   //設定現在選取的帳本
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
-//                select_expense=dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBooks);
-//                select_income=dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBooks);
-                select_BookAttribute = dbmanager.fetchBookallattribute(book);
+                select_expense = dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBook);
+                System.out.println("fetchExpense size: "+select_expense.size());
+                select_income = dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBook);
+                select_BookAttribute = dbmanager.fetchBookallattribute(selectBook);
                 dbmanager.close();
 
                 for(int i = 0; i < select_BookAttribute.size(); i++){
@@ -181,7 +184,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
             spn_homeBook.setSelection(bookPosition);
             i_note = getSaveBag.getString("note");
-            updateBook();
+            initBook();
             spn_homeBook.setAdapter(bookList);
         }
 
@@ -492,9 +495,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         String year = Integer.toString(cal.get(Calendar.YEAR));
-        String month = Integer.toString(cal.get(Calendar.MONTH) +1);
+        String month = (cal.get(Calendar.MONTH) +1 < 10) ? "0"+ Integer.toString(cal.get(Calendar.MONTH) +1) : Integer.toString(cal.get(Calendar.MONTH) +1);
 
-        this.dateinStart = year+"-"+month+"-"+1;
+        this.dateinStart = year+"-"+month+"-01";
         if(month == "2"){
             int intYear = Integer.parseInt(year);
             if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
@@ -508,22 +511,34 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             this.dateinEnd = year+"-"+month+"-"+30;
         }
 
-        //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
+        System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
-    public void updateBook(){
+    public void initBook(){
+        this.dbBookData.clear();
+        this.selectBook.clear();
+
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
         dbmanager.open();
         this.dbBookData = dbmanager.fetchBook();
         dbmanager.close();
+
         for(int i = 0; i<dbBookData.size(); i++){
-            if(book.contains(dbBookData.get(i))){
+            if(this.selectBook.contains(dbBookData.get(i))){
                 continue;
             }else{
-                this.book.add(dbBookData.get(i));
+                this.selectBook.add(dbBookData.get(i));
             }
         }
     }
+
+    //selectBook為丟進資料庫fetch的參數
+    public void setBook(String book){
+        this.selectBook.clear();
+        this.selectBook.add(book);
+    }
+
+
     //計算該帳本預算占幾%
     public double countPercentage(){
         return expense/(startBudget+income)*100;
