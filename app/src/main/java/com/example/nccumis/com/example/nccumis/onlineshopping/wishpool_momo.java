@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nccumis.Cardtype;
@@ -25,6 +28,10 @@ import com.example.nccumis.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +44,7 @@ public class wishpool_momo extends AppCompatActivity {
     private Button lastPage;
     private TextView ecommerceName;
     private Button changeCard;
+    private Button refresh;
 //    private ListView CreditCardListView;
 
     protected static ListView ProductListView;
@@ -57,6 +65,8 @@ public class wishpool_momo extends AppCompatActivity {
     private static List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
     private static List<String> owncardnamelist = new ArrayList<String>();
     private static int singleChoiceIndex = 0;   //預設選擇第一張卡
+    final Document[] doc = new Document[1];
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,16 +112,6 @@ public class wishpool_momo extends AppCompatActivity {
                             productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name));
                             //拿productlist去調用，包含登入使用者的所有product
                         }
-                        //下面是取值方式可以參考，不用就可以刪掉
-//                                for (int i = 0; i < productlist.size(); i++) {
-//                                    System.out.println(productlist.get(i).getId());
-//                                    System.out.println(productlist.get(i).getProduct_name());
-//                                    System.out.println(productlist.get(i).getProduct_price());
-//                                    System.out.println(productlist.get(i).getProduct_url());
-//                                    System.out.println(productlist.get(i).getMember_id());
-//                                    System.out.println(productlist.get(i).getChannel_name());
-//                                }
-
                         setProductList();
                         setListViewHeightBasedOnChildren(ProductListView);
                     } catch (JSONException e) {
@@ -279,6 +279,49 @@ public class wishpool_momo extends AppCompatActivity {
 
         //推薦信用卡
         recommendcreditcard = (TextView)findViewById(R.id.recommendcreditcard);
+
+        refresh = (Button) findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0;i<productlist.size();i++){
+                    rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
+                }
+                SharedPreferences sp = getSharedPreferences("changeamount", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                System.out.println(sp.getInt("changeamount",0));
+                if(sp.getInt("changeamount",0)==0){
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    builder.setMessage("所有商品皆無變動")
+                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    editor.putInt("changeamount",0);
+                                    editor.commit(); //提交
+                                    refresh();
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+                else{
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    builder.setMessage("已變動了"+sp.getInt("changeamount",0)+"項商品")
+                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    editor.putInt("changeamount",0);
+                                    editor.commit(); //提交
+                                    refresh();
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
+            }
+        });
 
     }
 
@@ -541,6 +584,139 @@ public class wishpool_momo extends AppCompatActivity {
 
     public void jumpToHome(){
         Intent intent = new Intent(wishpool_momo.this, Home.class);
+        startActivity(intent);
+    }
+    public void rewebcrawl(String inputurl,String product_id){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, inputurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            doc[0] = Jsoup.parse(response);
+                            Elements title = doc[0].getElementsByTag("title");
+                            String titles = "";
+                            int edition = 0;
+                            String sb = "";
+                            String sb2 = "";
+                            for (Element element : title) {
+                                titles = titles + element;
+                                //System.out.println(titles);
+                            }
+
+                            if (titles.contains("momo購物網行動版")) {
+                                edition = 1;
+                            } else {
+                                edition = 2;
+                            }
+                            if(!inputurl.contains("momoshop.com.tw/goods")){
+                                UpdateDatabase(product_id,"delete","delete");
+                                //Toast.makeText(getApplicationContext(), "無法解析", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            //System.out.println(edition);
+                            switch (edition) {
+                                //行動版
+                                case 1:
+                                    Elements element2 = doc[0].getElementsByTag("title");
+                                    for (Element element : element2) {
+                                        sb = sb + element;
+                                        sb = sb.replace("<title>", "");
+                                        sb = sb.replace("</title>", "");
+                                        sb = sb.replace("- momo購物網行動版", "");
+                                    }
+                                    Elements elements3 = doc[0].getElementsByClass("priceArea").first().getElementsByTag("b");
+                                    for (Element element : elements3) {
+                                        sb2 = sb2 + element;
+                                        sb2 = sb2.replace("<b>", "");
+                                        sb2 = sb2.replace("</b>", "");
+                                    }
+
+                                    sb2=sb2.replace(",","");//移除價錢的逗號
+                                    UpdateDatabase(product_id,sb,sb2);
+                                    break;
+                                //電腦版
+                                case 2:
+                                    Elements element4 = doc[0].getElementsByTag("title");
+                                    for (Element element : element4) {
+                                        sb = "";
+                                        sb = sb + element;
+                                        sb = sb.replace("<title>", "");
+                                        sb = sb.replace("</title>", "");
+                                        sb = sb.replace("-momo購物網", "");
+                                    }
+                                    Elements elements5 = doc[0].getElementsByClass("special").first().getElementsByTag("span");
+                                    for (Element element : elements5) {
+                                        sb2 = "";
+                                        sb2 = sb2 + element;
+                                        sb2 = sb2.replace("<span>", "");
+                                        sb2 = sb2.replace("</span>", "");
+                                    }
+
+                                    sb2=sb2.replace(",","");//移除價錢的逗號
+                                    UpdateDatabase(product_id,sb,sb2);
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            UpdateDatabase(product_id,"delete","delete");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                UpdateDatabase(product_id, "delete", "delete");
+            }
+        });
+        queue.add(stringRequest);
+
+    }
+    public void UpdateDatabase(String product_id,String product_name,String product_price){
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    String change = jsonResponse.getString("change");
+                    if (change.equals("change")) {
+                        SharedPreferences sp = getSharedPreferences("changeamount", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        int changeamount=sp.getInt("changeamount",0)+1;
+                        editor.putInt("changeamount",changeamount);
+                        editor.commit(); //提交
+                    } else if(change.equals("same")){
+                    }
+                    else{
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        UpdatepoolRequest updatepoolRequest = new UpdatepoolRequest(product_id,product_name,product_price,responseListener);
+        RequestQueue queue = Volley.newRequestQueue(wishpool_momo.this);
+        queue.add(updatepoolRequest);
+
+    }
+    public class UpdatepoolRequest extends StringRequest {
+        private static final String UpdatepoolRequest_REQUEST_URL="https://nccugo105306.000webhostapp.com/Updatepool.php";
+        private Map<String,String> params;
+
+        public UpdatepoolRequest(String id,String product_name, String product_price, Response.Listener<String> listener){
+            super(Method.POST, UpdatepoolRequest_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("id", id);
+            params.put("product_name", product_name);
+            params.put("product_price", product_price);
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+    private void refresh() {
+        finish();
+        Intent intent = new Intent(wishpool_momo.this, wishpool_momo.class);
         startActivity(intent);
     }
 }
