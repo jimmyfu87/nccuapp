@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -284,41 +285,47 @@ public class wishpool_momo extends AppCompatActivity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=0;i<productlist.size();i++){
-                    rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
+                int times=0;
+                for(times=0;times<productlist.size();times++){
+                    rewebcrawl(productlist.get(times).getProduct_url(),String.valueOf(productlist.get(times).getId()));
                 }
-                SharedPreferences sp = getSharedPreferences("changeamount", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                System.out.println(sp.getInt("changeamount",0));
-                if(sp.getInt("changeamount",0)==0){
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
-                    builder.setMessage("所有商品皆無變動")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    editor.putInt("changeamount",0);
-                                    editor.commit(); //提交
-                                    refresh();
-                                }
-                            })
-                            .create()
-                            .show();
-                }
-                else{
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
-                    builder.setMessage("已變動了"+sp.getInt("changeamount",0)+"項商品")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    editor.putInt("changeamount",0);
-                                    editor.commit(); //提交
-                                    refresh();
-                                }
-                            })
-                            .create()
-                            .show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        // Actions to do after 10 seconds
+                        SharedPreferences sp = getSharedPreferences("changeamount", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        System.out.println(sp.getInt("changeamount",0));
+                        if(sp.getInt("changeamount",0)==0){
+                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                            builder.setMessage("所有商品皆無變動")
+                                    .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            editor.putInt("changeamount",0).commit();
+                                            refresh();
+                                        }
+                                    })
+                                    .create()
+                                    .show();
+                        }
+                        else{
+                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                            builder.setMessage("已變動了"+sp.getInt("changeamount",0)+"項商品")
+                                    .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            editor.putInt("changeamount",0).commit();
+                                            refresh();
+                                        }
+                                    })
+                                    .create()
+                                    .show();
 
-                }
+                        }
+                    }
+                }, 3000);
+
 
             }
         });
@@ -682,8 +689,7 @@ public class wishpool_momo extends AppCompatActivity {
                         SharedPreferences sp = getSharedPreferences("changeamount", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         int changeamount=sp.getInt("changeamount",0)+1;
-                        editor.putInt("changeamount",changeamount);
-                        editor.commit(); //提交
+                        editor.putInt("changeamount",changeamount).commit();
                     } else if(change.equals("same")){
                     }
                     else{
