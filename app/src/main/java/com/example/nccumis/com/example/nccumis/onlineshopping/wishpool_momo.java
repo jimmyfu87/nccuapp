@@ -285,10 +285,11 @@ public class wishpool_momo extends AppCompatActivity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int times=0;
-                for(times=0;times<productlist.size();times++){
-                    rewebcrawl(productlist.get(times).getProduct_url(),String.valueOf(productlist.get(times).getId()));
+
+                for(int i=0;i<productlist.size();i++){
+                    rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
                 }
+                int time=productlist.size()*1100;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
@@ -324,7 +325,7 @@ public class wishpool_momo extends AppCompatActivity {
 
                         }
                     }
-                }, 3000);
+                }, time);
 
 
             }
