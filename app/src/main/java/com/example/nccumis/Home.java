@@ -153,7 +153,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 for(int i = 0; i < select_BookAttribute.size(); i++){
                     if(select_BookAttribute.get(i).getName().equals(i_book_name)){
                         startBudget = select_BookAttribute.get(i).getAmount_start();
-                    }
+                    }break;
                 }
                 countExpenseAndIncome();
                 PB_expense.setText(Integer.toString(expense));
@@ -183,15 +183,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             initBook();
             spn_homeBook.setAdapter(bookList);
         }
-
-        //進度條抓帳本資料
-        PB=(ProgressBar)findViewById(R.id.PB);
-        PB.getMax();
-
-
-
-
-
 
         //到記帳
         addSpend = (Button) findViewById(R.id.addSpend);
@@ -537,9 +528,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     //計算該帳本預算占幾%
     public float countPercentage(){
-        System.out.println("百分比 " +expense/(startBudget+income));
+        //我先設定80是因為比較好判斷是否startBudget+income == 0
         if(startBudget+income == 0){
-            return 100.0f;
+            return 80.0f;
         }
         return (expense/(startBudget+income))*100;
     }
