@@ -36,6 +36,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,11 +60,11 @@ public class wishpool_momo extends AppCompatActivity {
     private  List<String> nameArray=new ArrayList<>();
     private  List<Integer> priceArray=new ArrayList<>();
     private List<Product> productlist=new ArrayList<Product>();
-    protected static List<String> discountDetailArray =new ArrayList<>();
-    protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
+//    protected static List<String> discountDetailArray =new ArrayList<>();
+//    protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
     private static List<Activity> longactivitylist=new ArrayList<Activity>();
     private static List<Activity> shortactivitylist=new ArrayList<Activity>();
-    private static List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
+    private List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
     private static List<String> owncardnamelist = new ArrayList<String>();
     private static int singleChoiceIndex = 0;   //預設選擇第一張卡
     final Document[] doc = new Document[1];
@@ -157,6 +158,7 @@ public class wishpool_momo extends AppCompatActivity {
                             //拿owncardtypelist去調用
                         }
                         set_owncardnamelist();   //丟進alertdialog 的 String list
+//                        setandsort_owncardnamelist();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -463,39 +465,36 @@ public class wishpool_momo extends AppCompatActivity {
                 " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
     }
 
-    //抓取要丟進alertdialog的選單 && 沒依照優惠程度排序
+    //抓取要丟進alertdialog的選單 && 依照優惠程度排序
     public void set_owncardnamelist(){
         this.owncardnamelist.clear();   //歸零list
+        set_owncarddiscount();  //  設定每張卡的優惠
 
-        for(int i = 0; i < owncardtypelist.size(); i++){
-            owncardnamelist.add((owncardtypelist.get(i)).getCardtype_name());
+        List<Cardtype> tempcardtypelist = new ArrayList<Cardtype>();
+        tempcardtypelist = this.owncardtypelist;
+
+        while (tempcardtypelist.size() != 0){
+            int curMax = 0;
+            int position = 0;
+            for(int i = 0; i < tempcardtypelist.size(); i++){
+            int discount = tempcardtypelist.get(i).getdiscountMax();
+                curMax = (discount > curMax) ? discount : curMax;
+                position = i;
+            }
+            owncardnamelist.add(tempcardtypelist.get(position).getCardtype_name());
+            tempcardtypelist.remove(position);
         }
     }
 
-    //抓取要丟進alertdialog的選單 && 依照優惠程度排序
-    public void setandsort_owncardnamelist(){
-        this.owncardnamelist.clear();   //歸零list
 
-        List<Cardtype> tempowncardtypelist = new ArrayList<Cardtype>();
-        tempowncardtypelist = owncardtypelist;  //  暫存cardtypelist 做 selection sort
-
-        while (tempowncardtypelist.size() != 0){
-            this.owncardnamelist.add(getLargestDiscountCardName(tempowncardtypelist));
-            tempowncardtypelist.remove(getLargestDiscountCardName(tempowncardtypelist));
-        }
-    }
-
-    //算出cardtypelist中最優惠的卡
-    public String getLargestDiscountCardName(List<Cardtype> tempowncardtypelist){
-        int discountMax = 0;
-        int discountMaxPosition = 0;
+    //算出 owncardtypelist 每張的優惠程度
+    public void set_owncarddiscount(){
         int totalPriceinProductList = countProductListTotalPrice();
-
         int discountlongMax = 0;
         int discountshortMax = 0;
 
-        for(int i = 0; i < tempowncardtypelist.size(); i++){
-            String getcardtypeName = tempowncardtypelist.get(i).getCardtype_name();
+        for(int i = 0; i < owncardtypelist.size(); i++){
+            String getcardtypeName = owncardtypelist.get(i).getCardtype_name();
             for(int j = 0; j < longactivitylist.size();j++){
                 Activity getlongactivity = longactivitylist.get(j);
                 if(getlongactivity.getChannel_name().equals("Momo") && getlongactivity.getCardtype_name().equals(getcardtypeName)){
@@ -510,6 +509,7 @@ public class wishpool_momo extends AppCompatActivity {
                     }
 
                 }
+
             }
 
             for(int j = 0; j < shortactivitylist.size();j++){
@@ -524,16 +524,11 @@ public class wishpool_momo extends AppCompatActivity {
                     }
                 }
             }
-
-            if(discountlongMax + discountshortMax > discountMax){
-                discountMax = discountlongMax + discountshortMax;
-                discountMaxPosition = i;
-            }
-
+            owncardtypelist.get(i).setdiscountmax(discountlongMax + discountshortMax);
             discountlongMax = 0;
             discountshortMax = 0;
         }
-        return tempowncardtypelist.get(discountMaxPosition).getCardtype_name();
+
     }
 
     //算出productlist中商品的總額
