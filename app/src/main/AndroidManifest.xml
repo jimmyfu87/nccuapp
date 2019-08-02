@@ -18,9 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".book_adapter"
+            android:label="@string/title_activity_book_adapter"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".password_change"
             android:label="@string/title_activity_password_change"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BookManage" />
         <activity android:name=".Settings" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
@@ -47,7 +51,6 @@
         <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/> -->
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool_momo" />
         <activity
             android:name=".Home"

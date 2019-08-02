@@ -51,6 +51,7 @@ public class BookManage extends AppCompatActivity {
 
 
 
+
         });
 
 
@@ -73,13 +74,19 @@ public class BookManage extends AppCompatActivity {
         });
 
     }
+    public void setbookname() {
 
-    private void setbookname() {
-        
+    }
+    public void setList() {
+        //initListData();
+        book_adapter bk_adapter = new book_adapter("Book",this,selectBooks,this.bookArray);;
+
     }
 
-    private void setList() {
-    }
+
+
+
+
 
 
 }
