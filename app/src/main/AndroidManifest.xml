@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--//<activity android:name=".com.example.nccumis.onlineshopping.Channellist"></activity>-->
+        <activity android:name=".com.example.nccumis.onlineshopping.Channellist"></activity>
         <activity android:name=".BookManage" />
         <activity android:name=".Settings" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
@@ -47,22 +47,16 @@
         <activity
             android:name=".Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <!--<activity-->
-            <!--android:name=".LogIn"-->
-            <!--android:windowSoftInputMode="stateAlwaysHidden">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
         <activity
-            android:name=".com.example.nccumis.onlineshopping.Channellist">
+            android:name=".LogIn"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
