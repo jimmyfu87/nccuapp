@@ -85,6 +85,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private ProgressBar PB;
     private TextView PB_expense;
     private TextView PB_left;
+    private Button btn_showPB;
 
     private String i_price,i_note,i_date,i_type_name,i_book_name;
     private List<String> selectBook = new ArrayList<String>();//要查的帳本
@@ -118,6 +119,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         autoSetFirstandEndMonth();
+
+        btn_showPB=(Button)findViewById(R.id.btn_showPB);
+
 
 
         PB_left=(TextView)findViewById(R.id.PB_left);
@@ -218,6 +222,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 jumpToWishpool();
             }
         });
+    }
+//
+
+    public void showPB(View view){
+
     }
 
     //點擊左側菜單的動作

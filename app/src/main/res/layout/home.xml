@@ -72,6 +72,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </Spinner>
+            <Button
+                android:id="@+id/btn_showPB"
+                android:onClick="showPB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="顯上在手機通知欄位"/>
         </LinearLayout>
 
 
