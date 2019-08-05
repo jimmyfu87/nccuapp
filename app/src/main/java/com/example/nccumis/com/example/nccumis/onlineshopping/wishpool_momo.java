@@ -50,7 +50,7 @@ public class wishpool_momo extends AppCompatActivity {
 //    private ListView CreditCardListView;
 
     protected static ListView ProductListView;
-    private static TextView totalPrice;
+    private static Button totalPrice;
     private static int isCheckedprice = 0;
     private static int longactivity_discount = 0;
     private static int shortactivity_discount = 0;
@@ -68,6 +68,8 @@ public class wishpool_momo extends AppCompatActivity {
     private static List<String> owncardnamelist = new ArrayList<String>();
     private static int singleChoiceIndex = 0;   //預設選擇第一張卡
     final Document[] doc = new Document[1];
+    private static Activity activity_long;
+    private static Activity activity_short;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,9 +278,16 @@ public class wishpool_momo extends AppCompatActivity {
 
 
         //計算後的總價
-        totalPrice = (TextView)findViewById(R.id.totalPrice);
+        totalPrice = (Button) findViewById(R.id.totalPrice);
         totalPrice.setText("最終結算金額: \n"+0 +"(所有勾選商品金額)" +
                 " - " + 0 +"(長期優惠) - " + 0 +"(短期優惠) \n\t= " + 0);
+        totalPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToTotalPriceDetail();
+            }
+        });
+
 
         //推薦信用卡
         recommendcreditcard = (TextView)findViewById(R.id.recommendcreditcard);
@@ -415,10 +424,12 @@ public class wishpool_momo extends AppCompatActivity {
                 if(longactivity_discount_temp > longactivity_discount){
                     longactivity_discount = longactivity_discount_temp;
                     longactivity_position = i;
+                    activity_long = longactivitylist.get(longactivity_position);
                 }
 
             }
         }
+
 //        if(longactivity_discount > 0){
 //            discountDetailArray.add(longactivitylist.get(longactivity_position).getRemarks());
 //            LONG_OR_SHORT_ACTIVITYArray.add("LONG_ACTIVITY");
@@ -433,6 +444,7 @@ public class wishpool_momo extends AppCompatActivity {
                 if(shortactivity_discount_temp > shortactivity_discount){
                     shortactivity_discount = shortactivity_discount_temp;
                     shortactivity_position = i;
+                    activity_short = shortactivitylist.get(shortactivity_position);
                 }
             }
         }
@@ -587,6 +599,26 @@ public class wishpool_momo extends AppCompatActivity {
 
     public void jumpToHome(){
         Intent intent = new Intent(wishpool_momo.this, Home.class);
+        startActivity(intent);
+    }
+
+    public void jumpToTotalPriceDetail(){
+        Intent intent = new Intent(wishpool_momo.this, totalPriceDetail.class);
+        Bundle saveCheckPriceData = new Bundle();
+        saveCheckPriceData.putString("ecommerceName", ecommerceName.getText().toString());
+        saveCheckPriceData.putInt("isCheckedprice", isCheckedprice);
+        saveCheckPriceData.putInt("longactivity_discount", longactivity_discount);
+        if(longactivity_discount != 0){
+            saveCheckPriceData.putString("longactivity_name",activity_long.getActivity_name());
+            saveCheckPriceData.putString("longactivity_remark",activity_long.getRemarks());
+        }
+        saveCheckPriceData.putInt("shortactivity_discount", shortactivity_discount);
+        if(shortactivity_discount != 0){
+            saveCheckPriceData.putString("shortactivity_name",activity_short.getActivity_name());
+            saveCheckPriceData.putString("shortactivity_remark",activity_short.getRemarks());
+        }
+
+        intent.putExtras(saveCheckPriceData);
         startActivity(intent);
     }
     public void rewebcrawl(String inputurl,String product_id){

@@ -45,6 +45,10 @@
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool_momo"/>
+        <activity android:name=".com.example.nccumis.onlineshopping.onlineShoppingPath" />
+        <activity android:name=".com.example.nccumis.onlineshopping.wishpool" />
+        <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />
+
 
         <activity
                 android:name=".Home"
