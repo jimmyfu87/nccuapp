@@ -18,18 +18,22 @@ import java.util.List;
 public class onlineshoppingPathAdapter extends ArrayAdapter {
     //to reference the Activity
     private final android.app.Activity context;
+    private final List<Integer> idArray;
     private final List<String> PathNameArray;
-    private final List<String> discountDetailArray;
+//    private final List<String> discountDetailArray;
+    private final List<String> urlArray;
     private Button enterPath_btn;
 
 
-    public onlineshoppingPathAdapter(Activity context, List<String> PathNameArrayParam, List<String> discountDetailArrayParam){
+    public onlineshoppingPathAdapter(Activity context, List<Integer> idArrayParam, List<String> PathNameArrayParam, List<String>urlArrayParam){
 
-        super(context, R.layout.onlineshoppingpath_listview_row);
+        super(context, R.layout.onlineshoppingpath_listview_row,PathNameArrayParam);
 
         this.context = context;
+        this.idArray = idArrayParam;
         this.PathNameArray = PathNameArrayParam;
-        this.discountDetailArray = discountDetailArrayParam;
+        this.urlArray = urlArrayParam;
+//        this.discountDetailArray = discountDetailArrayParam;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -38,14 +42,13 @@ public class onlineshoppingPathAdapter extends ArrayAdapter {
 
         //this code gets references to objects in the listview_row.xml file
         TextView PathNameTextField = (TextView) rowView.findViewById(R.id.pathname);
-        TextView discountDetailTextField = (TextView) rowView.findViewById(R.id.discountDetail);
+//        TextView discountDetailTextField = (TextView) rowView.findViewById(R.id.discountDetail);
         enterPath_btn = (Button)rowView.findViewById(R.id.enterPath);
 
-//        check = (CheckBox) rowView.findViewById(R.id.check);
 
         //this code sets the values of the objects to values from the arrays
         PathNameTextField.setText(PathNameArray.get(position));
-        discountDetailTextField.setText(discountDetailArray.get(position));
+//        discountDetailTextField.setText(discountDetailArray.get(position));
 
         //到各通路網購(webview)
         enterPath_btn.setOnClickListener(new View.OnClickListener() {
@@ -60,9 +63,11 @@ public class onlineshoppingPathAdapter extends ArrayAdapter {
 
     public void jumpToOnlineShopping(int position,Activity activity){
         Intent intent = new Intent(activity, OnlineShopping.class);
-        Bundle saveData = new Bundle();
-//        saveExpenseData.putStringArrayList("selectBooks",selectBooks);
-        intent.putExtras(saveData);
+        Bundle saveChannelData = new Bundle();
+        saveChannelData.putString("channel_url",urlArray.get(position));
+        saveChannelData.putString("channel_name", PathNameArray.get(position));
+        saveChannelData.putBoolean("firstBankDiscount", false);
+        intent.putExtras(saveChannelData);
         activity.startActivity(intent);
 
     }

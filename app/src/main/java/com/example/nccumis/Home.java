@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nccumis.com.example.nccumis.onlineshopping.OnlineShopping;
+import com.example.nccumis.com.example.nccumis.onlineshopping.onlineShoppingPath;
 import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_momo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -141,7 +142,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         onlineShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToOnlineShopping();
+                jumpToOnlineShoppingPath();
             }
         });
         //到許願池
@@ -394,8 +395,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         startActivity(intent);
     }
     //到購物商城
-    public void jumpToOnlineShopping() {
-        startActivity(new Intent(Home.this, OnlineShopping.class));
+    public void jumpToOnlineShoppingPath() {
+        startActivity(new Intent(Home.this, onlineShoppingPath.class));
     }
     //到許願池
     public void jumpToWishpool() {

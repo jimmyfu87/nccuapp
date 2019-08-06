@@ -44,7 +44,7 @@ public class firstBankDiscount extends AppCompatActivity {
     public void jumpToOnlineShopping(){
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
-
+        getSaveBag.putBoolean("firstBankDiscount",true);
         Intent intent = new Intent(firstBankDiscount.this, OnlineShopping.class);
         intent.putExtras(getSaveBag);
         startActivity(intent);

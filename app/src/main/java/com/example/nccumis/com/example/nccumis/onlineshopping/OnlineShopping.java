@@ -61,8 +61,7 @@ public class OnlineShopping extends AppCompatActivity {
         btn_lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                jumpToLastPage();
-                jumpToHome();
+                jumpToOnlineShoppingPath();
             }
         });
 
@@ -132,14 +131,19 @@ public class OnlineShopping extends AppCompatActivity {
             }
         });
 
-        //檢查是否從firstbankDiscount回來
+        //檢查是否從firstbankDiscount回來 或從 onlineShoppingPath 回來
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
         if(getSaveBag != null){
-            getWebHomeURL = getSaveBag.getString("webHomeURL");
-            getWebName = getSaveBag.getString("webName");
-
-            OnlineShopping_webView.loadUrl(getSaveBag.getString("webURL"));
+            if(getSaveBag.getBoolean("firstBankDiscount")){
+                getWebHomeURL = getSaveBag.getString("webHomeURL");
+                getWebName = getSaveBag.getString("webName");
+                OnlineShopping_webView.loadUrl(getSaveBag.getString("webURL"));
+            }else{
+                getWebHomeURL = getSaveBag.getString("channel_url");
+                getWebName = getSaveBag.getString("channel_name");
+                OnlineShopping_webView.loadUrl(getSaveBag.getString("channel_url"));
+            }
             WebSettings webSettings = OnlineShopping_webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             OnlineShopping_webView.setVerticalScrollBarEnabled(true);
@@ -171,8 +175,8 @@ public class OnlineShopping extends AppCompatActivity {
 //        startActivity(new Intent(OnlineShopping.this, discountEcommerce.class));
 //    }
 
-    public void jumpToHome(){
-        startActivity(new Intent(OnlineShopping.this, Home.class));
+    public void jumpToOnlineShoppingPath(){
+        startActivity(new Intent(OnlineShopping.this, onlineShoppingPath.class));
 
     }
 
