@@ -62,6 +62,7 @@ public class wishpool extends AppCompatActivity {
 
                             //拿channellist去調用
                         }
+                        System.out.println("channelsize: "+channellist.size());
                         setChannelList();
                         setListViewHeightBasedOnChildren(ecommercePathListView);
                     } catch (JSONException e) {
@@ -95,13 +96,13 @@ public class wishpool extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //到個別通路的許願池
-//                jumpTocheck_expense_detail(position);
+                jumpTowishpool_channel(position);
             }
         });
     }
 
     public void initChannelList(){
-//        System.out.println("channellist size: "+this.channellist.size());
+        System.out.println("channellist size:333 "+this.channellist.size());
         for(int i = 0; i < this.channellist.size();i++){
 //            this.idArray.add(this.channellist.get(i).getId());
             this.nameArray.add(this.channellist.get(i).getChannel_name());
@@ -115,8 +116,12 @@ public class wishpool extends AppCompatActivity {
         ecommercePathListView.setAdapter(channellist_adapter);
     }
 
-    public void jumpTowishpool_channel(){
-
+    public void jumpTowishpool_channel(int position){
+        Intent saveWishpoolData = new Intent(wishpool.this, wishpool_channel.class);
+        Bundle saveBag = new Bundle();
+        saveBag.putString("channel_name", nameArray.get(position));
+        saveWishpoolData.putExtras(saveBag);
+        startActivity(saveWishpoolData);
     }
 
     public void jumpToHome(){

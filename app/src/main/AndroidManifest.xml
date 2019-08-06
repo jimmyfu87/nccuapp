@@ -16,7 +16,6 @@
         android:fullBackupContent="@xml/backup_rules"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".com.example.nccumis.onlineshopping.Channellist"></activity>
         <activity android:name=".BookManage" />
         <activity android:name=".Settings" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
@@ -36,16 +35,16 @@
         <activity
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
+        <activity android:name=".com.example.nccumis.onlineshopping.onlineShopping" />
         <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler"></activity>
         <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <!--<activity android:name=".Home" />-->
-        <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/> -->
+        <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.onlineShopping"/> -->
 
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".com.example.nccumis.onlineshopping.wishpool_momo"/>
+        <activity android:name=".com.example.nccumis.onlineshopping.wishpool_channel"/>
         <activity android:name=".com.example.nccumis.onlineshopping.onlineShoppingPath" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool" />
         <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />

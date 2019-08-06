@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.nccumis.R;
@@ -62,7 +61,7 @@ public class onlineshoppingPathAdapter extends ArrayAdapter {
     }
 
     public void jumpToOnlineShopping(int position,Activity activity){
-        Intent intent = new Intent(activity, OnlineShopping.class);
+        Intent intent = new Intent(activity, onlineShopping.class);
         Bundle saveChannelData = new Bundle();
         saveChannelData.putString("channel_url",urlArray.get(position));
         saveChannelData.putString("channel_name", PathNameArray.get(position));

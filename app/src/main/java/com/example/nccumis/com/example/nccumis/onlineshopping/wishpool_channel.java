@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +35,13 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class wishpool_momo extends AppCompatActivity {
+public class wishpool_channel extends AppCompatActivity {
     private static RequestQueue requestQueue;
     private static RequestQueue requestQueue2;
+    private static String channel_name = "";
     private Button lastPage;
     private TextView ecommerceName;
     private Button changeCard;
@@ -77,16 +76,22 @@ public class wishpool_momo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishpool_momo);
 
+        Intent getSaveData = getIntent();
+        Bundle getSaveBag = getSaveData.getExtras();
+        if(getSaveBag != null){
+            channel_name = getSaveBag.getString("channel_name");
+        }
+
         lastPage = (Button)findViewById(R.id.lastPage);
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToHome();
+                jumpToWishpool();
             }
         });
 
         ecommerceName = (TextView)findViewById(R.id.ecommerceName);
-        ecommerceName.setText("Momo購物網");//之後從資料庫抓電商名稱
+        ecommerceName.setText(channel_name+" 購物網");//之後從資料庫抓電商名稱
 
         changeCard = (Button)findViewById(R.id.changeCard);
         changeCard.setOnClickListener(new View.OnClickListener() {
@@ -125,13 +130,13 @@ public class wishpool_momo extends AppCompatActivity {
                 }
                 else{
                     //這邊是發現許願池是空的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
                     builder.setMessage("沒有商品")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
-                                    wishpool_momo.this.startActivity(intent);
+                                    Intent intent = new Intent(wishpool_channel.this, wishpool.class);
+                                    wishpool_channel.this.startActivity(intent);
                                 }
                             })
                             .create()
@@ -141,7 +146,7 @@ public class wishpool_momo extends AppCompatActivity {
         };
         SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        wishpool_momo.GetallproductRequest getRequest = new wishpool_momo.GetallproductRequest(sp.getString("member_id",null),"Momo",responseListener);
+        wishpool_channel.GetallproductRequest getRequest = new wishpool_channel.GetallproductRequest(sp.getString("member_id",null),channel_name,responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
@@ -168,13 +173,13 @@ public class wishpool_momo extends AppCompatActivity {
                 }
                 else{
                     //發現使用者沒有信用卡的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
                     builder.setMessage("使用者沒有信用卡")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
-                                    wishpool_momo.this.startActivity(intent);
+                                    Intent intent = new Intent(wishpool_channel.this, Home.class);
+                                    wishpool_channel.this.startActivity(intent);
                                 }
                             })
                             .create()
@@ -250,13 +255,13 @@ public class wishpool_momo extends AppCompatActivity {
                 }
                 else{
                     //發現沒有匹配活動的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
                     builder.setMessage("沒有適合的優惠活動")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
-                                    wishpool_momo.this.startActivity(intent);
+                                    Intent intent = new Intent(wishpool_channel.this, Home.class);
+                                    wishpool_channel.this.startActivity(intent);
                                 }
                             })
                             .create()
@@ -267,7 +272,7 @@ public class wishpool_momo extends AppCompatActivity {
         SharedPreferences sp3 = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
         //選擇的卡片名稱存在cardtypename
-        GetactivityRequest getactivityRequest = new GetactivityRequest(sp3.getString("member_id",null),"Momo",responseListener3);
+        GetactivityRequest getactivityRequest = new GetactivityRequest(sp3.getString("member_id",null),channel_name,responseListener3);
         RequestQueue requestQueue3 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
 
@@ -310,7 +315,7 @@ public class wishpool_momo extends AppCompatActivity {
                         SharedPreferences.Editor editor = sp.edit();
                         System.out.println(sp.getInt("changeamount",0));
                         if(sp.getInt("changeamount",0)==0){
-                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
                             builder.setMessage("所有商品皆無變動")
                                     .setPositiveButton("刷新列表", new DialogInterface.OnClickListener() {
                                         @Override
@@ -323,7 +328,7 @@ public class wishpool_momo extends AppCompatActivity {
                                     .show();
                         }
                         else{
-                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
                             builder.setMessage("已變動了"+sp.getInt("changeamount",0)+"項商品")
                                     .setPositiveButton("刷新列表", new DialogInterface.OnClickListener() {
                                         @Override
@@ -365,13 +370,13 @@ public class wishpool_momo extends AppCompatActivity {
                 }
                 else{
                     //發現使用者沒有信用卡的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
                     builder.setMessage("使用者已辦了所有信用卡")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
-                                    wishpool_momo.this.startActivity(intent);
+                                    Intent intent = new Intent(wishpool_channel.this, Home.class);
+                                    wishpool_channel.this.startActivity(intent);
                                 }
                             })
                             .create()
@@ -434,7 +439,7 @@ public class wishpool_momo extends AppCompatActivity {
 
     public void initProductList(){
         for(int i = 0; i < this.productlist.size();i++){
-            if(this.productlist.get(i).getChannel_name().equals("Momo")){
+            if(this.productlist.get(i).getChannel_name().equals(channel_name)){
                 this.idArray.add(this.productlist.get(i).getId());
                 this.nameArray.add(this.productlist.get(i).getProduct_name());
                 this.priceArray.add(Integer.parseInt(this.productlist.get(i).getProduct_price()));
@@ -445,7 +450,7 @@ public class wishpool_momo extends AppCompatActivity {
 
     public void setProductList(){
         initProductList();
-        productListAdapter productlist_adapter = new productListAdapter(wishpool_momo.this, idArray ,nameArray , priceArray);
+        productListAdapter productlist_adapter = new productListAdapter(wishpool_channel.this, idArray ,nameArray , priceArray);
         ProductListView.setAdapter(productlist_adapter);
     }
 
@@ -457,7 +462,7 @@ public class wishpool_momo extends AppCompatActivity {
         int shortactivity_position = 0;
 
         for(int i = 0; i < longactivitylist.size();i++){
-            if(longactivitylist.get(i).getChannel_name().equals("Momo") && longactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
+            if(longactivitylist.get(i).getChannel_name().equals(channel_name) && longactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
                 int longactivity_discount_temp = 0;
                 if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
                     longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
@@ -479,7 +484,7 @@ public class wishpool_momo extends AppCompatActivity {
 //        }
 
         for(int i = 0; i < shortactivitylist.size();i++){
-            if(shortactivitylist.get(i).getChannel_name().equals("Momo")&& shortactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
+            if(shortactivitylist.get(i).getChannel_name().equals("channel_name")&& shortactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
                 int shortactivity_discount_temp = 0;
                 if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
                     shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
@@ -499,7 +504,7 @@ public class wishpool_momo extends AppCompatActivity {
 
 //    public void setCreditCardDiscountList(){
 //        initCreditCardDiscountList();
-//        creditcardListAdapter creditcardList_adapter = new creditcardListAdapter(wishpool_momo.this, LONG_OR_SHORT_ACTIVITYArray, discountDetailArray);
+//        creditcardListAdapter creditcardList_adapter = new creditcardListAdapter(wishpool_channel.this, LONG_OR_SHORT_ACTIVITYArray, discountDetailArray);
 //        CreditCardListView.setAdapter(creditcardList_adapter);
 //    }
 
@@ -561,7 +566,7 @@ public class wishpool_momo extends AppCompatActivity {
             String getcardtypeName = owncardtypelist.get(i).getCardtype_name();
             for(int j = 0; j < longactivitylist.size();j++){
                 Activity getlongactivity = longactivitylist.get(j);
-                if(getlongactivity.getChannel_name().equals("Momo") && getlongactivity.getCardtype_name().equals(getcardtypeName)){
+                if(getlongactivity.getChannel_name().equals("channel_name") && getlongactivity.getCardtype_name().equals(getcardtypeName)){
                     int longactivity_discount_temp = 0;
                     if(getlongactivity.getDiscount_limit() > totalPriceinProductList*getlongactivity.getDiscount_ratio() ){
                         longactivity_discount_temp = Double.valueOf(totalPriceinProductList*getlongactivity.getDiscount_ratio()).intValue();
@@ -578,7 +583,7 @@ public class wishpool_momo extends AppCompatActivity {
 
             for(int j = 0; j < shortactivitylist.size();j++){
                 Activity getshortactivity = shortactivitylist.get(j);
-                if(getshortactivity.getChannel_name().equals("Momo") && getshortactivity.getCardtype_name().equals(getcardtypeName)){
+                if(getshortactivity.getChannel_name().equals("channel_name") && getshortactivity.getCardtype_name().equals(getcardtypeName)){
                     int shortactivity_discount_temp = 0;
                     if(totalPriceinProductList > getshortactivity.getMinimum_pay()){
                         shortactivity_discount_temp = getshortactivity.getDiscount_money();
@@ -605,7 +610,7 @@ public class wishpool_momo extends AppCompatActivity {
             String getcardtypeName = othercardtypelist.get(i).getCardtype_name();
             for(int j = 0; j < longactivitylist.size();j++){
                 Activity getlongactivity = longactivitylist.get(j);
-                if(getlongactivity.getChannel_name().equals("Momo") && getlongactivity.getCardtype_name().equals(getcardtypeName)){
+                if(getlongactivity.getChannel_name().equals("channel_name") && getlongactivity.getCardtype_name().equals(getcardtypeName)){
                     int longactivity_discount_temp = 0;
                     if(getlongactivity.getDiscount_limit() > totalPriceinProductList*getlongactivity.getDiscount_ratio() ){
                         longactivity_discount_temp = Double.valueOf(totalPriceinProductList*getlongactivity.getDiscount_ratio()).intValue();
@@ -622,7 +627,7 @@ public class wishpool_momo extends AppCompatActivity {
 
             for(int j = 0; j < shortactivitylist.size();j++){
                 Activity getshortactivity = shortactivitylist.get(j);
-                if(getshortactivity.getChannel_name().equals("Momo") && getshortactivity.getCardtype_name().equals(getcardtypeName)){
+                if(getshortactivity.getChannel_name().equals("channel_name") && getshortactivity.getCardtype_name().equals(getcardtypeName)){
                     int shortactivity_discount_temp = 0;
                     if(totalPriceinProductList > getshortactivity.getMinimum_pay()){
                         shortactivity_discount_temp = getshortactivity.getDiscount_money();
@@ -660,7 +665,7 @@ public class wishpool_momo extends AppCompatActivity {
     }
 
     public void singleDialogEvent(){
-        new AlertDialog.Builder(wishpool_momo.this)
+        new AlertDialog.Builder(wishpool_channel.this)
                 .setSingleChoiceItems(owncardnamelist.toArray(new String[owncardnamelist.size()]), singleChoiceIndex,
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -672,7 +677,7 @@ public class wishpool_momo extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         updatePrice();
-                        Toast.makeText(wishpool_momo.this, "你選擇的是"+owncardnamelist.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(wishpool_channel.this, "你選擇的是"+owncardnamelist.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })
@@ -704,13 +709,13 @@ public class wishpool_momo extends AppCompatActivity {
         listView.setLayoutParams(params);
     }
 
-    public void jumpToHome(){
-        Intent intent = new Intent(wishpool_momo.this, Home.class);
+    public void jumpToWishpool(){
+        Intent intent = new Intent(wishpool_channel.this, wishpool.class);
         startActivity(intent);
     }
 
     public void jumpToTotalPriceDetail(){
-        Intent intent = new Intent(wishpool_momo.this, totalPriceDetail.class);
+        Intent intent = new Intent(wishpool_channel.this, totalPriceDetail.class);
         Bundle saveCheckPriceData = new Bundle();
         saveCheckPriceData.putString("ecommerceName", ecommerceName.getText().toString());
         saveCheckPriceData.putInt("isCheckedprice", isCheckedprice);
@@ -835,7 +840,7 @@ public class wishpool_momo extends AppCompatActivity {
             }
         };
         UpdatepoolRequest updatepoolRequest = new UpdatepoolRequest(product_id,product_name,product_price,responseListener);
-        RequestQueue queue = Volley.newRequestQueue(wishpool_momo.this);
+        RequestQueue queue = Volley.newRequestQueue(wishpool_channel.this);
         queue.add(updatepoolRequest);
 
     }
@@ -857,7 +862,7 @@ public class wishpool_momo extends AppCompatActivity {
     }
     private void refresh() {
         finish();
-        Intent intent = new Intent(wishpool_momo.this, wishpool_momo.class);
+        Intent intent = new Intent(wishpool_channel.this, wishpool_channel.class);
         startActivity(intent);
     }
     public class GetothercardRequest extends StringRequest {

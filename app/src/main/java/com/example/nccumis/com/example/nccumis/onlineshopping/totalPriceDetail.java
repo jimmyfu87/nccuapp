@@ -65,7 +65,7 @@ public class totalPriceDetail extends AppCompatActivity {
     }
 
     public void jumpTowishpool(){
-        Intent intent = new Intent(totalPriceDetail.this, wishpool_momo.class);
+        Intent intent = new Intent(totalPriceDetail.this, wishpool_channel.class);
         startActivity(intent);
     }
 

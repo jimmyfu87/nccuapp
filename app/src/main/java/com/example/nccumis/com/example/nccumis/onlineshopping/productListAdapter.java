@@ -3,7 +3,6 @@ package com.example.nccumis.com.example.nccumis.onlineshopping;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -20,11 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.nccumis.DatabaseManager;
-import com.example.nccumis.LogIn;
 import com.example.nccumis.R;
-import com.example.nccumis.Register;
-import com.example.nccumis.RegisterRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,8 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class productListAdapter extends ArrayAdapter {
     //to reference the Activity
@@ -81,7 +74,7 @@ public class productListAdapter extends ArrayAdapter {
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                Toast.makeText(context, isChecked + "", Toast.LENGTH_SHORT).show();
-//                wishpool_momo.setFinalPrice(priceArray.get(position));
+//                wishpool_channel.setFinalPrice(priceArray.get(position));
 //            }
 //        });
 
@@ -96,14 +89,14 @@ public class productListAdapter extends ArrayAdapter {
                     //CheckBox狀態 : 已勾選
                     Toast.makeText(context, nameArray.get(position) +" 已勾選", Toast.LENGTH_SHORT).show();
                     isCheckArray.set(position, true);
-                    wishpool_momo.setisCheckedPrice(countPrice());
+                    wishpool_channel.setisCheckedPrice(countPrice());
                 }
                 else
                 {
                     //CheckBox狀態 : 未勾選
                     Toast.makeText(context, nameArray.get(position) +" 已取消勾選", Toast.LENGTH_SHORT).show();
                     isCheckArray.set(position, false);
-                    wishpool_momo.setisCheckedPrice(countPrice());
+                    wishpool_channel.setisCheckedPrice(countPrice());
                 }
             }
         });
@@ -133,7 +126,7 @@ public class productListAdapter extends ArrayAdapter {
                                                 priceArray.remove(position);
                                                 notifyDataSetChanged();
                                                 Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
-                                                wishpool_momo.setListViewHeightBasedOnChildren(wishpool_momo.ProductListView);
+                                                wishpool_channel.setListViewHeightBasedOnChildren(wishpool_channel.ProductListView);
 
                                             } else {
                                                 Snackbar.make(v, "刪除失敗", Snackbar.LENGTH_SHORT).show();

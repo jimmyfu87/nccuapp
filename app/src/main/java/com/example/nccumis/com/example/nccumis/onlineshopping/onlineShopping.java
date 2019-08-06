@@ -11,7 +11,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,11 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.nccumis.Home;
-import com.example.nccumis.LogIn;
 import com.example.nccumis.R;
-import com.example.nccumis.Register;
-import com.example.nccumis.RegisterRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class OnlineShopping extends AppCompatActivity {
+public class onlineShopping extends AppCompatActivity {
     private WebView OnlineShopping_webView;
     private String getWebHomeURL;       //從優惠店家取得首頁的URL，目前先塞Momo首頁
     private String getWebName;             //從優惠店家取得名稱，目前先塞Momo首頁
@@ -172,16 +167,16 @@ public class OnlineShopping extends AppCompatActivity {
     }
 
 //    public void jumpToLastPage(){
-//        startActivity(new Intent(OnlineShopping.this, discountEcommerce.class));
+//        startActivity(new Intent(onlineShopping.this, discountEcommerce.class));
 //    }
 
     public void jumpToOnlineShoppingPath(){
-        startActivity(new Intent(OnlineShopping.this, onlineShoppingPath.class));
+        startActivity(new Intent(onlineShopping.this, onlineShoppingPath.class));
 
     }
 
     private void jumpToFirstBankDiscountPage(){
-        Intent intent = new Intent(OnlineShopping.this, firstBankDiscount.class);
+        Intent intent = new Intent(onlineShopping.this, firstBankDiscount.class);
         Bundle savedWebData = new Bundle();
         savedWebData.putString("webName", getWebName);
         savedWebData.putString("webURL", getCurrentWebURL());
@@ -190,7 +185,7 @@ public class OnlineShopping extends AppCompatActivity {
         startActivity(intent);
     }
     private void jumpToDemo(String urldemo){
-        Intent intent = new Intent(OnlineShopping.this, Webcrawler.class);
+        Intent intent = new Intent(onlineShopping.this, Webcrawler.class);
         Bundle savedWebData = new Bundle();
         savedWebData.putString("webURL",urldemo);
         intent.putExtras(savedWebData);
@@ -288,7 +283,7 @@ public class OnlineShopping extends AppCompatActivity {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(onlineShopping.this);
                         builder.setMessage("成功加入許願池")
                                 .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                     @Override
@@ -299,7 +294,7 @@ public class OnlineShopping extends AppCompatActivity {
                                 .show();
 
                     } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(onlineShopping.this);
                         builder.setMessage("加入許願池失敗")
                                 .setPositiveButton("知道了", null)
                                 .create()
@@ -314,7 +309,7 @@ public class OnlineShopping extends AppCompatActivity {
         SharedPreferences.Editor editor = sp.edit();
         member_id=sp.getString("member_id",null);
         AddtopoolRequest addtopoolRequest = new AddtopoolRequest(product_name,product_price, product_url,member_id,channel_name,responseListener);
-        RequestQueue queue = Volley.newRequestQueue(OnlineShopping.this);
+        RequestQueue queue = Volley.newRequestQueue(onlineShopping.this);
         queue.add(addtopoolRequest);
 
     }

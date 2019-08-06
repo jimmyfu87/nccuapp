@@ -20,7 +20,7 @@ public class wishpoolListAdapter extends ArrayAdapter {
 
     public wishpoolListAdapter(Activity context, List<String> pathNameArrayArrayParam){
 
-        super(context, R.layout.wishpool_listview_row);
+        super(context, R.layout.wishpool_listview_row,pathNameArrayArrayParam);
 
         this.context = context;
         this.PathNameArray = pathNameArrayArrayParam;

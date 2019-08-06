@@ -22,9 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nccumis.com.example.nccumis.onlineshopping.OnlineShopping;
 import com.example.nccumis.com.example.nccumis.onlineshopping.onlineShoppingPath;
-import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_momo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -45,7 +43,6 @@ import java.util.Collections;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -400,7 +397,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
     //到許願池
     public void jumpToWishpool() {
-        startActivity(new Intent(Home.this, wishpool_momo.class));
+        startActivity(new Intent(Home.this, com.example.nccumis.com.example.nccumis.onlineshopping.wishpool.class));
     }
 
 
