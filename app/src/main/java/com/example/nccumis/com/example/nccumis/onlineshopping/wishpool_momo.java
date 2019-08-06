@@ -70,6 +70,7 @@ public class wishpool_momo extends AppCompatActivity {
     final Document[] doc = new Document[1];
     private static Activity activity_long;
     private static Activity activity_short;
+    private List<Cardtype> othercardtypelist=new ArrayList<Cardtype>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -300,7 +301,7 @@ public class wishpool_momo extends AppCompatActivity {
                 for(int i=0;i<productlist.size();i++){
                     rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
                 }
-                int time=productlist.size()*1100;
+                int time=productlist.size()*1300;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
@@ -311,7 +312,7 @@ public class wishpool_momo extends AppCompatActivity {
                         if(sp.getInt("changeamount",0)==0){
                             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
                             builder.setMessage("所有商品皆無變動")
-                                    .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("刷新列表", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             editor.putInt("changeamount",0).commit();
@@ -324,7 +325,7 @@ public class wishpool_momo extends AppCompatActivity {
                         else{
                             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
                             builder.setMessage("已變動了"+sp.getInt("changeamount",0)+"項商品")
-                                    .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("刷新列表", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             editor.putInt("changeamount",0).commit();
@@ -341,6 +342,48 @@ public class wishpool_momo extends AppCompatActivity {
 
             }
         });
+        //取得使用者沒有的信用卡
+        Response.Listener<String> responseListener4 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("NoValue")){
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        owncardtypelist.clear();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String cardtype_name = jsonObject.getString("cardtype_name");
+                            othercardtypelist.add(new Cardtype(id, cardtype_name));
+                            //拿othercardtypelist去調用
+                        }
+                        //set_owncardnamelist();   //丟進alertdialog 的 String list
+//                        setandsort_owncardnamelist();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //發現使用者沒有信用卡的處理方式，要改可以改
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_momo.this);
+                    builder.setMessage("使用者已辦了所有信用卡")
+                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(wishpool_momo.this, Home.class);
+                                    wishpool_momo.this.startActivity(intent);
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+            }
+        };
+        SharedPreferences sp4 = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor4 = sp4.edit();
+        GetothercardRequest getothercardRequest = new GetothercardRequest(sp4.getString("member_id",null),responseListener4);
+        RequestQueue requestQueue4 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(getothercardRequest);
 
     }
 
@@ -752,5 +795,19 @@ public class wishpool_momo extends AppCompatActivity {
         finish();
         Intent intent = new Intent(wishpool_momo.this, wishpool_momo.class);
         startActivity(intent);
+    }
+    public class GetothercardRequest extends StringRequest {
+        private static final String Getothercard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getothercard.php";
+        private Map<String, String> params;
+        //
+        public GetothercardRequest(String member_id, Response.Listener<String> listener) {
+            super(Method.POST, Getothercard_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("member_id", member_id);
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 }

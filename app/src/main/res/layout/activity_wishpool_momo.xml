@@ -52,7 +52,7 @@
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Refresh" />
+        android:text="取得最新價格" />
 
     <TextView
         android:id="@+id/ecommerceName"
