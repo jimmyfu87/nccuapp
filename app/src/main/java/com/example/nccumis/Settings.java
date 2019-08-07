@@ -14,6 +14,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_momo;
 
 import org.json.JSONArray;
@@ -21,7 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Settings extends AppCompatActivity {
@@ -59,11 +62,9 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Getallcard_url,
-                new Response.Listener<String>() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                             try {
                                 JSONArray array = new JSONArray(response);
                                 for (int i = 0; i < array.length(); i++) {
@@ -72,22 +73,33 @@ public class Settings extends AppCompatActivity {
                                     String cardtype_name = jsonObject.getString("cardtype_name");
                                     cardtype_list.add(new Cardtype(id, cardtype_name));
                                     //拿cardtype_list去調用
+
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        queue.add(stringRequest);
+        };
+        GetallcardRequest getRequest = new GetallcardRequest(responseListener);
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(getRequest);
     }
     public void fromSettingsToHome(){
         Intent intent = new Intent(Settings.this,Home.class);
         startActivity(intent);
+    }
+    public class GetallcardRequest extends StringRequest {
+        private static final String Getallcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getallcard.php";
+        private Map<String, String> params;
+        //
+        public GetallcardRequest(Response.Listener<String> listener) {
+            super(Method.GET,  Getallcard_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
     }
 
 }
