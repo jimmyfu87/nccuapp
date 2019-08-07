@@ -128,7 +128,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         PB_expense =(TextView)findViewById(R.id.PB_expense);
         PB=(ProgressBar)findViewById(R.id.PB);
         PB.setMax(100);
-        PB.setProgress(Math.round(countPercentage()));
 
 
         //Spinner ArrayAdapter 初始化
@@ -149,7 +148,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
                 select_expense = dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBook);
-                System.out.println("fetchExpense size: "+select_expense.size());
+//                System.out.println("fetchExpense size: "+select_expense.size());
                 select_income = dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBook);
                 select_BookAttribute = dbmanager.fetchBookallattribute(selectBook);
                 dbmanager.close();
@@ -157,12 +156,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 for(int i = 0; i < select_BookAttribute.size(); i++){
                     if(select_BookAttribute.get(i).getName().equals(i_book_name)){
                         startBudget = select_BookAttribute.get(i).getAmount_start();
-                    }break;
+                        break;
+                    }
                 }
                 countExpenseAndIncome();
                 PB_expense.setText(Integer.toString(expense));
                 PB_left.setText(Integer.toString(startBudget-expense+income));
-
+                PB.setProgress(Math.round(countPercentage()));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -507,7 +507,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             this.dateinEnd = year+"-"+month+"-"+30;
         }
 
-        System.out.println(this.dateinStart+" ,"+this.dateinEnd);
+//        System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
     public void initBook(){
@@ -537,11 +537,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     //計算該帳本預算占幾%
     public float countPercentage(){
-        //我先設定80是因為比較好判斷是否startBudget+income == 0
+//        System.out.println(expense +", "+ startBudget+", "+income);
         if(startBudget+income == 0){
-            return 80.0f;
+            return 0;
         }
-        return (expense/(startBudget+income))*100;
+
+        return ((float)expense/(startBudget+income))*100f;
     }
 
     public void countExpenseAndIncome(){

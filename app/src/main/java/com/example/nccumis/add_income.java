@@ -340,6 +340,7 @@ public class add_income extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear++;
+                setdateformat(year,monthOfYear,dayOfMonth);
                 add_income.this.input_date.setText(year + "年" + monthOfYear + "月" + dayOfMonth+"日");
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
