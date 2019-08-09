@@ -2,6 +2,7 @@ package com.example.nccumis.com.example.nccumis.onlineshopping;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,6 +38,7 @@ public class onlineShoppingPath extends AppCompatActivity {
     private List<Integer> idArray = new ArrayList<Integer>();
     private List<String> nameArray = new ArrayList<String>();
     private List<String> urlArray= new ArrayList<String>();
+    private List<Activity> activitylist=new ArrayList<Activity>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +79,10 @@ public class onlineShoppingPath extends AppCompatActivity {
                             String channel_name = jsonObject.getString("channel_name");
                             String channel_url = jsonObject.getString("channel_url");
                             channellist.add(new Channel(id, channel_name, channel_url));
-                            //拿channellist去調用
                         }
-                        setChannelList();
-                        setListViewHeightBasedOnChildren(ecommercePathListView);
+                          //我移下去了，用下面的，看完把這裡刪掉
+//                        setChannelList();
+//                        setListViewHeightBasedOnChildren(ecommercePathListView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -108,6 +110,67 @@ public class onlineShoppingPath extends AppCompatActivity {
         onlineShoppingPath.GetallchannelRequest getRequest = new onlineShoppingPath.GetallchannelRequest(responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
+
+        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("NoValue")){
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String activity_name = jsonObject.getString("activity_name");
+                            String channel_name = jsonObject.getString("channel_name");
+                            String cardtype_name = jsonObject.getString("cardtype_name");
+                            int Minimum_pay = jsonObject.getInt("Minimum_pay");
+                            double Discount_ratio = jsonObject.getDouble("Discount_ratio");
+                            int Discount_limit = jsonObject.getInt("Discount_limit");
+                            int Discount_money = jsonObject.getInt("Discount_money");
+                            String Start_time = jsonObject.getString("Start_time");
+                            String End_time = jsonObject.getString("End_time");
+                            String Remarks = jsonObject.getString("Remarks");
+                            activitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
+                        }
+                        for(int i=0;i<activitylist.size();i++){
+                            for(int j=0;j<channellist.size();j++) {
+                                if (activitylist.get(i).getChannel_name().equals(channellist.get(j).getChannel_name())) {
+                                    channellist.get(j).getActivitylist().add(activitylist.get(i));
+                                    break;
+                                }
+                            }
+                        }
+                        //拿channellist去調用
+//                        System.out.println(channellist.get(0).getActivitylist().get(0).getChannel_name());
+//                        System.out.println(channellist.get(0).getActivitylist().get(1).getChannel_name());
+                        setChannelList();
+                        setListViewHeightBasedOnChildren(ecommercePathListView);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //這邊是發現許願池是空的處理方式，要改可以改
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(onlineShoppingPath.this);
+                    builder.setMessage("沒有商家")
+                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(onlineShoppingPath.this, Home.class);
+                                    onlineShoppingPath.this.startActivity(intent);
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+            }
+        };
+        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        GetliveactivitywithcardRequest getRequest2 = new GetliveactivitywithcardRequest(sp.getString("member_id",null),responseListener2);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue2.add(getRequest2);
 
 
         ecommercePathListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -171,6 +234,21 @@ public class onlineShoppingPath extends AppCompatActivity {
         public GetallchannelRequest(Response.Listener<String> listener) {
             super(Method.GET, Getallchannel_REQUEST_URL, listener, null);
             params = new HashMap<>();
+
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+    public class GetliveactivitywithcardRequest extends StringRequest {
+        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getliveactivitywithcard.php";
+        private Map<String, String> params;
+        //
+        public GetliveactivitywithcardRequest(String member_id,Response.Listener<String> listener) {
+            super(Method.POST,  Getliveactivitywithcard_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("member_id", member_id);
 
         }
         @Override

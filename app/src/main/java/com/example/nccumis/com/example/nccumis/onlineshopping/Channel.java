@@ -1,9 +1,13 @@
 package com.example.nccumis.com.example.nccumis.onlineshopping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Channel {
     private int  id;
     private String channel_name;
     private String channel_url;
+    private List<Activity> activitylist=new ArrayList<Activity>();
 
     public Channel(int id, String channel_name, String channel_url) {
         this.id = id;
@@ -33,5 +37,13 @@ public class Channel {
 
     public void setChannel_url(String channel_url) {
         this.channel_url = channel_url;
+    }
+
+    public List<Activity> getActivitylist() {
+        return activitylist;
+    }
+
+    public void setActivitylist(ArrayList<Activity> activitylist) {
+        this.activitylist = activitylist;
     }
 }
