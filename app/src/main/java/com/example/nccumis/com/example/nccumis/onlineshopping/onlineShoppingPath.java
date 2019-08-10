@@ -111,6 +111,7 @@ public class onlineShoppingPath extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
+        //取得優惠商家的活動
         Response.Listener<String> responseListener2 = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
