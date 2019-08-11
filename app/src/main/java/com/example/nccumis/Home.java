@@ -83,6 +83,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        Intent intent = new Intent(this,AutocrawlService.class);
+        startService(intent);
+
         toolbar = findViewById(R.id.head_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("購智帳");

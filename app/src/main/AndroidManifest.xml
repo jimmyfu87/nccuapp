@@ -7,15 +7,21 @@
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="nccumis"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:fullBackupContent="@xml/backup_rules"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".AutocrawlService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <receiver android:name=".AlarmReceiver"/>
         <activity android:name=".BookManage" />
         <activity android:name=".Settings" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
@@ -36,28 +42,25 @@
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".com.example.nccumis.onlineshopping.onlineShopping" />
-        <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler"></activity>
-        <!-- //backupagent key -->
+        <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
-        <!--<activity android:name=".Home" />-->
+        <!-- <activity android:name=".Home" /> -->
         <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.onlineShopping"/> -->
-
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
-        <activity android:name=".com.example.nccumis.onlineshopping.wishpool_channel"/>
+        <activity android:name=".com.example.nccumis.onlineshopping.wishpool_channel" />
         <activity android:name=".com.example.nccumis.onlineshopping.onlineShoppingPath" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool" />
         <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />
-
-
         <activity
-                android:name=".Home"
-                android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:name=".Home"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
