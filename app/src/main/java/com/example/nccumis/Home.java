@@ -169,6 +169,18 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
+        //儲存下拉式選單
+        final String book_id=spn_homeBook.getSelectedItem().toString();
+        SharedPreferences SP = getSharedPreferences("Book", MODE_PRIVATE);
+        SharedPreferences.Editor editor = SP.edit();
+        editor.putString("book_id",book_id);
+        editor.commit();
+
+
+
+
+
+
 
 //        expense.setText(Integer.toString(countTotalExpensePrice())); //支出
 //        income.setText(Integer.toString(countTotalIncomePrice()));  //收入
