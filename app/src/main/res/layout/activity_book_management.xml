@@ -20,22 +20,11 @@
 
 
         <Button
-            android:layout_marginTop="10dp"
             android:id="@+id/btn_showBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="顯示所有帳本"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/BookList"
-                android:layout_width="wrap_content"
-                android:layout_height="202dp"></ListView>
-
-        </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:text="搜尋帳簿" />
 
         <Button
             android:id="@+id/btn_newBook"
