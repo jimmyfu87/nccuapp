@@ -54,8 +54,9 @@ public class AutocrawlService extends Service {
     public void onCreate() {
         super.onCreate();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startMyOwnForeground();
-           // startOwnForeground();
+            //startMyOwnForeground();
+            //startOwnForeground();
+            //startForeground(1,new Notification());
         }
         else{
             startForeground(1, new Notification());
@@ -73,6 +74,7 @@ public class AutocrawlService extends Service {
             @Override
             public void run() {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(String response) {
                         if(!response.equals("NoValue")){
@@ -97,6 +99,7 @@ public class AutocrawlService extends Service {
                                 SharedPreferences.Editor editor2 = sp2.edit();
                                 Log.i(TAG, "run: executed at "+new Date().toString());
                                 Log.i(TAG, "變動的商品"+String.valueOf(sp2.getInt("changeamount",0)));
+                                startMyOwnForeground();
                                 editor2.putInt("changeamount",0).commit();
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -114,7 +117,7 @@ public class AutocrawlService extends Service {
             }
         }).start();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int anHour = 30*1000;
+        int anHour = 10*1000;
         long triggerAtTime = SystemClock.elapsedRealtime()+anHour;
         Intent i = new Intent(this,AlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(this,0,i,0);
@@ -267,7 +270,7 @@ public class AutocrawlService extends Service {
     private void startMyOwnForeground(){
         String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
         String channelName = "自動更新價格";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -277,25 +280,20 @@ public class AutocrawlService extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         SharedPreferences sp3 = getSharedPreferences("changeamount", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
-        Notification notification = notificationBuilder
-                .setContentTitle("App is running in background")
-                .setContentText("好帥")
-                .setAutoCancel(false)
-                .setPriority(NotificationManager.IMPORTANCE_MIN)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .build();
-        SharedPreferences sp4 = getSharedPreferences("changeamount", MODE_PRIVATE);
-        SharedPreferences.Editor editor4 = sp4.edit();
-        if(true) {
-            Notification.Builder builder =
-                    new Notification.Builder(this)
-                            .setSmallIcon(R.drawable.love)
-                            .setContentTitle("My Love")
-                            .setContentText("Hi, my love!")
-                            .setChannelId("idLove");
-            manager.notify(3, builder.build());
+        if(sp3.getInt("changeamount",0)>0) {
+            Notification notification = notificationBuilder
+                    .setSmallIcon(R.drawable.love)
+                    .setContentTitle("有商品更新了喔")
+                    .setContentText("快來查看吧")
+                    .setLights(Color.GREEN, 1000, 1000)
+                    .setAutoCancel(false)
+                    .setPriority(NotificationManager.IMPORTANCE_MIN)
+                    .setCategory(Notification.CATEGORY_SERVICE)
+                    .build();
+            manager.notify(1, notification);
+           // startForeground(2, notification);
         }
-        startForeground(2, notification);
+
     }
 //    @RequiresApi(api = Build.VERSION_CODES.O)
 //    private void startOwnForeground(){
@@ -320,5 +318,29 @@ public class AutocrawlService extends Service {
 //                        .setChannelId("idLove");
 //        manager.notify(1, builder.build());
 //    }
+//        @RequiresApi(api = Build.VERSION_CODES.O)
+//        private void startOwnForeground(){
+//            String NOTIFICATION_CHANNEL_ID = "com.example.update";
+//            String channelName = "通知";
+//            NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+//            chan.setLightColor(Color.BLUE);
+//            chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+//            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//            assert manager != null;
+//            manager.createNotificationChannel(chan);
+//
+//            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+//            SharedPreferences sp3 = getSharedPreferences("changeamount", MODE_PRIVATE);
+//            if(true) {
+//                Notification.Builder builder =
+//                        new Notification.Builder(this)
+//                                .setSmallIcon(R.drawable.love)
+//                                .setContentTitle("My Love")
+//                                .setContentText("Hi, my love!")
+//                                .setChannelId("idLove");
+//                manager.notify(2, builder.build());
+//            }
+//
+//        }
 
 }
