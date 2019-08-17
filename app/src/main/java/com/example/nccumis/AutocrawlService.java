@@ -94,6 +94,7 @@ public class AutocrawlService extends Service {
                                 }
                                 for(int i=0;i<productlist.size();i++){
                                     rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
+                                    System.out.println("Execute");
                                 }
                                 SharedPreferences sp2 = getSharedPreferences("changeamount", MODE_PRIVATE);
                                 SharedPreferences.Editor editor2 = sp2.edit();
@@ -280,8 +281,12 @@ public class AutocrawlService extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         SharedPreferences sp3 = getSharedPreferences("changeamount", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
+        Notification notification = notificationBuilder
+                .setContentTitle("自動更新價格執行中")
+                .setAutoCancel(false)
+                .build();
         if(sp3.getInt("changeamount",0)>0) {
-            Notification notification = notificationBuilder
+            notification = notificationBuilder
                     .setSmallIcon(R.drawable.love)
                     .setContentTitle("有商品更新了喔")
                     .setContentText("快來查看吧")
@@ -291,9 +296,8 @@ public class AutocrawlService extends Service {
                     .setCategory(Notification.CATEGORY_SERVICE)
                     .build();
             manager.notify(1, notification);
-           // startForeground(2, notification);
         }
-
+        startForeground(0,notification);
     }
 //    @RequiresApi(api = Build.VERSION_CODES.O)
 //    private void startOwnForeground(){
