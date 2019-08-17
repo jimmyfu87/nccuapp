@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class book_detail extends AppCompatActivity {
+public class book_detail_adapter extends AppCompatActivity {
 
 
 }

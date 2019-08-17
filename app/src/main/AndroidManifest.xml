@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".book_detail"
+            android:name=".book_detail_adapter"
             android:label="@string/title_activity_book_detail"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
