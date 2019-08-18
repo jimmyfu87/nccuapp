@@ -82,7 +82,7 @@ public class AutocrawlService extends Service {
                                 JSONArray array = new JSONArray(response);
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject jsonObject = array.getJSONObject(i);
-                                    productlist.clear();
+                                   // productlist.clear();
                                     int id = jsonObject.getInt("id");
                                     String product_name = jsonObject.getString("product_name");
                                     String product_price = jsonObject.getString("product_price");
@@ -94,7 +94,7 @@ public class AutocrawlService extends Service {
                                 }
                                 for(int i=0;i<productlist.size();i++){
                                     rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
-                                    System.out.println("Execute");
+                                    //System.out.println("Execute");
                                 }
                                 SharedPreferences sp2 = getSharedPreferences("changeamount", MODE_PRIVATE);
                                 SharedPreferences.Editor editor2 = sp2.edit();
@@ -105,6 +105,9 @@ public class AutocrawlService extends Service {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                        }
+                        else{
+                            startMyOwnForeground();
                         }
                     }
                 };
@@ -197,13 +200,13 @@ public class AutocrawlService extends Service {
                                     break;
                             }
                         } catch (Exception e) {
-                            UpdateDatabase(product_id,"delete","delete");
+                            //UpdateDatabase(product_id,"delete","delete");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                UpdateDatabase(product_id, "delete", "delete");
+                //UpdateDatabase(product_id, "delete", "delete");
             }
         });
         queue.add(stringRequest);
@@ -271,7 +274,8 @@ public class AutocrawlService extends Service {
     private void startMyOwnForeground(){
         String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
         String channelName = "自動更新價格";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -282,9 +286,11 @@ public class AutocrawlService extends Service {
         SharedPreferences sp3 = getSharedPreferences("changeamount", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
         Notification notification = notificationBuilder
+                 .setSmallIcon(R.drawable.love)
                 .setContentTitle("自動更新價格執行中")
                 .setAutoCancel(false)
                 .build();
+
         if(sp3.getInt("changeamount",0)>0) {
             notification = notificationBuilder
                     .setSmallIcon(R.drawable.love)
@@ -297,7 +303,8 @@ public class AutocrawlService extends Service {
                     .build();
             manager.notify(1, notification);
         }
-        startForeground(0,notification);
+        startForeground(2,notification);
+
     }
 //    @RequiresApi(api = Build.VERSION_CODES.O)
 //    private void startOwnForeground(){
