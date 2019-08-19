@@ -92,16 +92,20 @@ public class AutocrawlService extends Service {
                                     productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name));
                                     //拿productlist去調用，包含登入使用者的所有product
                                 }
+                                System.out.println(productlist.size());
                                 for(int i=0;i<productlist.size();i++){
                                     rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
-                                    //System.out.println("Execute");
+                                    System.out.println("Execute");
                                 }
                                 SharedPreferences sp2 = getSharedPreferences("changeamount", MODE_PRIVATE);
                                 SharedPreferences.Editor editor2 = sp2.edit();
                                 Log.i(TAG, "run: executed at "+new Date().toString());
                                 Log.i(TAG, "變動的商品"+String.valueOf(sp2.getInt("changeamount",0)));
+
                                 startMyOwnForeground();
+
                                 editor2.putInt("changeamount",0).commit();
+                                productlist.clear();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -274,7 +278,7 @@ public class AutocrawlService extends Service {
     private void startMyOwnForeground(){
         String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
         String channelName = "自動更新價格";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
 
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
@@ -290,22 +294,22 @@ public class AutocrawlService extends Service {
                 .setContentTitle("自動更新價格執行中")
                 .setAutoCancel(false)
                 .build();
-
         if(sp3.getInt("changeamount",0)>0) {
-            notification = notificationBuilder
+            Notification notification2 = notificationBuilder
                     .setSmallIcon(R.drawable.love)
                     .setContentTitle("有商品更新了喔")
                     .setContentText("快來查看吧")
                     .setLights(Color.GREEN, 1000, 1000)
                     .setAutoCancel(false)
-                    .setPriority(NotificationManager.IMPORTANCE_MIN)
+                    .setPriority(NotificationManager.IMPORTANCE_HIGH)
                     .setCategory(Notification.CATEGORY_SERVICE)
                     .build();
-            manager.notify(1, notification);
+            manager.notify(1, notification2);
         }
         startForeground(2,notification);
 
     }
+
 //    @RequiresApi(api = Build.VERSION_CODES.O)
 //    private void startOwnForeground(){
 //        NotificationChannel channelLove = new NotificationChannel(
