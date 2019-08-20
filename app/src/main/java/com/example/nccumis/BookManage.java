@@ -34,6 +34,7 @@ public class BookManage extends AppCompatActivity {
     private Intent getPreSavedData;
     private Activity context;
     private ArrayList<String> bookArrayParam;
+    private String bookName;
 
 
     @SuppressLint("WrongViewCast")
@@ -144,7 +145,7 @@ public class BookManage extends AppCompatActivity {
     }
 
     public void setList() {
-        book_adapter bk_adapter = new book_adapter(this, this.bookArray, context, bookArrayParam);
+        book_adapter bk_adapter = new book_adapter(this, this.bookArray, bookName, context, bookArrayParam);
         TypeListView.setAdapter(bk_adapter);
     }
 
