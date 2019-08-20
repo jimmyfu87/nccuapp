@@ -39,6 +39,7 @@ public class productListAdapter extends ArrayAdapter {
     private final List<String> urlArray;
     private final List<String> nameArray;
     private final List<Integer> priceArray;
+    private final List<String> uploadTimeArray;
     private String channel_name;
     private List<Boolean> isCheckArray;
     private CheckBox check;
@@ -48,7 +49,7 @@ public class productListAdapter extends ArrayAdapter {
     private SharedPreferences sp;
 
 
-    public productListAdapter(Activity context, String channel_nameParam,List<String> urlArrayParam ,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam){
+    public productListAdapter(Activity context, String channel_nameParam,List<String> urlArrayParam ,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam, List<String> uploadTimeArrayParam){
 
         super(context, R.layout.product_listview_row, nameArrayParam);
 
@@ -59,6 +60,7 @@ public class productListAdapter extends ArrayAdapter {
         this.urlArray = urlArrayParam;
         this.nameArray = nameArrayParam;
         this.priceArray = priceArrayParam;
+        this.uploadTimeArray = uploadTimeArrayParam;
         this.isCheckArray = new ArrayList<Boolean>();
         this.sizeOfList = nameArrayParam.size();
         for(int i = 0; i < sizeOfList; i++){
@@ -75,6 +77,8 @@ public class productListAdapter extends ArrayAdapter {
         TextView idTextField = (TextView)rowView.findViewById(R.id.id);
         TextView nameTextField = (TextView) rowView.findViewById(R.id.name);
         TextView priceTextField = (TextView) rowView.findViewById(R.id.price);
+        TextView uploadTimeTextField = (TextView) rowView.findViewById(R.id.recentUpdateTime);
+
         check = (CheckBox) rowView.findViewById(R.id.check);
         deleteBtn =(Button)rowView.findViewById(R.id.deleteBtn);
         productWebBtn = (Button)rowView.findViewById(R.id.productWebBtn);

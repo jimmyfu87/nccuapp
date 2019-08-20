@@ -45,7 +45,7 @@ public class wishpool_channel extends AppCompatActivity {
     private static String channel_name = "";
     private Button lastPage;
     private TextView ecommerceName;
-    private TextView recentUpdateTime;
+    private TextView newActivity;
     private Button changeCard;
     private Button refresh;
 //    private ListView CreditCardListView;
@@ -61,6 +61,7 @@ public class wishpool_channel extends AppCompatActivity {
     private  List<String> nameArray=new ArrayList<String>();
     private  List<Integer> priceArray=new ArrayList<Integer>();
     private List<String> urlArray = new ArrayList<String>();
+    private List<String> uploadTimeArray = new ArrayList<String>();
     private List<Product> productlist=new ArrayList<Product>();
 //    protected static List<String> discountDetailArray =new ArrayList<>();
 //    protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
@@ -97,8 +98,7 @@ public class wishpool_channel extends AppCompatActivity {
         ecommerceName = (TextView)findViewById(R.id.ecommerceName);
         ecommerceName.setText(channel_name+" 購物網");//之後從資料庫抓電商名稱
 
-        //顯示上次更新時間
-        recentUpdateTime = (TextView)findViewById(R.id.recentUpdateTime);
+        newActivity = (TextView)findViewById(R.id.newActivity);
 
         changeCard = (Button)findViewById(R.id.changeCard);
         changeCard.setOnClickListener(new View.OnClickListener() {
@@ -432,6 +432,9 @@ public class wishpool_channel extends AppCompatActivity {
         GetliveactivitywithcardRequest getRequest5 = new GetliveactivitywithcardRequest(sp5.getString("member_id",null),responseListener5);
         RequestQueue requestQueue5 = Volley.newRequestQueue(getApplicationContext());
         requestQueue5.add(getRequest5);
+
+        updateActivity();
+
     }
 
     public class GetallproductRequest extends StringRequest {
@@ -501,6 +504,7 @@ public class wishpool_channel extends AppCompatActivity {
                 this.nameArray.add(this.productlist.get(i).getProduct_name());
                 this.urlArray.add(this.productlist.get(i).getProduct_url());
                 this.priceArray.add(Integer.parseInt(this.productlist.get(i).getProduct_price()));
+                this.uploadTimeArray.add(this.productlist.get(i).getUpload_time());
             }
         }
         //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
@@ -508,7 +512,7 @@ public class wishpool_channel extends AppCompatActivity {
 
     public void setProductList(){
         initProductList();
-        productListAdapter productlist_adapter = new productListAdapter(wishpool_channel.this, channel_name, urlArray, idArray ,nameArray , priceArray);
+        productListAdapter productlist_adapter = new productListAdapter(wishpool_channel.this, channel_name, urlArray, idArray ,nameArray , priceArray, uploadTimeArray);
         ProductListView.setAdapter(productlist_adapter);
     }
 
@@ -581,6 +585,14 @@ public class wishpool_channel extends AppCompatActivity {
         int totalPriceData = isCheckedprice - longactivity_discount - shortactivity_discount;
         totalPrice.setText("最終結算金額: \n"+isCheckedprice +"(所有勾選商品金額)" +
                 " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
+    }
+
+    public void updateActivity(){
+        for(int i = 0; i < activitylistwithcard.size(); i++){
+            if(activitylistwithcard.get(i).getCardtype_name() == owncardnamelist.get(singleChoiceIndex)){
+                newActivity.setText("最新優惠: " + activitylistwithcard.get(i).getRemarks());
+            }
+        }
     }
 
     //抓取要丟進alertdialog的選單 && 依照優惠程度排序 (own && other cardtypelist)
@@ -735,6 +747,7 @@ public class wishpool_channel extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         updatePrice();
+                        updateActivity();
                         Toast.makeText(wishpool_channel.this, "你選擇的是"+owncardnamelist.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
