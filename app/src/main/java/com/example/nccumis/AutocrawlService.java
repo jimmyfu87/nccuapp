@@ -204,13 +204,13 @@ public class AutocrawlService extends Service {
                                     break;
                             }
                         } catch (Exception e) {
-                            //UpdateDatabase(product_id,"delete","delete");
+                            UpdateDatabase(product_id,"delete","delete");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //UpdateDatabase(product_id, "delete", "delete");
+                UpdateDatabase(product_id, "delete", "delete");
             }
         });
         queue.add(stringRequest);
@@ -291,7 +291,7 @@ public class AutocrawlService extends Service {
         SharedPreferences.Editor editor3 = sp3.edit();
         Notification notification = notificationBuilder
                  .setSmallIcon(R.drawable.love)
-                .setContentTitle("自動更新價格執行中")
+                .setContentTitle("價格更新通知執行中")
                 .setAutoCancel(false)
                 .build();
         if(sp3.getInt("changeamount",0)>0) {
