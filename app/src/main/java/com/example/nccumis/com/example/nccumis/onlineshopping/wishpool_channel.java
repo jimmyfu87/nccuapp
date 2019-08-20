@@ -126,7 +126,8 @@ public class wishpool_channel extends AppCompatActivity {
                             String product_url = jsonObject.getString("product_url");
                             String member_id = jsonObject.getString("member_id");
                             String channel_name = jsonObject.getString("channel_name");
-                            productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name));
+                            String upload_time = jsonObject.getString("upload_time");
+                            productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name,upload_time));
                             //拿productlist去調用，包含登入使用者的所有product
                         }
                         setProductList();

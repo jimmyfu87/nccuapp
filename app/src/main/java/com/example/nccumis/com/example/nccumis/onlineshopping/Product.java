@@ -7,14 +7,16 @@ public class Product {
     private String product_url;
     private String member_id;
     private String channel_name;
+    private String upload_time;
 
-    public Product(int id, String product_name, String product_price, String product_url, String member_id, String channel_name) {
+    public Product(int id, String product_name, String product_price, String product_url, String member_id, String channel_name,String upload_time) {
         this.id = id;
         this.product_name = product_name;
         this.product_price = product_price;
         this.product_url = product_url;
         this.member_id = member_id;
         this.channel_name = channel_name;
+        this.upload_time = upload_time;
     }
 
     public int getId() {
@@ -65,4 +67,11 @@ public class Product {
         this.channel_name = channel_name;
     }
 
+    public String getUpload_time() {
+        return upload_time;
+    }
+
+    public void setUpload_time(String upload_time) {
+        this.upload_time = upload_time;
+    }
 }
