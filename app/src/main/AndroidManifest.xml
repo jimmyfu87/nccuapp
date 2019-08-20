@@ -41,11 +41,11 @@
         <activity
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".com.example.nccumis.onlineshopping.onlineShopping" />
+        <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
         <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <!-- <activity android:name=".Home" /> -->
-        <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.onlineShopping"/> -->
+        <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/> -->
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool_channel" />

@@ -29,13 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class onlineShoppingPath extends AppCompatActivity {
+public class  onlineShoppingPath extends AppCompatActivity {
     private Button lastPage;
     private ListView ecommercePathListView;
     private EditText inputPath;
     private Button searchPath;
     private List<Channel> channellist=new ArrayList<Channel>();
     private List<Integer> idArray = new ArrayList<Integer>();
+    private List<String> discountDetailArray = new ArrayList<String>();
     private List<String> nameArray = new ArrayList<String>();
     private List<String> urlArray= new ArrayList<String>();
     private List<Activity> activitylist=new ArrayList<Activity>();
@@ -215,8 +216,17 @@ public class onlineShoppingPath extends AppCompatActivity {
     public void initChannelList(){
 //        System.out.println("channellist size: "+this.channellist.size());
         for(int i = 0; i < this.channellist.size();i++){
+            String discountDetailtemp = "";
             this.idArray.add(this.channellist.get(i).getId());
             this.nameArray.add(this.channellist.get(i).getChannel_name());
+            for(int j = 0; j < this.channellist.get(i).getActivitylist().size(); j++){
+                    if(!this.channellist.get(i).getActivitylist().get(j).getRemarks().isEmpty()){
+                    discountDetailtemp += this.channellist.get(i).getActivitylist().get(j).getRemarks() +"\n";
+                }
+            }
+            discountDetailtemp = discountDetailtemp == "" ? "無優惠資訊" : discountDetailtemp;
+            System.out.println("discountDetailtemp :"+discountDetailtemp);
+            this.discountDetailArray.add(discountDetailtemp);
             this.urlArray.add(this.channellist.get(i).getChannel_url());
         }
         //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
@@ -224,7 +234,7 @@ public class onlineShoppingPath extends AppCompatActivity {
 
     public void setChannelList(){
         initChannelList();
-        onlineshoppingPathAdapter channellist_adapter = new onlineshoppingPathAdapter(this, idArray ,nameArray , urlArray);
+        onlineshoppingPathAdapter channellist_adapter = new onlineshoppingPathAdapter(onlineShoppingPath.this, discountDetailArray, idArray ,nameArray , urlArray);
         ecommercePathListView.setAdapter(channellist_adapter);
     }
 

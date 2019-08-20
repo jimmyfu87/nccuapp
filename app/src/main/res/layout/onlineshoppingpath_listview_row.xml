@@ -20,12 +20,12 @@
         android:textSize="16sp"
         android:layout_weight="1"/>
 
-    <!--<TextView-->
-        <!--android:text="discountDetail"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/TypeName"-->
-        <!--android:layout_weight="1"/>-->
+    <TextView
+        android:text="discountDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/discountDetail"
+        android:layout_weight="1"/>
     <Button
         android:text="立即購物"
         android:layout_width="match_parent"

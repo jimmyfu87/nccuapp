@@ -3,7 +3,9 @@ package com.example.nccumis.com.example.nccumis.onlineshopping;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,22 +36,27 @@ public class productListAdapter extends ArrayAdapter {
     private final Activity context;
 //    private final List<Integer> pictureArray;   //  還沒弄
     private final List<Integer> idArray;
+    private final List<String> urlArray;
     private final List<String> nameArray;
     private final List<Integer> priceArray;
+    private String channel_name;
     private List<Boolean> isCheckArray;
     private CheckBox check;
     private Button deleteBtn;
+    private Button productWebBtn;
     private int sizeOfList;
     private SharedPreferences sp;
 
 
-    public productListAdapter(Activity context,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam){
+    public productListAdapter(Activity context, String channel_nameParam,List<String> urlArrayParam ,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam){
 
         super(context, R.layout.product_listview_row, nameArrayParam);
 
         this.context=context;
+        this.channel_name = channel_nameParam;
 //        this.pictureArray = pictureArrayParam;
         this.idArray = idArrayParam;
+        this.urlArray = urlArrayParam;
         this.nameArray = nameArrayParam;
         this.priceArray = priceArrayParam;
         this.isCheckArray = new ArrayList<Boolean>();
@@ -70,6 +77,7 @@ public class productListAdapter extends ArrayAdapter {
         TextView priceTextField = (TextView) rowView.findViewById(R.id.price);
         check = (CheckBox) rowView.findViewById(R.id.check);
         deleteBtn =(Button)rowView.findViewById(R.id.deleteBtn);
+        productWebBtn = (Button)rowView.findViewById(R.id.productWebBtn);
 //        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -152,6 +160,13 @@ public class productListAdapter extends ArrayAdapter {
             }
         });
 
+        productWebBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToOnlineShopping(position, context);
+            }
+        });
+
         //this code sets the values of the objects to values from the arrays
 //        pictureTextField.setText(pictureArray.get(position).toString());
         nameTextField.setText(nameArray.get(position));
@@ -181,5 +196,14 @@ public class productListAdapter extends ArrayAdapter {
         public Map<String, String> getParams() {
             return params;
         }
+    }
+
+    public void jumpToOnlineShopping(int position, Activity activity){
+        Intent intent = new Intent(activity, OnlineShopping.class);
+        Bundle saveWishpoolProductData = new Bundle();
+        saveWishpoolProductData.putString("channel_url", urlArray.get(position));
+        saveWishpoolProductData.putString("channel_name", channel_name);
+        intent.putExtras(saveWishpoolProductData);
+        activity.startActivity(intent);
     }
 }

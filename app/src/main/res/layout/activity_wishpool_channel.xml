@@ -62,6 +62,14 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp" />
 
+    <TextView
+        android:id="@+id/recentUpdateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:text="最近更新時間:"
+        android:layout_marginTop="10dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

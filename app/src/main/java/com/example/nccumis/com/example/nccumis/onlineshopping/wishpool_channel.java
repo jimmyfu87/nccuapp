@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -44,6 +45,7 @@ public class wishpool_channel extends AppCompatActivity {
     private static String channel_name = "";
     private Button lastPage;
     private TextView ecommerceName;
+    private TextView recentUpdateTime;
     private Button changeCard;
     private Button refresh;
 //    private ListView CreditCardListView;
@@ -56,8 +58,9 @@ public class wishpool_channel extends AppCompatActivity {
 //    private TextView recommendcreditcard;
     private  List<Integer> pictureArray= new ArrayList<>();    //還沒弄
     private List<Integer> idArray = new ArrayList<Integer>();
-    private  List<String> nameArray=new ArrayList<>();
-    private  List<Integer> priceArray=new ArrayList<>();
+    private  List<String> nameArray=new ArrayList<String>();
+    private  List<Integer> priceArray=new ArrayList<Integer>();
+    private List<String> urlArray = new ArrayList<String>();
     private List<Product> productlist=new ArrayList<Product>();
 //    protected static List<String> discountDetailArray =new ArrayList<>();
 //    protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
@@ -75,7 +78,7 @@ public class wishpool_channel extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wishpool_momo);
+        setContentView(R.layout.activity_wishpool_channel);
 
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
@@ -93,6 +96,9 @@ public class wishpool_channel extends AppCompatActivity {
 
         ecommerceName = (TextView)findViewById(R.id.ecommerceName);
         ecommerceName.setText(channel_name+" 購物網");//之後從資料庫抓電商名稱
+
+        //顯示上次更新時間
+        recentUpdateTime = (TextView)findViewById(R.id.recentUpdateTime);
 
         changeCard = (Button)findViewById(R.id.changeCard);
         changeCard.setOnClickListener(new View.OnClickListener() {
@@ -492,6 +498,7 @@ public class wishpool_channel extends AppCompatActivity {
             if(this.productlist.get(i).getChannel_name().equals(channel_name)){
                 this.idArray.add(this.productlist.get(i).getId());
                 this.nameArray.add(this.productlist.get(i).getProduct_name());
+                this.urlArray.add(this.productlist.get(i).getProduct_url());
                 this.priceArray.add(Integer.parseInt(this.productlist.get(i).getProduct_price()));
             }
         }
@@ -500,7 +507,7 @@ public class wishpool_channel extends AppCompatActivity {
 
     public void setProductList(){
         initProductList();
-        productListAdapter productlist_adapter = new productListAdapter(wishpool_channel.this, idArray ,nameArray , priceArray);
+        productListAdapter productlist_adapter = new productListAdapter(wishpool_channel.this, channel_name, urlArray, idArray ,nameArray , priceArray);
         ProductListView.setAdapter(productlist_adapter);
     }
 
@@ -783,6 +790,7 @@ public class wishpool_channel extends AppCompatActivity {
         intent.putExtras(saveCheckPriceData);
         startActivity(intent);
     }
+
     public void rewebcrawl(String inputurl,String product_id){
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, inputurl,

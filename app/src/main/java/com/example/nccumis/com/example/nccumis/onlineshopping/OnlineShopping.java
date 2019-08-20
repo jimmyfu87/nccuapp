@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class onlineShopping extends AppCompatActivity {
+public class OnlineShopping extends AppCompatActivity {
     private WebView OnlineShopping_webView;
     private String getWebHomeURL;       //從優惠店家取得首頁的URL，目前先塞Momo首頁
     private String getWebName;             //從優惠店家取得名稱，目前先塞Momo首頁
@@ -126,7 +126,7 @@ public class onlineShopping extends AppCompatActivity {
             }
         });
 
-        //檢查是否從firstbankDiscount回來 或從 onlineShoppingPath 回來
+        //檢查是否從firstbankDiscount回來 或從 onlineShoppingPath/wishpool_channel 回來
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
         if(getSaveBag != null){
@@ -167,16 +167,16 @@ public class onlineShopping extends AppCompatActivity {
     }
 
 //    public void jumpToLastPage(){
-//        startActivity(new Intent(onlineShopping.this, discountEcommerce.class));
+//        startActivity(new Intent(OnlineShopping.this, discountEcommerce.class));
 //    }
 
     public void jumpToOnlineShoppingPath(){
-        startActivity(new Intent(onlineShopping.this, onlineShoppingPath.class));
+        startActivity(new Intent(OnlineShopping.this, onlineShoppingPath.class));
 
     }
 
     private void jumpToFirstBankDiscountPage(){
-        Intent intent = new Intent(onlineShopping.this, firstBankDiscount.class);
+        Intent intent = new Intent(OnlineShopping.this, firstBankDiscount.class);
         Bundle savedWebData = new Bundle();
         savedWebData.putString("webName", getWebName);
         savedWebData.putString("webURL", getCurrentWebURL());
@@ -185,7 +185,7 @@ public class onlineShopping extends AppCompatActivity {
         startActivity(intent);
     }
     private void jumpToDemo(String urldemo){
-        Intent intent = new Intent(onlineShopping.this, Webcrawler.class);
+        Intent intent = new Intent(OnlineShopping.this, Webcrawler.class);
         Bundle savedWebData = new Bundle();
         savedWebData.putString("webURL",urldemo);
         intent.putExtras(savedWebData);
@@ -283,7 +283,7 @@ public class onlineShopping extends AppCompatActivity {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(onlineShopping.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
                         builder.setMessage("成功加入許願池")
                                 .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                     @Override
@@ -294,7 +294,7 @@ public class onlineShopping extends AppCompatActivity {
                                 .show();
 
                     } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(onlineShopping.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
                         builder.setMessage("加入許願池失敗")
                                 .setPositiveButton("知道了", null)
                                 .create()
@@ -309,7 +309,7 @@ public class onlineShopping extends AppCompatActivity {
         SharedPreferences.Editor editor = sp.edit();
         member_id=sp.getString("member_id",null);
         AddtopoolRequest addtopoolRequest = new AddtopoolRequest(product_name,product_price, product_url,member_id,channel_name,responseListener);
-        RequestQueue queue = Volley.newRequestQueue(onlineShopping.this);
+        RequestQueue queue = Volley.newRequestQueue(OnlineShopping.this);
         queue.add(addtopoolRequest);
 
     }
