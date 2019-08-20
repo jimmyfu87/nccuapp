@@ -87,7 +87,7 @@ public class BookManage extends AppCompatActivity {
                     select_book=dbmanager.fetchBook();
                     dbmanager.close();
                     setList();
-                    setBookArray();
+
 
             }
         });
