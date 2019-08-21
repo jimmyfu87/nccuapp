@@ -421,6 +421,7 @@ public class wishpool_channel extends AppCompatActivity {
                             activitylistwithcard.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
                         }
                         //拿Activitylist調用
+                        updateActivity();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -433,7 +434,6 @@ public class wishpool_channel extends AppCompatActivity {
         RequestQueue requestQueue5 = Volley.newRequestQueue(getApplicationContext());
         requestQueue5.add(getRequest5);
 
-        updateActivity();
 
     }
 
@@ -588,11 +588,14 @@ public class wishpool_channel extends AppCompatActivity {
     }
 
     public void updateActivity(){
+        System.out.println("size: "+ owncardnamelist.size());
         for(int i = 0; i < activitylistwithcard.size(); i++){
-            if(activitylistwithcard.get(i).getCardtype_name() == owncardnamelist.get(singleChoiceIndex)){
+            if(activitylistwithcard.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
                 newActivity.setText("最新優惠: " + activitylistwithcard.get(i).getRemarks());
+                return;
             }
         }
+        newActivity.setText("卡片目前無任何優惠");
     }
 
     //抓取要丟進alertdialog的選單 && 依照優惠程度排序 (own && other cardtypelist)
