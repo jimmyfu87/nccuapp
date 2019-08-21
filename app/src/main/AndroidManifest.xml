@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nccumis">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,6 +16,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="nccumis"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:fullBackupContent="@xml/backup_rules"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
@@ -23,6 +25,19 @@
             android:exported="true"></service>
         <receiver android:name=".AlarmReceiver"/>
         <activity android:name=".BookManage" />
+        <activity
+            android:name=".book_detail_adapter"
+            android:label="@string/title_activity_book_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".book_adapter"
+            android:label="@string/title_activity_book_adapter"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".password_change"
+            android:label="@string/title_activity_password_change"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".BookManage"> </activity >
         <activity android:name=".Settings" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <activity android:name=".add_spend_viewpager" />
@@ -42,10 +57,12 @@
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
-        <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler" /> <!-- //backupagent key -->
+        <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler"></activity>
+        <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
-        <!-- <activity android:name=".Home" /> -->
+        <!--<activity android:name=".Home" />-->
         <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/> -->
+
         <activity android:name=".PasswordCheckEmail" />
         <activity android:name=".Register" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool_channel" />
@@ -53,14 +70,13 @@
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool" />
         <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />
         <activity
-            android:name=".Home"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+                android:name=".Home"
+                android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -4,4 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="open">string</string>
     <string name="close">string</string>
+    <string name="title_activity_password_change">password_change</string>
+    <string name="title_activity_book_adapter">book_adapter</string>
+    <string name="title_activity_book_detail">book_detail</string>
 </resources>

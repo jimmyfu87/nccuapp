@@ -19,6 +19,8 @@ public class Settings extends AppCompatActivity {
     private EditText et_GREEN;
     private EditText et_GLORY;
     private Button btn_setToHome;
+    private Button password_change;
+
 
 
     @Override
@@ -26,26 +28,44 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ckbox_GLORY =(CheckBox)findViewById(R.id.ckbox_GLORY);
-        ckbox_Green =(CheckBox)findViewById(R.id.ckbox_Green);
-        ckbox_Wonderful=(CheckBox)findViewById(R.id.ckbox_Wonderful);
-        et_GLORY =(EditText)findViewById(R.id.et_GLORY);
-        et_GREEN =(EditText)findViewById(R.id.et_GREEN);
-        et_Wonderful =(EditText)findViewById(R.id.et_Wonderful);
-        btn_setToHome =(Button)findViewById(R.id.btn_setToHome);
+        ckbox_GLORY = (CheckBox) findViewById(R.id.ckbox_GLORY);
+        ckbox_Green = (CheckBox) findViewById(R.id.ckbox_Green);
+        ckbox_Wonderful = (CheckBox) findViewById(R.id.ckbox_Wonderful);
+        et_GLORY = (EditText) findViewById(R.id.et_GLORY);
+        et_GREEN = (EditText) findViewById(R.id.et_GREEN);
+        et_Wonderful = (EditText) findViewById(R.id.et_Wonderful);
+        btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
+        password_change = (Button) findViewById(R.id.password_change);
+
+
+        password_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passwordchange();
+            }
+
+            public void passwordchange() {
+                Intent intent = new Intent(Settings.this, password_change.class);
+                startActivity(intent);
+            }
+
+        });
 
         btn_setToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fromSettingsToHome();
             }
+
+            public void fromSettingsToHome() {
+                Intent intent = new Intent(Settings.this, Home.class);
+                startActivity(intent);
+            }
         });
 
-    }
-    public void fromSettingsToHome(){
-        Intent intent = new Intent(Settings.this,Home.class);
-        startActivity(intent);
-    }
 
+    }
 }
+
+
 

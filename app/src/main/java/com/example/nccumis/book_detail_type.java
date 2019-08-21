@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 //查帳下面的
-public class ExpenseIncomeListAdapter extends ArrayAdapter {
+public class book_detail_type extends ArrayAdapter {
     //to reference the Activity
     private final Activity context;
     private final List<Integer> numberArray;
@@ -18,7 +18,7 @@ public class ExpenseIncomeListAdapter extends ArrayAdapter {
     private final List<Integer> totalArray;
 
 
-    public ExpenseIncomeListAdapter(Activity context, List<Integer> numberArrayParam, List<String> nameArrayParam, List<String> percentageArrayParam, List<Integer> totalArrayParam){
+    public book_detail_type (Activity context, List<Integer> numberArrayParam, List<String> nameArrayParam, List<String> percentageArrayParam, List<Integer> totalArrayParam){
 
         super(context, R.layout.spend_listview_row, nameArrayParam);
 
