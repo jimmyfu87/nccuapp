@@ -472,7 +472,6 @@ public class add_expense extends AppCompatActivity {
         saveExpenseData.putString("note",input_note.getText().toString());
         intent.putExtras(saveExpenseData);
         startActivity(intent);
-
     }
 
     public void jumpToadd_type(){
