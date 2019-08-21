@@ -152,7 +152,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 //                System.out.println("fetchExpense size: "+select_expense.size());
                 select_income = dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBook);
                 select_BookAttribute = dbmanager.fetchBookallattribute(selectBook);
-                dbmanager.close();
+                dbmanager.close();String book_id=spn_homeBook.getSelectedItem().toString();
+
+                SharedPreferences SP = getSharedPreferences("Book", MODE_PRIVATE);
+                SharedPreferences.Editor editor = SP.edit();
+                editor.putString("book_id",book_id);
+                editor.putInt("book_position",position);
+                editor.commit();
 
                 for(int i = 0; i < select_BookAttribute.size(); i++){
                     if(select_BookAttribute.get(i).getName().equals(i_book_name)){
@@ -170,23 +176,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
-        //儲存下拉式選單
-        spn_homeBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String book_id=spn_homeBook.getSelectedItem().toString();
-                SharedPreferences SP = getSharedPreferences("Book", MODE_PRIVATE);
-                SharedPreferences.Editor editor = SP.edit();
-                editor.putString("book_id",book_id);
-                editor.putInt("book_position",position);
-                editor.commit();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         SharedPreferences SP2 = getSharedPreferences("Book", MODE_PRIVATE);
         spn_homeBook.setSelection(SP2.getInt("book_position",0));
 
@@ -564,7 +553,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     //計算該帳本預算占幾%
     public float countPercentage(){
-//        System.out.println(expense +", "+ startBudget+", "+income);
+        System.out.println(expense +", "+ startBudget+", "+income);
         if(startBudget+income == 0){
             return 0;
         }
