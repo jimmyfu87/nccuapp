@@ -64,7 +64,6 @@ public class CountMoney extends AppCompatActivity {
         switchBook = (Button)findViewById(R.id.switchBook);
 
         //拉資料庫的支出進來
-
         btn_checkCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +80,6 @@ public class CountMoney extends AppCompatActivity {
                 }
             }
         });
-
-
 
         //開始日期
         date_start.setOnTouchListener(new View.OnTouchListener() {

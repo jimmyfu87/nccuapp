@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class LogIn extends AppCompatActivity {
 
 
 
-    private CheckBox checkboxLogIn;
+    private CheckBox checkLogIn;
     private EditText et_userAccountLogin;
     private EditText et_passwordLogin;
     private Button btn_forgetPassword;
@@ -63,7 +64,7 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
-        checkboxLogIn = (CheckBox)findViewById(R.id.checkLogIn);
+        checkLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_userAccountLogin=(EditText)findViewById(R.id.et_userAccountLogin);
         et_passwordLogin =(EditText)findViewById(R.id.et_passwordLogin);
         btn_forgetPassword=(Button)findViewById(R.id.btn_forgetPassword);
@@ -97,13 +98,13 @@ public class LogIn extends AppCompatActivity {
 
 
         //顯示隱藏密碼
-        checkboxLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    et_passwordLogin.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    et_passwordLogin.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 }else{
-                    et_passwordLogin.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    et_passwordLogin.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             }
         });

@@ -28,20 +28,21 @@
         android:id="@+id/et_passwordLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="密碼"/>
+        android:hint="密碼"
+        android:inputType="textPassword"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center">
-    <CheckBox
-        android:id="@+id/checkLogIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="顯示密碼"
-        android:layout_marginTop="5dp"
-        />
+
+        <CheckBox
+            android:id="@+id/checkLogIn"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginTop="5dp"
+            android:text="顯示密碼" />
 
     <CheckBox
         android:layout_width="wrap_content"

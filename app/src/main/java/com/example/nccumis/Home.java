@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -18,7 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,14 +78,32 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public SharedPreferences setting;
     private static final String TAG = "Home";
     public  boolean isCreated=false;
-    private Button jumpToBook;
+    private Spinner spn_homeBook;
+    private SQLiteDatabase database;
+    private boolean detail = false;
+    private int saveDetailId =0;
+    private ProgressBar PB;
+    private TextView PB_expense;
+    private TextView PB_left;
+    private Button btn_showPB;
+
+    private String i_price,i_note,i_date,i_type_name,i_book_name;
+    private List<String> selectBook = new ArrayList<String>();//要查的帳本
+    public List<String> dbBookData = new ArrayList<String>();//接資料庫資料
+    private List<Integer> getPriceData = new ArrayList<Integer>();
+    private List<String> bookArray = new ArrayList<String>();
+    private List<Expense> select_expense = new ArrayList<Expense>();
+    private List<Income> select_income = new ArrayList<Income>();
+    private List<Book> select_BookAttribute = new ArrayList<Book>();
 
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
     private  String dateinStart;
     private String dateinEnd;
     private TextView member_id;
-
+    private int startBudget = 0;
+    private int expense = 0;
+    private int income = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,28 +119,88 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         autoSetFirstandEndMonth();
-        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        List<Expense> select_expense=new ArrayList<>();
-        dbmanager.open();
-        select_expense=dbmanager.fetchExpense(dateinStart,dateinEnd);           //可直接調用select_expense的資訊
-        dbmanager.close();
 
-        dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-        dbmanager.open();
-        dbmanager.close();
+        btn_showPB=(Button)findViewById(R.id.btn_showPB);
 
 
 
-        //到帳本管理
-        jumpToBook =(Button)findViewById(R.id.jumpToBook);
-        jumpToBook.setOnClickListener(new View.OnClickListener() {
+        PB_left=(TextView)findViewById(R.id.PB_left);
+        PB_expense =(TextView)findViewById(R.id.PB_expense);
+        PB=(ProgressBar)findViewById(R.id.PB);
+        PB.setMax(100);
+
+
+        //Spinner ArrayAdapter 初始化
+        initBook();     //抓所有資料庫的帳本名稱
+
+        ArrayAdapter<String> bookList = new ArrayAdapter<String>(Home.this,
+                android.R.layout.simple_spinner_dropdown_item, dbBookData);
+
+        spn_homeBook=(Spinner)findViewById(R.id.spn_homeBook);
+        spn_homeBook.setAdapter(bookList);
+
+        //取回book的值
+        spn_homeBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                jumpToBookManage();
-            }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                i_book_name = spn_homeBook.getSelectedItem().toString();
+                setBook(i_book_name);   //設定現在選取的帳本
+                DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                dbmanager.open();
+                select_expense = dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBook);
+//                System.out.println("fetchExpense size: "+select_expense.size());
+                select_income = dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBook);
+                select_BookAttribute = dbmanager.fetchBookallattribute(selectBook);
+                dbmanager.close();
 
+                for(int i = 0; i < select_BookAttribute.size(); i++){
+                    if(select_BookAttribute.get(i).getName().equals(i_book_name)){
+                        startBudget = select_BookAttribute.get(i).getAmount_start();
+                        break;
+                    }
+                }
+                countExpenseAndIncome();
+                PB_expense.setText(Integer.toString(expense));
+                PB_left.setText(Integer.toString(startBudget-expense+income));
+                PB.setProgress(Math.round(countPercentage()));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
+        //儲存下拉式選單
+        String book_id=spn_homeBook.getSelectedItem().toString();
+        SharedPreferences SP = getSharedPreferences("Book", MODE_PRIVATE);
+        SharedPreferences.Editor editor = SP.edit();
+        editor.putString("book_id",book_id);
+        editor.commit();
+        getSharedPreferences("book_id",MODE_PRIVATE);
+
+
+
+
+
+
+
+
+//        expense.setText(Integer.toString(countTotalExpensePrice())); //支出
+//        income.setText(Integer.toString(countTotalIncomePrice()));  //收入
+//        remain.setText(Integer.toString(countRemain()));    //期間花費餘額
+
+        //從add_book 或 add_type 返回 填過的資料自動傳入
+        Intent getSaveData = getIntent();
+        Bundle getSaveBag = getSaveData.getExtras();
+        if(getSaveBag != null) {
+            this.detail = getSaveBag.getBoolean("detail");
+            i_price = getSaveBag.getString("amount");
+            i_date = getSaveBag.getString("date");
+            int bookPosition = bookList.getPosition(getSaveBag.getString("book"));
+            spn_homeBook.setSelection(bookPosition);
+            i_note = getSaveBag.getString("note");
+            initBook();
+            spn_homeBook.setAdapter(bookList);
+        }
 
         //到記帳
         addSpend = (Button) findViewById(R.id.addSpend);
@@ -152,6 +236,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 jumpToWishpool();
             }
         });
+    }
+//
+
+    public void showPB(View view){
+
     }
 
     //點擊左側菜單的動作
@@ -416,9 +505,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         String year = Integer.toString(cal.get(Calendar.YEAR));
-        String month = Integer.toString(cal.get(Calendar.MONTH) +1);
+        String month = (cal.get(Calendar.MONTH) +1 < 10) ? "0"+ Integer.toString(cal.get(Calendar.MONTH) +1) : Integer.toString(cal.get(Calendar.MONTH) +1);
 
-        this.dateinStart = year+"-"+month+"-"+1;
+        this.dateinStart = year+"-"+month+"-01";
         if(month == "2"){
             int intYear = Integer.parseInt(year);
             if ((intYear % 4 == 0 && intYear % 100 != 0) || (intYear % 400 == 0 && intYear % 3200 != 0)){
@@ -432,8 +521,54 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             this.dateinEnd = year+"-"+month+"-"+30;
         }
 
-        //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
+//        System.out.println(this.dateinStart+" ,"+this.dateinEnd);
+    }
+
+    public void initBook(){
+        this.dbBookData.clear();
+        this.selectBook.clear();
+
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+        dbmanager.open();
+        this.dbBookData = dbmanager.fetchBook();
+        dbmanager.close();
+
+        for(int i = 0; i<dbBookData.size(); i++){
+            if(this.selectBook.contains(dbBookData.get(i))){
+                continue;
+            }else{
+                this.selectBook.add(dbBookData.get(i));
+            }
+        }
+    }
+
+    //selectBook為丟進資料庫fetch的參數
+    public void setBook(String book){
+        this.selectBook.clear();
+        this.selectBook.add(book);
+    }
+
+
+    //計算該帳本預算占幾%
+    public float countPercentage(){
+//        System.out.println(expense +", "+ startBudget+", "+income);
+        if(startBudget+income == 0){
+            return 0;
+        }
+
+        return ((float)expense/(startBudget+income))*100f;
+    }
+
+    public void countExpenseAndIncome(){
+        expense = 0;
+        income = 0;
+        for(int i = 0; i < select_expense.size();i++){
+            expense += select_expense.get(i).getEx_price();
+        }
+        for(int i= 0; i<select_income.size();i++){
+            income += select_income.get(i).getIn_price();
+        }
+
     }
 
 }
-
