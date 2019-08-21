@@ -206,6 +206,7 @@ public class AutocrawlService extends Service {
                             }
                         } catch (Exception e) {
                             UpdateDatabase(product_id,"delete","delete");
+
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -230,7 +231,7 @@ public class AutocrawlService extends Service {
                         SharedPreferences.Editor editor = sp.edit();
                         int changeamount=sp.getInt("changeamount",0)+1;
                         editor.putInt("changeamount",changeamount).commit();
-                    } else if(change.equals("same")){
+                    } else if(change.equals("NoValue")){
                     }
                     else{
                     }
