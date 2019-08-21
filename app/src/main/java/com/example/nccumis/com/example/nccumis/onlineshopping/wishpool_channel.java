@@ -589,6 +589,9 @@ public class wishpool_channel extends AppCompatActivity {
 
     public void updateActivity(){
         System.out.println("size: "+ owncardnamelist.size());
+        if(owncardnamelist.size() == 0){
+            return;
+        }
         for(int i = 0; i < activitylistwithcard.size(); i++){
             if(activitylistwithcard.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
                 newActivity.setText("最新優惠: " + activitylistwithcard.get(i).getRemarks());
