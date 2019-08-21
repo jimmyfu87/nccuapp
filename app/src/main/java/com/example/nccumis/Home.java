@@ -170,12 +170,24 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         });
 
         //儲存下拉式選單
-        String book_id=spn_homeBook.getSelectedItem().toString();
-        SharedPreferences SP = getSharedPreferences("Book", MODE_PRIVATE);
-        SharedPreferences.Editor editor = SP.edit();
-        editor.putString("book_id",book_id);
-        editor.commit();
-        getSharedPreferences("book_id",MODE_PRIVATE);
+        spn_homeBook.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String book_id=spn_homeBook.getSelectedItem().toString();
+                SharedPreferences SP = getSharedPreferences("Book", MODE_PRIVATE);
+                SharedPreferences.Editor editor = SP.edit();
+                editor.putString("book_id",book_id);
+                editor.putInt("book_position",position);
+                editor.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        SharedPreferences SP2 = getSharedPreferences("Book", MODE_PRIVATE);
+        spn_homeBook.setSelection(SP2.getInt("book_position",0));
 
 
 
