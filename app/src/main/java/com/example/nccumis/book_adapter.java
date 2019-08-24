@@ -39,6 +39,7 @@ public class book_adapter extends ArrayAdapter {
         bookTextField.setText(bookArray.get(position).toString());
         fixBtn = (Button) rowView.findViewById(R.id.fixBtn);
         deleteBtn = (Button) rowView.findViewById(R.id.deleteBtn);
+        //
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
