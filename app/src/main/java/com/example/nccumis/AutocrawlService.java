@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
@@ -280,7 +281,7 @@ public class AutocrawlService extends Service {
     private void startMyOwnForeground(){
         String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
         String channelName = "自動更新價格";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW);
 
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
@@ -291,20 +292,26 @@ public class AutocrawlService extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         SharedPreferences sp3 = getSharedPreferences("changeamount", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
+        Intent intent = new Intent(this,Home.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this,1,intent,0);
+
         Notification notification = notificationBuilder
-                 .setSmallIcon(R.drawable.love)
-                .setContentTitle("價格更新通知執行中")
+                 .setSmallIcon(R.drawable.ic_stat_name)
+                //.setContentText("價格更新通知執行中")
                 .setAutoCancel(false)
+                .setContentIntent(pIntent)
                 .build();
         if(sp3.getInt("changeamount",0)>0) {
             Notification notification2 = notificationBuilder
-                    .setSmallIcon(R.drawable.love)
+                    .setSmallIcon(R.drawable.ic_stat_name)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_name))
                     .setContentTitle("有商品更新了喔")
-                    .setContentText("快來查看吧")
+                     .setContentText("快來查看吧")
                     .setLights(Color.GREEN, 1000, 1000)
                     .setAutoCancel(false)
                     .setPriority(NotificationManager.IMPORTANCE_HIGH)
                     .setCategory(Notification.CATEGORY_SERVICE)
+                    .setContentIntent(pIntent)
                     .build();
             manager.notify(1, notification2);
         }
