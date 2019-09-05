@@ -38,14 +38,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="固定金額："/>
+            android:text="固定金額：   "
+            android:orientation="horizontal"/>
 
-        <EditText
+        <TextView
             android:id="@+id/et_amount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="8000"
-            android:textSize="20dp"/>
+            android:text="8000" />
+
+           <Button
+               android:id="@+id/btn_amountchange"
+               android:layout_width="wrap_content"
+               android:layout_height="35dp"
+               android:layout_gravity="center_horizontal"
+               android:layout_marginTop="20dp"
+               android:layout_marginLeft="30dp"
+               android:text="更改金額" />
 
 
        </LinearLayout>
@@ -53,13 +62,7 @@
 
 
 
-        <Button
-            android:id="@+id/btn_amountchange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="更改金額"
-            android:layout_marginTop="20dp"/>
+
 
         <LinearLayout
             android:layout_width="wrap_content"

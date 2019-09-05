@@ -1,8 +1,10 @@
 package com.example.nccumis;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,13 @@ public class book_adapter extends ArrayAdapter {
         fixBtn = (Button) rowView.findViewById(R.id.fixBtn);
         deleteBtn = (Button) rowView.findViewById(R.id.deleteBtn);
         //
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletebook();
+            }
+        });
+
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +63,11 @@ public class book_adapter extends ArrayAdapter {
         return rowView;
 
     }
+
+    public void deletebook() {
+
+    }
+
 
     public void jumpToBookManage(int position, Activity context) {
         Intent intent = new Intent(context, BookManage.class);
