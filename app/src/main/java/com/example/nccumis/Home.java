@@ -164,6 +164,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     if(select_BookAttribute.get(i).getName().equals(i_book_name)){
                         startBudget = select_BookAttribute.get(i).getAmount_start();
                         break;
+                        
                     }
                 }
                 countExpenseAndIncome();
