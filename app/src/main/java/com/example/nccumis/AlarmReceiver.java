@@ -18,7 +18,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(new Intent(context, AutocrawlService.class));
         } else {
-            context.startService(new Intent(context, AutocrawlService.class));
+            context.startService(new Intent(context, Home.class));
         }
     }
 }

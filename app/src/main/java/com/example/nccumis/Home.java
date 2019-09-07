@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -107,9 +108,15 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        Intent intent = new Intent(this,AutocrawlService.class);
-        startService(intent);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            if(sp.getString("member_id",null)!=null) {
+                Intent intent = new Intent(this, AutocrawlService.class);
+                startService(intent);
+            }
+        }
         toolbar = findViewById(R.id.head_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("購智帳");

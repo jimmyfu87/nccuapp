@@ -68,7 +68,7 @@ public class AutocrawlService extends Service {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         new Thread(new Runnable() {
@@ -127,7 +127,7 @@ public class AutocrawlService extends Service {
             }
         }).start();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int anHour = 10*1000;
+        int anHour = 8*60*60*10*1000;
         long triggerAtTime = SystemClock.elapsedRealtime()+anHour;
         Intent i = new Intent(this,AlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(this,0,i,0);
