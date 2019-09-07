@@ -36,6 +36,7 @@ public class LogIn extends AppCompatActivity {
 
 
     private CheckBox checkLogIn;
+    private CheckBox rememberInfo;
     private EditText et_userAccountLogin;
     private EditText et_passwordLogin;
     private Button btn_forgetPassword;
@@ -55,14 +56,14 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
 
-
-        signInButton=findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+//    Google登入
+//        signInButton=findViewById(R.id.sign_in_button);
+//        signInButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                signIn();
+//            }
+//        });
 
         checkLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_userAccountLogin=(EditText)findViewById(R.id.et_userAccountLogin);
@@ -71,6 +72,7 @@ public class LogIn extends AppCompatActivity {
         btn_registerAgain = (Button)findViewById(R.id.btn_registerAgain);
         loginHome = (Button) findViewById(R.id.loginHome);
         btn_backToHome =(Button)findViewById(R.id.btn_backToHome);
+        rememberInfo =(CheckBox) findViewById(R.id.rememberInfo);
 
         //回上頁
         btn_backToHome.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +132,22 @@ public class LogIn extends AppCompatActivity {
                                     SharedPreferences.Editor editor = sp.edit();
                                     editor.putString("member_id",member_id);
                                     editor.commit(); //提交
+                                    if(rememberInfo.isChecked()){
+                                        SharedPreferences sp2 = getSharedPreferences("LoginInfo", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor2 = sp2.edit();
+                                        editor2.putString("member_id",member_id);
+                                        editor2.putString("member_password",member_password);
+                                        editor2.putBoolean("remember",true);
+                                        editor2.commit(); //提交
+                                    }
+                                    else{
+                                        SharedPreferences sp2 = getSharedPreferences("LoginInfo", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor2 = sp2.edit();
+                                        editor2.putString("member_id","");
+                                        editor2.putString("member_password","");
+                                        editor2.putBoolean("remember",false);
+                                        editor2.commit(); //提交
+                                    }
                                     android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(LogIn.this);
                                     builder.setMessage("登入成功")
                                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
@@ -162,7 +180,11 @@ public class LogIn extends AppCompatActivity {
                 }
             }
         });
-
+        SharedPreferences sp3 = getSharedPreferences("LoginInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor3 = sp3.edit();
+        et_userAccountLogin.setText(sp3.getString("member_id",""));
+        et_passwordLogin.setText(sp3.getString("member_password",""));
+        rememberInfo.setChecked(sp3.getBoolean("remember",false));
     }
 //    protected void onStart(){
 //        super.onStart();
