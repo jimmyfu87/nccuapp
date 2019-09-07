@@ -1,10 +1,11 @@
 package com.example.nccumis;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,15 +46,44 @@ public class book_adapter extends ArrayAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletebook();
-            }
-        });
+                new AlertDialog.Builder(context)
+                        .setTitle("刪除提醒")
+                        .setMessage("是否確定刪除？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseManager dbmanager=new DatabaseManager(getContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+                                dbmanager.open();
+                                if(BookName.equals("Book")){
+                                 //   dbmanager.deleteBook();
+                                }else{
+                                 //   dbmanager.deleteIncome(idArray.get(position));
+                                }
+                                dbmanager.close();
 
+
+                                bookArray.remove(position);
+                                ///////////資料庫刪除，加這//////////////
+                                notifyDataSetChanged();
+                                Snackbar.make(v, "You just remove No." + BookName +" item", Snackbar.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Snackbar.make(v, "You didn't remove any item", Snackbar.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
+
+            }
+
+    });
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(BookName.equals("Book")){
-                    jumpToadd_book(position, context);
+                    jumpTobook_fixed(position, context);
                 }else{
                     jumpToBookManage(position, context);
                 }
@@ -64,19 +94,16 @@ public class book_adapter extends ArrayAdapter {
 
     }
 
-    public void deletebook() {
-
-    }
 
 
     public void jumpToBookManage(int position, Activity context) {
         Intent intent = new Intent(context, BookManage.class);
     }
 
-    public void jumpToadd_book(int position, Activity context) {
-        Intent intent = new Intent(context, add_book.class);
-        Bundle savebookdata = new Bundle();
-        savebookdata.putBoolean("detail",true);
+    public void jumpTobook_fixed(int position, Activity context) {
+        Intent intent = new Intent(context, book_fixed.class);
+       // Bundle savebookdata = new Bundle();
+      //  savebookdata.putBoolean("detail",true);
 
     }
 
