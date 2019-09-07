@@ -42,6 +42,7 @@ public class wishpool_channel extends AppCompatActivity {
     private static RequestQueue requestQueue;
     private static RequestQueue requestQueue2;
     private static String channel_name = "";
+    private static String channel_webHome = "";
     private Button lastPage;
     private TextView ecommerceName;
     private TextView newActivity;
@@ -84,6 +85,7 @@ public class wishpool_channel extends AppCompatActivity {
         Bundle getSaveBag = getSaveData.getExtras();
         if(getSaveBag != null){
             channel_name = getSaveBag.getString("channel_name");
+            channel_webHome = getSaveBag.getString("channel_webHome");
         }
 
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -511,7 +513,7 @@ public class wishpool_channel extends AppCompatActivity {
 
     public void setProductList(){
         initProductList();
-        productListAdapter productlist_adapter = new productListAdapter(wishpool_channel.this, channel_name, urlArray, idArray ,nameArray , priceArray, uploadTimeArray);
+        productListAdapter productlist_adapter = new productListAdapter(wishpool_channel.this, channel_name, channel_webHome, urlArray, idArray ,nameArray , priceArray, uploadTimeArray);
         ProductListView.setAdapter(productlist_adapter);
     }
 

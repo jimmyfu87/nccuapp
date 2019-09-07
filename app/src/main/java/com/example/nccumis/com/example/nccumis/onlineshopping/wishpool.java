@@ -32,6 +32,7 @@ public class wishpool extends AppCompatActivity {
     private ListView ecommercePathListView;
     private List<Channel> channellist=new ArrayList<Channel>();
     private List<String> nameArray = new ArrayList<String>();
+    private List<String> homeurlArray = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +103,11 @@ public class wishpool extends AppCompatActivity {
     }
 
     public void initChannelList(){
-        System.out.println("channellist size:333 "+this.channellist.size());
+//        System.out.println("channellist size:333 "+this.channellist.size());
         for(int i = 0; i < this.channellist.size();i++){
-//            this.idArray.add(this.channellist.get(i).getId());
+//            this.idArray.add(this.btn_webHome.get(i).getId());
             this.nameArray.add(this.channellist.get(i).getChannel_name());
+            this.homeurlArray.add(this.channellist.get(i).getChannel_url());
         }
         //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
@@ -120,6 +122,7 @@ public class wishpool extends AppCompatActivity {
         Intent saveWishpoolData = new Intent(wishpool.this, wishpool_channel.class);
         Bundle saveBag = new Bundle();
         saveBag.putString("channel_name", nameArray.get(position));
+        saveBag.putString("channel_webHome", homeurlArray.get(position));
         saveWishpoolData.putExtras(saveBag);
         startActivity(saveWishpoolData);
     }

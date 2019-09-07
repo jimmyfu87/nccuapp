@@ -135,7 +135,7 @@ public class OnlineShopping extends AppCompatActivity {
                 getWebName = getSaveBag.getString("webName");
                 OnlineShopping_webView.loadUrl(getSaveBag.getString("webURL"));
             }else{
-                getWebHomeURL = getSaveBag.getString("channel_url");
+                getWebHomeURL = getSaveBag.getString("channel_webHome");
                 getWebName = getSaveBag.getString("channel_name");
                 OnlineShopping_webView.loadUrl(getSaveBag.getString("channel_url"));
             }

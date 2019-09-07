@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-<LinearLayout
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,70 +8,79 @@
     tools:context=".com.example.nccumis.onlineshopping.OnlineShopping"
     android:orientation="vertical">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <Button
-        android:id="@+id/btn_lastPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="回上頁"
-        android:layout_weight="1"
-        />
-
-    <TextView
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="購物平台"
-        android:textSize="30dp"
-        android:layout_weight="1"/>
-    <Button
-        android:id="@+id/btn_webHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="網購首頁"
-        android:layout_weight="1"/>
-</LinearLayout>
-    <WebView
-        android:id="@+id/OnlineShopping_webView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </WebView>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:id="@+id/header">
+        <Button
+            android:id="@+id/btn_lastPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回上頁"
+            android:layout_weight="1"
+            />
 
-       <LinearLayout
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="購物商城"
+            android:textSize="30dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_webHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="網購首頁"
+            android:layout_weight="1"/>
+    </LinearLayout>
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_alignParentBottom="true"
+       android:id="@+id/footer">
+       <Button
+           android:id="@+id/btn_webPrePage"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:orientation="horizontal">
-           <Button
-               android:id="@+id/btn_webPrePage"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Pre"
-               android:layout_weight="1"/>
-           <Button
-               android:id="@+id/btn_webNextPage"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Next"
-               android:layout_weight="1"/>
-        <Button
-            android:id="@+id/btn_FirstBankDiscount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="一銀回饋資訊"
-            android:layout_weight="3"/>
-        <Button
-            android:id="@+id/btn_addInCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="加入許願池"
-            android:layout_weight="3"/>
+           android:text="Pre"
+           android:layout_weight="1"/>
+       <Button
+           android:id="@+id/btn_webNextPage"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Next"
+           android:layout_weight="1"/>
+    <Button
+        android:id="@+id/btn_FirstBankDiscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="一銀回饋資訊"
+        android:layout_weight="3"/>
+    <Button
+        android:id="@+id/btn_addInCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加入許願池"
+        android:layout_weight="3"/>
 
-       </LinearLayout>
+   </LinearLayout>
 
-</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/header"	>
+        <WebView
+            android:id="@+id/OnlineShopping_webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </WebView>
+    </ScrollView>
 
-</ScrollView>
+</RelativeLayout>
+

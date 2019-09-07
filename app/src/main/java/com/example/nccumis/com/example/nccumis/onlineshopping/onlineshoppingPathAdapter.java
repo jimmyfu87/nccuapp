@@ -63,6 +63,7 @@ public class onlineshoppingPathAdapter extends ArrayAdapter {
     public void jumpToOnlineShopping(int position,Activity activity){
         Intent intent = new Intent(activity, OnlineShopping.class);
         Bundle saveChannelData = new Bundle();
+        saveChannelData.putString("channel_webHome",urlArray.get(position));
         saveChannelData.putString("channel_url",urlArray.get(position));
         saveChannelData.putString("channel_name", PathNameArray.get(position));
         saveChannelData.putBoolean("firstBankDiscount", false);

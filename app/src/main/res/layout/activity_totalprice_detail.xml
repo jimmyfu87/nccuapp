@@ -44,7 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="勾選金額:" />
+        android:text="勾選金額:"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/isCheckedPrice"
@@ -57,7 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="長期活動:" />
+        android:text="長期活動:"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/activityamountLong"
@@ -84,7 +86,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="短期活動:" />
+        android:text="短期活動:"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/activityamountShort"
@@ -110,7 +113,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="優惠後金額:" />
+        android:text="優惠後金額:"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/totalprice"

@@ -41,6 +41,7 @@ public class productListAdapter extends ArrayAdapter {
     private final List<Integer> priceArray;
     private final List<String> uploadTimeArray;
     private String channel_name;
+    private String channel_webHome;
     private List<Boolean> isCheckArray;
     private CheckBox check;
     private Button deleteBtn;
@@ -49,12 +50,13 @@ public class productListAdapter extends ArrayAdapter {
     private SharedPreferences sp;
 
 
-    public productListAdapter(Activity context, String channel_nameParam,List<String> urlArrayParam ,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam, List<String> uploadTimeArrayParam){
+    public productListAdapter(Activity context, String channel_nameParam, String channel_webHomeParam, List<String> urlArrayParam ,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam, List<String> uploadTimeArrayParam){
 
         super(context, R.layout.product_listview_row, nameArrayParam);
 
         this.context=context;
         this.channel_name = channel_nameParam;
+        this.channel_webHome = channel_webHomeParam;
 //        this.pictureArray = pictureArrayParam;
         this.idArray = idArrayParam;
         this.urlArray = urlArrayParam;
@@ -208,6 +210,7 @@ public class productListAdapter extends ArrayAdapter {
         Bundle saveWishpoolProductData = new Bundle();
         saveWishpoolProductData.putString("channel_url", urlArray.get(position));
         saveWishpoolProductData.putString("channel_name", channel_name);
+        saveWishpoolProductData.putString("channel_webHome", channel_webHome);
         intent.putExtras(saveWishpoolProductData);
         activity.startActivity(intent);
     }
