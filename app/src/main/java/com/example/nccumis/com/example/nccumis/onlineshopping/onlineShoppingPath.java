@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
@@ -108,7 +109,8 @@ public class  onlineShoppingPath extends AppCompatActivity {
             }
         };
 
-        onlineShoppingPath.GetallchannelRequest getRequest = new onlineShoppingPath.GetallchannelRequest(responseListener);
+        GetallchannelRequest getRequest = new onlineShoppingPath.GetallchannelRequest(responseListener);
+        getRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
@@ -171,6 +173,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         GetliveactivitywithcardRequest getRequest2 = new GetliveactivitywithcardRequest(sp.getString("member_id",null),responseListener2);
+        getRequest2.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
         requestQueue2.add(getRequest2);
 
