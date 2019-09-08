@@ -99,6 +99,20 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="更改密碼" />
+        <Button
+            android:id="@+id/addcardrelation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="新增卡片" />
+        <Button
+            android:id="@+id/deletecardrelation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="刪除卡片" />
 
 
 <Button
