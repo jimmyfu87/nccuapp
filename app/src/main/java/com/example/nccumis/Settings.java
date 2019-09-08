@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,12 +32,16 @@ import java.util.Map;
 public class Settings extends AppCompatActivity {
 
     private EditText et_predictAmount;
-    private CheckBox ckbox_GLORY;
-    private CheckBox ckbox_Green;
-    private CheckBox ckbox_Wonderful;
-    private EditText et_Wonderful;
-    private EditText et_GREEN;
-    private EditText et_GLORY;
+//    private CheckBox ckbox_GLORY;
+//    private CheckBox ckbox_Green;
+//    private CheckBox ckbox_Wonderful;
+//    private EditText et_Wonderful;
+//    private EditText et_GREEN;
+//    private EditText et_GLORY;
+
+    private ListView listView;
+    private ListAdapter listAdapter;
+
     private Button btn_setToHome;
     private RequestQueue queue;
     private String Getallcard_url="https://nccugo105306.000webhostapp.com/Getallcard.php";
@@ -48,12 +55,16 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ckbox_GLORY = (CheckBox) findViewById(R.id.ckbox_GLORY);
-        ckbox_Green = (CheckBox) findViewById(R.id.ckbox_Green);
-        ckbox_Wonderful = (CheckBox) findViewById(R.id.ckbox_Wonderful);
-        et_GLORY = (EditText) findViewById(R.id.et_GLORY);
-        et_GREEN = (EditText) findViewById(R.id.et_GREEN);
-        et_Wonderful = (EditText) findViewById(R.id.et_Wonderful);
+//        ckbox_GLORY = (CheckBox) findViewById(R.id.ckbox_GLORY);
+//        ckbox_Green = (CheckBox) findViewById(R.id.ckbox_Green);
+//        ckbox_Wonderful = (CheckBox) findViewById(R.id.ckbox_Wonderful);
+//        et_GLORY = (EditText) findViewById(R.id.et_GLORY);
+//        et_GREEN = (EditText) findViewById(R.id.et_GREEN);
+//        et_Wonderful = (EditText) findViewById(R.id.et_Wonderful);
+//        listView = (ListView) findViewById(R.id.listView);
+//        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, new String[]{"GLORY+世界卡", "Living Green綠活卡", "Wonderful星璨卡"});
+//        listView.setAdapter(listAdapter);
+
         btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
         password_change = (Button) findViewById(R.id.password_change);
 

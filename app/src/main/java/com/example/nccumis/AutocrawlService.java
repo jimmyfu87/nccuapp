@@ -219,6 +219,7 @@ public class AutocrawlService extends Service {
         queue.add(stringRequest);
 
     }
+
     public void UpdateDatabase(String product_id,String product_name,String product_price){
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
