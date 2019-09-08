@@ -109,14 +109,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
 
         //到帳本管理
-        jumpToBook =(Button)findViewById(R.id.jumpToBook);
-        jumpToBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToBookManage();
-            }
-
-        });
+//        jumpToBook =(Button)findViewById(R.id.jumpToBook);
+//        jumpToBook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                jumpToBookManage();
+//            }
+//
+//        });
 
 
         //到記帳
