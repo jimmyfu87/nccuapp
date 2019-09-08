@@ -30,8 +30,10 @@ public class firstBankDiscount extends AppCompatActivity {
     private TextView ecommerceName;
     private String getEcommerceName;
     private TextView discountDetail;
-    private static List<Activity> longactivitylist=new ArrayList<Activity>();
-    private static List<Activity> shortactivitylist=new ArrayList<Activity>();
+    private List<Activity> longactivitylist=new ArrayList<Activity>();
+    private List<Activity> shortactivitylist=new ArrayList<Activity>();
+    private String dicountLong;
+    private String dicountShort;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +57,7 @@ public class firstBankDiscount extends AppCompatActivity {
 
         //一銀與電商優惠，從資料庫fetch資料
         discountDetail = (TextView)findViewById(R.id.discountDetail);
-        discountDetail.setText("此處加資料庫fetch的資料");
+        discountDetail.setText("優惠資訊：");
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -85,20 +87,29 @@ public class firstBankDiscount extends AppCompatActivity {
                                 shortactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
                             }
                         }
+                        setLongactivity();
+                        setShortactivity();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+
                 }
             }
         };
         SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         //這邊要放渠道名字
-        String channel_name="Momo";
-        GetactivityRequest getactivityRequest = new GetactivityRequest(sp.getString("member_id",null),channel_name,responseListener);
+//        String channel_name="Momo";
+        GetactivityRequest getactivityRequest = new GetactivityRequest(sp.getString("member_id",null),getEcommerceName,responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
+
+
+        System.out.println("heeee"+getEcommerceName);
+        discountDetail.setText("長期優惠資訊： \n"+dicountLong + "\n 短期優惠資訊： \n" + dicountShort);
+
     }
 
     public void jumpToOnlineShopping(){
@@ -126,4 +137,20 @@ public class firstBankDiscount extends AppCompatActivity {
         }
     }
 
+    public void setLongactivity(){
+        for(int i = 0; i < longactivitylist.size(); i++){
+            if(longactivitylist.get(i).getChannel_name().equals(getEcommerceName)){
+                dicountLong += longactivitylist.get(i).getRemarks() + "\n";
+                System.out.println(longactivitylist.get(i).getRemarks());
+            }
+        }
+    }
+
+    public void setShortactivity(){
+        for(int i = 0; i < shortactivitylist.size(); i++){
+            if(shortactivitylist.get(i).getChannel_name().equals(getEcommerceName)){
+                dicountShort += shortactivitylist.get(i).getRemarks() + "\n";
+            }
+        }
+    }
 }
