@@ -2,6 +2,7 @@ package com.example.nccumis;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,8 +45,8 @@ public class Settings extends AppCompatActivity {
 
     private Button btn_setToHome;
     private RequestQueue queue;
-    private String Getallcard_url="https://nccugo105306.000webhostapp.com/Getallcard.php";
-    private List<Cardtype> cardtype_list=new ArrayList<Cardtype>();
+    private List<Cardtype> owncardtype_list=new ArrayList<Cardtype>();
+    private List<Cardtype> othercardtype_list=new ArrayList<Cardtype>();
     private Button password_change;
 
 
@@ -89,6 +90,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        //owncardtype_list使用者沒有的卡
         Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -98,7 +100,7 @@ public class Settings extends AppCompatActivity {
                                     JSONObject jsonObject = array.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String cardtype_name = jsonObject.getString("cardtype_name");
-                                    cardtype_list.add(new Cardtype(id, cardtype_name));
+                                    owncardtype_list.add(new Cardtype(id, cardtype_name));
                                     //拿cardtype_list去調用
 
                                 }
@@ -107,21 +109,61 @@ public class Settings extends AppCompatActivity {
                             }
                     }
         };
-        GetallcardRequest getRequest = new GetallcardRequest(responseListener);
+        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        GetcardRequest getRequest = new GetcardRequest(sp.getString("member_id",null),responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
+
+        //othercardtype_list使用者沒有的卡
+        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject jsonObject = array.getJSONObject(i);
+                        int id = jsonObject.getInt("id");
+                        String cardtype_name = jsonObject.getString("cardtype_name");
+                        othercardtype_list.add(new Cardtype(id, cardtype_name));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sp2.edit();
+        GetothercardRequest getRequest2 = new GetothercardRequest(sp2.getString("member_id",null),responseListener2);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue2.add(getRequest2);
     }
     public void fromSettingsToHome(){
         Intent intent = new Intent(Settings.this,Home.class);
         startActivity(intent);
     }
-    public class GetallcardRequest extends StringRequest {
-        private static final String Getallcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getallcard.php";
+    public class GetcardRequest extends StringRequest {
+        private static final String Getcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getcard.php";
         private Map<String, String> params;
         //
-        public GetallcardRequest(Response.Listener<String> listener) {
-            super(Method.GET,  Getallcard_REQUEST_URL, listener, null);
+        public GetcardRequest(String member_id,Response.Listener<String> listener) {
+            super(Method.POST,  Getcard_REQUEST_URL, listener, null);
             params = new HashMap<>();
+            params.put("member_id", member_id);
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+    public class GetothercardRequest extends StringRequest {
+        private static final String Getothercard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getothercard.php";
+        private Map<String, String> params;
+        //
+        public GetothercardRequest(String member_id,Response.Listener<String> listener) {
+            super(Method.POST,  Getothercard_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("member_id", member_id);
         }
         @Override
         public Map<String, String> getParams() {
