@@ -36,10 +36,6 @@
             android:label="@string/title_activity_book_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".book_adapter"
-            android:label="@string/title_activity_book_adapter"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".password_change"
             android:label="@string/title_activity_password_change"
             android:theme="@style/AppTheme.NoActionBar" />

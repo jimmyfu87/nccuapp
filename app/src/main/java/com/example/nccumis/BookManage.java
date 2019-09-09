@@ -29,27 +29,19 @@ import java.util.List;
 
 public class BookManage extends AppCompatActivity {
 
-    private Button btn_showBook;
-    private ListView BookList;
+
+
     private Button btn_newBook;
-    private ArrayList<String> selectBooks = new ArrayList<String>();
-    private List<String> bookArray = new ArrayList<String>();
-    private List<String> select_book = new ArrayList<String>();
-    private List<Integer> getPriceData = new ArrayList<Integer>();
-    private List<String> getTypeName = new ArrayList<String>();
-    private List<Expense> select_expense = new ArrayList<Expense>();
-    private String start_date,end_date;
-    private ListView TypeListView;
-    private List<Integer> numberArray = new ArrayList<Integer>();
-    private boolean[] checked;
-    private Bundle saveBag;
-    private Intent getPreSavedData;
-    private Activity context;
-    private ArrayList<String> bookArrayParam;
-    private String bookName;
-    private TextView book1;
-    private TextView book2;
-    private TextView book3;
+    private ArrayList<Integer> idArray = new ArrayList<Integer>();
+    private List<String> nameArray = new ArrayList<String>();
+    private List<Integer> amount_startArray = new ArrayList<Integer>();
+    private List<Integer> amount_remainArray = new ArrayList<Integer>();
+    private List<String> currencytypeArray = new ArrayList<String>();
+    private List<String> getBookNameFromDB = new ArrayList<String>();   //接資料庫用
+   private List<Book> getBookArrayFromDB = new ArrayList<Book>();
+
+    private ListView BookListView;
+
 
 
 
@@ -58,123 +50,20 @@ public class BookManage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_management);
-        btn_newBook=(Button)findViewById(R.id.btn_newBook);
-        btn_showBook=(Button)findViewById(R.id.btn_showBook);
-       // BookList=(ListView) findViewById(R.id.BookList);
-        TypeListView = (ListView)findViewById(R.id.TypeListView);
-        book1=(TextView)findViewById(R.id.book1);
-        book2=(TextView)findViewById(R.id.book2);
-        book3=(TextView)findViewById(R.id.book3);
 
+
+
+        btn_newBook=(Button)findViewById(R.id.btn_newBook);
+       // BookList=(ListView) findViewById(R.id.BookList);
+        BookListView = (ListView)findViewById(R.id.book_listview);
+        setBookFromDBList();
+        setList();
+        setListViewHeightBasedOnChildren(BookListView);
        // saveBag = getPreSavedData.getExtras();
 
-        if(saveBag != null){
-
-            selectBooks = saveBag.getStringArrayList("selectBooks");
 
 
 
-            DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-            dbmanager.open();
-            select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
-            System.out.println(select_expense.size()+", "+selectBooks.size());
-            dbmanager.close();
-            //setExpenseData(select_expense);
-            setList();
-            setListViewHeightBasedOnChildren(TypeListView);
-
-        }else {
-            //圖表
-           // setExpenseData(select_expense);
-
-            //ListView 類別項目、類別名稱、類別佔總額%、類別金額
-            //setList();
-            setListViewHeightBasedOnChildren(TypeListView);
-        }
-
-        btn_showBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                book1.setText("旅遊帳本");
-                book2.setText("現金帳本");
-                book3.setText("購物帳本");
-
-
-                    //Expense 資料庫
-                    //DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                    //dbmanager.open();
-                    // select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
-                    //System.out.println("Size of select books"+selectBooks.size());
-                    //select_book=dbmanager.fetchBook();
-                    //dbmanager.close();
-                   // setList();
-            }
-
-        });
-
-        book1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(BookManage.this);
-                builder.setMessage("管理帳本");
-                builder.setPositiveButton("編輯", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(BookManage.this,book_fixed.class);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("刪除", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                       book1.setText("");
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-        book2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(BookManage.this);
-                builder.setMessage("管理帳本");
-                builder.setPositiveButton("編輯", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(BookManage.this,book_fixed.class);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("刪除", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        book2.setText("");
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-        book3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(BookManage.this);
-                builder.setMessage("管理帳本");
-                builder.setPositiveButton("編輯", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(BookManage.this,book_fixed.class);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("刪除", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        book3.setText("");
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
 
 
 
@@ -197,39 +86,36 @@ public class BookManage extends AppCompatActivity {
             }
         });
 
-//        TypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
- //           @Override
-  //          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-   //             jumpTobook_adapter(position);
-    //        }
-     //   });
-
     }
 
 
 
 
+    public void setBookFromDBList(){
+        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+        dbmanager.open();
+        getBookNameFromDB=dbmanager.fetchBook();
+        getBookArrayFromDB=dbmanager.fetchBookallattribute(getBookNameFromDB);
+        dbmanager.close();
 
-
-
-
-
-    public void jumpTobook_adapter(int position) {
     }
-
-    public void setBookData(List<String> select_book){
-        String getBookName = "";
-        int replacePosition = 0;
-        for(int i=0;i < select_book.size();i++){
-            getBookName = select_book.get(i);
+    public void initialData(){
+        for(int i=0; i<this.getBookArrayFromDB.size();i++){
+            this.idArray.add(getBookArrayFromDB.get(i).getId());
+            this.nameArray.add(getBookArrayFromDB.get(i).getName());
+            this.amount_startArray.add(getBookArrayFromDB.get(i).getAmount_start());
+            this.amount_remainArray.add(getBookArrayFromDB.get(i).getAmount_remain());
+            this.currencytypeArray.add(getBookArrayFromDB.get(i).getCurrency_type());
 
         }
+
 
     }
 
     public void setList() {
-        book_adapter bk_adapter = new book_adapter(this, this.bookArray, bookName, context, bookArrayParam);
-        TypeListView.setAdapter(bk_adapter);
+        initialData();
+        book_detail_adapter bk_adapter = new book_detail_adapter(this,idArray,nameArray,amount_startArray,amount_remainArray,currencytypeArray);
+        BookListView.setAdapter(bk_adapter);
     }
 
 
