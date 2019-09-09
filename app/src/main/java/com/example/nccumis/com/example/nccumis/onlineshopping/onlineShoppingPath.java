@@ -192,7 +192,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
     }
 
     /**
-     * 動態設定ListView的高度
+         * 動態設定ListView的高度
      * @param listView
      */
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -228,7 +228,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
                 }
             }
             discountDetailtemp = discountDetailtemp == "" ? "無優惠資訊" : discountDetailtemp;
-            System.out.println("discountDetailtemp :"+discountDetailtemp);
+//            System.out.println("discountDetailtemp :"+discountDetailtemp);
             this.discountDetailArray.add(discountDetailtemp);
             this.urlArray.add(this.channellist.get(i).getChannel_url());
         }
