@@ -155,18 +155,8 @@ public class  onlineShoppingPath extends AppCompatActivity {
                     }
                 }
                 else{
-                    //這邊是發現許願池是空的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(onlineShoppingPath.this);
-                    builder.setMessage("沒有商家")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(onlineShoppingPath.this, Home.class);
-                                    onlineShoppingPath.this.startActivity(intent);
-                                }
-                            })
-                            .create()
-                            .show();
+                    //這邊是發現活動是空的處理方式，要改可以改
+
                 }
             }
         };

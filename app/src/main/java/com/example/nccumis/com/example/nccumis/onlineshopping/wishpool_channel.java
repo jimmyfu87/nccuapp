@@ -182,17 +182,7 @@ public class wishpool_channel extends AppCompatActivity {
                 }
                 else{
                     //發現使用者沒有信用卡的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
-                    builder.setMessage("使用者沒有信用卡")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_channel.this, Home.class);
-                                    wishpool_channel.this.startActivity(intent);
-                                }
-                            })
-                            .create()
-                            .show();
+
                 }
             }
         };
@@ -264,17 +254,6 @@ public class wishpool_channel extends AppCompatActivity {
                 }
                 else{
                     //發現沒有匹配活動的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
-                    builder.setMessage("沒有適合的優惠活動")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_channel.this, Home.class);
-                                    wishpool_channel.this.startActivity(intent);
-                                }
-                            })
-                            .create()
-                            .show();
                 }
             }
         };
@@ -378,18 +357,8 @@ public class wishpool_channel extends AppCompatActivity {
                     }
                 }
                 else{
-                    //發現使用者沒有信用卡的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
-                    builder.setMessage("使用者已辦了所有信用卡")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_channel.this, Home.class);
-                                    wishpool_channel.this.startActivity(intent);
-                                }
-                            })
-                            .create()
-                            .show();
+                    //發現使用者辦了所有信用卡的處理方式，要改可以改
+
                 }
             }
         };
