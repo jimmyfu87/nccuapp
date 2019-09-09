@@ -130,6 +130,7 @@ public class book_fixed extends AppCompatActivity {
 
     public void backtolastpage() {
         Intent intent = new Intent(book_fixed.this,BookManage.class);
+        startActivity(intent);
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
