@@ -13,6 +13,9 @@
         <Key
             android:codes="57"
             android:keyLabel="9"/>
+        <key
+            android:codes="6"
+            android:keyLabel="/"/>
 
     </Row>
 
@@ -26,6 +29,9 @@
         <Key
             android:codes="54"
             android:keyLabel="6"/>
+        <key
+            android:codes="7"
+            android:keyLabel="*"/>
 
         />
     </Row>
@@ -39,6 +45,9 @@
         <Key
             android:codes="51"
             android:keyLabel="3" />
+        <key
+            android:codes="8"
+            android:keyLabel="-"/>
 
     </Row>
     <Row>
@@ -53,6 +62,12 @@
             android:codes="-5"
             android:isRepeatable="true"
             android:keyLabel="X" />
+        <key
+            android:codes="9"
+            android:keyLabel="+"/>
+        <key
+            android:codes="10"
+            android:keyLabel="="/>
 
     </Row>
 </Keyboard>
