@@ -9,6 +9,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class keyboardHelper {
+    public static final int DIVIDE = 6;
+    public static final int MULTIPLICATION = 7;
+    public static final int MINUS = 8;
+    public static final int PLUS = 9;
+    public static final int EQUAL = 10;
+
     private Context context;
     private KeyboardView keyboardView;
     private EditText input_amount;
@@ -73,6 +79,7 @@ public class keyboardHelper {
                 int start = input_amount.getSelectionStart();
                 int end = input_amount.getSelectionEnd();
                 switch (primaryCode) {
+
                     case Keyboard.KEYCODE_DELETE:
                         if (editable != null && editable.length() > 0) {
                             if (start == end) {
@@ -85,6 +92,7 @@ public class keyboardHelper {
                     case Keyboard.KEYCODE_CANCEL:
                         keyboardView.setVisibility(View.GONE);
                         break;
+
 
 
 

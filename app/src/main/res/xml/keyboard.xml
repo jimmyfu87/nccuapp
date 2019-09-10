@@ -14,7 +14,7 @@
             android:codes="57"
             android:keyLabel="9"/>
         <key
-            android:codes="6"
+            android:codes="76"
             android:keyLabel="/"/>
 
     </Row>
@@ -30,7 +30,7 @@
             android:codes="54"
             android:keyLabel="6"/>
         <key
-            android:codes="7"
+            android:codes="17"
             android:keyLabel="*"/>
 
         />
@@ -46,7 +46,7 @@
             android:codes="51"
             android:keyLabel="3" />
         <key
-            android:codes="8"
+            android:codes="69"
             android:keyLabel="-"/>
 
     </Row>
@@ -63,10 +63,10 @@
             android:isRepeatable="true"
             android:keyLabel="X" />
         <key
-            android:codes="9"
+            android:codes="81"
             android:keyLabel="+"/>
         <key
-            android:codes="10"
+            android:codes="70"
             android:keyLabel="="/>
 
     </Row>
