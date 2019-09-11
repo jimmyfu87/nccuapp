@@ -52,17 +52,16 @@ public class book_detail_adapter extends ArrayAdapter {
 
         //this code gets references to objects in the detail_listview_row.xml file
         TextView nameTextField = (TextView) rowView.findViewById(R.id.name);
-        TextView Amount_remainTextField = (TextView) rowView.findViewById(R.id.amount_remain);
         TextView Amount_startTextField = (TextView) rowView.findViewById(R.id.amount_start);
+        TextView Amount_remainTextField = (TextView) rowView.findViewById(R.id.amount_remain);
         TextView currency_typeTextField = (TextView) rowView.findViewById(R.id.currency_type);
-
         fixBtn = (Button) rowView.findViewById(R.id.fixBtn);
         deleteBtn = (Button) rowView.findViewById(R.id.deleteBtn);
 
         //this code sets the values of the objects to values from the arrays
         nameTextField.setText(nameArray.get(position));
-        Amount_remainTextField.setText(Amount_remainArray.get(position).toString());
         Amount_startTextField.setText(Amount_startArray.get(position).toString());
+        Amount_remainTextField.setText(Amount_remainArray.get(position).toString());
         currency_typeTextField.setText(currency_typeArray.get(position));
 
 
@@ -102,7 +101,7 @@ public class book_detail_adapter extends ArrayAdapter {
                         .setNegativeButton("否", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Snackbar.make(v, "You didn't remove any item", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(v, "You didn't remove any book", Snackbar.LENGTH_SHORT).show();
                             }
                         })
                         .show();
