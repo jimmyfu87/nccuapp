@@ -87,18 +87,19 @@ public class  onlineShoppingPath extends AppCompatActivity {
                     }
                 }
                 else{
-                    //這邊是發現許願池是空的處理方式，要改可以改
+                    //這邊是發現許願池是空的處理方式（使用者沒卡），要改可以改
                     android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(onlineShoppingPath.this);
                     builder.setMessage("沒有商家")
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-//                                    Intent intent = new Intent(onlineShoppingPath.this, Home.class);
-//                                    onlineShoppingPath.this.startActivity(intent);
+                                    Intent intent = new Intent(onlineShoppingPath.this, Home.class);
+                                    onlineShoppingPath.this.startActivity(intent);
                                 }
                             })
                             .create()
                             .show();
+
                 }
 //                System.out.println(channellist.get(0).getId());
 //                System.out.println(channellist.get(1).getChannel_url());
@@ -153,7 +154,14 @@ public class  onlineShoppingPath extends AppCompatActivity {
                 }
                 else{
                     //這邊是發現活動是空的處理方式，要改可以改
-
+                    setChannelList();
+                    setListViewHeightBasedOnChildren(ecommercePathListView);
+                    System.out.println("size of channellist : " + channellist.size());
+                    for(int i = 0; i < channellist.size(); i++){
+                        if(channellist.get(i).getActivitylist().isEmpty()){
+                            System.out.println("!empty!!!!!!!!!!!!!!");
+                        }
+                    }
                 }
             }
         };
@@ -199,7 +207,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = 2*totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
 
@@ -209,9 +217,11 @@ public class  onlineShoppingPath extends AppCompatActivity {
             String discountDetailtemp = "";
             this.idArray.add(this.channellist.get(i).getId());
             this.nameArray.add(this.channellist.get(i).getChannel_name());
-            for(int j = 0; j < this.channellist.get(i).getActivitylist().size(); j++){
+            if(!this.channellist.get(i).getActivitylist().isEmpty()) {
+                for(int j = 0; j < this.channellist.get(i).getActivitylist().size(); j++){
                     if(!this.channellist.get(i).getActivitylist().get(j).getRemarks().isEmpty()){
-                    discountDetailtemp += this.channellist.get(i).getActivitylist().get(j).getRemarks() +"\n";
+                        discountDetailtemp += this.channellist.get(i).getActivitylist().get(j).getRemarks() +"\n";
+                    }
                 }
             }
             discountDetailtemp = discountDetailtemp == "" ? "無優惠資訊" : discountDetailtemp;
