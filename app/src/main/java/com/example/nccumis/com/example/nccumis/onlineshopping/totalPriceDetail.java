@@ -35,17 +35,17 @@ public class totalPriceDetail extends AppCompatActivity {
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
         isCheckedPrice = (TextView)findViewById(R.id.isCheckedPrice);
-        isCheckedPrice.setText(Integer.toString(getSaveBag.getInt("isCheckedprice")));
+        isCheckedPrice.setText("\t\t"+Integer.toString(getSaveBag.getInt("isCheckedprice")));
 
         amountLong = (TextView)findViewById(R.id.activityamountLong);
         nameLong = (TextView)findViewById(R.id.activitynameLong);
         remarkLong = (TextView)findViewById(R.id.remarkLong);
         if(getSaveBag.getInt("longactivity_discount") != 0){
-            amountLong.setText(Integer.toString(getSaveBag.getInt("longactivity_discount")));
-            nameLong.setText(getSaveBag.getString("longactivity_name"));
-            remarkLong.setText(getSaveBag.getString("longactivity_remark"));
+            amountLong.setText("\t\t"+Integer.toString(getSaveBag.getInt("longactivity_discount")));
+            nameLong.setText("\t\t"+getSaveBag.getString("longactivity_name"));
+            remarkLong.setText("\t\t"+getSaveBag.getString("longactivity_remark"));
         }else {
-            amountLong.setText("長期優惠為零");
+            amountLong.setText("\t\t長期優惠為零");
         }
 
         amountShort = (TextView)findViewById(R.id.activityamountShort);
@@ -53,15 +53,15 @@ public class totalPriceDetail extends AppCompatActivity {
         remarkShort = (TextView)findViewById(R.id.remarkShort);
 
         if(getSaveBag.getInt("shortactivity_discount") != 0){
-            amountShort.setText(Integer.toString(getSaveBag.getInt("shortactivity_discount")));
-            nameShort.setText(getSaveBag.getString("shortactivity_name"));
-            remarkShort.setText(getSaveBag.getString("shortactivity_remark"));
+            amountShort.setText("\t\t"+Integer.toString(getSaveBag.getInt("shortactivity_discount")));
+            nameShort.setText("\t\t"+getSaveBag.getString("shortactivity_name"));
+            remarkShort.setText("\t\t"+getSaveBag.getString("shortactivity_remark"));
         }else {
-            amountShort.setText("短期優惠為零");
+            amountShort.setText("\t\t短期優惠為零");
         }
 
         totalprice = (TextView)findViewById(R.id.totalprice);
-        totalprice.setText(Integer.toString(getSaveBag.getInt("isCheckedprice")-getSaveBag.getInt("longactivity_discount")-getSaveBag.getInt("shortactivity_discount")));
+        totalprice.setText("\t\t"+Integer.toString(getSaveBag.getInt("isCheckedprice")-getSaveBag.getInt("longactivity_discount")-getSaveBag.getInt("shortactivity_discount")));
     }
 
     public void jumpTowishpool(){
