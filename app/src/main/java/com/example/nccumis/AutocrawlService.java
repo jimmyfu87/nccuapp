@@ -127,7 +127,8 @@ public class AutocrawlService extends Service {
             }
         }).start();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int anHour = 8*60*60*10*1000;
+        //int anHour = 8*60*60*10*1000;
+        int anHour=10*1000;
         long triggerAtTime = SystemClock.elapsedRealtime()+anHour;
         Intent i = new Intent(this,AlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(this,0,i,0);
@@ -293,8 +294,14 @@ public class AutocrawlService extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         SharedPreferences sp3 = getSharedPreferences("changeamount", MODE_PRIVATE);
         SharedPreferences.Editor editor3 = sp3.edit();
-        Intent intent = new Intent(this,Home.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this,1,intent,0);
+        Intent intent=new Intent();
+        if(sp3.getString("User",null)!=null) {
+            intent.setClass(this, wishpool.class);
+        }
+        else{
+            intent.setClass(this, Home.class);
+        }
+            PendingIntent pIntent = PendingIntent.getActivity(this,1,intent,0);
 
         Notification notification = notificationBuilder
                  .setSmallIcon(R.drawable.ic_stat_name)
