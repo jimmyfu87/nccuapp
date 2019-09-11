@@ -50,7 +50,7 @@ public class wishpool_channel extends AppCompatActivity {
     private Button refresh;
 //    private ListView CreditCardListView;
 
-    protected static ListView ProductListView;
+    protected static com.example.nccumis.MyListView ProductListView;
     private static Button totalPrice;
     private static int isCheckedprice = 0;
     private static int longactivity_discount = 0;
@@ -110,7 +110,7 @@ public class wishpool_channel extends AppCompatActivity {
         });
 
         //商品列表
-        ProductListView = (ListView)findViewById(R.id.ProductListView);
+        ProductListView = (com.example.nccumis.MyListView)findViewById(R.id.ProductListView);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -745,19 +745,19 @@ public class wishpool_channel extends AppCompatActivity {
             return;
         }
         int totalHeight = 0;
-        int saveItemHeight = 0;
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-            saveItemHeight = listItem.getMeasuredHeight();
+            totalHeight += listItem.getMeasuredHeight() + listView.getDividerHeight();
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount())) + saveItemHeight;
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
 
         listView.setLayoutParams(params);
     }
+
+
 
     public void jumpToWishpool(){
         Intent intent = new Intent(wishpool_channel.this, wishpool.class);
