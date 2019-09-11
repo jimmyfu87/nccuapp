@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.nccumis.Cardtype;
 import com.example.nccumis.Home;
 import com.example.nccumis.R;
+import com.google.api.services.drive.Drive;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -785,76 +786,113 @@ public class wishpool_channel extends AppCompatActivity {
     }
 
     public void rewebcrawl(String inputurl,String product_id){
+        if(inputurl.contains("pchome.com.tw")){
+            if(inputurl.contains("?fq")){
+                int pos=inputurl.indexOf("?fq");
+                inputurl=inputurl.substring(0,pos);
+            }
+            if(inputurl.contains("/prod")){
+                int pos=inputurl.indexOf("/prod");
+                char[] str=inputurl.toCharArray();
+                StringBuilder sb=new StringBuilder();
+                sb.append(str);
+                sb.insert(pos,"/ecapi/ecshop/prodapi/v2");
+                sb.append("&fields=Name,Price&_callback=jsonp_prod");
+                inputurl=sb.toString();
+            }
+        }
+        else if(inputurl.contains("momoshop.com.tw/goods")){
+
+        }
+        else{
+            //無法解析
+            UpdateDatabase(product_id,"delete","delete");
+            return;
+        }
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, inputurl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            doc[0] = Jsoup.parse(response);
-                            Elements title = doc[0].getElementsByTag("title");
-                            String titles = "";
-                            int edition = 0;
-                            String sb = "";
-                            String sb2 = "";
-                            for (Element element : title) {
-                                titles = titles + element;
-                                //System.out.println(titles);
+                            if(response.contains("momoshop.com.tw")) {
+                                doc[0] = Jsoup.parse(response);
+                                Elements title = doc[0].getElementsByTag("title");
+                                String titles = "";
+                                int edition = 0;
+                                String sb = "";
+                                String sb2 = "";
+                                for (Element element : title) {
+                                    titles = titles + element;
+                                    //System.out.println(titles);
+                                }
+
+                                if (titles.contains("momo購物網行動版")) {
+                                    edition = 1;
+                                } else {
+                                    edition = 2;
+                                }
+                                //System.out.println(edition);
+                                switch (edition) {
+                                    //Momo行動版
+                                    case 1:
+                                        Elements element2 = doc[0].getElementsByTag("title");
+                                        for (Element element : element2) {
+                                            sb = sb + element;
+                                            sb = sb.replace("<title>", "");
+                                            sb = sb.replace("</title>", "");
+                                            sb = sb.replace("- momo購物網行動版", "");
+                                        }
+                                        Elements elements3 = doc[0].getElementsByClass("priceArea").first().getElementsByTag("b");
+                                        for (Element element : elements3) {
+                                            sb2 = sb2 + element;
+                                            sb2 = sb2.replace("<b>", "");
+                                            sb2 = sb2.replace("</b>", "");
+                                        }
+
+                                        sb2 = sb2.replace(",", "");//移除價錢的逗號
+                                        UpdateDatabase(product_id, sb, sb2);
+                                        break;
+                                    //Momo電腦版
+                                    case 2:
+                                        Elements element4 = doc[0].getElementsByTag("title");
+                                        for (Element element : element4) {
+                                            sb = "";
+                                            sb = sb + element;
+                                            sb = sb.replace("<title>", "");
+                                            sb = sb.replace("</title>", "");
+                                            sb = sb.replace("-momo購物網", "");
+                                        }
+                                        Elements elements5 = doc[0].getElementsByClass("special").first().getElementsByTag("span");
+                                        for (Element element : elements5) {
+                                            sb2 = "";
+                                            sb2 = sb2 + element;
+                                            sb2 = sb2.replace("<span>", "");
+                                            sb2 = sb2.replace("</span>", "");
+                                        }
+
+                                        sb2 = sb2.replace(",", "");//移除價錢的逗號
+                                        UpdateDatabase(product_id, sb, sb2);
+                                        break;
+
+                                }
+                            }
+                            //Pchome爬蟲
+                            else {
+                                response=response.replace("try{jsonpcb_prodecshop(","");
+                                response=response.replace("}}catch(e){if(window.console){console.log(e);}}","");
+                                int pos=response.indexOf(":");
+                                response=response.substring(pos+1,response.length()-1);
+                                JSONObject jsonresponse=new JSONObject(response);
+
+                                String product_name=jsonresponse.getString("Name");
+                                String fprice=jsonresponse.getString("Price");
+                                JSONObject jsonresponse2=new JSONObject(fprice);
+                                String product_price=jsonresponse2.getString("P");
+
+                                UpdateDatabase(product_id,product_name,product_price);
                             }
 
-                            if (titles.contains("momo購物網行動版")) {
-                                edition = 1;
-                            } else {
-                                edition = 2;
-                            }
-                            if(!inputurl.contains("momoshop.com.tw/goods")){
-                                UpdateDatabase(product_id,"delete","delete");
-                                //Toast.makeText(getApplicationContext(), "無法解析", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            //System.out.println(edition);
-                            switch (edition) {
-                                //行動版
-                                case 1:
-                                    Elements element2 = doc[0].getElementsByTag("title");
-                                    for (Element element : element2) {
-                                        sb = sb + element;
-                                        sb = sb.replace("<title>", "");
-                                        sb = sb.replace("</title>", "");
-                                        sb = sb.replace("- momo購物網行動版", "");
-                                    }
-                                    Elements elements3 = doc[0].getElementsByClass("priceArea").first().getElementsByTag("b");
-                                    for (Element element : elements3) {
-                                        sb2 = sb2 + element;
-                                        sb2 = sb2.replace("<b>", "");
-                                        sb2 = sb2.replace("</b>", "");
-                                    }
-
-                                    sb2=sb2.replace(",","");//移除價錢的逗號
-                                    UpdateDatabase(product_id,sb,sb2);
-                                    break;
-                                //電腦版
-                                case 2:
-                                    Elements element4 = doc[0].getElementsByTag("title");
-                                    for (Element element : element4) {
-                                        sb = "";
-                                        sb = sb + element;
-                                        sb = sb.replace("<title>", "");
-                                        sb = sb.replace("</title>", "");
-                                        sb = sb.replace("-momo購物網", "");
-                                    }
-                                    Elements elements5 = doc[0].getElementsByClass("special").first().getElementsByTag("span");
-                                    for (Element element : elements5) {
-                                        sb2 = "";
-                                        sb2 = sb2 + element;
-                                        sb2 = sb2.replace("<span>", "");
-                                        sb2 = sb2.replace("</span>", "");
-                                    }
-
-                                    sb2=sb2.replace(",","");//移除價錢的逗號
-                                    UpdateDatabase(product_id,sb,sb2);
-                                    break;
-                            }
                         } catch (Exception e) {
                             UpdateDatabase(product_id,"delete","delete");
                         }
