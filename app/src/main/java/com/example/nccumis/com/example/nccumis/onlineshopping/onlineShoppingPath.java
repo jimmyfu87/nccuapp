@@ -82,9 +82,6 @@ public class  onlineShoppingPath extends AppCompatActivity {
                             String channel_url = jsonObject.getString("channel_url");
                             channellist.add(new Channel(id, channel_name, channel_url));
                         }
-                          //我移下去了，用下面的，看完把這裡刪掉
-//                        setChannelList();
-//                        setListViewHeightBasedOnChildren(ecommercePathListView);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -96,8 +93,8 @@ public class  onlineShoppingPath extends AppCompatActivity {
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(onlineShoppingPath.this, Home.class);
-                                    onlineShoppingPath.this.startActivity(intent);
+//                                    Intent intent = new Intent(onlineShoppingPath.this, Home.class);
+//                                    onlineShoppingPath.this.startActivity(intent);
                                 }
                             })
                             .create()
