@@ -119,7 +119,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         }
         toolbar = findViewById(R.id.head_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("購智帳");
+        getSupportActionBar().setTitle("iWant購");
         drawerLayout = findViewById(R.id.drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);

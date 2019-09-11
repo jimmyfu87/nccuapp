@@ -754,7 +754,7 @@ public class wishpool_channel extends AppCompatActivity {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1)) + saveItemHeight;
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount())) + saveItemHeight;
 
         listView.setLayoutParams(params);
     }
