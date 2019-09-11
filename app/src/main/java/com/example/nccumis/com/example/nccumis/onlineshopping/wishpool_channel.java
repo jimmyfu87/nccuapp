@@ -745,14 +745,17 @@ public class wishpool_channel extends AppCompatActivity {
             return;
         }
         int totalHeight = 0;
+        int saveItemHeight = 0;
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
+            saveItemHeight = listItem.getMeasuredHeight();
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1))+100;
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1)) + saveItemHeight;
+
         listView.setLayoutParams(params);
     }
 
