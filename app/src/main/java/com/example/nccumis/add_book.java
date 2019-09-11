@@ -98,7 +98,7 @@ public class add_book extends AppCompatActivity {
         });
 
         //預設帳本
-        default_book = (Switch) findViewById(R.id.default_book);
+
 
         //從bookManager返回
         Intent getSaveData = getIntent();

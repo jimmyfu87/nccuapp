@@ -88,13 +88,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
 
-        <Switch
-            android:id="@+id/default_book"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="預設帳本" />
-
     </LinearLayout>
 </LinearLayout>
 </ScrollView>
