@@ -88,9 +88,9 @@ public class book_detail_adapter extends ArrayAdapter {
                                 dbmanager.close();
                                 String bookName = nameArray.get(position);
                                 idArray.remove(position);
-                               nameArray.remove(position);
+                                nameArray.remove(position);
                                 Amount_startArray.remove(position);
-                               Amount_remainArray.remove(position);
+                                Amount_remainArray.remove(position);
                                 currency_typeArray.remove(position);
 
 
