@@ -33,16 +33,10 @@ import java.util.Map;
 
 public class Settings extends AppCompatActivity {
 
-    private EditText et_predictAmount;
-//    private CheckBox ckbox_GLORY;
-//    private CheckBox ckbox_Green;
-//    private CheckBox ckbox_Wonderful;
-//    private EditText et_Wonderful;
-//    private EditText et_GREEN;
-//    private EditText et_GLORY;
+//    private EditText et_predictAmount;
 
-    private ListView listView;
-    private ListAdapter listAdapter;
+//    private ListView listView;
+//    private ListAdapter listAdapter;
 
     private Button btn_setToHome;
     private RequestQueue queue;
