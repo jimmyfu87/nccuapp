@@ -101,14 +101,14 @@ public class productListAdapter extends ArrayAdapter {
                 if(isChecked)
                 {
                     //CheckBox狀態 : 已勾選
-                    Toast.makeText(context, nameArray.get(position) +" 已勾選", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, nameArray.get(position) +" 已勾選", Toast.LENGTH_SHORT).show();
                     isCheckArray.set(position, true);
                     wishpool_channel.setisCheckedPrice(countPrice());
                 }
                 else
                 {
                     //CheckBox狀態 : 未勾選
-                    Toast.makeText(context, nameArray.get(position) +" 已取消勾選", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, nameArray.get(position) +" 已取消勾選", Toast.LENGTH_SHORT).show();
                     isCheckArray.set(position, false);
                     wishpool_channel.setisCheckedPrice(countPrice());
                 }

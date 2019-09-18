@@ -82,7 +82,6 @@ public class wishpool_channel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishpool_channel);
-        nocardname.add("使用者無信用卡");
 
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
@@ -109,6 +108,8 @@ public class wishpool_channel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(owncardtypelist.isEmpty()){
+                    nocardname.clear();
+                    nocardname.add("使用者無信用卡");
                     singleDialogEventWhenNocard();
                 }else{
                     singleDialogEvent();
