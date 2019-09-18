@@ -61,7 +61,7 @@
         <!--</LinearLayout>-->
 
 
-        <com.example.nccumis.MyListViewListView
+        <com.example.nccumis.MyListView
             android:id="@+id/ecommercePathListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
