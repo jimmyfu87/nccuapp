@@ -120,7 +120,6 @@ public class book_detail_adapter extends ArrayAdapter {
         saveBookData.putInt("amount_start",Amount_startArray.get(position));
         saveBookData.putInt("amount_remain", Amount_remainArray.get(position));
         saveBookData.putString("currency_type", currency_typeArray.get(position));
-
         intent.putExtras(saveBookData);
         activity.startActivity(intent);
 

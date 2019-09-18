@@ -4,7 +4,9 @@ import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -71,10 +73,14 @@ public class keyboardHelper {
             public void onKey(int primaryCode, int[] keyCodes) {
                 //设置了codes属性后，点击键盘会触发该方法，回调codes的值
                 //codes值与ASCLL码对应
+                InputConnection ic = getCurrentInputConnection();
                 Editable editable = input_amount.getText();
                 int start = input_amount.getSelectionStart();
                 int end = input_amount.getSelectionEnd();
                 switch (primaryCode) {
+                    case Keyboard.KEYCODE_DONE:
+                        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
+                        break;
 
 
                     case Keyboard.KEYCODE_DELETE:
@@ -106,7 +112,11 @@ public class keyboardHelper {
             }
         };
 
-        //在显示键盘前应调用此方法，指定EditText与KeyboardView绑定
+    private InputConnection getCurrentInputConnection() {
+        return null;
+    }
+
+    //在显示键盘前应调用此方法，指定EditText与KeyboardView绑定
         public void setEditText(EditText editText) {
             this.input_amount = editText;
             //关闭进入该界面获取焦点后弹出的系统键盘

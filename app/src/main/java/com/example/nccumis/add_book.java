@@ -103,14 +103,13 @@ public class add_book extends AppCompatActivity {
         //從bookManager返回
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
-        if(getSaveBag != null){
+        if(getSaveBag != null ){
             input_bookName.setText(getSaveBag.getString("name"));
             book_name = getSaveBag.getString("name");
             input_startBudget.setText(getSaveBag.getString("amount_start"));
             budget_start = getSaveBag.getString("amount_start");
             int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency"));
-           input_currency.setSelection(currencyListPosition);
-
+            input_currency.setSelection(currencyListPosition);
         }
 
 
