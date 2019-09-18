@@ -76,11 +76,13 @@ public class wishpool_channel extends AppCompatActivity {
     private static Activity activity_short;
     private List<Cardtype> othercardtypelist=new ArrayList<Cardtype>();
     private List<Activity> activitylistwithcard=new ArrayList<Activity>();
+    private static List<String> nocardname = new ArrayList<String>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishpool_channel);
+        nocardname.add("使用者無信用卡");
 
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
@@ -106,7 +108,11 @@ public class wishpool_channel extends AppCompatActivity {
         changeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                singleDialogEvent();
+                if(owncardtypelist.isEmpty()){
+                    singleDialogEventWhenNocard();
+                }else{
+                    singleDialogEvent();
+                }
             }
         });
 
@@ -495,17 +501,31 @@ public class wishpool_channel extends AppCompatActivity {
         int shortactivity_position = 0;
 
         for(int i = 0; i < longactivitylist.size();i++){
-            if(longactivitylist.get(i).getChannel_name().equals(channel_name) && longactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
-                int longactivity_discount_temp = 0;
-                if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
-                    longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
-                }else {
-                    longactivity_discount_temp = longactivitylist.get(i).getDiscount_limit();
-                }
-                if(longactivity_discount_temp > longactivity_discount){
-                    longactivity_discount = longactivity_discount_temp;
-                    longactivity_position = i;
-                    activity_long = longactivitylist.get(longactivity_position);
+            if(longactivitylist.get(i).getChannel_name().equals(channel_name)){
+                if(!owncardnamelist.isEmpty() && longactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
+                    int longactivity_discount_temp = 0;
+                    if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
+                        longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
+                    }else {
+                        longactivity_discount_temp = longactivitylist.get(i).getDiscount_limit();
+                    }
+                    if(longactivity_discount_temp > longactivity_discount){
+                        longactivity_discount = longactivity_discount_temp;
+                        longactivity_position = i;
+                        activity_long = longactivitylist.get(longactivity_position);
+                    }
+                }else{
+                    int longactivity_discount_temp = 0;
+                    if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
+                        longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
+                    }else {
+                        longactivity_discount_temp = longactivitylist.get(i).getDiscount_limit();
+                    }
+                    if(longactivity_discount_temp > longactivity_discount){
+                        longactivity_discount = longactivity_discount_temp;
+                        longactivity_position = i;
+                        activity_long = longactivitylist.get(longactivity_position);
+                    }
                 }
 
             }
@@ -517,15 +537,28 @@ public class wishpool_channel extends AppCompatActivity {
 //        }
 
         for(int i = 0; i < shortactivitylist.size();i++){
-            if(shortactivitylist.get(i).getChannel_name().equals("channel_name")&& shortactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
-                int shortactivity_discount_temp = 0;
-                if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
-                    shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
-                }
-                if(shortactivity_discount_temp > shortactivity_discount){
-                    shortactivity_discount = shortactivity_discount_temp;
-                    shortactivity_position = i;
-                    activity_short = shortactivitylist.get(shortactivity_position);
+            if(shortactivitylist.get(i).getChannel_name().equals("channel_name")){
+                if(!owncardnamelist.isEmpty() && shortactivitylist.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
+                    int shortactivity_discount_temp = 0;
+                    if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
+                        shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
+                    }
+                    if(shortactivity_discount_temp > shortactivity_discount){
+                        shortactivity_discount = shortactivity_discount_temp;
+                        shortactivity_position = i;
+                        activity_short = shortactivitylist.get(shortactivity_position);
+                    }
+
+                }else {
+                    int shortactivity_discount_temp = 0;
+                    if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
+                        shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
+                    }
+                    if(shortactivity_discount_temp > shortactivity_discount){
+                        shortactivity_discount = shortactivity_discount_temp;
+                        shortactivity_position = i;
+                        activity_short = shortactivitylist.get(shortactivity_position);
+                    }
                 }
             }
         }
@@ -600,6 +633,8 @@ public class wishpool_channel extends AppCompatActivity {
             tempcardtypelist.remove(position);
             count++;
         }
+
+
     }
 
 
@@ -726,6 +761,25 @@ public class wishpool_channel extends AppCompatActivity {
                         updatePrice();
                         updateActivity();
                         Toast.makeText(wishpool_channel.this, "你選擇的是"+owncardnamelist.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    public void singleDialogEventWhenNocard(){
+        new AlertDialog.Builder(wishpool_channel.this)
+                .setSingleChoiceItems(nocardname.toArray(new String[nocardname.size()]), 0,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(wishpool_channel.this, "你選擇的是"+nocardname.get(0), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })

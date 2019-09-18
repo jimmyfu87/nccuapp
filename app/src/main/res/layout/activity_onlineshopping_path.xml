@@ -61,11 +61,34 @@
         <!--</LinearLayout>-->
 
 
-        <com.example.nccumis.MyListView
+        <com.example.nccumis.MyListViewListView
             android:id="@+id/ecommercePathListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/pic"-->
+                <!--android:textSize="50dp"-->
+                <!--android:layout_marginLeft="120dip"-->
+                <!--android:layout_marginTop="100dip"-->
+                <!--android:text="bello"/>-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="bottom|center"-->
+                <!--android:layout_marginLeft="20dip"-->
+                <!--android:layout_marginTop="100dip"-->
+                <!--android:src="@drawable/minion" />-->
+        <!--</RelativeLayout>-->
+
+
 
     </LinearLayout>
 </ScrollView>
