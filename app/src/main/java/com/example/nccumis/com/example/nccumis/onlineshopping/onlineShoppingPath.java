@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nccumis.Home;
+import com.example.nccumis.MyListView;
 import com.example.nccumis.R;
 
 import org.json.JSONArray;
@@ -32,7 +33,7 @@ import java.util.Map;
 
 public class  onlineShoppingPath extends AppCompatActivity {
     private Button lastPage;
-    private ListView ecommercePathListView;
+    protected static com.example.nccumis.MyListView ecommercePathListView;
     private EditText inputPath;
     private Button searchPath;
     private List<Channel> channellist=new ArrayList<Channel>();
@@ -66,7 +67,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
 //        });
 
 
-        ecommercePathListView = (ListView)findViewById(R.id.ecommercePathListView);
+        ecommercePathListView = (MyListView)findViewById(R.id.ecommercePathListView);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -203,11 +204,11 @@ public class  onlineShoppingPath extends AppCompatActivity {
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
+            totalHeight += listItem.getMeasuredHeight()+ listView.getDividerHeight();
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = 2*totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
 
