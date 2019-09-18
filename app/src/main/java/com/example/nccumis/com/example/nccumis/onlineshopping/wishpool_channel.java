@@ -107,7 +107,7 @@ public class wishpool_channel extends AppCompatActivity {
         changeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(owncardtypelist.isEmpty()){
+                if(owncardnamelist.isEmpty()){
                     nocardname.clear();
                     nocardname.add("使用者無信用卡");
                     singleDialogEventWhenNocard();
