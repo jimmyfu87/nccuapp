@@ -318,8 +318,8 @@ public class OnlineShopping extends AppCompatActivity {
                 System.out.println(response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if (success) {
+                    String success = jsonResponse.getString("success");
+                    if (success.equals("success")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
                         builder.setMessage("成功加入許願池")
                                 .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
@@ -330,7 +330,19 @@ public class OnlineShopping extends AppCompatActivity {
                                 .create()
                                 .show();
 
-                    } else {
+                    }
+                    else if(success.equals("same")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
+                        builder.setMessage("已加入過許願池")
+                                .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+                    else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(OnlineShopping.this);
                         builder.setMessage("加入許願池失敗")
                                 .setPositiveButton("知道了", null)
