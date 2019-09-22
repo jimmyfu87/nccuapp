@@ -20,19 +20,15 @@ import java.util.List;
 //流水帳
 public class book_detail_adapter extends ArrayAdapter {
     //to reference the Activity
-
-
     private ArrayList<String> selectBooks;
     private final Activity context;
     private final List<Integer> idArray;
     private final List<String> nameArray;
-    private final List<Integer> Amount_startArray;
-    private final List<Integer> Amount_remainArray;
+    private final List<Integer> amount_startArray;
+    private final List<Integer> amount_remainArray;
     private final List<String> currency_typeArray;
-
     private Button fixBtn;
     private Button deleteBtn;
-
     //, Button fixParam, Button deleteParam
     public book_detail_adapter (Activity context, List<Integer> idArrayParam , List<String> nameArrayParam, List<Integer> Amount_startArrayParam, List<Integer> Amount_remainArrayParam, List<String> currency_typeArrayParam){
         super(context, R.layout.activity_book_adapter,nameArrayParam);
@@ -40,17 +36,13 @@ public class book_detail_adapter extends ArrayAdapter {
         this.idArray = idArrayParam;
         this.context=context;
         this.nameArray = nameArrayParam;
-        this.Amount_remainArray = Amount_remainArrayParam;
-        this.Amount_startArray = Amount_startArrayParam;
+        this.amount_remainArray = Amount_remainArrayParam;
+        this.amount_startArray = Amount_startArrayParam;
         this.currency_typeArray = currency_typeArrayParam;
-
     }
-
     public View getView(final int position, final View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.activity_book_adapter, null,true);
-
-        //this code gets references to objects in the detail_listview_row.xml file
         TextView nameTextField = (TextView) rowView.findViewById(R.id.name);
         TextView Amount_startTextField = (TextView) rowView.findViewById(R.id.amount_start);
         TextView Amount_remainTextField = (TextView) rowView.findViewById(R.id.amount_remain);
@@ -58,12 +50,10 @@ public class book_detail_adapter extends ArrayAdapter {
         fixBtn = (Button) rowView.findViewById(R.id.fixBtn);
         deleteBtn = (Button) rowView.findViewById(R.id.deleteBtn);
 
-        //this code sets the values of the objects to values from the arrays
         nameTextField.setText(nameArray.get(position));
-        Amount_startTextField.setText(Amount_startArray.get(position).toString());
-        Amount_remainTextField.setText(Amount_remainArray.get(position).toString());
+        Amount_startTextField.setText(amount_startArray.get(position).toString());
+        Amount_remainTextField.setText(amount_remainArray.get(position).toString());
         currency_typeTextField.setText(currency_typeArray.get(position));
-
 
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +79,9 @@ public class book_detail_adapter extends ArrayAdapter {
                                 String bookName = nameArray.get(position);
                                 idArray.remove(position);
                                 nameArray.remove(position);
-                                Amount_startArray.remove(position);
-                                Amount_remainArray.remove(position);
+                                amount_startArray.remove(position);
+                                amount_remainArray.remove(position);
                                 currency_typeArray.remove(position);
-
-
                                 notifyDataSetChanged();
                                 Snackbar.make(v, "You just remove  " + bookName , Snackbar.LENGTH_SHORT).show();
                             }
@@ -105,10 +93,8 @@ public class book_detail_adapter extends ArrayAdapter {
                             }
                         })
                         .show();
-
             }
         });
-
         return rowView;
     };
 
@@ -117,8 +103,8 @@ public class book_detail_adapter extends ArrayAdapter {
         Bundle saveBookData = new Bundle();
         saveBookData.putInt("id",idArray.get(position));
         saveBookData.putString("name", nameArray.get(position).toString());
-        saveBookData.putInt("amount_start",Amount_startArray.get(position));
-        saveBookData.putInt("amount_remain", Amount_remainArray.get(position));
+        saveBookData.putString("amount_start",amount_startArray.get(position).toString());
+        saveBookData.putInt("amount_remain", amount_remainArray.get(position));
         saveBookData.putString("currency_type", currency_typeArray.get(position));
         intent.putExtras(saveBookData);
         activity.startActivity(intent);

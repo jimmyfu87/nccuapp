@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //
 public class add_book extends AppCompatActivity {
     private Button lastPage;
@@ -24,10 +27,12 @@ public class add_book extends AppCompatActivity {
     private Intent savedDataFromExpense;
     private Bundle saveBag;
     private int JumpToWhere = 0;
+    public List<String> dbBookData = new ArrayList<>();
+    private List<String> book = new ArrayList<String>();
 
     private String i_currencyid;
-    private String book_name,currency_type;
-    private String budget_start;
+    private String book_name,currency_type,budget_start;
+
 
 
 
@@ -110,10 +115,25 @@ public class add_book extends AppCompatActivity {
             budget_start = getSaveBag.getString("amount_start");
             int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency"));
             input_currency.setSelection(currencyListPosition);
+            updateBook();
+        }
+    }
+
+    public void updateBook(){
+        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+        dbmanager.open();
+        this.dbBookData = dbmanager.fetchBook();
+        dbmanager.close();
+        for(int i = 0; i<dbBookData.size(); i++){
+            if(book.contains(dbBookData.get(i))){
+                continue;
+            }else{
+                this.book.add(dbBookData.get(i));
+            }
         }
 
-
     }
+
 
     //檢查輸入的值是否正確
     public boolean checkInputInfo(){

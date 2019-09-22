@@ -43,32 +43,21 @@ public class add_expense extends AppCompatActivity {
     private Spinner input_type;
     private Spinner input_book;                          //改成final才能使用
     private EditText input_note;
-
     private RadioButton newBookBtn;
     private RadioButton newTypeBtn;
-
-//    private Button scanInvoice;
-//    private Button regularExpense;
-
-
     private List<String> type = new ArrayList<String>();         //傳給ArrayAdapter的參數
     private List<String> book = new ArrayList<String>();
-
     public List<Type> dbTypeData = new ArrayList<>();
     public List<String> dbBookData = new ArrayList<>();       //接資料庫資料
-
     private String saveDetailStartdate ="";
     private String saveDetailEnddate ="";
     private ArrayList<String> saveDetailBooksArray = new ArrayList<String>();
     private String saveDetailDate="";
     private int saveDetailId =0;
-
     ViewPager pager;
     ArrayList<View> pagerList;
-
     private EditText i_userid;                  //宣告需要輸入的變數的EditText
     private String i_price,i_note,i_date,i_type_name,i_book_name;
-
     private GestureDetectorCompat geatureObject;
     private keyboardHelper helper;
     private KeyboardView keyboard2;

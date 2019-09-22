@@ -13,6 +13,8 @@ import android.widget.EditText;
 public class keyboardHelper {
 
 
+
+
     private Context context;
     private KeyboardView keyboardView;
     private EditText input_amount;
@@ -73,13 +75,37 @@ public class keyboardHelper {
             public void onKey(int primaryCode, int[] keyCodes) {
                 //设置了codes属性后，点击键盘会触发该方法，回调codes的值
                 //codes值与ASCLL码对应
+
+
                 InputConnection ic = getCurrentInputConnection();
                 Editable editable = input_amount.getText();
                 int start = input_amount.getSelectionStart();
                 int end = input_amount.getSelectionEnd();
                 switch (primaryCode) {
                     case Keyboard.KEYCODE_DONE:
-                        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
+                        float  mValueOne = 0, mValueTwo = 0;
+                        boolean crunchifyAddition = false, mSubtract = false, crunchifyMultiplication = false, crunchifyDivision = false;
+                        if (crunchifyAddition == true) {
+                            input_amount.setText(mValueOne + mValueTwo + "");
+                            crunchifyAddition = false;
+                        }
+
+                        if (mSubtract == true) {
+                            input_amount.setText(mValueOne - mValueTwo + "");
+                            mSubtract = false;
+                        }
+
+                        if (crunchifyMultiplication == true) {
+                            input_amount.setText(mValueOne * mValueTwo + "");
+                            crunchifyMultiplication = false;
+                        }
+
+                        if (crunchifyDivision == true) {
+                            input_amount.setText(mValueOne / mValueTwo + "");
+                            crunchifyDivision = false;
+                        }
+
+
                         break;
 
 
