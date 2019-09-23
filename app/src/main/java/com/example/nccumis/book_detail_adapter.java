@@ -2,7 +2,6 @@ package com.example.nccumis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,7 +59,7 @@ public class book_detail_adapter extends ArrayAdapter {
         TextView numberTextField = (TextView) rowView.findViewById(R.id.number);
         TextView dateTextField = (TextView) rowView.findViewById(R.id.date);
         TextView priceTextField = (TextView) rowView.findViewById(R.id.price);
-        TextView noteTextField = (TextView) rowView.findViewById(R.id.note);
+        TextView noteTextField = (TextView) rowView.findViewById(R.id.note_input);
         TextView bookTextField = (TextView) rowView.findViewById(R.id.book) ;
         fixBtn = (Button) rowView.findViewById(R.id.fixBtn);
         deleteBtn = (Button) rowView.findViewById(R.id.deleteBtn);
