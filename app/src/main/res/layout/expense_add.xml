@@ -49,55 +49,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <android.support.constraint.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="258dp"
-                android:layout_height="226dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginLeft="48dp"
-                android:layout_marginTop="105dp"
-                android:layout_marginEnd="239dp"
-                android:layout_marginRight="239dp"
-                android:layout_marginBottom="412dp"
-                android:contentDescription="@string/todo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/ic_bluedot" />
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="100dp"
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="金額"
-                tools:layout_editor_absoluteX="123dp"
-                tools:layout_editor_absoluteY="180dp" />
-        </android.support.constraint.ConstraintLayout>
-            <!--<TextView-->
-                <!--android:id="@+id/amount"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:text="金額" />-->
-        <!---->
-        <!--<EditText-->
-                <!--android:id="@+id/amount_input"-->
-                <!--android:layout_width="200dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:inputType="numberDecimal" />-->
+                android:layout_marginTop="10dp"
+                android:text="金額" />
+
+        <EditText
+                android:id="@+id/amount_input"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:inputType="numberDecimal" />
 
         <TextView
             android:id="@+id/date"
