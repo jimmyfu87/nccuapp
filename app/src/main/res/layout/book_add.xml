@@ -23,7 +23,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <TextView
-            android:id="@+id/newBook"
+            android:id="@+id/fixedBook"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

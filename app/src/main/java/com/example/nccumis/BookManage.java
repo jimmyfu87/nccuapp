@@ -48,9 +48,11 @@ public class BookManage extends AppCompatActivity {
         setContentView(R.layout.activity_book_management);
         btn_newBook=(Button)findViewById(R.id.btn_newBook);
         BookListView = (ListView)findViewById(R.id.book_listview);
+        clearList();
         setBookFromDBList();
         setList();
         setListViewHeightBasedOnChildren(BookListView);
+
 
         btn_newBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +74,16 @@ public class BookManage extends AppCompatActivity {
         getBookNameFromDB=dbmanager.fetchBook();
         getBookArrayFromDB=dbmanager.fetchBookallattribute(getBookNameFromDB);
         dbmanager.close();
+    }
+
+    public void clearList(){
+        this.getBookArrayFromDB.clear();
+        this.getBookNameFromDB.clear();
+        this.idArray.clear();
+        this.nameArray.clear();
+        this.amount_remainArray.clear();
+        this.amount_startArray.clear();
+        this.currencytypeArray.clear();
     }
     public void initialData(){
         for(int i=0; i<this.getBookArrayFromDB.size();i++){

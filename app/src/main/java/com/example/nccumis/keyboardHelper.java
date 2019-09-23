@@ -11,15 +11,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class keyboardHelper {
-
-
-
-
     private Context context;
     private KeyboardView keyboardView;
     private EditText input_amount;
     private Keyboard k1;// 自定义键盘
-   private KeyboardCallBack callBack;//按键回调监听
+    private KeyboardCallBack callBack;//按键回调监听
+    String NU1 = "0",NU2 = "0";
+     int Cal_index = 0;
+     int Index_value = 0;
 
     public keyboardHelper(Context context, KeyboardView keyboardView) {
         this(context, keyboardView, null);
@@ -83,33 +82,10 @@ public class keyboardHelper {
                 int end = input_amount.getSelectionEnd();
                 switch (primaryCode) {
                     case Keyboard.KEYCODE_DONE:
-                        float  mValueOne = 0, mValueTwo = 0;
-                        boolean crunchifyAddition = false, mSubtract = false, crunchifyMultiplication = false, crunchifyDivision = false;
-                        if (crunchifyAddition == true) {
-                            input_amount.setText(mValueOne + mValueTwo + "");
-                            crunchifyAddition = false;
-                        }
-
-                        if (mSubtract == true) {
-                            input_amount.setText(mValueOne - mValueTwo + "");
-                            mSubtract = false;
-                        }
-
-                        if (crunchifyMultiplication == true) {
-                            input_amount.setText(mValueOne * mValueTwo + "");
-                            crunchifyMultiplication = false;
-                        }
-
-                        if (crunchifyDivision == true) {
-                            input_amount.setText(mValueOne / mValueTwo + "");
-                            crunchifyDivision = false;
-                        }
-
-
+                        calculate();
                         break;
 
-
-                    case Keyboard.KEYCODE_DELETE:
+                        case Keyboard.KEYCODE_DELETE:
                         if (editable != null && editable.length() > 0) {
                             if (start == end) {
                                 editable.delete(start - 1, start);
@@ -137,6 +113,65 @@ public class keyboardHelper {
                 }
             }
         };
+
+    public void calculate() {
+        int Cal_value = 0;
+        String Cal_Nu = "";
+        double x;
+        String Ans;
+        switch (Cal_value){
+            case 0:
+                NU1 = Cal_Nu;
+                Cal_index = 0;
+                input_amount.setText("");
+                break;
+            case 1:
+                NU1 = Cal_Nu;
+                Cal_index = 1;
+                input_amount.setText("");
+                break;
+            case 2:
+                NU1 = Cal_Nu;
+                Cal_index = 2;
+                input_amount.setText("");
+                break;
+            case 3:
+                NU1 = Cal_Nu;
+                Cal_index = 3;
+                input_amount.setText("");
+                break;
+            case 99:
+                NU2 = input_amount.getText().toString();
+                double i =Double.valueOf(NU1);
+                double j =Double.valueOf(NU2);
+                switch (Cal_index){
+                    case 0:
+                        x = i + j;
+                        Ans = Double.toString(x);
+                        input_amount.setText(Ans);
+                        break;
+                    case 1:
+                        x = i - j;
+                        Ans = Double.toString(x);
+                        input_amount.setText(Ans);
+                        break;
+                    case  2:
+                        x = i * j;
+                        Ans = Double.toString(x);
+                        input_amount.setText(Ans);
+                        break;
+                    case 3:
+                        x = i / j;
+                        Ans = Double.toString(x);
+                        input_amount.setText(Ans);
+                        break;
+                }
+                break;
+        }
+
+
+
+    }
 
     private InputConnection getCurrentInputConnection() {
         return null;
