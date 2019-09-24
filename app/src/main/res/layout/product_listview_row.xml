@@ -70,7 +70,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp" >
-
+        <Button
+            android:id="@+id/record"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="記帳"
+            android:layout_gravity="center_horizontal|left"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
         <Button
             android:id="@+id/deleteBtn"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
