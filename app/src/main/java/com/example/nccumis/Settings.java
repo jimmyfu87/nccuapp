@@ -32,12 +32,6 @@ import java.util.Map;
 
 
 public class Settings extends AppCompatActivity {
-
-//    private EditText et_predictAmount;
-
-//    private ListView listView;
-//    private ListAdapter listAdapter;
-
     private Button btn_setToHome;
     private RequestQueue queue;
     private List<Cardtype> owncardtype_list=new ArrayList<Cardtype>();
@@ -47,21 +41,10 @@ public class Settings extends AppCompatActivity {
     private Button deletecardrelation;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-//        ckbox_GLORY = (CheckBox) findViewById(R.id.ckbox_GLORY);
-//        ckbox_Green = (CheckBox) findViewById(R.id.ckbox_Green);
-//        ckbox_Wonderful = (CheckBox) findViewById(R.id.ckbox_Wonderful);
-//        et_GLORY = (EditText) findViewById(R.id.et_GLORY);
-//        et_GREEN = (EditText) findViewById(R.id.et_GREEN);
-//        et_Wonderful = (EditText) findViewById(R.id.et_Wonderful);
-//        listView = (ListView) findViewById(R.id.listView);
-//        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, new String[]{"GLORY+世界卡", "Living Green綠活卡", "Wonderful星璨卡"});
-//        listView.setAdapter(listAdapter);
 
         btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
         password_change = (Button) findViewById(R.id.password_change);
@@ -87,7 +70,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        //owncardtype_list使用者沒有的卡
+        //owncardtype_list使用者有的卡
         Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
