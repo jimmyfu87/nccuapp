@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 //流水帳
 public class book_detail_adapter extends ArrayAdapter {
@@ -26,9 +27,11 @@ public class book_detail_adapter extends ArrayAdapter {
     private final List<String> nameArray;
     private final List<Integer> amount_startArray;
     private final List<Integer> amount_remainArray;
-    private final List<String> currency_typeArray;
+    private final List<String> i_currencyidArray;
     private Button fixBtn;
     private Button deleteBtn;
+
+
     //, Button fixParam, Button deleteParam
     public book_detail_adapter (Activity context, List<Integer> idArrayParam , List<String> nameArrayParam, List<Integer> Amount_startArrayParam, List<Integer> Amount_remainArrayParam, List<String> currency_typeArrayParam){
         super(context, R.layout.activity_book_adapter,nameArrayParam);
@@ -38,7 +41,7 @@ public class book_detail_adapter extends ArrayAdapter {
         this.nameArray = nameArrayParam;
         this.amount_remainArray = Amount_remainArrayParam;
         this.amount_startArray = Amount_startArrayParam;
-        this.currency_typeArray = currency_typeArrayParam;
+        this.i_currencyidArray = currency_typeArrayParam;
     }
     public View getView(final int position, final View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
@@ -53,11 +56,13 @@ public class book_detail_adapter extends ArrayAdapter {
         nameTextField.setText(nameArray.get(position));
         Amount_startTextField.setText(amount_startArray.get(position).toString());
         Amount_remainTextField.setText(amount_remainArray.get(position).toString());
-        currency_typeTextField.setText(currency_typeArray.get(position));
+        currency_typeTextField.setText(i_currencyidArray.get(position));
 
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 jumpToadd_book(position, context);
             }
         });
@@ -81,7 +86,7 @@ public class book_detail_adapter extends ArrayAdapter {
                                 nameArray.remove(position);
                                 amount_startArray.remove(position);
                                 amount_remainArray.remove(position);
-                                currency_typeArray.remove(position);
+                                i_currencyidArray.remove(position);
                                 notifyDataSetChanged();
                                 Snackbar.make(v, "You just remove  " + bookName , Snackbar.LENGTH_SHORT).show();
                             }
@@ -98,6 +103,7 @@ public class book_detail_adapter extends ArrayAdapter {
         return rowView;
     };
 
+
     public void jumpToadd_book(int position,Activity activity){
         Intent intent = new Intent(activity, add_book.class);
         Bundle saveBookData = new Bundle();
@@ -105,7 +111,8 @@ public class book_detail_adapter extends ArrayAdapter {
         saveBookData.putString("name", nameArray.get(position).toString());
         saveBookData.putString("amount_start",amount_startArray.get(position).toString());
         saveBookData.putInt("amount_remain", amount_remainArray.get(position));
-        saveBookData.putString("currency_type", currency_typeArray.get(position));
+        saveBookData.putString("currency_type", i_currencyidArray.get(position));
+        saveBookData.putBoolean("FromBookManage", true);
         intent.putExtras(saveBookData);
         activity.startActivity(intent);
 

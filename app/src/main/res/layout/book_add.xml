@@ -23,13 +23,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <TextView
-            android:id="@+id/fixedBook"
+            android:id="@+id/newBook"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:text="新增帳本" />
+            android:text="帳本" />
 
         <Button
             android:id="@+id/confirm"

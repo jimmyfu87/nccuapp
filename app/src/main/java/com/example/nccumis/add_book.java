@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,9 @@ public class add_book extends AppCompatActivity {
 
     private String i_currencyid;
     private String book_name,currency_type,budget_start;
+    private TextView fixedbook;
+
+
 
 
 
@@ -50,6 +54,8 @@ public class add_book extends AppCompatActivity {
 
         //起始金額
         input_startBudget = (EditText) findViewById(R.id.startBudget_input);
+        fixedbook = (TextView)findViewById(R.id.newBook);
+
 
 
         //不儲存回 新增支出 或 新增收入
@@ -57,7 +63,12 @@ public class add_book extends AppCompatActivity {
         lastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToaddSpend(saveBag);
+                if(saveBag.getBoolean("FromBookManage")){
+                    jumptoBookManage();
+                }else {
+                    jumpToaddSpend(saveBag);
+                }
+
             }
         });
 
@@ -68,15 +79,26 @@ public class add_book extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkInputInfo()){
-                    //到下一頁
                     String i_bookName=input_bookName.getText().toString();
                     int i_startBudget=Integer.parseInt(input_startBudget.getText().toString());
                     int i_remain=i_startBudget;
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
-                    dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                    dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid);            //將資料放到資料庫
+                    dbmanager.open();
+                    //從帳本管理來
+                    if(saveBag.getBoolean("FromBookManage")){
+                        updateBook();
+                        //int book_id,String book_name,int amount_start,int amount_remain,String currency_type
+                        int book_id = saveBag.getInt("id");
+                        dbmanager.updateBook(book_id,i_bookName,i_startBudget,i_currencyid);
+
+                        jumptoBookManage();
+                    }else{
+                        //到下一頁
+                        dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid);            //將資料放到資料庫
+                        jumpToaddSpend(saveBag);
+                    }
                     dbmanager.close();                                                                      //關閉資料庫
-                    jumpToaddSpend(saveBag);
+
                 }
             }
         });
@@ -113,13 +135,19 @@ public class add_book extends AppCompatActivity {
             book_name = getSaveBag.getString("name");
             input_startBudget.setText(getSaveBag.getString("amount_start"));
             budget_start = getSaveBag.getString("amount_start");
-            int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency"));
+            int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency_type"));
             input_currency.setSelection(currencyListPosition);
             updateBook();
         }
     }
 
+    public void jumptoBookManage() {
+        Intent intent = new Intent(add_book.this, BookManage.class);
+        startActivity(intent);
+    }
+
     public void updateBook(){
+
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
         dbmanager.open();
         this.dbBookData = dbmanager.fetchBook();
@@ -133,7 +161,6 @@ public class add_book extends AppCompatActivity {
         }
 
     }
-
 
     //檢查輸入的值是否正確
     public boolean checkInputInfo(){

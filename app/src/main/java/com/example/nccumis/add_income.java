@@ -452,6 +452,7 @@ public class add_income extends AppCompatActivity {
         saveIncomeData.putString("type",input_type.getSelectedItem().toString());
         saveIncomeData.putString("book",input_book.getSelectedItem().toString());
         saveIncomeData.putString("note",input_note.getText().toString());
+        saveIncomeData.putBoolean("FromBookManage", false);
         intent.putExtras(saveIncomeData);
         startActivity(intent);
 
