@@ -305,7 +305,12 @@ public class add_expense extends AppCompatActivity {
             }
 
         }
-
+        Intent getpoolrecord = getIntent();
+        Bundle poolrecord = getpoolrecord.getExtras();
+        if(poolrecord != null){
+            input_amount.setText(poolrecord.getString("product_price"));
+            input_note.setText(poolrecord.getString("product_name"));
+        }
 
         //固定支出
 //        regularExpense = (Button) findViewById(R.id.regularExpense);

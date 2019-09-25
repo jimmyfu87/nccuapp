@@ -2,6 +2,7 @@ package com.example.nccumis.com.example.nccumis.onlineshopping;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nccumis.R;
+import com.example.nccumis.add_book;
+import com.example.nccumis.add_expense;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +51,7 @@ public class productListAdapter extends ArrayAdapter {
     private Button productWebBtn;
     private int sizeOfList;
     private SharedPreferences sp;
+    private Button record;
 
 
     public productListAdapter(Activity context, String channel_nameParam, String channel_webHomeParam, List<String> urlArrayParam ,List<Integer> idArrayParam, List<String> nameArrayParam, List<Integer> priceArrayParam, List<String> uploadTimeArrayParam){
@@ -84,6 +88,7 @@ public class productListAdapter extends ArrayAdapter {
         check = (CheckBox) rowView.findViewById(R.id.check);
         deleteBtn =(Button)rowView.findViewById(R.id.deleteBtn);
         productWebBtn = (Button)rowView.findViewById(R.id.productWebBtn);
+        record=(Button)rowView.findViewById(R.id.record);
 //        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -173,12 +178,66 @@ public class productListAdapter extends ArrayAdapter {
             }
         });
 
+        record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(context)
+                        .setTitle("記帳提醒")
+                        .setMessage("是否要將此商品記帳並移除許願池？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String record_name = nameArray.get(position);   //要刪除的product name
+                                int record_id = idArray.get(position);      //要刪除的product id
+                                int record_price=priceArray.get(position);
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        System.out.println(response);
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if (success) {
+                                                idArray.remove(position);
+                                                nameArray.remove(position);
+                                                priceArray.remove(position);
+                                                notifyDataSetChanged();
+                                                Snackbar.make(v, "You just remove No." + record_name +" item", Snackbar.LENGTH_SHORT).show();
+                                                wishpool_channel.setListViewHeightBasedOnChildren(wishpool_channel.ProductListView);
+                                                jumpToadd_expense_withrecord(record_price,record_name);
+
+                                            } else {
+                                                Snackbar.make(v, "刪除失敗", Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                DeleteproductRequest deleteproductRequest = new DeleteproductRequest(String.valueOf(record_id),responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(getContext());
+                                queue.add(deleteproductRequest);
+
+                            }
+                        })
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Snackbar.make(v, "You didn't remove any item", Snackbar.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
+            }
+        });
+
         //this code sets the values of the objects to values from the arrays
 //        pictureTextField.setText(pictureArray.get(position).toString());
         nameTextField.setText(nameArray.get(position));
         priceTextField.setText(priceArray.get(position).toString());
         uploadTimeTextField.setText(uploadTimeArray.get(position));
         return rowView;
+
+
     }
 
     public int countPrice(){
@@ -213,5 +272,15 @@ public class productListAdapter extends ArrayAdapter {
         saveWishpoolProductData.putString("channel_webHome", channel_webHome);
         intent.putExtras(saveWishpoolProductData);
         activity.startActivity(intent);
+    }
+    public void jumpToadd_expense_withrecord(int product_price_int,String product_name){
+        String product_price=String.valueOf(product_price_int);
+        Intent intent= new Intent(this.context,add_expense.class);
+        intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle poolrecord = new Bundle();
+        poolrecord.putString("product_price",product_price);
+        poolrecord.putString("product_name",product_name);
+        intent.putExtras(poolrecord);
+        this.context.startActivity(intent);
     }
 }
