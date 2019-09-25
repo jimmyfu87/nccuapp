@@ -155,6 +155,8 @@
             <!--android:layout_marginTop="10dp"-->
             <!--android:text="" />-->
 
+
+
         <TextView
             android:id="@+id/note_input"
             android:layout_width="match_parent"

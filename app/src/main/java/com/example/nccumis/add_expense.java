@@ -26,9 +26,6 @@ import java.util.List;
 
 import android.content.Intent;
 
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
-
 public class add_expense extends AppCompatActivity {
     private static final int EXPENSE = -1;
     private boolean detail = false;
