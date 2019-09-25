@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent" android:layout_height="fill_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:orientation="vertical">
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/lastPage"
-                style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="上一頁"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:background="@drawable/backup_btn" />
 
-            <Button
-                style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="許願池通路選擇" />
+            <ImageView
+                android:id="@+id/topbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/topbar_wishpool" />
 
-        </LinearLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="#AAAAAA"
-            android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:background="#AAAAAA"-->
+            <!--android:layout_marginTop="10dp" />-->
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/header"
             android:orientation="vertical">
 
             <ListView
@@ -54,5 +49,5 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

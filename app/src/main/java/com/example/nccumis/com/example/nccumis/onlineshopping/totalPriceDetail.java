@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nccumis.R;
 
@@ -17,8 +18,10 @@ public class totalPriceDetail extends AppCompatActivity {
     private TextView amountShort;
     private TextView nameLong;
     private TextView nameShort;
-    private TextView remarkLong;
-    private TextView remarkShort;
+    private Button remarkLong;
+    private Button remarkShort;
+    private String remarkLongText;
+    private String remarkShortText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,33 +38,51 @@ public class totalPriceDetail extends AppCompatActivity {
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
         isCheckedPrice = (TextView)findViewById(R.id.isCheckedPrice);
-        isCheckedPrice.setText("\t\t"+Integer.toString(getSaveBag.getInt("isCheckedprice")));
+        isCheckedPrice.setText(Integer.toString(getSaveBag.getInt("isCheckedprice")));
 
         amountLong = (TextView)findViewById(R.id.activityamountLong);
         nameLong = (TextView)findViewById(R.id.activitynameLong);
-        remarkLong = (TextView)findViewById(R.id.remarkLong);
+        remarkLong = (Button) findViewById(R.id.remarkLong);
         if(getSaveBag.getInt("longactivity_discount") != 0){
-            amountLong.setText("\t\t"+Integer.toString(getSaveBag.getInt("longactivity_discount")));
-            nameLong.setText("\t\t"+getSaveBag.getString("longactivity_name"));
-            remarkLong.setText("\t\t"+getSaveBag.getString("longactivity_remark"));
+            amountLong.setText(Integer.toString(getSaveBag.getInt("longactivity_discount")));
+            nameLong.setText(getSaveBag.getString("longactivity_name"));
+            remarkLongText = getSaveBag.getString("longactivity_remark");
         }else {
-            amountLong.setText("\t\t長期優惠為零");
+            amountLong.setText("長期優惠為零");
         }
 
         amountShort = (TextView)findViewById(R.id.activityamountShort);
         nameShort = (TextView)findViewById(R.id.activitynameShort);
-        remarkShort = (TextView)findViewById(R.id.remarkShort);
+        remarkShort = (Button) findViewById(R.id.remarkShort);
 
         if(getSaveBag.getInt("shortactivity_discount") != 0){
-            amountShort.setText("\t\t"+Integer.toString(getSaveBag.getInt("shortactivity_discount")));
-            nameShort.setText("\t\t"+getSaveBag.getString("shortactivity_name"));
-            remarkShort.setText("\t\t"+getSaveBag.getString("shortactivity_remark"));
+            amountShort.setText(Integer.toString(getSaveBag.getInt("shortactivity_discount")));
+            nameShort.setText(getSaveBag.getString("shortactivity_name"));
+            remarkShortText = getSaveBag.getString("shortactivity_remark");
         }else {
-            amountShort.setText("\t\t短期優惠為零");
+            amountShort.setText("短期優惠為零");
         }
 
+        remarkLong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remarkLongText = (remarkLongText == null) ? "無長期優惠備註" : remarkLongText ;
+                Toast.makeText(totalPriceDetail.this,
+                        remarkLongText, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        remarkShort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remarkShortText = (remarkShortText == null) ? "無短期優惠備註" : remarkShortText ;
+                Toast.makeText(totalPriceDetail.this,
+                        remarkShortText, Toast.LENGTH_LONG).show();
+            }
+        });
+
         totalprice = (TextView)findViewById(R.id.totalprice);
-        totalprice.setText("\t\t"+Integer.toString(getSaveBag.getInt("isCheckedprice")-getSaveBag.getInt("longactivity_discount")-getSaveBag.getInt("shortactivity_discount")));
+        totalprice.setText(Integer.toString(getSaveBag.getInt("isCheckedprice")-getSaveBag.getInt("longactivity_discount")-getSaveBag.getInt("shortactivity_discount")));
     }
 
     public void jumpTowishpool(){

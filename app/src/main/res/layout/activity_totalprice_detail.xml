@@ -1,128 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <Button
             android:id="@+id/lastPage"
-            style="@android:style/Widget.DeviceDefault.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:background="@drawable/backup_btn"
+            android:layout_width="50dp"
+            android:layout_height="60dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="上一頁"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
+            android:layout_alignStart="@+id/header"
+            android:layout_alignTop="@+id/header"
+            app:srcCompat="@drawable/topbar_totalprice" />
+    </RelativeLayout>
 
-        <Button
-            style="@android:style/Widget.DeviceDefault.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="總價細目" />
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="#AAAAAA"
-        android:layout_marginTop="10dp" />
-
-    <TextView
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="\t\t勾選金額:"
-        android:textSize="20dp"/>
+        android:layout_below="@+id/header"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="12dp"
+        app:srcCompat="@drawable/selectprice_cir" />
 
     <TextView
         android:id="@+id/isCheckedPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
+        android:layout_below="@+id/header"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="95dp"
+        android:text="勾選金額" />
 
-    <TextView
+    <ImageView
+        android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="\t\t長期活動:"
-        android:textSize="20dp"/>
-
-    <TextView
-        android:id="@+id/activityamountLong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
-
-    <TextView
-        android:id="@+id/activitynameLong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
-
-    <TextView
-        android:id="@+id/remarkLong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="\t\t短期活動:"
-        android:textSize="20dp"/>
+        android:layout_below="@+id/header"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="251dp"
+        app:srcCompat="@drawable/shortactivity_cir" />
 
     <TextView
         android:id="@+id/activityamountShort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
+        android:layout_below="@+id/header"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="335dp"
+        android:text=""/>
 
     <TextView
         android:id="@+id/activitynameShort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
+        android:layout_below="@+id/header"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="365dp"
+        android:text=""/>
+
+    <Button
+        android:id="@+id/remarkShort"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="385dp"
+        android:textColor="#7ED321"
+        android:text="顯示備註"/>
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="135dp"
+        app:srcCompat="@drawable/longactivity_cir" />
 
     <TextView
-        android:id="@+id/remarkShort"
+        android:id="@+id/activityamountLong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
+        android:layout_alignTop="@+id/header"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="280dp"
+        android:text=""/>
+
     <TextView
+        android:id="@+id/activitynameLong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="\t\t優惠後金額:"
-        android:textSize="20dp"/>
+        android:layout_alignTop="@+id/header"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="310dp"
+        android:text="" />
+
+    <Button
+        android:id="@+id/remarkLong"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/header"
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="340dp"
+        android:textColor="#7ED321"
+        android:text="顯示備註" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="370dp"
+        app:srcCompat="@drawable/priceafterdiscount" />
 
     <TextView
         android:id="@+id/totalprice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
+        android:layout_alignTop="@+id/header"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="520dp"
+        android:text="優惠金額" />
 
-
-</LinearLayout>
-</ScrollView>
+</RelativeLayout>
