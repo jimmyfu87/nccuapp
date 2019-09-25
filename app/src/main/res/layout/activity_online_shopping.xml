@@ -8,65 +8,70 @@
     tools:context=".com.example.nccumis.onlineshopping.OnlineShopping"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:id="@+id/header">
+        android:id="@+id/header"
+        android:background="@drawable/topbar_onlineshopping">
         <Button
             android:id="@+id/btn_lastPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="回上頁"
-            android:layout_weight="1"
-            />
+            android:layout_width="70dp"
+            android:layout_height="61dp"
+            android:layout_alignTop="@+id/header"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/backup_btn"/>
 
         <TextView
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="10dp"
             android:text="購物商城"
-            android:textSize="30dp"
-            android:layout_weight="1"/>
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
         <Button
             android:id="@+id/btn_webHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="網購首頁"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_width="145dp"
+            android:layout_height="61dp"
+            android:layout_alignTop="@+id/header"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/homepage_btn" />
+    </RelativeLayout>
    <LinearLayout
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:orientation="horizontal"
        android:layout_alignParentBottom="true"
        android:id="@+id/footer">
+
        <Button
            android:id="@+id/btn_webPrePage"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Pre"
-           android:layout_weight="1"/>
+           android:layout_width="72dp"
+           android:layout_height="72dp"
+           android:layout_alignTop="@+id/footer"
+           android:layout_weight="1"
+           android:background="@drawable/pre_btn" />
+
        <Button
            android:id="@+id/btn_webNextPage"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Next"
-           android:layout_weight="1"/>
+           android:layout_width="72dp"
+           android:layout_height="72dp"
+           android:layout_alignTop="@+id/footer"
+           android:layout_weight="1"
+           android:background="@drawable/next_btn" />
     <Button
         android:id="@+id/btn_FirstBankDiscount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="一銀回饋資訊"
-        android:layout_weight="3"/>
+        android:layout_width="244dp"
+        android:layout_height="72dp"
+        android:background="@drawable/firstbankdiscount_btn" />
     <Button
         android:id="@+id/btn_addInCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="加入許願池"
-        android:layout_weight="3"/>
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/add_btn"/>
 
    </LinearLayout>
 

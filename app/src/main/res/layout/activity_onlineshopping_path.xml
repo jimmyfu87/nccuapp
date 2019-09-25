@@ -1,50 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent" android:layout_height="fill_parent" >
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:background="@drawable/topbar_onlineshopping_path">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/lastPage"
-                style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="上一頁"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
-
-            <Button
-                style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="購物商城" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="#AAAAAA"
-            android:layout_marginTop="10dp" />
+        <Button
+            android:id="@+id/lastPage"
+            android:background="@drawable/backup_btn"
+            android:layout_width="70dp"
+            android:layout_height="61dp" />
 
 
-        <com.example.nccumis.MyListView
-            android:id="@+id/ecommercePathListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
     </LinearLayout>
-</ScrollView>
+
+    <com.example.nccumis.MyListView
+        android:id="@+id/ecommercePathListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+</LinearLayout>

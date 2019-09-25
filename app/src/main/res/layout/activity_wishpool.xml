@@ -11,20 +11,14 @@
         <RelativeLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/topbar_wishpool">
 
             <Button
                 android:id="@+id/lastPage"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
+                android:layout_width="70dp"
+                android:layout_height="61dp"
                 android:background="@drawable/backup_btn" />
-
-            <ImageView
-                android:id="@+id/topbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/topbar_wishpool" />
-
 
         </RelativeLayout>
 

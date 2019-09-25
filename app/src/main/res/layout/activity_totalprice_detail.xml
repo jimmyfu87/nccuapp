@@ -10,96 +10,89 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/topbar_totalprice">
         <Button
             android:id="@+id/lastPage"
             android:background="@drawable/backup_btn"
-            android:layout_width="50dp"
-            android:layout_height="60dp" />
+            android:layout_width="70dp"
+            android:layout_height="61dp" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/header"
-            android:layout_alignTop="@+id/header"
-            app:srcCompat="@drawable/topbar_totalprice" />
     </RelativeLayout>
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_chooseprice"
+        android:layout_width="146dp"
+        android:layout_height="137dp"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/selectprice_cir" />
+
+
+    <ImageView
+        android:id="@+id/imageView_longactivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="12dp"
-        app:srcCompat="@drawable/selectprice_cir" />
+        android:layout_alignStart="@+id/activityamountShort"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="23dp"
+        app:srcCompat="@drawable/longactivity_cir" />
+
+    <ImageView
+        android:id="@+id/imageView_shortactivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="254dp"
+        app:srcCompat="@drawable/shortactivity_cir" />
+
+    <ImageView
+        android:id="@+id/imageView_priceafterdiscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="455dp"
+        app:srcCompat="@drawable/priceafterdiscount" />
 
     <TextView
         android:id="@+id/isCheckedPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="95dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="60dp"
         android:text="勾選金額" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="251dp"
-        app:srcCompat="@drawable/shortactivity_cir" />
 
     <TextView
         android:id="@+id/activityamountShort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="335dp"
-        android:text=""/>
+        android:text="" />
 
     <TextView
         android:id="@+id/activitynameShort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="365dp"
-        android:text=""/>
-
-    <Button
-        android:id="@+id/remarkShort"
-        style="@android:style/Widget.DeviceDefault.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="385dp"
-        android:textColor="#7ED321"
-        android:text="顯示備註"/>
-
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="135dp"
-        app:srcCompat="@drawable/longactivity_cir" />
+        android:text="" />
 
     <TextView
         android:id="@+id/activityamountLong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/header"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="165dp"
         android:text=""/>
 
     <TextView
@@ -107,8 +100,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/header"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="310dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="190dp"
         android:text="" />
 
     <Button
@@ -117,27 +110,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/header"
-        android:layout_marginStart="235dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="290dp"
         android:textColor="#7ED321"
         android:text="顯示備註" />
 
-    <ImageView
-        android:id="@+id/imageView6"
+    <Button
+        android:id="@+id/remarkShort"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="370dp"
-        app:srcCompat="@drawable/priceafterdiscount" />
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="460dp"
+        android:text="顯示備註"
+        android:textColor="#7ED321" />
 
     <TextView
         android:id="@+id/totalprice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/header"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="585dp"
         android:text="優惠金額" />
 
 </RelativeLayout>

@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
-                android:textColor="#7ED321"
+                android:textColor="#417505"
                 android:layout_weight="3"/>
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/price"
-                android:textColor="#7ED321"
+                android:textColor="#D0021B"
                 android:layout_weight="3"/>
 
             <TextView
@@ -60,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recentUpdateTime"
-                android:textColor="#7ED321"
                 android:layout_weight="3"/>
 
         </LinearLayout>
@@ -80,7 +79,7 @@
             android:layout_marginTop="10dp"
             android:text="記帳"
             android:layout_gravity="center_horizontal|left"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:textAppearance="@style/TextAppearance.AppCompat" />
         <Button
             android:id="@+id/deleteBtn"
@@ -89,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="刪除"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:layout_gravity="center_horizontal|left"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
@@ -100,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="前往網購"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:layout_gravity="center_horizontal|left"
             android:textAppearance="@style/TextAppearance.AppCompat" />
     </LinearLayout>

@@ -233,7 +233,7 @@ public class productListAdapter extends ArrayAdapter {
         //this code sets the values of the objects to values from the arrays
 //        pictureTextField.setText(pictureArray.get(position).toString());
         nameTextField.setText(nameArray.get(position));
-        priceTextField.setText(priceArray.get(position).toString());
+        priceTextField.setText("$"+priceArray.get(position).toString());
         uploadTimeTextField.setText(uploadTimeArray.get(position));
         return rowView;
 

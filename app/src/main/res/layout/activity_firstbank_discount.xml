@@ -1,32 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_lastPage"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="回上頁" />
+        android:orientation="horizontal"
+        android:background="@drawable/topbar_firstbankdiscount">
+        <Button
+            android:id="@+id/btn_lastPage"
+            android:layout_width="70dp"
+            android:layout_height="64dp"
+            android:background="@drawable/backup_btn" />
+
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/ecommerceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
+        android:textColor="#417505"
         android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/discountDetail"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"/>
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/star" />
+
+        <TextView
+            android:id="@+id/discountDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textColor="#417505"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+
 </LinearLayout>
 </ScrollView>

@@ -8,24 +8,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/topbar_wishpoolchannel">
 
         <Button
             android:id="@+id/lastPage"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
+            android:layout_width="70dp"
+            android:layout_height="61dp"
             android:background="@drawable/backup_btn" />
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/topbar_wishpoolchannel" />
-
 
         <Button
             android:id="@+id/changeCard"
             android:layout_width="145dp"
-            android:layout_height="60dp"
+            android:layout_height="61dp"
             android:layout_alignRight="@+id/imageView3"
             android:layout_alignParentEnd="true"
             android:background="@drawable/choosecard_btn" />
@@ -36,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="#7ED321"
+        android:textColor="#417505"
         android:layout_gravity="center"
         android:layout_marginTop="10dp" />
 
@@ -58,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:layout_weight="10" />
 
     </LinearLayout>
@@ -67,15 +62,19 @@
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/updateprice_btn" />
+        android:layout_marginTop="20dp"
+        android:textColor="#417505"
+        android:text="更新產品價格"
+        android:background="@drawable/rectangle" />
 
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/totalPrice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="74dp"
         android:background="@drawable/rectangle"
         android:text="最後總價"
-        android:textColor="#B8E986"/>
+        android:textColor="#417505"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,28 +85,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="勾選"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:layout_weight="1"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:text="圖片" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:text="商品名稱" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#7ED321"
+            android:textColor="#417505"
             android:text="價錢" />
     </LinearLayout>
 

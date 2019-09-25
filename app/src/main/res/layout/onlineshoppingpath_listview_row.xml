@@ -14,24 +14,27 @@
 
     <TextView
         android:text="name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pathname"
         android:textSize="16sp"
-        android:layout_weight="1"/>
+        android:textColor="#417505"
+        android:layout_weight="5"/>
 
     <TextView
         android:text="discountDetail"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/discountDetail"
-        android:layout_weight="1"/>
+        android:textColor="#417505"
+        android:layout_weight="5"/>
+
     <Button
-        android:text="立即購物"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/enterPath"
-        android:layout_weight="1"/>
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/goshopping_btn" />
 
 
 </LinearLayout>
