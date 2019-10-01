@@ -29,7 +29,7 @@ public class add_type extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.type_add);
+        setContentView(R.layout.fix_type_add);
         savedDataFromSpend = getIntent();
         saveBag = savedDataFromSpend.getExtras();
         JumpToWhere = saveBag.getInt("FromExpenseOrIncome");

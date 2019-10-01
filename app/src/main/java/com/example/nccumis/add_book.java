@@ -31,7 +31,7 @@ public class add_book extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_add);
+        setContentView(R.layout.fix_book_add);
         savedDataFromExpense = getIntent();
         saveBag = savedDataFromExpense.getExtras();
         JumpToWhere = saveBag.getInt("FromExpenseOrIncome");
