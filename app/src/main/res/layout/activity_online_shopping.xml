@@ -34,8 +34,8 @@
 
         <Button
             android:id="@+id/btn_webHome"
-            android:layout_width="145dp"
-            android:layout_height="61dp"
+            android:layout_width="115dp"
+            android:layout_height="60dp"
             android:layout_alignTop="@+id/header"
             android:layout_alignParentEnd="true"
             android:background="@drawable/homepage_btn" />
@@ -49,16 +49,16 @@
 
        <Button
            android:id="@+id/btn_webPrePage"
-           android:layout_width="72dp"
-           android:layout_height="72dp"
+           android:layout_width="75dp"
+           android:layout_height="75dp"
            android:layout_alignTop="@+id/footer"
            android:layout_weight="1"
            android:background="@drawable/pre_btn" />
 
        <Button
            android:id="@+id/btn_webNextPage"
-           android:layout_width="72dp"
-           android:layout_height="72dp"
+           android:layout_width="75dp"
+           android:layout_height="75dp"
            android:layout_alignTop="@+id/footer"
            android:layout_weight="1"
            android:background="@drawable/next_btn" />

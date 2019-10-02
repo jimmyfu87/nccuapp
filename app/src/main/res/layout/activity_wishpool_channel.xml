@@ -19,8 +19,8 @@
 
         <Button
             android:id="@+id/changeCard"
-            android:layout_width="145dp"
-            android:layout_height="61dp"
+            android:layout_width="115dp"
+            android:layout_height="60dp"
             android:layout_alignRight="@+id/imageView3"
             android:layout_alignParentEnd="true"
             android:background="@drawable/choosecard_btn" />

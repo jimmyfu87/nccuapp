@@ -30,6 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#417505"
                 android:text="已用:"/>
             <TextView
                 android:id="@+id/PB_expense"
@@ -39,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="剩餘:"
+                android:textColor="#417505"
                 android:layout_marginLeft="100dp"/>
             <TextView
                 android:id="@+id/PB_left"
@@ -66,7 +68,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="選擇匯入之帳本"/>
+                android:text="選擇匯入之帳本"
+                android:textColor="#417505"/>
             <Spinner
                 android:id="@+id/spn_homeBook"
                 android:layout_width="wrap_content"
@@ -77,48 +80,57 @@
                 android:onClick="showPB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="顯上在手機通知欄位"/>
+                android:background="@drawable/notification_btn"/>
         </LinearLayout>
 
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="190dp"
-        >
+        android:layout_marginTop="300dp"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/addSpend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:text="記帳" />
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="380dp"
+            android:background="@drawable/addspend_btn" />
 
         <Button
             android:id="@+id/checkSpend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="查帳" />
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="380dp"
+            android:background="@drawable/checkspend_btn" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/onlineshopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="480dp"
+            android:background="@drawable/onlineshopping_btn" />
 
         <Button
             android:id="@+id/wishpool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="許願池" />
-
-        <Button
-            android:id="@+id/onlineshopping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="購物商城" />
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="480dp"
+            android:background="@drawable/wishpool_btn" />
     </LinearLayout>
 
 

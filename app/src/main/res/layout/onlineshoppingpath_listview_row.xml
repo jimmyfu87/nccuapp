@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp">
@@ -18,23 +18,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/pathname"
         android:textSize="16sp"
-        android:textColor="#417505"
-        android:layout_weight="5"/>
+        android:textColor="#417505"/>
 
     <TextView
+        android:layout_marginTop="5dp"
         android:text="discountDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/discountDetail"
-        android:textColor="#417505"
-        android:layout_weight="5"/>
+        android:textColor="#417505"/>
 
     <Button
+        android:layout_marginTop="5dp"
         android:id="@+id/enterPath"
-        android:layout_width="93dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:background="@drawable/goshopping_btn" />
-
 
 </LinearLayout>
