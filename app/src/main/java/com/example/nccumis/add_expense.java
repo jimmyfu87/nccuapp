@@ -72,7 +72,7 @@ public class add_expense extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.expense_add);
+        setContentView(R.layout.xx);
 
         geatureObject = new GestureDetectorCompat(this, new LearnGesture());
 //        pager = (ViewPager) findViewById(R.id.pager);
