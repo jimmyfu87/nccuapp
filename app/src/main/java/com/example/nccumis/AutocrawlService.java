@@ -128,7 +128,7 @@ public class AutocrawlService extends Service {
         }).start();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         //int time = 8*60*60*10*1000;
-        int time= 3*60*10*1000;
+        int time= 10*10*1000;
         //int anHour=10*1000;
         long triggerAtTime = SystemClock.elapsedRealtime()+time;
         Intent i = new Intent(this,AlarmReceiver.class);

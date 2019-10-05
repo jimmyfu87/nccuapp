@@ -152,8 +152,7 @@ public class wishpool_channel extends AppCompatActivity {
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(wishpool_channel.this, wishpool.class);
-                                    wishpool_channel.this.startActivity(intent);
+                                  
                                 }
                             })
                             .create()
