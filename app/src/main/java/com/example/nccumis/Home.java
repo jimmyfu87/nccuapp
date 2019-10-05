@@ -128,7 +128,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         navigationView.setNavigationItemSelectedListener(this);
         autoSetFirstandEndMonth();
 
-        btn_showPB=(Button)findViewById(R.id.btn_showPB);
+//        btn_showPB=(Button)findViewById(R.id.btn_showPB);
 
 
 
