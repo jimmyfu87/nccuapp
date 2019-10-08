@@ -42,6 +42,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
     private List<String> nameArray = new ArrayList<String>();
     private List<String> urlArray= new ArrayList<String>();
     private List<Activity> activitylist=new ArrayList<Activity>();
+    private Button refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,13 @@ public class  onlineShoppingPath extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToHome();
+            }
+        });
+        refresh = (Button)findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh();
             }
         });
 
@@ -267,5 +275,10 @@ public class  onlineShoppingPath extends AppCompatActivity {
         public Map<String, String> getParams() {
             return params;
         }
+    }
+    private void refresh() {
+        finish();
+        Intent intent = new Intent(onlineShoppingPath.this, onlineShoppingPath.class);
+        startActivity(intent);
     }
 }

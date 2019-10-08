@@ -33,6 +33,7 @@ public class wishpool extends AppCompatActivity {
     private List<Channel> channellist=new ArrayList<Channel>();
     private List<String> nameArray = new ArrayList<String>();
     private List<String> homeurlArray = new ArrayList<String>();
+    private Button refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,13 @@ public class wishpool extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToHome();
+            }
+        });
+        refresh = (Button)findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh();
             }
         });
 
@@ -169,6 +177,11 @@ public class wishpool extends AppCompatActivity {
         public Map<String, String> getParams() {
             return params;
         }
+    }
+    private void refresh() {
+        finish();
+        Intent intent = new Intent(wishpool.this, wishpool.class);
+        startActivity(intent);
     }
 
 }

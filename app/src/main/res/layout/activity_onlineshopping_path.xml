@@ -5,7 +5,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -17,8 +17,17 @@
             android:layout_width="70dp"
             android:layout_height="61dp" />
 
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="76dp"
+            android:layout_height="62dp"
+            android:layout_alignRight="@+id/imageView3"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="11dp"
+            android:background="@drawable/ic_refresh_black_5dp" />
 
-    </LinearLayout>
+
+    </RelativeLayout>
 
     <com.example.nccumis.MyListView
         android:id="@+id/ecommercePathListView"
