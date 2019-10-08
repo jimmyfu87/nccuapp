@@ -4,7 +4,8 @@ public class Cardtype {
     private int  id;
     private String cardtype_name;
     private int discountMax;
-    public Cardtype(int id, String cardtype_name) {
+    private String apply_url;
+    public Cardtype(int id, String cardtype_name,String apply_url) {
         this.id = id;
         this.cardtype_name = cardtype_name;
         discountMax = 0;
@@ -32,5 +33,13 @@ public class Cardtype {
 
     public int getdiscountMax(){
         return discountMax;
+    }
+
+    public String getApply_url() {
+        return apply_url;
+    }
+
+    public void setApply_url(String apply_url) {
+        this.apply_url = apply_url;
     }
 }

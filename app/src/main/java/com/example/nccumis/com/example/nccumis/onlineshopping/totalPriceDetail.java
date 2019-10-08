@@ -96,7 +96,7 @@ public class totalPriceDetail extends AppCompatActivity {
                 StringBuffer uni_nameLongText=new StringBuffer(nameLongText);
                 StringBuffer uni_remarkLongText=new StringBuffer(remarkLongText);
                 if(nameLongText!=null&&remarkLongText!=null){
-                    shareTextToLine(remarkLongText);
+                    shareTextToLine(nameLongText+remarkLongText);
                 }
                 else{
                     Toast.makeText(totalPriceDetail.this,
@@ -109,7 +109,7 @@ public class totalPriceDetail extends AppCompatActivity {
             public void onClick(View v) {
                 remarkShortText = (remarkShortText == null) ? "無短期優惠備註" : remarkShortText ;
                 if(nameShortText!=null&&remarkShortText!=null) {
-                    shareTextToLine(remarkShortText);
+                    shareTextToLine(nameShortText+remarkShortText);
                 }
                 else{
                     Toast.makeText(totalPriceDetail.this,

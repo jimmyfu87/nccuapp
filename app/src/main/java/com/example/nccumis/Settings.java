@@ -80,7 +80,8 @@ public class Settings extends AppCompatActivity {
                                     JSONObject jsonObject = array.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String cardtype_name = jsonObject.getString("cardtype_name");
-                                    owncardtype_list.add(new Cardtype(id, cardtype_name));
+                                    String apply_url = jsonObject.getString("apply_url");
+                                    owncardtype_list.add(new Cardtype(id, cardtype_name,apply_url));
                                     //拿cardtype_list去調用
 
                                 }
@@ -105,7 +106,8 @@ public class Settings extends AppCompatActivity {
                         JSONObject jsonObject = array.getJSONObject(i);
                         int id = jsonObject.getInt("id");
                         String cardtype_name = jsonObject.getString("cardtype_name");
-                        othercardtype_list.add(new Cardtype(id, cardtype_name));
+                        String apply_url = jsonObject.getString("apply_url");
+                        othercardtype_list.add(new Cardtype(id, cardtype_name,apply_url));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

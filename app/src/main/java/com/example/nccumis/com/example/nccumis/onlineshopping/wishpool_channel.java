@@ -152,7 +152,7 @@ public class wishpool_channel extends AppCompatActivity {
                             .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                  
+
                                 }
                             })
                             .create()
@@ -178,7 +178,8 @@ public class wishpool_channel extends AppCompatActivity {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
                             String cardtype_name = jsonObject.getString("cardtype_name");
-                            owncardtypelist.add(new Cardtype(id, cardtype_name));
+                            String apply_url = jsonObject.getString("apply_url");
+                            owncardtypelist.add(new Cardtype(id, cardtype_name,apply_url));
                             //拿owncardtypelist去調用
                         }
                         set_owncardnamelist();   //丟進alertdialog 的 String list
@@ -354,7 +355,8 @@ public class wishpool_channel extends AppCompatActivity {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
                             String cardtype_name = jsonObject.getString("cardtype_name");
-                            othercardtypelist.add(new Cardtype(id, cardtype_name));
+                            String apply_url = jsonObject.getString("apply_url");
+                            othercardtypelist.add(new Cardtype(id, cardtype_name,apply_url));
                             //拿othercardtypelist去調用
                         }
                         //set_owncardnamelist();   //丟進alertdialog 的 String list
