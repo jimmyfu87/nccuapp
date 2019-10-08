@@ -109,6 +109,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();

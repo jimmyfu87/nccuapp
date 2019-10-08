@@ -101,17 +101,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="560dp"
-            android:text="備註"
-            android:textSize="18dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <!--<TextView-->
+            <!--android:id="@+id/note"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="40dp"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:layout_marginTop="560dp"-->
+            <!--android:text="備註"-->
+            <!--android:textSize="18dp"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
             android:id="@+id/type"
@@ -161,23 +161,30 @@
             android:id="@+id/note_input"
             android:layout_width="280dp"
             android:layout_height="85dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="520dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
-            android:gravity="center"
+            android:gravity="bottom|left"
             android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/confirm"
-            android:layout_width="147dp"
+            android:layout_width="180dp"
             android:layout_height="44dp"
-            android:layout_marginStart="132dp"
-            android:layout_marginLeft="132dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="608dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/login_btn"
             android:text="確認"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -205,16 +212,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/lastPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:text="回上頁"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <!--<Button-->
+            <!--android:id="@+id/lastPage"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:text="回上頁"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
 
         <Button
             android:id="@+id/newIncome"
@@ -225,7 +232,8 @@
             android:layout_marginRight="8dp"
             android:text="新增支出"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/login_btn"/>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

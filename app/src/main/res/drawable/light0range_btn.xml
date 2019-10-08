@@ -4,9 +4,9 @@
         <shape>
             <!--元件的漸層-->
             <gradient
-                android:startColor="#F5DC90"
-                android:centerColor="#D8BF74"
-                android:endColor="#F1D88E"
+                android:startColor="#82DBC6"
+                android:centerColor="#5ABAC7"
+                android:endColor="#82DBC6"
                 android:angle="270" />
 
             <!--邊框顏色、粗細-->

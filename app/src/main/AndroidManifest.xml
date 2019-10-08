@@ -40,9 +40,14 @@
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <activity android:name=".add_spend_viewpager" />
         <activity android:name=".add_type" />
-        <activity android:name=".add_book" />
-        <activity android:name=".add_expense" />
-        <activity android:name=".add_income" />
+        <activity android:name=".add_book"
+            android:theme="@style/LightGreenBar"/>
+        <activity android:name=".add_expense"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Home"/>
+        <activity android:name=".add_income"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".add_expense"/>
         <activity
             android:name=".check_expense"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -69,7 +74,8 @@
         <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />
         <activity
                 android:name=".Home"
-                android:windowSoftInputMode="stateAlwaysHidden"/>
+                android:windowSoftInputMode="stateAlwaysHidden"
+            />
         <activity
             android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden">
