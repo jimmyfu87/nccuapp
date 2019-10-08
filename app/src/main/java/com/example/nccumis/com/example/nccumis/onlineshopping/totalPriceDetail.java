@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.example.nccumis.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class totalPriceDetail extends AppCompatActivity {
     private Button lastPage;
     private TextView isCheckedPrice;
@@ -96,7 +99,7 @@ public class totalPriceDetail extends AppCompatActivity {
                 StringBuffer uni_nameLongText=new StringBuffer(nameLongText);
                 StringBuffer uni_remarkLongText=new StringBuffer(remarkLongText);
                 if(nameLongText!=null&&remarkLongText!=null){
-                    shareTextToLine(nameLongText+remarkLongText);
+                    shareTextToLine("活動名稱："+nameLongText+"\n"+"活動內容："+remarkLongText+"\n"+"辦卡網址：https://card.esunbank.com.tw/EsunCreditweb/txnproc/preChoice?PRJCD=APYCRD0055#b");
                 }
                 else{
                     Toast.makeText(totalPriceDetail.this,
@@ -109,7 +112,7 @@ public class totalPriceDetail extends AppCompatActivity {
             public void onClick(View v) {
                 remarkShortText = (remarkShortText == null) ? "無短期優惠備註" : remarkShortText ;
                 if(nameShortText!=null&&remarkShortText!=null) {
-                    shareTextToLine(nameShortText+remarkShortText);
+                    shareTextToLine(nameShortText+":\n"+remarkShortText);
                 }
                 else{
                     Toast.makeText(totalPriceDetail.this,
@@ -126,7 +129,13 @@ public class totalPriceDetail extends AppCompatActivity {
         startActivity(intent);
     }
     public void shareTextToLine(String content){
-        String scheme = "line://msg/text/"+content;
+        String newscheme= null;
+        try {
+            newscheme = URLEncoder.encode(content, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String scheme = "line://msg/text/"+newscheme;
         Uri uri = Uri.parse(scheme);
         startActivity(new Intent(Intent.ACTION_VIEW,uri));
     }
