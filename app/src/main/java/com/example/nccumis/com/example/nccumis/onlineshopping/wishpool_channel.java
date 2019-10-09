@@ -22,7 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nccumis.Cardtype;
+import com.example.nccumis.Home;
 import com.example.nccumis.R;
+import com.google.api.services.drive.Drive;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,7 @@ public class wishpool_channel extends AppCompatActivity {
     private TextView newActivity;
     private Button changeCard;
     private Button refresh;
+//    private ListView CreditCardListView;
 
     protected static com.example.nccumis.MyListView ProductListView;
     private static Button totalPrice;
@@ -163,40 +166,7 @@ public class wishpool_channel extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getRequest);
 
-        //取得使用者{沒有}的信用卡
-        Response.Listener<String> responseListener4 = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(!response.equals("NoValue")){
-                    try {
-                        JSONArray array = new JSONArray(response);
-                        owncardtypelist.clear();
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            int id = jsonObject.getInt("id");
-                            String cardtype_name = jsonObject.getString("cardtype_name");
-                            othercardtypelist.add(new Cardtype(id, cardtype_name));
-                            //拿othercardtypelist去調用
-                        }
-                        //set_owncardnamelist();   //丟進alertdialog 的 String list
-//                        setandsort_owncardnamelist();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    //發現使用者辦了所有信用卡的處理方式，要改可以改
-
-                }
-            }
-        };
-        SharedPreferences sp4 = getSharedPreferences("User", MODE_PRIVATE);
-        SharedPreferences.Editor editor4 = sp4.edit();
-        GetothercardRequest getothercardRequest = new GetothercardRequest(sp4.getString("member_id",null),responseListener4);
-        RequestQueue requestQueue4 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(getothercardRequest);
-
-        //取得使用者{擁有}的信用卡
+        //取得使用者擁有的信用卡
         Response.Listener<String> responseListener2 = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -208,10 +178,12 @@ public class wishpool_channel extends AppCompatActivity {
                             JSONObject jsonObject = array.getJSONObject(i);
                             int id = jsonObject.getInt("id");
                             String cardtype_name = jsonObject.getString("cardtype_name");
-                            owncardtypelist.add(new Cardtype(id, cardtype_name));
+                            String apply_url = jsonObject.getString("apply_url");
+                            owncardtypelist.add(new Cardtype(id, cardtype_name,apply_url));
                             //拿owncardtypelist去調用
                         }
                         set_owncardnamelist();   //丟進alertdialog 的 String list
+//                        setandsort_owncardnamelist();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -282,6 +254,8 @@ public class wishpool_channel extends AppCompatActivity {
 //                        System.out.println(shortactivitylist.get(0).getEnd_time());
 //                        System.out.println(shortactivitylist.get(0).getRemarks());
 
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -316,7 +290,6 @@ public class wishpool_channel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 jumpToTotalPriceDetail();
-
             }
         });
 
@@ -373,7 +346,38 @@ public class wishpool_channel extends AppCompatActivity {
 
             }
         });
+        //取得使用者沒有的信用卡
+        Response.Listener<String> responseListener4 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("NoValue")){
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        owncardtypelist.clear();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String cardtype_name = jsonObject.getString("cardtype_name");
+                            othercardtypelist.add(new Cardtype(id, cardtype_name));
+                            //拿othercardtypelist去調用
+                        }
+                        //set_owncardnamelist();   //丟進alertdialog 的 String list
+//                        setandsort_owncardnamelist();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //發現使用者辦了所有信用卡的處理方式，要改可以改
 
+                }
+            }
+        };
+        SharedPreferences sp4 = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor4 = sp4.edit();
+        GetothercardRequest getothercardRequest = new GetothercardRequest(sp4.getString("member_id",null),responseListener4);
+        RequestQueue requestQueue4 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(getothercardRequest);
 
         //取得使用者有的信用卡的活動
         Response.Listener<String> responseListener5 = new Response.Listener<String>() {
@@ -628,7 +632,6 @@ public class wishpool_channel extends AppCompatActivity {
                 curMax = (discount > curMax) ? discount : curMax;
                 position = i;
             }
-            System.out.println("優惠卡名： "+tempcardtypelist.get(position).getCardtype_name() +"優惠金額: "+curMax);
             owncardnamelist.add(tempcardtypelist.get(position).getCardtype_name());
             tempcardtypelist.remove(position);
             count++;
