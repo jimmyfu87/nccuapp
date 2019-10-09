@@ -66,7 +66,7 @@ public class add_income extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_income_xx);
+        setContentView(R.layout.income_add);
 
         geatureObject = new GestureDetectorCompat(this, new LearnGesture());
 
