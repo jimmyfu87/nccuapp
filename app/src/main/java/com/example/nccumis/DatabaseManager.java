@@ -208,7 +208,7 @@ public class DatabaseManager {
         database.delete(dbHelper.tb_name4,dbHelper.TYPE_ID + " ='" + type_id + "'",null);
     }
 
-    public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type,String start_date,String end_date) {
+    public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type,String start_date,String end_date,int closed) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.BOOK_NAME, book_name);
         contentValues.put(dbHelper.AMOUNT_START, amount_start);
@@ -216,6 +216,7 @@ public class DatabaseManager {
         contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
         contentValues.put(dbHelper.START_DATE, start_date);
         contentValues.put(dbHelper.END_DATE, end_date);
+        contentValues.put(dbHelper.CLOSED, closed);
         database.insert(dbHelper.tb_name3, null, contentValues);
 
     }
@@ -254,7 +255,7 @@ public class DatabaseManager {
                 (result,null);
         List<Book> Booklist=new ArrayList<>();
         while (Books.moveToNext()){
-            Booklist.add(new Book(Books.getInt(0),Books.getString(1),Books.getInt(2),Books.getInt(3),Books.getString(4),Books.getString(5),Books.getString(6)));
+            Booklist.add(new Book(Books.getInt(0),Books.getString(1),Books.getInt(2),Books.getInt(3),Books.getString(4),Books.getString(5),Books.getString(6),Books.getInt(7)));
         }
         return  Booklist;
     }
@@ -287,6 +288,22 @@ public class DatabaseManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.AMOUNT_REMAIN, total_remain_amount);
         database.update(dbHelper.tb_name3, contentValues, dbHelper.BOOK_NAME + "=" +"'"+book_name+"'", null);
+
+    }
+    public List<String> fetchunclosedBook() {
+        List<String> book = new ArrayList<>();
+        Cursor allbook=database.rawQuery
+                ("select Book_name from Book WHERE Closed=0 " ,null);
+
+        while(allbook.moveToNext()){
+            book.add(allbook.getString(0));
+        }
+        return  book;
+    }
+    public void updateClosed(int book_id,int closed) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.CLOSED, closed);
+        database.update(dbHelper.tb_name3, contentValues, dbHelper.BOOK_ID + "=" +"'"+book_id+"'", null);
 
     }
 

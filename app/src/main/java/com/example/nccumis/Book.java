@@ -8,8 +8,9 @@ public class Book {
     private String Currency_type;
     private String Start_date;
     private String End_date;
+    private int Closed;
 
-    public Book(int id, String name, int amount_start, int amount_remain, String currency_type,String start_date,String end_date) {
+    public Book(int id, String name, int amount_start, int amount_remain, String currency_type,String start_date,String end_date,int closed) {
         this.id = id;
         this.name = name;
         Amount_start = amount_start;
@@ -17,6 +18,7 @@ public class Book {
         Currency_type = currency_type;
         Start_date=start_date;
         End_date=end_date;
+        Closed=closed;
     }
 
     public int getId() {
@@ -73,6 +75,14 @@ public class Book {
 
     public void setEnd_date(String end_date) {
         End_date = end_date;
+    }
+
+    public int getClosed() {
+        return Closed;
+    }
+
+    public void setClosed(int closed) {
+        Closed = closed;
     }
 }
 

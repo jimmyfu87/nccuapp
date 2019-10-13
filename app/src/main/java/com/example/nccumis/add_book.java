@@ -83,8 +83,7 @@ public class add_book extends AppCompatActivity {
                     int i_remain=i_startBudget;
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());
                     dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                    System.out.println(i_enddate);
-                    dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,i_startdate,i_enddate);            //將資料放到資料庫
+                    dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,i_startdate,i_enddate,0);            //將資料放到資料庫
                     dbmanager.close();                                                                      //關閉資料庫
                     jumpToaddSpend(saveBag);
                 }
