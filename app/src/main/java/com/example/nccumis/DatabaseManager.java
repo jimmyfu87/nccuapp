@@ -208,12 +208,14 @@ public class DatabaseManager {
         database.delete(dbHelper.tb_name4,dbHelper.TYPE_ID + " ='" + type_id + "'",null);
     }
 
-    public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type) {
+    public void insert_Book(String book_name,int amount_start,int amount_remain,String currency_type,String start_date,String end_date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.BOOK_NAME, book_name);
         contentValues.put(dbHelper.AMOUNT_START, amount_start);
         contentValues.put(dbHelper.AMOUNT_REMAIN, amount_remain);
         contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
+        contentValues.put(dbHelper.START_DATE, start_date);
+        contentValues.put(dbHelper.END_DATE, end_date);
         database.insert(dbHelper.tb_name3, null, contentValues);
 
     }
@@ -252,7 +254,7 @@ public class DatabaseManager {
                 (result,null);
         List<Book> Booklist=new ArrayList<>();
         while (Books.moveToNext()){
-            Booklist.add(new Book(Books.getInt(0),Books.getString(1),Books.getInt(2),Books.getInt(3),Books.getString(4)));
+            Booklist.add(new Book(Books.getInt(0),Books.getString(1),Books.getInt(2),Books.getInt(3),Books.getString(4),Books.getString(5),Books.getString(6)));
         }
         return  Booklist;
     }

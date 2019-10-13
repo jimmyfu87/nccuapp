@@ -35,15 +35,17 @@ public class Dbhelper extends SQLiteOpenHelper {
                     + "Book_name" + " text , "
                     + "Amount_start" + " INTEGER , "
                     + "Amount_remain" + " INTEGER , "
-                    + "Currency_type" + " text " + ");";
+                    + "Currency_type" + " text , "
+                    + "Start_date" + " text , "
+                    + "End_date" + " text " + ");";
     static final String create_tb4=
             "CREATE TABLE IF NOT EXISTS " + "Type" + " ("
                     + "Type_id" + " INTEGER primary key autoincrement, "
                     + "Type_name" + " text , "
                     + "ExpenseorIncome" + " text " + ");";
     static final String insert_default_book=
-            "INSERT INTO " + "Book" + " (Book_name,Amount_start,Amount_remain,Currency_type) VALUES"
-                    + "('現金帳本',0,0,'TWD')"+ ",('旅遊帳本',0,0,'TWD')"+",('購物帳本',0,0,'TWD');";
+            "INSERT INTO " + "Book" + " (Book_name,Amount_start,Amount_remain,Currency_type,Start_date,End_date) VALUES"
+                    + "('現金帳本',0,0,'TWD','2019-04-20','2019-08-31')"+ ",('旅遊帳本',0,0,'TWD','2019-07-01','2019-10-31')"+",('購物帳本',0,0,'TWD','2018-03-31','2019-10-16');";
     static final String insert_default_expense_type=
             "INSERT INTO " + "Type" + " (Type_name,ExpenseorIncome) VALUES"
                     + "('早餐','Expense')"+ ",('午餐','Expense')"+ ",('晚餐','Expense')"+ ",('飲料','Expense')"
@@ -95,6 +97,8 @@ public class Dbhelper extends SQLiteOpenHelper {
     static final String AMOUNT_START = "Amount_start";
     static final String AMOUNT_REMAIN = "Amount_remain";
     static final String CURRENCY_TYPE = "Currency_type";
+    static final String START_DATE = "Start_date";
+    static final String END_DATE = "End_date";
 
     //類別欄位
     static final String TYPE_ID = "Type_id";

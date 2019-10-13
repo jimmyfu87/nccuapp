@@ -6,13 +6,17 @@ public class Book {
     private int Amount_start;
     private int Amount_remain;
     private String Currency_type;
+    private String Start_date;
+    private String End_date;
 
-    public Book(int id, String name, int amount_start, int amount_remain, String currency_type) {
+    public Book(int id, String name, int amount_start, int amount_remain, String currency_type,String start_date,String end_date) {
         this.id = id;
         this.name = name;
         Amount_start = amount_start;
         Amount_remain = amount_remain;
         Currency_type = currency_type;
+        Start_date=start_date;
+        End_date=end_date;
     }
 
     public int getId() {
@@ -55,5 +59,20 @@ public class Book {
         Currency_type = currency_type;
     }
 
+    public String getStart_date() {
+        return Start_date;
+    }
+
+    public void setStart_date(String start_date) {
+        Start_date = start_date;
+    }
+
+    public String getEnd_date() {
+        return End_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        End_date = end_date;
+    }
 }
 
