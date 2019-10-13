@@ -54,6 +54,8 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().setTitle("註冊");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //被findViewById抓下來的type是view ,要再轉string
         et_userName = findViewById(R.id.et_userName);

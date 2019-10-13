@@ -63,7 +63,9 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLength="11"
+        />
 
     <EditText
         android:id="@+id/amount_input"
@@ -73,9 +75,11 @@
         android:layout_marginLeft="184dp"
         android:layout_marginTop="248dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:digits="0123456789"
+        />
 
     <TextView
         android:id="@+id/date"
@@ -168,10 +172,12 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:gravity="bottom|left"
+        android:hint="備註"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLength="100"/>
 
     <Button
         android:id="@+id/confirm"

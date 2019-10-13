@@ -14,15 +14,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/lastPage"
-                style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text="上一頁"
-                android:textAppearance="@style/TextAppearance.AppCompat" />
+            <!--<Button-->
+                <!--android:id="@+id/lastPage"-->
+                <!--style="@android:style/Widget.DeviceDefault.Button.Borderless"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="上一頁"-->
+                <!--android:textAppearance="@style/TextAppearance.AppCompat" />-->
 
             <Button
                 android:id="@+id/checkIncome"
@@ -31,7 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="收入統計" />
+                android:text="查詢支出"
+                android:background="@drawable/lightorange"
+                />
 
             <Button
                 android:id="@+id/switchAccount"
@@ -40,7 +42,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="切換帳戶" />
+                android:text="切換帳戶"
+                android:background="@drawable/lightorange"
+                />
 
         </LinearLayout>
 
@@ -64,7 +68,7 @@
                     android:id="@+id/searchThisMonth_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#DDDDDD"
+                    android:background="@drawable/login_btn"
                     android:layout_marginTop="5dp"
                     android:text="本月"
                     android:layout_gravity="left|center_vertical"
@@ -74,7 +78,7 @@
                     android:id="@+id/searchThisYear_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#DDDDDD"
+                    android:background="@drawable/forget_password_btn"
                     android:layout_marginTop="5dp"
                     android:text="本年"
                     android:layout_gravity="left|center_vertical"
@@ -129,6 +133,8 @@
                 android:layout_marginTop="10dp"
                 android:text="查詢"
                 android:layout_gravity="left|center_vertical"
+                android:background="@drawable/lightblue_btn"
+
                 />
 
         </LinearLayout>
@@ -148,19 +154,19 @@
 
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:orientation="vertical">
+        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="400dp"-->
+            <!--android:orientation="vertical">-->
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/Inlinechart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
+            <!--<com.github.mikephil.charting.charts.LineChart-->
+                <!--android:id="@+id/Inlinechart"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginTop="10dp">-->
 
-            </com.github.mikephil.charting.charts.LineChart>
-        </LinearLayout>
+            <!--</com.github.mikephil.charting.charts.LineChart>-->
+        <!--</LinearLayout>-->
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"

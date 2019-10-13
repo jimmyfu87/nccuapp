@@ -11,17 +11,6 @@
     android:padding="16dp"
     tools:context=".Register">
 
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="註冊帳號"
-        android:layout_gravity="center"
-        android:textSize="20dp"/>
-
-
-
     <EditText
         android:id="@+id/et_userName"
         android:layout_width="match_parent"
@@ -117,11 +106,13 @@
 
     <Button
         android:id="@+id/btn_confirm"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="確認"/>
+        android:text="確認"
+        android:background="@drawable/login_btn"
+        />
 
     <Button
         android:id="@+id/btn_lastPage"

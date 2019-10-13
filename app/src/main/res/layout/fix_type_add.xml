@@ -15,17 +15,19 @@
         android:layout_marginTop="8dp"
         android:text="回上頁"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/login_btn"/>
 
     <Button
         android:id="@+id/confirm"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="408dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:background="@drawable/lightblue_btn"
         android:text="確定"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
@@ -36,14 +38,18 @@
         android:id="@+id/typeName_input"
         android:layout_width="215dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="128dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="類別名稱(最多十個字)"
-        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLength="10"
+        android:inputType="text"/>
 
     <TextView
         android:id="@+id/ExpenseOrIncome"
@@ -68,11 +74,11 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="400dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,11 +88,11 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="400dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="137dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
