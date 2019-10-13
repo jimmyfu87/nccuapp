@@ -118,6 +118,7 @@ public class OnlineShopping extends AppCompatActivity {
         btn_addInCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "加入中請稍候...", Toast.LENGTH_SHORT).show();
                 String currentWebURL = getCurrentWebURL();//給你們爬蟲的URL
                 webcrawl(currentWebURL);
                 //jumpToDemo(currentWebURL);
