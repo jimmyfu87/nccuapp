@@ -76,6 +76,7 @@ public class wishpool_channel extends AppCompatActivity {
     private static int shortactivity_position = 0;
     private List<Cardtype> othercardtypelist=new ArrayList<Cardtype>();
     private List<Activity> activitylistwithcard=new ArrayList<Activity>();
+    private List<Activity> activitylistwithothercard=new ArrayList<Activity>();
     private static List<String> nocardname = new ArrayList<String>();
 
 
@@ -416,6 +417,43 @@ public class wishpool_channel extends AppCompatActivity {
         RequestQueue requestQueue5 = Volley.newRequestQueue(getApplicationContext());
         requestQueue5.add(getRequest5);
 
+        //取得使用者有的沒有的信用卡活動
+        Response.Listener<String> responseListener6 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("NoValue")){
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String activity_name = jsonObject.getString("activity_name");
+                            String channel_name = jsonObject.getString("channel_name");
+                            String cardtype_name = jsonObject.getString("cardtype_name");
+                            int Minimum_pay = jsonObject.getInt("Minimum_pay");
+                            double Discount_ratio = jsonObject.getDouble("Discount_ratio");
+                            int Discount_limit = jsonObject.getInt("Discount_limit");
+                            int Discount_money = jsonObject.getInt("Discount_money");
+                            String Start_time = jsonObject.getString("Start_time");
+                            String End_time = jsonObject.getString("End_time");
+                            String Remarks = jsonObject.getString("Remarks");
+                            activitylistwithothercard.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
+                        }
+                        //拿Activitylist調用
+                        updateActivity();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        SharedPreferences sp6 = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor6 = sp6.edit();
+        GetliveactivitywithcardRequest getRequest6 = new GetliveactivitywithcardRequest(sp6.getString("member_id",null),responseListener6);
+        RequestQueue requestQueue6 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue6.add(getRequest6);
+
+
 
 
 
@@ -470,6 +508,22 @@ public class wishpool_channel extends AppCompatActivity {
         private Map<String, String> params;
         //
         public GetliveactivitywithcardRequest(String member_id,Response.Listener<String> listener) {
+            super(Method.POST,  Getliveactivitywithcard_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("member_id", member_id);
+
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
+    public class GetliveactivitywithothercardRequest extends StringRequest {
+        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getliveactivitywithothercard.php";
+        private Map<String, String> params;
+        //
+        public GetliveactivitywithothercardRequest(String member_id,Response.Listener<String> listener) {
             super(Method.POST,  Getliveactivitywithcard_REQUEST_URL, listener, null);
             params = new HashMap<>();
             params.put("member_id", member_id);
