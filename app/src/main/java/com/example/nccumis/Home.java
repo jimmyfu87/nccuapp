@@ -1,6 +1,7 @@
 package com.example.nccumis;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nccumis.com.example.nccumis.onlineshopping.onlineShoppingPath;
+import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_channel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -46,6 +48,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 
 import java.util.ArrayList;
@@ -178,6 +182,49 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 PB_expense.setText(Integer.toString(expense));
                 PB_left.setText(Integer.toString(startBudget-expense+income));
                 PB.setProgress(Math.round(countPercentage()));
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH)+1;
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                String today=year+"-"+month+"-"+day;
+                for(int i = 0; i < select_BookAttribute.size(); i++){
+                    if(isDate2Bigger(today,select_BookAttribute.get(i).getEnd_date())&&select_BookAttribute.get(i).getClosed()==0){
+                        String message="";
+                        String selection="";
+                        if(select_BookAttribute.get(i).getAmount_remain()>=0){
+                            message="的結餘為+";
+                            selection="來去放縱自己吧XDD";
+                        }
+                        else{
+                            message="的結餘為";
+                            selection="省著點下次再買吧QQ";
+                        }
+                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Home.this);
+                        builder.setMessage(select_BookAttribute.get(i).getName()+message+select_BookAttribute.get(i).getAmount_remain()+"元")
+                                .setPositiveButton(selection, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dbmanager.open();
+                                        dbmanager.updateClosed(select_BookAttribute.get(i).getId(),1);
+                                        dbmanager.close();
+                                        editor.putInt("book_position",0);
+                                        editor.commit();
+
+                                        if(select_BookAttribute.get(i).getAmount_remain()>=0) {
+                                            Intent intent = new Intent(Home.this, onlineShoppingPath.class);
+                                            Home.this.startActivity(intent);
+                                        }
+                                        else{
+                                            refresh();
+                                        }
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+                    break;
+                }
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -540,7 +587,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
         dbmanager.open();
-        this.dbBookData = dbmanager.fetchBook();
+        this.dbBookData = dbmanager.fetchunclosedBook();
         dbmanager.close();
 
         for(int i = 0; i<dbBookData.size(); i++){
@@ -579,6 +626,29 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             income += select_income.get(i).getIn_price();
         }
 
+    }
+    public static boolean isDate2Bigger(String str1, String str2) {
+        boolean isBigger = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date  dt1 = sdf.parse(str1);
+            Date  dt2 = sdf.parse(str2);
+            if (dt1.getTime() <= dt2.getTime()) {
+                isBigger = false;
+            } else if (dt1.getTime() > dt2.getTime()) {
+                isBigger = true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return isBigger;
+    }
+    private void refresh() {
+        finish();
+        Intent intent = new Intent(Home.this, Home.class);
+        startActivity(intent);
     }
 
 }

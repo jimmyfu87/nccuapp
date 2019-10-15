@@ -64,8 +64,10 @@ public class wishpool_channel extends AppCompatActivity {
     private List<String> urlArray = new ArrayList<String>();
     private List<String> uploadTimeArray = new ArrayList<String>();
     private List<Product> productlist=new ArrayList<Product>();
-    private static List<Activity> longactivitylist=new ArrayList<Activity>();   //接資料庫長期活動
-    private static List<Activity> shortactivitylist=new ArrayList<Activity>();  //接資料庫短期活動
+//    protected static List<String> discountDetailArray =new ArrayList<>();
+//    protected static List<String> LONG_OR_SHORT_ACTIVITYArray =new ArrayList<>();
+    private static List<Activity> longactivitylist=new ArrayList<Activity>();
+    private static List<Activity> shortactivitylist=new ArrayList<Activity>();
     private List<Cardtype> owncardtypelist=new ArrayList<Cardtype>();
     private static List<String> owncardnamelist = new ArrayList<String>();  //alertdialog選單的卡名
     private static int singleChoiceIndex = 0;   //預設選擇第一張卡
@@ -75,6 +77,8 @@ public class wishpool_channel extends AppCompatActivity {
     private static List<Cardtype> othercardtypelist=new ArrayList<Cardtype>();
     private List<Activity> activitylistwithcard=new ArrayList<Activity>();  //沒用到，可刪掉！！！
     private static List<String> nocardnamelist = new ArrayList<String>();   //使用者沒卡時推薦一張信用卡
+    private List<Activity> activitylistwithothercard=new ArrayList<Activity>();
+    private static List<String> nocardname = new ArrayList<String>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -465,6 +469,22 @@ public class wishpool_channel extends AppCompatActivity {
         private Map<String, String> params;
         //
         public GetliveactivitywithcardRequest(String member_id,Response.Listener<String> listener) {
+            super(Method.POST,  Getliveactivitywithcard_REQUEST_URL, listener, null);
+            params = new HashMap<>();
+            params.put("member_id", member_id);
+
+        }
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
+    public class GetliveactivitywithothercardRequest extends StringRequest {
+        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getliveactivitywithothercard.php";
+        private Map<String, String> params;
+        //
+        public GetliveactivitywithothercardRequest(String member_id,Response.Listener<String> listener) {
             super(Method.POST,  Getliveactivitywithcard_REQUEST_URL, listener, null);
             params = new HashMap<>();
             params.put("member_id", member_id);

@@ -35,15 +35,18 @@ public class Dbhelper extends SQLiteOpenHelper {
                     + "Book_name" + " text , "
                     + "Amount_start" + " INTEGER , "
                     + "Amount_remain" + " INTEGER , "
-                    + "Currency_type" + " text " + ");";
+                    + "Currency_type" + " text , "
+                    + "Start_date" + " text , "
+                    + "End_date" + " text , "
+                    + "Closed" + " INTEGER " + ");";
     static final String create_tb4=
             "CREATE TABLE IF NOT EXISTS " + "Type" + " ("
                     + "Type_id" + " INTEGER primary key autoincrement, "
                     + "Type_name" + " text , "
                     + "ExpenseorIncome" + " text " + ");";
     static final String insert_default_book=
-            "INSERT INTO " + "Book" + " (Book_name,Amount_start,Amount_remain,Currency_type) VALUES"
-                    + "('現金帳本',0,0,'TWD')"+ ",('旅遊帳本',0,0,'TWD')"+",('購物帳本',0,0,'TWD');";
+            "INSERT INTO " + "Book" + " (Book_name,Amount_start,Amount_remain,Currency_type,Start_date,End_date,Closed) VALUES"
+                    + "('現金帳本',0,0,'TWD','2019-04-20','2019-08-31',1)"+ ",('旅遊帳本',6000,0,'TWD','2019-07-01','2019-10-12',0)"+",('購物帳本',3000,0,'TWD','2018-03-31','2019-10-31',0);";
     static final String insert_default_expense_type=
             "INSERT INTO " + "Type" + " (Type_name,ExpenseorIncome) VALUES"
                     + "('早餐','Expense')"+ ",('午餐','Expense')"+ ",('晚餐','Expense')"+ ",('飲料','Expense')"
@@ -60,7 +63,7 @@ public class Dbhelper extends SQLiteOpenHelper {
                     + "(500,'2019-10-01','投資','現金帳本','買東西'),(1000,'2019-10-02','交通','購物帳本','買東西')," +
                     "(300,'2019-10-03','早餐','現金帳本','買東西'),(500,'2019-10-06','投資','現金帳本','買東西')," +
                     "(600,'2019-10-08','衣物','旅遊帳本','買東西'),(3200,'2019-10-10','娛樂','現金帳本','買東西')," +
-                    "(300,'2019-10-13','電話費','現金帳本','買東西'),(500,'2019-10-16','投資','購物帳本','買東西')," +
+                    "(300,'2019-10-13','電話費','現金帳本','買東西'),(500,'2019-09-21','投資','購物帳本','買東西')," +
                     "(300,'2019-10-17','零食','現金帳本','買東西'),(600,'2019-10-20','早餐','現金帳本','買東西')," +
                     "(500,'2019-10-23','早餐','現金帳本','買東西'),(700,'2019-10-28','投資','旅遊帳本','買東西');";
 
@@ -95,6 +98,9 @@ public class Dbhelper extends SQLiteOpenHelper {
     static final String AMOUNT_START = "Amount_start";
     static final String AMOUNT_REMAIN = "Amount_remain";
     static final String CURRENCY_TYPE = "Currency_type";
+    static final String START_DATE = "Start_date";
+    static final String END_DATE = "End_date";
+    static final String CLOSED = "Closed";
 
     //類別欄位
     static final String TYPE_ID = "Type_id";
