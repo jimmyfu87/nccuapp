@@ -56,8 +56,6 @@ public class add_expense extends AppCompatActivity {
     private EditText i_userid;                  //宣告需要輸入的變數的EditText
     private String i_price,i_note,i_date,i_type_name,i_book_name;
     private GestureDetectorCompat geatureObject;
-    private keyboardHelper helper;
-    private KeyboardView keyboard2;
 
 
     @Override
@@ -183,30 +181,6 @@ public class add_expense extends AppCompatActivity {
 
         //金額
         input_amount = (EditText)findViewById(R.id.amount_input);
-        keyboard2 = findViewById(R.id.keyboard);
-        helper = new keyboardHelper(add_expense.this, keyboard2);
-        helper.setEditText(input_amount);
-        helper.setCallBack(new keyboardHelper.KeyboardCallBack() {
-
-            public void keyCall(int code) {
-                //回调键盘监听，根据回调的code值进行处理
-            }
-        });
-        input_amount.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                //多条件判断，防止重复显示
-                if (input_amount.hasFocus() && !helper.isVisibility() && event.getAction() == MotionEvent.ACTION_DOWN) {
-                    helper.show();
-                }
-                return false;
-            }
-        });
-
-
-
-
-
 
 
         i_price = input_amount.getText().toString();

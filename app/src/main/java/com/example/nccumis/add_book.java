@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.view.GestureDetector;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.MotionEvent;
@@ -48,25 +50,21 @@ public class add_book extends AppCompatActivity {
     private String book_name,currency_type,budget_start;
     private TextView fixedbook;
 
-
-
-
     private EditText input_startdate;
     private EditText input_enddate;
     private String i_startdate;
     private String i_enddate;
-
+    private GestureDetectorCompat geatureObject;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fix_book_add);
+        setContentView(R.layout.book_add);
         savedDataFromExpense = getIntent();
         saveBag = savedDataFromExpense.getExtras();
         JumpToWhere = saveBag.getInt("FromExpenseOrIncome");
         saveBag.remove("FromExpenseOrIncome");
         saveBag.putBoolean("detail",false);
         getSupportActionBar().setTitle("新增帳本");
-
 
         //帳本名稱
         input_bookName = (EditText) findViewById(R.id.bookName_input);
@@ -106,11 +104,10 @@ public class add_book extends AppCompatActivity {
                     dbmanager.open();
                     //從帳本管理來
                     if(saveBag.getBoolean("FromBookManage")){
-                        updateBook();
+                        //updateBook();
                         //int book_id,String book_name,int amount_start,int amount_remain,String currency_type
                         int book_id = saveBag.getInt("id");
-                        dbmanager.updateBook(book_id,i_bookName,i_startBudget,i_currencyid);
-
+                        dbmanager.updateBook(book_id,i_bookName,i_startBudget,i_currencyid,i_startdate,i_enddate);
                         jumptoBookManage();
                     }else{
                         //到下一頁
@@ -159,29 +156,8 @@ public class add_book extends AppCompatActivity {
             budget_start = getSaveBag.getString("amount_start");
             int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency_type"));
             input_currency.setSelection(currencyListPosition);
-            updateBook();
+            //updateBook();
         }
-    }
-
-    public void jumptoBookManage() {
-        Intent intent = new Intent(add_book.this, BookManage.class);
-        startActivity(intent);
-    }
-
-    public void updateBook(){
-
-        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
-        dbmanager.open();
-        this.dbBookData = dbmanager.fetchBook();
-        dbmanager.close();
-        for(int i = 0; i<dbBookData.size(); i++){
-            if(book.contains(dbBookData.get(i))){
-                continue;
-            }else{
-                this.book.add(dbBookData.get(i));
-            }
-        }
-
         //開始日期
         input_startdate = (EditText)findViewById(R.id.startdate_input);
         input_startdate.setOnTouchListener(new View.OnTouchListener() {
@@ -232,6 +208,27 @@ public class add_book extends AppCompatActivity {
 
 
     }
+
+    public void jumptoBookManage() {
+        Intent intent = new Intent(add_book.this, BookManage.class);
+        startActivity(intent);
+    }
+
+//    public void updateBook(){
+//
+//        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
+//        dbmanager.open();
+//        this.dbBookData = dbmanager.fetchBook();
+//        dbmanager.close();
+//        for(int i = 0; i<dbBookData.size(); i++){
+//            if(book.contains(dbBookData.get(i))){
+//                continue;
+//            }else{
+//                this.book.add(dbBookData.get(i));
+//            }
+//        }
+//
+//    }
 
     //檢查輸入的值是否正確
     public boolean checkInputInfo(){
@@ -330,7 +327,7 @@ public class add_book extends AppCompatActivity {
         else
             i_enddate=year+"-"+st_month+"-"+st_day;
     }
-    public static boolean isDate2Bigger(String str1, String str2) {
+    public boolean isDate2Bigger(String str1, String str2) {
         boolean isBigger = true;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 
@@ -348,5 +345,12 @@ public class add_book extends AppCompatActivity {
 
         return isBigger;
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.geatureObject.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+
 
 }
