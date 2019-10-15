@@ -31,15 +31,28 @@
         <activity android:name=".Settings" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <activity android:name=".add_spend_viewpager" />
-        <activity android:name=".add_type" />
-        <activity android:name=".add_book" />
-        <activity android:name=".add_expense" />
-        <activity android:name=".add_income" />
+        <activity android:name=".add_type"
+            android:theme="@style/LightGreenBar"
+            />
+
+        <activity android:name=".add_book"
+            android:theme="@style/LightGreenBar"/>
+
+        <activity android:name=".add_expense"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Home"/>
+        <activity android:name=".add_income"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Home"/>
         <activity
             android:name=".check_expense"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".check_income"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".check_expense_detail" />
         <activity android:name=".check_income_detail" />
@@ -53,15 +66,21 @@
         <!--<activity android:name=".Home" />-->
         <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/> -->
 
-        <activity android:name=".PasswordCheckEmail" />
-        <activity android:name=".Register" />
+        <activity android:name=".PasswordCheckEmail"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".LogIn"/>/>
+        <activity android:name=".Register"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Home"
+            />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool_channel" />
         <activity android:name=".com.example.nccumis.onlineshopping.onlineShoppingPath" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool" />
         <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />
         <activity
                 android:name=".Home"
-                android:windowSoftInputMode="stateAlwaysHidden"/>
+                android:windowSoftInputMode="stateAlwaysHidden"
+            />
         <activity
             android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden">

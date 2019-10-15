@@ -43,7 +43,7 @@ public class Register extends AppCompatActivity {
     private EditText et_userBirth ;
     private TextView et_wrongPassword;
     private Button btn_checkRegister ;
-    private Button btn_lastPage;
+//    private Button btn_lastPage;
     private CheckBox checkBoxPassword1 ;
     private CheckBox checkBoxPassword2 ;
 
@@ -54,6 +54,8 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().setTitle("註冊");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //被findViewById抓下來的type是view ,要再轉string
         et_userName = findViewById(R.id.et_userName);
@@ -66,7 +68,7 @@ public class Register extends AppCompatActivity {
          et_usernumber=findViewById(R.id.et_userNumber);
          et_userBirth = findViewById(R.id.et_userBirth);
          btn_checkRegister =  findViewById(R.id.btn_confirm);
-         btn_lastPage = findViewById(R.id.btn_lastPage);
+//         btn_lastPage = findViewById(R.id.btn_lastPage);
          checkBoxPassword1 = findViewById(R.id.checkBoxPassword1);
          checkBoxPassword2 =  findViewById(R.id.checkBoxPassword2);
 
@@ -128,12 +130,12 @@ public class Register extends AppCompatActivity {
         });
 
         //上一頁
-        btn_lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToHome();
-            }
-        });
+//        btn_lastPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                jumpToHome();
+//            }
+//        });
    }
 
     private void showDatePickDlg() {
@@ -261,9 +263,9 @@ public class Register extends AppCompatActivity {
        }
    };
 
-   public void jumpToHome(){
-       startActivity(new Intent(Register.this,Home.class));
-   }
+//   public void jumpToHome(){
+//       startActivity(new Intent(Register.this,Home.class));
+//   }
 
 
 

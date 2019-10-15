@@ -97,6 +97,8 @@ public class check_expense extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_check);
         initOddMonth();
+        getSupportActionBar().setTitle("查詢支出");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        pager = (ViewPager) findViewById(R.id.pager);
 //
@@ -134,7 +136,7 @@ public class check_expense extends AppCompatActivity {
             setList();
             setListViewHeightBasedOnChildren(TypeListView);
             setPieChart();
-            setLineChart();
+//            setLineChart();
         }else {
             //圖表
             setExpenseData(select_expense);
@@ -148,14 +150,14 @@ public class check_expense extends AppCompatActivity {
         setBookArray();
         initSelectBooks();
 
-        //上一頁
-        lastPage = (Button)findViewById(R.id.lastPage);
-        lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpToHome();
-            }
-        });
+//        //上一頁
+//        lastPage = (Button)findViewById(R.id.lastPage);
+//        lastPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                jumpToHome();
+//            }
+//        });
 
         checkExpense = (Button)findViewById(R.id.checkExpense);
         checkExpense.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +242,7 @@ public class check_expense extends AppCompatActivity {
                     setList();
                     setListViewHeightBasedOnChildren(TypeListView);
                     setPieChart();
-                    setLineChart();
+//                    setLineChart();
                 }
             }
         });
@@ -260,7 +262,7 @@ public class check_expense extends AppCompatActivity {
                 setList();
                 setListViewHeightBasedOnChildren(TypeListView);
                 setPieChart();
-                setLineChart();
+//                setLineChart();
             }
         });
 
@@ -281,7 +283,7 @@ public class check_expense extends AppCompatActivity {
                 setList();
                 setListViewHeightBasedOnChildren(TypeListView);
                 setPieChart();
-                setLineChart();
+//                setLineChart();
             }
         });
 
@@ -543,105 +545,105 @@ public class check_expense extends AppCompatActivity {
 
     }
 
-    public void setLineChart(){
-        LineChart lineChart = (LineChart) findViewById(R.id.Exlinechart);
-
-        lineChart.setEnabled(true);
-        lineChart.setScaleEnabled(false);
-
-        ArrayList<Entry> values = new ArrayList<Entry>();
-        setLineChartValue(values);
-
-        LineDataSet set = new LineDataSet(values, this.lineChartName);
-        set.setFillAlpha(110);
-        set.setLineWidth(3f);
-        set.setValueTextSize(12f);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(set);
-
-        LineData data = new LineData(dataSets);
-
-        lineChart.setData(data);
-    }
-    //設定折線圖的x,y值
-    public void setLineChartValue(ArrayList<Entry> values){
-        //x軸以年、月、天 為間隔
-        String xSpace = (this.yearEnd - this.yearStart > 0) ? "year" :((this.monthEnd - this.monthStart > 0)? "month" : "day");
-        switch (xSpace){
-            case "year":
-                for(int i = this.yearStart; i <= this.yearEnd; i++){
-                    int countMoneyPerYear = 0;
-                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                    dbmanager.open();
-                    dbmanager.close();
-                    List<Expense> Ex_list = new ArrayList<Expense>();
-                    String s_date = set_dateformat(i,1,1);
-                    String e_date = set_dateformat(i,12,31);
-                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
-                    dbmanager.close();
-                    for(int j = 0; j < Ex_list.size(); j++){
-                        countMoneyPerYear += Ex_list.get(j).getEx_price();
-                    }
-                    values.add(new Entry(i,countMoneyPerYear));
-//                    System.out.println("year:"+i +", "+countMoneyPerYear);
-                }
-                this.lineChartName = this.yearStart +"~"+ this.yearEnd + "年支出";
-                break;
-            case "month":
-                for(int i = this.monthStart; i <= this.monthEnd; i++){
-                    int countMoneyPerMonth = 0;
-                    int endDay = 0;
-                    if(i == 2){
-                        if((this.yearStart % 4 == 0 && this.yearStart % 100 != 0) || (this.yearStart % 400 == 0 && this.yearStart % 3200 != 0)){
-                            endDay = 29;
-                        }else{
-                            endDay = 28;
-                        }
-                    }else if(oddMonth.contains(Integer.toString(i))){
-                        endDay = 31;
-                    }else {
-                        endDay = 30;
-                    }
-//                    System.out.println("月天數"+endDay);
-                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                    dbmanager.open();
-                    dbmanager.close();
-                    List<Expense> Ex_list = new ArrayList<Expense>();
-                    String s_date = set_dateformat(this.yearStart,i,1);
-                    String e_date = set_dateformat(this.yearStart,i,endDay);
-                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
-                    dbmanager.close();
-                    for(int j = 0; j < Ex_list.size(); j++){
-                        countMoneyPerMonth += Ex_list.get(j).getEx_price();
-                    }
-                    values.add(new Entry(i,countMoneyPerMonth));
-//                    System.out.println("month:"+i +", "+countMoneyPerMonth);
-                }
-                this.lineChartName = this.yearStart+"/" + this.monthStart +"~"+ this.yearEnd+"/"+this.monthEnd+ "月支出";
-                break;
-            case "day":
-                for(int i = this.dayStart; i <= this.dayEnd; i++){
-                    int countMoneyPerDay = 0;
-                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                    dbmanager.open();
-                    dbmanager.close();
-                    List<Expense> Ex_list = new ArrayList<Expense>();
-                    String s_date = set_dateformat(this.yearStart,this.monthStart,i);
-                    String e_date = set_dateformat(this.yearStart,this.monthStart,i);
-                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
-                    dbmanager.close();
-                    for(int j = 0; j < Ex_list.size(); j++){
-                        countMoneyPerDay += Ex_list.get(j).getEx_price();
-                    }
-                    values.add(new Entry(i,countMoneyPerDay));
-//                    System.out.println("day:"+i +", "+countMoneyPerDay);
-
-                }
-                this.lineChartName = this.yearStart+"/" + this.monthStart+"/" + this.dayStart +"~"+ this.yearEnd+"/" + this.monthEnd+"/" + this.dayEnd + "日支出";
-                break;
-        }
-    }
+//    public void setLineChart(){
+//        LineChart lineChart = (LineChart) findViewById(R.id.Exlinechart);
+//
+//        lineChart.setEnabled(true);
+//        lineChart.setScaleEnabled(false);
+//
+//        ArrayList<Entry> values = new ArrayList<Entry>();
+//        setLineChartValue(values);
+//
+//        LineDataSet set = new LineDataSet(values, this.lineChartName);
+//        set.setFillAlpha(110);
+//        set.setLineWidth(3f);
+//        set.setValueTextSize(12f);
+//
+//        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+//        dataSets.add(set);
+//
+//        LineData data = new LineData(dataSets);
+//
+//        lineChart.setData(data);
+//    }
+//    //設定折線圖的x,y值
+//    public void setLineChartValue(ArrayList<Entry> values){
+//        //x軸以年、月、天 為間隔
+//        String xSpace = (this.yearEnd - this.yearStart > 0) ? "year" :((this.monthEnd - this.monthStart > 0)? "month" : "day");
+//        switch (xSpace){
+//            case "year":
+//                for(int i = this.yearStart; i <= this.yearEnd; i++){
+//                    int countMoneyPerYear = 0;
+//                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+//                    dbmanager.open();
+//                    dbmanager.close();
+//                    List<Expense> Ex_list = new ArrayList<Expense>();
+//                    String s_date = set_dateformat(i,1,1);
+//                    String e_date = set_dateformat(i,12,31);
+//                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
+//                    dbmanager.close();
+//                    for(int j = 0; j < Ex_list.size(); j++){
+//                        countMoneyPerYear += Ex_list.get(j).getEx_price();
+//                    }
+//                    values.add(new Entry(i,countMoneyPerYear));
+////                    System.out.println("year:"+i +", "+countMoneyPerYear);
+//                }
+//                this.lineChartName = this.yearStart +"~"+ this.yearEnd + "年支出";
+//                break;
+//            case "month":
+//                for(int i = this.monthStart; i <= this.monthEnd; i++){
+//                    int countMoneyPerMonth = 0;
+//                    int endDay = 0;
+//                    if(i == 2){
+//                        if((this.yearStart % 4 == 0 && this.yearStart % 100 != 0) || (this.yearStart % 400 == 0 && this.yearStart % 3200 != 0)){
+//                            endDay = 29;
+//                        }else{
+//                            endDay = 28;
+//                        }
+//                    }else if(oddMonth.contains(Integer.toString(i))){
+//                        endDay = 31;
+//                    }else {
+//                        endDay = 30;
+//                    }
+////                    System.out.println("月天數"+endDay);
+//                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+//                    dbmanager.open();
+//                    dbmanager.close();
+//                    List<Expense> Ex_list = new ArrayList<Expense>();
+//                    String s_date = set_dateformat(this.yearStart,i,1);
+//                    String e_date = set_dateformat(this.yearStart,i,endDay);
+//                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
+//                    dbmanager.close();
+//                    for(int j = 0; j < Ex_list.size(); j++){
+//                        countMoneyPerMonth += Ex_list.get(j).getEx_price();
+//                    }
+//                    values.add(new Entry(i,countMoneyPerMonth));
+////                    System.out.println("month:"+i +", "+countMoneyPerMonth);
+//                }
+//                this.lineChartName = this.yearStart+"/" + this.monthStart +"~"+ this.yearEnd+"/"+this.monthEnd+ "月支出";
+//                break;
+//            case "day":
+//                for(int i = this.dayStart; i <= this.dayEnd; i++){
+//                    int countMoneyPerDay = 0;
+//                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+//                    dbmanager.open();
+//                    dbmanager.close();
+//                    List<Expense> Ex_list = new ArrayList<Expense>();
+//                    String s_date = set_dateformat(this.yearStart,this.monthStart,i);
+//                    String e_date = set_dateformat(this.yearStart,this.monthStart,i);
+//                    Ex_list = dbmanager.fetchExpenseWithbook(s_date,e_date,selectBooks);
+//                    dbmanager.close();
+//                    for(int j = 0; j < Ex_list.size(); j++){
+//                        countMoneyPerDay += Ex_list.get(j).getEx_price();
+//                    }
+//                    values.add(new Entry(i,countMoneyPerDay));
+////                    System.out.println("day:"+i +", "+countMoneyPerDay);
+//
+//                }
+//                this.lineChartName = this.yearStart+"/" + this.monthStart+"/" + this.dayStart +"~"+ this.yearEnd+"/" + this.monthEnd+"/" + this.dayEnd + "日支出";
+//                break;
+//        }
+//    }
 
 
     //暫存日期
@@ -726,10 +728,10 @@ public class check_expense extends AppCompatActivity {
     }
 
 
-    public void jumpToHome(){
-        Intent intent = new Intent(check_expense.this,Home.class);
-        startActivity(intent);
-    }
+//    public void jumpToHome(){
+//        Intent intent = new Intent(check_expense.this,Home.class);
+//        startActivity(intent);
+//    }
 
     public void jumpTocheck_expense_detail(int position){
         Intent intent = new Intent(check_expense.this, check_expense_detail.class);

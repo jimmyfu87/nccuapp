@@ -29,12 +29,14 @@ public class add_type extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.type_add);
+        setContentView(R.layout.fix_type_add);
         savedDataFromSpend = getIntent();
         saveBag = savedDataFromSpend.getExtras();
         JumpToWhere = saveBag.getInt("FromExpenseOrIncome");
         saveBag.remove("FromExpenseOrIncome");
         saveBag.putBoolean("detail",false);
+        getSupportActionBar().setTitle("新增類別");
+
 
         //不儲存回 新增支出 或 新增收入
         lastPage = (Button)findViewById(R.id.lastPage);

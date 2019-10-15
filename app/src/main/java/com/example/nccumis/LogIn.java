@@ -53,17 +53,10 @@ public class LogIn extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
+        setContentView(R.layout.fix_login);
 
 
-//    Google登入
-//        signInButton=findViewById(R.id.sign_in_button);
-//        signInButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signIn();
-//            }
-//        });
+
 
         checkLogIn = (CheckBox)findViewById(R.id.checkLogIn);
         et_userAccountLogin=(EditText)findViewById(R.id.et_userAccountLogin);

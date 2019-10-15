@@ -26,6 +26,10 @@ public class PasswordCheckEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_check_email);
         et_useremail=(EditText)findViewById(R.id.Email);
+        getSupportActionBar().setTitle("忘記密碼");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         btn_sendEmail=(Button) findViewById(R.id.btn_sendEmail);
         btn_sendEmail.setOnClickListener(new View.OnClickListener() {

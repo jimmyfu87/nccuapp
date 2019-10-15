@@ -26,16 +26,13 @@ import java.util.List;
 
 import android.content.Intent;
 
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
-
-
 public class add_expense extends AppCompatActivity {
     private static final int EXPENSE = -1;
     private boolean detail = false;
     private Button lastPage;
     private Button newExpense;
     private Button confirm;
+
 
     private EditText input_amount;
     private EditText input_date;
@@ -72,7 +69,7 @@ public class add_expense extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.expense_add);
+        setContentView(R.layout.fix_addexpense);
 
         geatureObject = new GestureDetectorCompat(this, new LearnGesture());
 //        pager = (ViewPager) findViewById(R.id.pager);
@@ -90,6 +87,9 @@ public class add_expense extends AppCompatActivity {
         updateType();
         updateBook();
 
+        getSupportActionBar().setTitle("新增支出");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         for(int i = 0; i < type.size(); i++){
             System.out.println(type.get(i));
         }
@@ -101,17 +101,17 @@ public class add_expense extends AppCompatActivity {
                 book);
 
         //不儲存回首頁 或 回流水帳
-        lastPage = (Button)findViewById(R.id.lastPage);
-        lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(detail){
-                    jumpTocheck_expense_detail();
-                }else{
-                    jumpToHome();
-                }
-            }
-        });
+//        lastPage = (Button)findViewById(R.id.lastPage);
+//        lastPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(detail){
+//                    jumpTocheck_expense_detail();
+//                }else{
+//                    jumpToHome();
+//                }
+//            }
+//        });
 
         //切換為新增支出
         newExpense = (Button)findViewById(R.id.newExpense);

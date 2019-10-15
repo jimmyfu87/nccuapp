@@ -20,9 +20,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -66,7 +63,10 @@ public class add_income extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.income_add);
+        setContentView(R.layout.fix_addincome);
+
+        getSupportActionBar().setTitle("新增收入");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         geatureObject = new GestureDetectorCompat(this, new LearnGesture());
 
@@ -81,18 +81,18 @@ public class add_income extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
 
-        //不儲存回首頁 或 回流水帳
-        lastPage = (Button)findViewById(R.id.lastPage);
-        lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(detail){
-                    jumpTocheck_income_detail();
-                }else{
-                    jumpToHome();
-                }
-            }
-        });
+//        //不儲存回首頁 或 回流水帳
+//        lastPage = (Button)findViewById(R.id.lastPage);
+//        lastPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(detail){
+//                    jumpTocheck_income_detail();
+//                }else{
+//                    jumpToHome();
+//                }
+//            }
+//        });
 
         //切換為新增收入
         newIncome = (Button)findViewById(R.id.newIncome);
