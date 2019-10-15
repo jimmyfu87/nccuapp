@@ -269,7 +269,7 @@ public class wishpool_channel extends AppCompatActivity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getApplicationContext(), "更新中請稍候...", Toast.LENGTH_SHORT).show();
                 for(int i=0;i<productlist.size();i++){
                     rewebcrawl(productlist.get(i).getProduct_url(),String.valueOf(productlist.get(i).getId()));
                 }
