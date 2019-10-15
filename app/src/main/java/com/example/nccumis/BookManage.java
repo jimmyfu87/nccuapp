@@ -2,14 +2,26 @@ package com.example.nccumis;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,81 +29,30 @@ import java.util.List;
 
 public class BookManage extends AppCompatActivity {
 
-    private Button btn_showBook;
-    private ListView BookList;
-    private Button btn_newBook;
-    private ArrayList<String> selectBooks = new ArrayList<String>();
-    private List<String> bookArray = new ArrayList<String>();
-    private List<String> select_book = new ArrayList<String>();
-    private List<Integer> getPriceData = new ArrayList<Integer>();
-    private List<String> getTypeName = new ArrayList<String>();
-    private List<Expense> select_expense = new ArrayList<Expense>();
-    private String start_date,end_date;
-    private ListView TypeListView;
-    private List<Integer> numberArray = new ArrayList<Integer>();
-    private boolean[] checked;
-    private Bundle saveBag;
-    private Intent getPreSavedData;
-    private Activity context;
-    private ArrayList<String> bookArrayParam;
-    private String bookName;
 
+
+    private Button btn_newBook;
+    private ArrayList<Integer> idArray = new ArrayList<Integer>();
+    private List<String> nameArray = new ArrayList<String>();
+    private List<Integer> amount_startArray = new ArrayList<Integer>();
+    private List<Integer> amount_remainArray = new ArrayList<Integer>();
+    private List<String> i_currencyidArray = new ArrayList<String>();
+    private List<String> getBookNameFromDB = new ArrayList<String>();   //接資料庫用
+    private List<Book> getBookArrayFromDB = new ArrayList<Book>();
+    private ListView BookListView;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_management);
         btn_newBook=(Button)findViewById(R.id.btn_newBook);
-        btn_showBook=(Button)findViewById(R.id.btn_showBook);
-       // BookList=(ListView) findViewById(R.id.BookList);
-        TypeListView = (ListView)findViewById(R.id.TypeListView);
+        BookListView = (ListView)findViewById(R.id.book_listview);
 
-       // saveBag = getPreSavedData.getExtras();
-
-        if(saveBag != null){
-
-            selectBooks = saveBag.getStringArrayList("selectBooks");
-
-
-
-            DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-            dbmanager.open();
-            select_expense=dbmanager.fetchExpenseWithbook(start_date,end_date,selectBooks);
-            System.out.println(select_expense.size()+", "+selectBooks.size());
-            dbmanager.close();
-            //setExpenseData(select_expense);
-            setList();
-            setListViewHeightBasedOnChildren(TypeListView);
-
-        }else {
-            //圖表
-           // setExpenseData(select_expense);
-
-            //ListView 類別項目、類別名稱、類別佔總額%、類別金額
-            //setList();
-            setListViewHeightBasedOnChildren(TypeListView);
-        }
-
-
-
-        this.btn_showBook =(Button)findViewById(R.id.btn_newBook);
-        btn_showBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    //Expense 資料庫
-                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
-                    dbmanager.open();
-                    // select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
-                    //System.out.println("Size of select books"+selectBooks.size());
-                    select_book=dbmanager.fetchBook();
-                    dbmanager.close();
-                    setList();
-
-
-            }
-        });
+        setBookFromDBList();
+        setList();
+        setListViewHeightBasedOnChildren(BookListView);
 
 
 
@@ -105,48 +66,47 @@ public class BookManage extends AppCompatActivity {
                 Bundle saveIncomeData = new Bundle();
                 intent.putExtras(saveIncomeData);
                 startActivity(intent);
-
             }
         });
-
-//        TypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
- //           @Override
-  //          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-   //             jumpTobook_adapter(position);
-    //        }
-     //   });
-
     }
 
-    public void setBookArray() {
-        DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
+
+
+
+    public void setBookFromDBList(){
+        getBookNameFromDB.clear();
+        DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
         dbmanager.open();
-        this.bookArray = dbmanager.fetchBook();           //可直接調用select_expense的資訊
+        getBookNameFromDB=dbmanager.fetchBook();
+        getBookArrayFromDB=dbmanager.fetchBookallattribute(getBookNameFromDB);
         dbmanager.close();
-        this.checked = new boolean[this.bookArray.size()];
+    }
 
-        for(int i = 0; i < checked.length; i++){
-            checked[i] = true;
-        }
+    public void clearList(){
+
+        this.idArray.clear();
+        this.amount_remainArray.clear();
+        this.nameArray.clear();
+        this.amount_startArray.clear();
+        this.i_currencyidArray.clear();
     }
 
 
-    public void jumpTobook_adapter(int position) {
-    }
-
-    public void setBookData(List<String> select_book){
-        String getBookName = "";
-        int replacePosition = 0;
-        for(int i=0;i < select_book.size();i++){
-            getBookName = select_book.get(i);
-
+    public void initialData(){
+        clearList();
+        for(int i=0; i<this.getBookArrayFromDB.size();i++){
+            this.idArray.add(getBookArrayFromDB.get(i).getId());
+            this.nameArray.add(getBookArrayFromDB.get(i).getName());
+            this.amount_startArray.add(getBookArrayFromDB.get(i).getAmount_start());
+            this.amount_remainArray.add(getBookArrayFromDB.get(i).getAmount_remain());
+            this.i_currencyidArray.add(getBookArrayFromDB.get(i).getCurrency_type());
         }
-
     }
 
     public void setList() {
-        book_adapter bk_adapter = new book_adapter(this, this.bookArray, bookName, context, bookArrayParam);
-        TypeListView.setAdapter(bk_adapter);
+        initialData();
+        book_detail_adapter bk_adapter = new book_detail_adapter(this,idArray,nameArray,amount_startArray,amount_remainArray,i_currencyidArray);
+        BookListView.setAdapter(bk_adapter);
     }
 
 
@@ -165,11 +125,8 @@ public class BookManage extends AppCompatActivity {
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
         }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
-
-
 }

@@ -231,11 +231,10 @@ public class DatabaseManager {
         return  book;
     }
 
-    public void updateBook(int book_id,String book_name,int amount_start,int amount_remain,String currency_type) {
+    public void updateBook(int book_id,String book_name,int amount_start,String currency_type) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.BOOK_NAME, book_name);
         contentValues.put(dbHelper.AMOUNT_START, amount_start);
-        contentValues.put(dbHelper.AMOUNT_REMAIN, amount_remain);
         contentValues.put(dbHelper.CURRENCY_TYPE, currency_type);
         database.update(dbHelper.tb_name3, contentValues, dbHelper.BOOK_ID + "=" +"'"+book_id+"'", null);
 

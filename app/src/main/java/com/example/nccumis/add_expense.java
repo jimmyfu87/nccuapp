@@ -2,6 +2,7 @@ package com.example.nccumis;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.inputmethodservice.KeyboardView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
@@ -39,33 +40,26 @@ public class add_expense extends AppCompatActivity {
     private Spinner input_type;
     private Spinner input_book;                          //改成final才能使用
     private EditText input_note;
-
     private RadioButton newBookBtn;
     private RadioButton newTypeBtn;
-
-//    private Button scanInvoice;
-//    private Button regularExpense;
-
-
     private List<String> type = new ArrayList<String>();         //傳給ArrayAdapter的參數
     private List<String> book = new ArrayList<String>();
-
     public List<Type> dbTypeData = new ArrayList<>();
     public List<String> dbBookData = new ArrayList<>();       //接資料庫資料
-
     private String saveDetailStartdate ="";
     private String saveDetailEnddate ="";
     private ArrayList<String> saveDetailBooksArray = new ArrayList<String>();
     private String saveDetailDate="";
     private int saveDetailId =0;
-
     ViewPager pager;
     ArrayList<View> pagerList;
-
     private EditText i_userid;                  //宣告需要輸入的變數的EditText
     private String i_price,i_note,i_date,i_type_name,i_book_name;
-
     private GestureDetectorCompat geatureObject;
+    private keyboardHelper helper;
+    private KeyboardView keyboard2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,6 +183,32 @@ public class add_expense extends AppCompatActivity {
 
         //金額
         input_amount = (EditText)findViewById(R.id.amount_input);
+        keyboard2 = findViewById(R.id.keyboard);
+        helper = new keyboardHelper(add_expense.this, keyboard2);
+        helper.setEditText(input_amount);
+        helper.setCallBack(new keyboardHelper.KeyboardCallBack() {
+
+            public void keyCall(int code) {
+                //回调键盘监听，根据回调的code值进行处理
+            }
+        });
+        input_amount.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //多条件判断，防止重复显示
+                if (input_amount.hasFocus() && !helper.isVisibility() && event.getAction() == MotionEvent.ACTION_DOWN) {
+                    helper.show();
+                }
+                return false;
+            }
+        });
+
+
+
+
+
+
+
         i_price = input_amount.getText().toString();
 
 
@@ -475,6 +495,8 @@ public class add_expense extends AppCompatActivity {
         saveExpenseData.putString("type",input_type.getSelectedItem().toString());
         saveExpenseData.putString("book",input_book.getSelectedItem().toString());
         saveExpenseData.putString("note",input_note.getText().toString());
+        saveExpenseData.putBoolean("FromBookManage", false);
+
         intent.putExtras(saveExpenseData);
         startActivity(intent);
     }

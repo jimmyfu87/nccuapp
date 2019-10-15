@@ -63,6 +63,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:inputType="numberDecimal" />
+        <android.inputmethodservice.KeyboardView
+            android:id="@+id/keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:keyTextColor="#000000"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:shadowRadius="0.0" />
+
 
         <TextView
             android:id="@+id/date"
@@ -173,7 +186,6 @@
             android:maxLength="100"/>
 
     </LinearLayout>
-
 
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
         <!--android:layout_width="match_parent"-->

@@ -8,4 +8,5 @@
     <string name="title_activity_book_adapter">book_adapter</string>
     <string name="title_activity_book_detail">book_detail</string>
     <string name="todo">TODO</string>
+    <string name="title_activity_book_fixed">book_fixed</string>
 </resources>

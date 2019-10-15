@@ -57,9 +57,8 @@
             android:layout_marginLeft="35dp"
             android:layout_marginTop="100dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:progress="100"
-            />
+            app:layout_constraintStart_toStartOf="parent"/>
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
