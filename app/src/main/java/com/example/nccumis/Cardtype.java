@@ -8,6 +8,7 @@ public class Cardtype {
     public Cardtype(int id, String cardtype_name,String apply_url) {
         this.id = id;
         this.cardtype_name = cardtype_name;
+        this.apply_url = apply_url;
         discountMax = 0;
     }
 

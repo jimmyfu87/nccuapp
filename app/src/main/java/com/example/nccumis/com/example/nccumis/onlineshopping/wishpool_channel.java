@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -867,17 +868,21 @@ public class wishpool_channel extends AppCompatActivity {
             for(int i = 0; i < othercardtypelist.size(); i++){
                 if(nocardnamelist.get(0).equals(othercardtypelist.get(i).getCardtype_name())){
                     creditcardurl = othercardtypelist.get(i).getApply_url();
-                    break;
+                    System.out.println("沒卡");
+                    return creditcardurl;
                 }
             }
         }else {
             for(int i = 0; i < owncardtypelist.size(); i++){
                 if(owncardnamelist.get(singleChoiceIndex).equals(owncardtypelist.get(i).getCardtype_name())){
                     creditcardurl = owncardtypelist.get(i).getApply_url();
-                    break;
+                    System.out.println("有卡");
+                    return creditcardurl;
                 }
             }
         }
+
+        System.out.println("信用卡URL："+creditcardurl);
         return creditcardurl;
     }
 

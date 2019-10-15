@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp" >
+
+
+        <TextView
+            android:text="id"
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+
+        <!--<TextView-->
+        <!--android:text="picture"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/picture"-->
+        <!--android:textSize="16sp"-->
+        <!--android:layout_weight="1"/>-->
+
+        <TextView
+            android:text="cardtypename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardtypename"
+            android:textColor="#417505"
+            android:layout_marginTop="10dp"
+            android:layout_weight="3"/>
+        <Button
+            android:id="@+id/deleteBtn"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="刪除"
+            android:layout_gravity="center_horizontal|left"
+            android:textColor="#417505"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+</LinearLayout>
