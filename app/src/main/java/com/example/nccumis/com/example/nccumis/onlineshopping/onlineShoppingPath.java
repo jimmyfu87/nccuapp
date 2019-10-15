@@ -229,7 +229,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
             if(!this.channellist.get(i).getActivitylist().isEmpty()) {
                 for(int j = 0; j < this.channellist.get(i).getActivitylist().size(); j++){
                     if(!this.channellist.get(i).getActivitylist().get(j).getRemarks().isEmpty()){
-                        discountDetailtemp += this.channellist.get(i).getActivitylist().get(j).getRemarks() +"\n";
+                        discountDetailtemp += this.channellist.get(i).getActivitylist().get(j).getCardtype_name() +"\n";
                     }
                 }
             }
