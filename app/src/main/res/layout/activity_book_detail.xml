@@ -49,3 +49,5 @@
             android:layout_height="wrap_content"
             android:id="@+id/note_input"
             android:layout_weight="1"/>
+    </LinearLayout>>
+</LinearLayout>

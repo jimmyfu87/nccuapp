@@ -114,7 +114,7 @@ public class add_book extends AppCompatActivity {
                         jumptoBookManage();
                     }else{
                         //到下一頁
-                        dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid);            //將資料放到資料庫
+                        dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,i_startdate,i_enddate,0);            //將資料放到資料庫
                         jumpToaddSpend(saveBag);
                     }
                     dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
