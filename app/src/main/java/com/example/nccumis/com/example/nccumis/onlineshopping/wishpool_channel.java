@@ -110,7 +110,7 @@ public class wishpool_channel extends AppCompatActivity {
         changeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(owncardnamelist.isEmpty()){
+                if(owncardnamelist.isEmpty() || owncardnamelist == null){
                     singleDialogEventWhenNocard();
                 }else{
                     singleDialogEvent();
@@ -330,6 +330,11 @@ public class wishpool_channel extends AppCompatActivity {
                             othercardtypelist.add(new Cardtype(id, cardtype_name,apply_url));
                             //拿othercardtypelist去調用
                         }
+
+                        for(int i = 0; i < othercardtypelist.size();i++){
+                            System.out.println("使用者沒的信用卡卡名："+othercardtypelist.get(i).getCardtype_name());
+
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -361,8 +366,13 @@ public class wishpool_channel extends AppCompatActivity {
                             String apply_url = jsonObject.getString("apply_url");
                             owncardtypelist.add(new Cardtype(id, cardtype_name,apply_url));
                             //拿owncardtypelist去調用
+
                         }
                         set_owncardnamelist();   //丟進alertdialog 的 String list
+                        for(int i = 0; i < owncardtypelist.size();i++){
+                            System.out.println("使用者有的信用卡卡名："+owncardtypelist.get(i).getCardtype_name());
+
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -375,9 +385,11 @@ public class wishpool_channel extends AppCompatActivity {
         };
         SharedPreferences sp2 = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor2 = sp2.edit();
+        System.out.println("member_id"+sp2.getString("member_id",null));
         GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
         RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getcardRequest);
+
 
         //取得使用者有的信用卡的活動
         Response.Listener<String> responseListener5 = new Response.Listener<String>() {
@@ -609,7 +621,7 @@ public class wishpool_channel extends AppCompatActivity {
 
     //更新使用者有的信用卡中的最新活動訊息
     public void updateActivity(){
-        if(!hasActivity()){
+        if(!hasActivity() || owncardnamelist.isEmpty()){
             newActivity.setText("卡片目前無任何優惠");
             return;
         }
@@ -801,6 +813,7 @@ public class wishpool_channel extends AppCompatActivity {
                 cardnameMaxdiscount = othercardtypelist.get(i).getCardtype_name();
             }
         }
+        System.out.println("cardnameMaxdiscount:"+cardnameMaxdiscount);
         return cardnameMaxdiscount;
     }
 
@@ -838,10 +851,11 @@ public class wishpool_channel extends AppCompatActivity {
 
     //當使用者無信用卡可選時，直接推薦使用者可辦的卡
     public void singleDialogEventWhenNocard(){
+        set_othercarddiscount();
+
         nocardnamelist.clear();
         nocardnamelist.add(getMaxdiscountInothercardtypelist());
         new AlertDialog.Builder(wishpool_channel.this)
-                .setMessage("使用者目前無卡片可選，以下為推薦使用者辦的卡片")
                 .setSingleChoiceItems(nocardnamelist.toArray(new String[nocardnamelist.size()]), singleChoiceIndex,
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -868,7 +882,7 @@ public class wishpool_channel extends AppCompatActivity {
             for(int i = 0; i < othercardtypelist.size(); i++){
                 if(nocardnamelist.get(0).equals(othercardtypelist.get(i).getCardtype_name())){
                     creditcardurl = othercardtypelist.get(i).getApply_url();
-                    System.out.println("沒卡");
+//                    System.out.println("沒卡");
                     return creditcardurl;
                 }
             }
@@ -876,7 +890,7 @@ public class wishpool_channel extends AppCompatActivity {
             for(int i = 0; i < owncardtypelist.size(); i++){
                 if(owncardnamelist.get(singleChoiceIndex).equals(owncardtypelist.get(i).getCardtype_name())){
                     creditcardurl = owncardtypelist.get(i).getApply_url();
-                    System.out.println("有卡");
+//                    System.out.println("有卡");
                     return creditcardurl;
                 }
             }
@@ -940,8 +954,6 @@ public class wishpool_channel extends AppCompatActivity {
 
         }
 
-        System.out.println("長期活動" + longactivitylist.get(longactivity_position).getActivity_name());
-        System.out.println("短期活動" + shortactivitylist.get(shortactivity_position).getActivity_name());
 
 
         intent.putExtras(saveCheckPriceData);
