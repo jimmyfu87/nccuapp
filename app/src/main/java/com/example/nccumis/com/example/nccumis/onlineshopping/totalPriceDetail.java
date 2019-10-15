@@ -30,6 +30,7 @@ public class totalPriceDetail extends AppCompatActivity {
     private Button shareShortTextToline;
     private String nameLongText;
     private String nameShortText;
+    private String applyURL;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,8 @@ public class totalPriceDetail extends AppCompatActivity {
         remarkLong = (Button) findViewById(R.id.remarkLong);
         shareLongTextToline=(Button)findViewById(R.id.shareLongTextToline);
         shareShortTextToline=(Button)findViewById(R.id.shareShortTextToline);
+
+        applyURL = getSaveBag.getString("apply_url");///////////////辦卡連結在這////////////////
         if(getSaveBag.getInt("longactivity_discount") != 0){
             nameLongText=getSaveBag.getString("longactivity_name");
             remarkLongText = getSaveBag.getString("longactivity_remark");
