@@ -55,8 +55,8 @@ public class Settings extends AppCompatActivity {
 
         btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
         password_change = (Button) findViewById(R.id.password_change);
-        OwncardtypeListView = (ListView)findViewById(R.id.OwncardtypeListView);
-        OthercardtypeListView = (ListView)findViewById(R.id.OthercardtypeListView);
+        OwncardtypeListView = (ListView)findViewById(R.id.owncardtypeListView);
+        OthercardtypeListView = (ListView)findViewById(R.id.othercardtypeListView);
 
         password_change.setOnClickListener(new View.OnClickListener() {
             @Override

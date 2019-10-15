@@ -31,7 +31,7 @@
             android:layout_marginTop="10dp">
 
             <ListView
-                android:id="@+id/OwncardtypeListView"
+                android:id="@+id/owncardtypeListView"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"/>
         </LinearLayout>
@@ -49,7 +49,7 @@
             android:layout_marginTop="10dp">
 
             <ListView
-                android:id="@+id/OthercardtypeListView"
+                android:id="@+id/othercardtypeListView"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"/>
         </LinearLayout>
