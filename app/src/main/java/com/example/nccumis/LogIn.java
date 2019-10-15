@@ -97,7 +97,8 @@ public class LogIn extends AppCompatActivity {
         });
 
 
-        //顯示隱藏密碼
+        //顯示密碼
+
         checkLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
