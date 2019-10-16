@@ -25,6 +25,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.nccumis.R;
 import com.example.nccumis.add_book;
 import com.example.nccumis.add_expense;
+import com.example.nccumis.com.example.nccumis.onlineshopping.productListAdapter;
+import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_channel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,9 +108,32 @@ public class owncardtypeadapter extends ArrayAdapter{
                             public void onClick(DialogInterface dialog, int which) {
                                 String delete_name = nameArray.get(position);   //要加入的信用卡 name
                                 int delete_id = idArray.get(position);      //  要加入的信用卡 id
-                                nameArray.remove(position);
-                                idArray.remove(position);
                                 ///////////資料庫othercard新增，owncard刪除//////////////
+
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        System.out.println(response);
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if (success) {
+                                                idArray.remove(position);
+                                                nameArray.remove(position);
+                                                notifyDataSetChanged();
+                                                Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
+                                            } else {
+                                                Snackbar.make(v, "刪除失敗", Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                DeletecardrelationRequest deleteproductRequest = new DeletecardrelationRequest(String.valueOf(delete_id),responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(getContext());
+                                queue.add(deleteproductRequest);
+
 
 
                             }

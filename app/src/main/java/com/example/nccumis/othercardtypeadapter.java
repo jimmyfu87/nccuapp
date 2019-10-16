@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class othercardtypeadapter extends ArrayAdapter{
     //to reference the Activity
     private final Activity context;
@@ -107,7 +109,31 @@ public class othercardtypeadapter extends ArrayAdapter{
                                 nameArray.remove(position);
                                 idArray.remove(position);
                                 ///////////資料庫owncard新增，othercard刪除//////////////
-
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        System.out.println(response);
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response);
+                                            boolean success = jsonResponse.getBoolean("success");
+                                            if (success) {
+                                                idArray.remove(position);
+                                                nameArray.remove(position);
+                                                notifyDataSetChanged();
+                                                Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
+                                            } else {
+                                                Snackbar.make(v, "刪除失敗", Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                SharedPreferences sp = context.getSharedPreferences("User", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                AddcardrelationRequest addcardrelationRequest = new AddcardrelationRequest(sp.getString("member_id",null),delete_name,responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(getContext());
+                                queue.add(addcardrelationRequest);
 
                             }
                         })
@@ -138,19 +164,6 @@ public class othercardtypeadapter extends ArrayAdapter{
             params = new HashMap<>();
             params.put("member_id", member_id);
             params.put("cardtype_name", cardtype_name);
-        }
-        @Override
-        public Map<String, String> getParams() {
-            return params;
-        }
-    }
-    public class DeletecardrelationRequest extends StringRequest {
-        private static final String Deletecardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Deletecardrelation.php";
-        private Map<String, String> params;
-        public DeletecardrelationRequest(String id , Response.Listener<String> listener) {
-            super(Method.POST,  Deletecardrelation_REQUEST_URL, listener, null);
-            params = new HashMap<>();
-            params.put("id", id);
         }
         @Override
         public Map<String, String> getParams() {
