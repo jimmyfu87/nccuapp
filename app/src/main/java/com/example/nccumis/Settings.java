@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -92,6 +93,7 @@ public class Settings extends AppCompatActivity {
                                     owncardtype_list.add(new Cardtype(id, cardtype_name,apply_url));
                                     //拿cardtype_list去調用
                                     setOwnCardList();
+                                    setListViewHeightBasedOnChildren(OwncardtypeListView);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -117,6 +119,7 @@ public class Settings extends AppCompatActivity {
                         String apply_url = jsonObject.getString("apply_url");
                         othercardtype_list.add(new Cardtype(id, cardtype_name,apply_url));
                         setOtherCardList();
+                        setListViewHeightBasedOnChildren(OthercardtypeListView);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -241,6 +244,31 @@ public class Settings extends AppCompatActivity {
         initialOtherCardList();
         othercardtypeadapter  othercardtype_adapter = new othercardtypeadapter(this,owncardidArray,owncardnameArray);
         OthercardtypeListView.setAdapter(othercardtype_adapter);
+    }
+
+    /**
+     * 動態設定ListView的高度
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) {
+            return;
+        }
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     public void fromSettingsToHome(){

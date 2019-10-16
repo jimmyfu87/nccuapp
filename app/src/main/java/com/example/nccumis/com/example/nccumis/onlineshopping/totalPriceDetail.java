@@ -52,8 +52,8 @@ public class totalPriceDetail extends AppCompatActivity {
         amountLong = (TextView)findViewById(R.id.activityamountLong);
         nameLong = (TextView)findViewById(R.id.activitynameLong);
         remarkLong = (Button) findViewById(R.id.remarkLong);
-        shareLongTextToline=(Button)findViewById(R.id.shareLongTextToLine);
-        shareShortTextToline=(Button)findViewById(R.id.shareShortTextToLine);
+        shareLongTextToline=(Button)findViewById(R.id.shareLongTextToline);
+        shareShortTextToline=(Button)findViewById(R.id.shareShortTextToline);
 
         applyURL = getSaveBag.getString("apply_url");///////////////辦卡連結在這////////////////
         if(getSaveBag.getInt("longactivity_discount") != 0){
