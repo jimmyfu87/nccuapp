@@ -68,7 +68,7 @@
 
         <activity android:name=".PasswordCheckEmail"
             android:theme="@style/LightGreenBar"
-            android:parentActivityName=".LogIn"/>/>
+            android:parentActivityName=".LogIn"/>
         <activity android:name=".Register"
             android:theme="@style/LightGreenBar"
             android:parentActivityName=".Home"
