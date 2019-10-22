@@ -31,6 +31,9 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LogIn extends AppCompatActivity {
 
 
@@ -108,6 +111,8 @@ public class LogIn extends AppCompatActivity {
         loginHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast toast=Toast.makeText(LogIn.this,"登錄中請稍候...",Toast.LENGTH_LONG);
+                showMyToast(toast,300);
                 final String member_id=et_userAccountLogin.getText().toString();
                 final String member_password=et_passwordLogin.getText().toString();
                 if(checkAccountPassword()){
@@ -337,4 +342,20 @@ public class LogIn extends AppCompatActivity {
 //                    Toast.makeText(LogIn.this, "登錄失敗", Toast.LENGTH_SHORT).show();
 //                });
 //    }
+    public void showMyToast(final Toast toast, final int cnt) {
+        final Timer timer =new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.show();
+            }
+        },0,3000);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.cancel();
+                timer.cancel();
+            }
+        }, cnt );
+    }
 }
