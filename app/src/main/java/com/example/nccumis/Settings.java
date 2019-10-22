@@ -221,6 +221,8 @@ public class Settings extends AppCompatActivity {
     }
 
     public void initialOwnCardList(){
+        owncardidArray.clear();
+        owncardnameArray.clear();
         for(int i = 0; i < owncardtype_list.size();i++){
             owncardidArray.add(owncardtype_list.get(i).getId());
             owncardnameArray.add(owncardtype_list.get(i).getCardtype_name());
@@ -234,6 +236,8 @@ public class Settings extends AppCompatActivity {
     }
 
     public void initialOtherCardList(){
+        othercardidArray.clear();
+        othercardnameArray.clear();
         for(int i = 0; i < othercardtype_list.size();i++){
             othercardidArray.add(othercardtype_list.get(i).getId());
             othercardnameArray.add(othercardtype_list.get(i).getCardtype_name());
