@@ -445,7 +445,7 @@ public class add_expense extends AppCompatActivity {
     public void updateBook(){
         DatabaseManager dbmanager = new DatabaseManager(getApplicationContext());
         dbmanager.open();
-        this.dbBookData = dbmanager.fetchBook();
+        this.dbBookData = dbmanager.fetchunclosedBook();
         dbmanager.close();
         for(int i = 0; i<dbBookData.size(); i++){
             if(book.contains(dbBookData.get(i))){
