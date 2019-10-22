@@ -66,10 +66,10 @@ public class ExpenseIncomeDetailListAdapter extends ArrayAdapter {
 
         //this code sets the values of the objects to values from the arrays
 //        numberTextField.setText(numberArray.get(position).toString());
-        dateTextField.setText(dateArray.get(position));
-        priceTextField.setText(priceArray.get(position).toString());
-        noteTextField.setText(noteArray.get(position));
-        bookTextField.setText(bookArray.get(position));
+        dateTextField.setText("日期： "+dateArray.get(position));
+        priceTextField.setText("金額： "+priceArray.get(position).toString());
+        noteTextField.setText("備註： "+noteArray.get(position));
+        bookTextField.setText("帳本："+bookArray.get(position));
 
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override

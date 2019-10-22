@@ -4,20 +4,63 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp" >
+    android:padding="5dp" >
+        <TextView
+            android:text="id"
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp" >
-
-                <TextView
-                    android:text="id"
-                    android:id="@+id/id"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:orientation="vertical">
+                        <TextView
+                            android:text="date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/date"
+                            android:textSize="16sp"
+                            android:layout_weight="1"
+                            android:textColor="#0D3B47"
+                            />
+                        <TextView
+                            android:text="price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/price"
+                            android:layout_weight="1"
+                            android:textColor="#0D3B47"
+                            android:textSize="16sp"
+                            />
+                        <TextView
+                            android:text="book"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/book"
+                            android:layout_weight="1"
+                            android:textColor="#0D3B47"
+                            android:textSize="16sp"
+                            />
+                        <TextView
+                            android:text="note"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/note_input"
+                            android:layout_weight="1"
+                            android:textColor="#0D3B47"
+                            android:textSize="16sp"
+                            />
+
+                </LinearLayout>
+
+
 
                 <!--<TextView-->
                     <!--android:text="number"-->
@@ -32,18 +75,10 @@
 
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                        <TextView
-                            android:text="date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/date"
-                            android:textSize="16sp"
-                            android:layout_weight="1"
-                            android:textColor="#0D3B47"
-                            />
+
                         <Button
                             android:id="@+id/fixBtn"
                             style="@android:style/Widget.DeviceDefault.Button.Borderless"
@@ -54,36 +89,8 @@
                             android:textAppearance="@style/TextAppearance.AppCompat"
                             android:background="@drawable/square_lightblue"
                             android:layout_marginLeft="25dp"/>
-
-
-                </LinearLayout>>
-
-                <TextView
-                    android:text="price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/price"
-                    android:layout_weight="1"
-                    android:textColor="#0D3B47"
-                    android:layout_marginBottom="40dp"
-                    />
-
-                <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp">
-
-                        <TextView
-                            android:text="book"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/book"
-                            android:layout_weight="1"
-                            android:textColor="#0D3B47"
-                            />
                         <Button
+
                             android:id="@+id/deleteBtn"
                             style="@android:style/Widget.DeviceDefault.Button.Borderless"
                             android:layout_width="60dp"
@@ -92,16 +99,12 @@
                             android:text="刪除"
                             android:layout_gravity="center_horizontal|right"
                             android:textAppearance="@style/TextAppearance.AppCompat"
-                            android:background="@drawable/square_lightgreen"/>
-                </LinearLayout>
-                <TextView
-                    android:text="note"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/note_input"
-                    android:layout_weight="1"
-                    android:textColor="#0D3B47"
-                    />
+                            android:background="@drawable/square_lightgreen"
+                            android:layout_marginTop="20dp"/>
+
+
+                </LinearLayout>>
+
 
         </LinearLayout>
 
