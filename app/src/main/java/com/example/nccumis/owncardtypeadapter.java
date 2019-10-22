@@ -121,7 +121,6 @@ public class owncardtypeadapter extends ArrayAdapter{
                                                 idArray.remove(position);
                                                 nameArray.remove(position);
                                                 notifyDataSetChanged();
-                                                Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
 
                                                 refresh(context);
                                             } else {
