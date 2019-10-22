@@ -87,11 +87,11 @@
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool" />
         <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />
         <activity
-            android:name=".Home"
+            android:name=".LogIn"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
         <activity
-            android:name=".LogIn"
+            android:name=".Home"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
