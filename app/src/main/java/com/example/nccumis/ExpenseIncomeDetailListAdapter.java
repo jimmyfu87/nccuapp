@@ -56,7 +56,7 @@ public class ExpenseIncomeDetailListAdapter extends ArrayAdapter {
         View rowView=inflater.inflate(R.layout.detail_listview_row, null,true);
 
         //this code gets references to objects in the detail_listview_row.xml file
-        TextView numberTextField = (TextView) rowView.findViewById(R.id.number);
+//        TextView numberTextField = (TextView) rowView.findViewById(R.id.number);
         TextView dateTextField = (TextView) rowView.findViewById(R.id.date);
         TextView priceTextField = (TextView) rowView.findViewById(R.id.price);
         TextView noteTextField = (TextView) rowView.findViewById(R.id.note_input);
@@ -65,7 +65,7 @@ public class ExpenseIncomeDetailListAdapter extends ArrayAdapter {
         deleteBtn = (Button) rowView.findViewById(R.id.deleteBtn);
 
         //this code sets the values of the objects to values from the arrays
-        numberTextField.setText(numberArray.get(position).toString());
+//        numberTextField.setText(numberArray.get(position).toString());
         dateTextField.setText(dateArray.get(position));
         priceTextField.setText(priceArray.get(position).toString());
         noteTextField.setText(noteArray.get(position));
