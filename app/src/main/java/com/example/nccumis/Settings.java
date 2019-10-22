@@ -33,7 +33,7 @@ import java.util.Map;
 
 
 public class Settings extends AppCompatActivity {
-    private Button btn_setToHome;
+//    private Button btn_setToHome;
     private RequestQueue queue;
     private List<Cardtype> owncardtype_list=new ArrayList<Cardtype>();
     private List<Cardtype> othercardtype_list=new ArrayList<Cardtype>();
@@ -54,10 +54,14 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
+        getSupportActionBar().setTitle("設定");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
         password_change = (Button) findViewById(R.id.password_change);
         OwncardtypeListView = (ListView)findViewById(R.id.owncardtypeListView);
         OthercardtypeListView = (ListView)findViewById(R.id.othercardtypeListView);
+
 
         password_change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,12 +76,12 @@ public class Settings extends AppCompatActivity {
 
         });
 
-        btn_setToHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fromSettingsToHome();
-            }
-        });
+//        btn_setToHome.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                fromSettingsToHome();
+//            }
+//        });
 
         //owncardtype_list使用者有的卡
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -271,10 +275,10 @@ public class Settings extends AppCompatActivity {
         listView.setLayoutParams(params);
     }
 
-    public void fromSettingsToHome(){
-        Intent intent = new Intent(Settings.this,Home.class);
-        startActivity(intent);
-    }
+//    public void fromSettingsToHome(){
+//        Intent intent = new Intent(Settings.this,Home.class);
+//        startActivity(intent);
+//    }
     public class GetcardRequest extends StringRequest {
         private static final String Getcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getcard.php";
         private Map<String, String> params;

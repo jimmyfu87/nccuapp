@@ -25,7 +25,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/number"
                     android:textSize="16sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    />
 
                 <TextView
                     android:text="date"
@@ -33,28 +35,36 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/date"
                     android:textSize="16sp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    />
 
                 <TextView
                     android:text="price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/price"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    />
 
                 <TextView
                     android:text="book"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/book"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    />
 
                 <TextView
                     android:text="note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/note_input"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    />
 
         </LinearLayout>
 
@@ -62,27 +72,32 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            >
 
                 <Button
                     android:id="@+id/fixBtn"
                     style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:text="修改"
                     android:layout_gravity="center_horizontal|right"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:background="@drawable/square_lightblue"
+                    android:layout_marginLeft="25dp"/>
 
                 <Button
                     android:id="@+id/deleteBtn"
                     style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
                     android:text="刪除"
                     android:layout_gravity="center_horizontal|right"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:background="@drawable/square_lightgreen"/>
 
         </LinearLayout>
 </LinearLayout>

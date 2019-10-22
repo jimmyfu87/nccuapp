@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class check_expense_detail extends AppCompatActivity {
-    private Button lastPage;
+//    private Button lastPage;
     private TextView typeField;
     private Intent getCheckExpenseData;
     private Bundle saveBag;
@@ -34,6 +34,9 @@ public class check_expense_detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_detail);
 
+        getSupportActionBar().setTitle("支出統計");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //get typeName,startDate,endDate,selectBook
         getCheckExpenseData = getIntent();
         saveBag = getCheckExpenseData.getExtras();
@@ -45,13 +48,13 @@ public class check_expense_detail extends AppCompatActivity {
         //System.out.println(startDate+", "+endDate);
 
         //上一頁
-        lastPage = (Button)findViewById(R.id.lastPage);
-        lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpTocheck_expense();
-            }
-        });
+//        lastPage = (Button)findViewById(R.id.lastPage);
+//        lastPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                jumpTocheck_expense();
+//            }
+//        });
 
         //傳入類別名稱
         typeField = (TextView)findViewById(R.id.typefield);
@@ -87,11 +90,11 @@ public class check_expense_detail extends AppCompatActivity {
         DetailListView.setAdapter(ExDetail_adapter);
     }
 
-    public void jumpTocheck_expense(){
-        Intent intent = new Intent(check_expense_detail.this, check_expense.class);
-        intent.putExtra("startDate" ,startDate);
-        intent.putExtra("endDate" , endDate);
-        intent.putExtra("selectBooks" , selectBooks);
-        startActivity(intent);
-    }
+//    public void jumpTocheck_expense(){
+//        Intent intent = new Intent(check_expense_detail.this, check_expense.class);
+//        intent.putExtra("startDate" ,startDate);
+//        intent.putExtra("endDate" , endDate);
+//        intent.putExtra("selectBooks" , selectBooks);
+//        startActivity(intent);
+//    }
 }

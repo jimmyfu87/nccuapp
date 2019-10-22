@@ -10,11 +10,11 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="設定"
-            android:layout_gravity="center"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="設定"-->
+            <!--android:layout_gravity="center"/>-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,7 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="更改密碼" />
+            android:text="更改密碼"
+            android:background="@drawable/lightblue_btn"/>
         <!--<Button-->
             <!--android:id="@+id/addcardrelation"-->
             <!--android:layout_width="wrap_content"-->
@@ -78,13 +79,13 @@
             <!--android:text="刪除卡片" />-->
 
 
-<Button
-    android:id="@+id/btn_setToHome"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginTop="10dp"
-    android:text="回上頁"/>
+<!--<Button-->
+    <!--android:id="@+id/btn_setToHome"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:text="回上頁"/>-->
         <!--<ListView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->

@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class password_change<ModifyPswActivity> extends AppCompatActivity {
-    private Button btn_lastPage;
+//    private Button btn_lastPage;
     private Button btn_confirm;
     private EditText new_password;
     private EditText check_password;
@@ -41,24 +41,28 @@ public class password_change<ModifyPswActivity> extends AppCompatActivity {
         new_password = findViewById(R.id.new_password);
         check_password = findViewById(R.id.check_password);
 
+        getSupportActionBar().setTitle("更改密碼");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       // ex_password.addTextChangedListener(changeTextWatcher);
+
+
+        // ex_password.addTextChangedListener(changeTextWatcher);
        // new_password.addTextChangedListener(changeTextWatcher);
         //check_password.addTextChangedListener(changeTextWatcher);
 
 
-        btn_lastPage = (Button) findViewById(R.id.btn_lastPage);
-        btn_lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backlastpage();
-            }
-
-            public void backlastpage() {
-                Intent intent = new Intent(password_change.this, Settings.class);
-                startActivity(intent);
-            }
-        });
+//        btn_lastPage = (Button) findViewById(R.id.btn_lastPage);
+//        btn_lastPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                backlastpage();
+//            }
+//
+//            public void backlastpage() {
+//                Intent intent = new Intent(password_change.this, Settings.class);
+//                startActivity(intent);
+//            }
+//        });
         btn_confirm = (Button) findViewById(R.id.btn_confirm);
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override

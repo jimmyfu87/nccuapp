@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class check_income_detail extends AppCompatActivity {
-    private Button lastPage;
+//    private Button lastPage;
     private TextView typeField;
     private Intent getCheckIncomeData;
     private Bundle saveBag;
@@ -33,6 +33,10 @@ public class check_income_detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.income_detail);
 
+        getSupportActionBar().setTitle("收入統計");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         //get typeName,startDate,endDate,selectBook
         getCheckIncomeData = getIntent();
         saveBag = getCheckIncomeData.getExtras();
@@ -42,13 +46,13 @@ public class check_income_detail extends AppCompatActivity {
         selectBooks = saveBag.getStringArrayList("selectBooks");
 
         //上一頁
-        lastPage = (Button)findViewById(R.id.lastPage);
-        lastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jumpTocheck_income();
-            }
-        });
+//        lastPage = (Button)findViewById(R.id.lastPage);
+//        lastPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                jumpTocheck_income();
+//            }
+//        });
 
         //傳入類別名稱
         typeField = (TextView)findViewById(R.id.typefield);
@@ -84,12 +88,12 @@ public class check_income_detail extends AppCompatActivity {
         DetailListView.setAdapter(InDetail_adapter);
     }
 
-    public void jumpTocheck_income(){
-        Intent intent = new Intent(check_income_detail.this, check_income.class);
-        intent.putExtra("startDate" ,startDate);
-        intent.putExtra("endDate" , endDate);
-        intent.putExtra("selectBooks" , selectBooks);
-        startActivity(intent);
-    }
+//    public void jumpTocheck_income(){
+//        Intent intent = new Intent(check_income_detail.this, check_income.class);
+//        intent.putExtra("startDate" ,startDate);
+//        intent.putExtra("endDate" , endDate);
+//        intent.putExtra("selectBooks" , selectBooks);
+//        startActivity(intent);
+//    }
 
 }
