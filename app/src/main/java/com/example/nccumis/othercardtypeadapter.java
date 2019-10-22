@@ -119,6 +119,8 @@ public class othercardtypeadapter extends ArrayAdapter{
                                                 nameArray.remove(position);
                                                 notifyDataSetChanged();
                                                 Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
+                                                refresh(context);
+
                                             } else {
                                                 Snackbar.make(v, "刪除失敗", Snackbar.LENGTH_SHORT).show();
                                             }
@@ -168,5 +170,11 @@ public class othercardtypeadapter extends ArrayAdapter{
         public Map<String, String> getParams() {
             return params;
         }
+    }
+
+    private void refresh(Activity activity) {
+        activity.finish();
+        Intent intent = new Intent(activity, activity.getClass());
+        activity.startActivity(intent);
     }
 }

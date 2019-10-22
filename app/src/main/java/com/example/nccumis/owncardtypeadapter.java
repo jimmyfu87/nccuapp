@@ -122,6 +122,8 @@ public class owncardtypeadapter extends ArrayAdapter{
                                                 nameArray.remove(position);
                                                 notifyDataSetChanged();
                                                 Snackbar.make(v, "You just remove No." + delete_name +" item", Snackbar.LENGTH_SHORT).show();
+
+                                                refresh(context);
                                             } else {
                                                 Snackbar.make(v, "刪除失敗", Snackbar.LENGTH_SHORT).show();
                                             }
@@ -174,10 +176,10 @@ public class owncardtypeadapter extends ArrayAdapter{
     public class DeletecardrelationRequest extends StringRequest {
         private static final String Deletecardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Deletecardrelation.php";
         private Map<String, String> params;
-        public DeletecardrelationRequest(String id ,String cardtype_name, Response.Listener<String> listener) {
+        public DeletecardrelationRequest(String member_id ,String cardtype_name, Response.Listener<String> listener) {
             super(Method.POST,  Deletecardrelation_REQUEST_URL, listener, null);
             params = new HashMap<>();
-            params.put("id", id);
+            params.put("member_id", member_id);
             params.put("cardtype_name", cardtype_name);
         }
         @Override
@@ -186,9 +188,9 @@ public class owncardtypeadapter extends ArrayAdapter{
         }
     }
 
-//    private void refresh() {
-//        finish();
-//        Intent intent = new Intent(owncardtypeadapter.this, owncardtypeadapter.class);
-//        startActivity(intent);
-//    }
+    private void refresh(Activity activity) {
+        activity.finish();
+        Intent intent = new Intent(activity, activity.getClass());
+        activity.startActivity(intent);
+    }
 }
