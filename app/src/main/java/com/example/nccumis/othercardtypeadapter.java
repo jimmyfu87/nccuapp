@@ -99,15 +99,13 @@ public class othercardtypeadapter extends ArrayAdapter{
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(context)
-                        .setTitle("刪除提醒")
-                        .setMessage("是否確定刪除？")
+                        .setTitle("新增提醒")
+                        .setMessage("是否確定新增？")
                         .setPositiveButton("是", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String delete_name = nameArray.get(position);   //要加入的信用卡 name
-                                int delete_id = idArray.get(position);      //  要加入的信用卡 id
-                                nameArray.remove(position);
-                                idArray.remove(position);
+
                                 ///////////資料庫owncard新增，othercard刪除//////////////
                                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                                     @Override
