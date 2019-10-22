@@ -135,6 +135,7 @@ public class othercardtypeadapter extends ArrayAdapter{
                                 RequestQueue queue = Volley.newRequestQueue(getContext());
                                 queue.add(addcardrelationRequest);
 
+
                             }
                         })
                         .setNegativeButton("否", new DialogInterface.OnClickListener() {

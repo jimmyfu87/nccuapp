@@ -118,6 +118,7 @@ public class Settings extends AppCompatActivity {
                         String cardtype_name = jsonObject.getString("cardtype_name");
                         String apply_url = jsonObject.getString("apply_url");
                         othercardtype_list.add(new Cardtype(id, cardtype_name,apply_url));
+                        System.out.println("othercardtype_list: "+id+", "+cardtype_name+", "+apply_url);
                         setOtherCardList();
                         setListViewHeightBasedOnChildren(OthercardtypeListView);
                     }
@@ -246,7 +247,7 @@ public class Settings extends AppCompatActivity {
 
     public void setOtherCardList(){
         initialOtherCardList();
-        othercardtypeadapter  othercardtype_adapter = new othercardtypeadapter(this,owncardidArray,owncardnameArray);
+        othercardtypeadapter  othercardtype_adapter = new othercardtypeadapter(this,othercardidArray,othercardnameArray);
         OthercardtypeListView.setAdapter(othercardtype_adapter);
     }
 
