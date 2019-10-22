@@ -130,12 +130,11 @@ public class owncardtypeadapter extends ArrayAdapter{
                                         }
                                     }
                                 };
-                                DeletecardrelationRequest deleteproductRequest = new DeletecardrelationRequest(String.valueOf(delete_id),responseListener);
+                                SharedPreferences sp = context.getSharedPreferences("User", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                DeletecardrelationRequest deleteproductRequest = new DeletecardrelationRequest(sp.getString("member_id",null),delete_name,responseListener);
                                 RequestQueue queue = Volley.newRequestQueue(getContext());
                                 queue.add(deleteproductRequest);
-
-
-
                             }
                         })
                         .setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -175,14 +174,21 @@ public class owncardtypeadapter extends ArrayAdapter{
     public class DeletecardrelationRequest extends StringRequest {
         private static final String Deletecardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Deletecardrelation.php";
         private Map<String, String> params;
-        public DeletecardrelationRequest(String id , Response.Listener<String> listener) {
+        public DeletecardrelationRequest(String id ,String cardtype_name, Response.Listener<String> listener) {
             super(Method.POST,  Deletecardrelation_REQUEST_URL, listener, null);
             params = new HashMap<>();
             params.put("id", id);
+            params.put("cardtype_name", cardtype_name);
         }
         @Override
         public Map<String, String> getParams() {
             return params;
         }
     }
+
+//    private void refresh() {
+//        finish();
+//        Intent intent = new Intent(owncardtypeadapter.this, owncardtypeadapter.class);
+//        startActivity(intent);
+//    }
 }
