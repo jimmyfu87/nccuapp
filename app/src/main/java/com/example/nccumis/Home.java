@@ -160,9 +160,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 setBook(i_book_name);   //設定現在選取的帳本
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
-                select_expense = dbmanager.fetchExpenseWithbook(dateinStart,dateinEnd,selectBook);
+                select_expense = dbmanager.fetchExpenseWithbook("0000-00-00","9999-99-99",selectBook);
 //                System.out.println("fetchExpense size: "+select_expense.size());
-                select_income = dbmanager.fetchIncomeWithbook(dateinStart,dateinEnd,selectBook);
+                select_income = dbmanager.fetchIncomeWithbook("0000-00-00","9999-99-99",selectBook);
                 select_BookAttribute = dbmanager.fetchBookallattribute(selectBook);
                 dbmanager.close();String book_id=spn_homeBook.getSelectedItem().toString();
 
