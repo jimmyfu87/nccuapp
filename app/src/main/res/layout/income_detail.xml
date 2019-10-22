@@ -10,23 +10,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/lastPage"
-            style="@android:style/Widget.DeviceDefault.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="上一頁"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
+        <!--<Button-->
+            <!--android:id="@+id/lastPage"-->
+            <!--style="@android:style/Widget.DeviceDefault.Button.Borderless"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="上一頁"-->
+            <!--android:textAppearance="@style/TextAppearance.AppCompat" />-->
 
-        <Button
-            style="@android:style/Widget.DeviceDefault.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="支出統計" />
+        <!--<Button-->
+            <!--style="@android:style/Widget.DeviceDefault.Button.Borderless"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="支出統計" />-->
 
     </LinearLayout>
 
@@ -48,32 +48,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp" >
+        android:layout_marginTop="20dp"
+        android:background="@drawable/square_lightblue"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="項目"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="#0D3B47"
+
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="日期"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="#0D3B47"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="金額"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="#0D3B47"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="帳本"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="#0D3B47"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="備註"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="#0D3B47"
+            />
 
     </LinearLayout>
 
@@ -81,12 +94,15 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/orange_background">
 
         <ListView
             android:id="@+id/DetailListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
 
 </LinearLayout>

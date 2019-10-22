@@ -27,8 +27,12 @@
         <activity
             android:name=".password_change"
             android:label="@string/title_activity_password_change"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Settings" /> <!-- //backupagent key -->
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Settings"
+            />
+        <activity android:name=".Settings"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".Home"/> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <activity android:name=".add_spend_viewpager" />
         <activity android:name=".add_type"
@@ -54,8 +58,13 @@
             android:theme="@style/LightGreenBar"
             android:parentActivityName=".Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".check_expense_detail" />
-        <activity android:name=".check_income_detail" />
+        <activity android:name=".check_expense_detail"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".check_expense"/>
+
+        <activity android:name=".check_income_detail"
+            android:theme="@style/LightGreenBar"
+            android:parentActivityName=".check_income"/>
         <activity
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
