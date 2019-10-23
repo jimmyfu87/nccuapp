@@ -340,7 +340,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         }else if(id == R.id.bookManagement){
             Intent intent = new Intent(Home.this,BookManage.class);
             startActivity(intent);
-        }else if(id == R.id.cloudBackup){
+        }else if(id == R.id.changepassword){
+            Intent intent = new Intent(Home.this,password_change.class);
+            startActivity(intent);
+        } else if(id == R.id.cloudBackup){
             signIn(REQUEST_CODE_SIGN_IN_create);
         }else if(id == R.id.cloudreturn){
             signIn(REQUEST_CODE_SIGN_IN_restore);
