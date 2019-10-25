@@ -133,7 +133,7 @@ public class ExpenseIncomeDetailListAdapter extends ArrayAdapter {
         saveExpenseData.putString("amount", priceArray.get(position).toString());
         saveExpenseData.putString("date", dateArray.get(position));
         saveExpenseData.putString("type", typeName);
-        saveExpenseData.putString("book", dateArray.get(position));
+        saveExpenseData.putString("book", bookArray.get(position));
         saveExpenseData.putString("note", noteArray.get(position));
         saveExpenseData.putString("saveDetailStartdate",saveDetailStartdate);
         saveExpenseData.putString("saveDetailEnddate",saveDetailEnddate);
@@ -151,7 +151,7 @@ public class ExpenseIncomeDetailListAdapter extends ArrayAdapter {
         saveIncomeData.putString("amount", priceArray.get(position).toString());
         saveIncomeData.putString("date", dateArray.get(position));
         saveIncomeData.putString("type", typeName);
-        saveIncomeData.putString("book", dateArray.get(position));
+        saveIncomeData.putString("book", bookArray.get(position));
         saveIncomeData.putString("note", noteArray.get(position));
         saveIncomeData.putString("saveDetailStartdate",saveDetailStartdate);
         saveIncomeData.putString("saveDetailEnddate",saveDetailEnddate);

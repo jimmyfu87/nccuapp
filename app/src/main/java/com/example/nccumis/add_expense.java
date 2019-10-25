@@ -2,7 +2,6 @@ package com.example.nccumis;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.inputmethodservice.KeyboardView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
@@ -10,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -30,7 +30,6 @@ import android.content.Intent;
 public class add_expense extends AppCompatActivity {
     private static final int EXPENSE = -1;
     private boolean detail = false;
-    private Button lastPage;
     private Button newExpense;
     private Button confirm;
 
@@ -82,9 +81,6 @@ public class add_expense extends AppCompatActivity {
         getSupportActionBar().setTitle("新增支出");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        for(int i = 0; i < type.size(); i++){
-            System.out.println(type.get(i));
-        }
         ArrayAdapter typeList = new ArrayAdapter<>(add_expense.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 type);
@@ -92,18 +88,6 @@ public class add_expense extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item,
                 book);
 
-        //不儲存回首頁 或 回流水帳
-//        lastPage = (Button)findViewById(R.id.lastPage);
-//        lastPage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(detail){
-//                    jumpTocheck_expense_detail();
-//                }else{
-//                    jumpToHome();
-//                }
-//            }
-//        });
 
         //切換為新增支出
         newExpense = (Button)findViewById(R.id.newExpense);
@@ -290,7 +274,11 @@ public class add_expense extends AppCompatActivity {
             updateType();
             input_book.setAdapter(bookList);
             input_type.setAdapter(typeList);
+            System.out.println("amount:"+i_price+",note:"+i_note);
+            //從流水帳來
             if(detail){
+                typePosition = typeList.getPosition(getSaveBag.getString("typeName"));
+                input_type.setSelection(typePosition);
                 saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
                 saveDetailEnddate = getSaveBag.getString("saveDetailEnddate");
@@ -299,24 +287,7 @@ public class add_expense extends AppCompatActivity {
             }
 
         }
-        Intent getpoolrecord = getIntent();
-        Bundle poolrecord = getpoolrecord.getExtras();
-        if(poolrecord != null){
-            input_amount.setText(poolrecord.getString("product_price"));
-            input_note.setText(poolrecord.getString("product_name"));
-        }
 
-        //固定支出
-//        regularExpense = (Button) findViewById(R.id.regularExpense);
-//        regularExpense.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
     }
 
     @Override
@@ -505,4 +476,14 @@ public class add_expense extends AppCompatActivity {
         startActivity(intent);
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                finish();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

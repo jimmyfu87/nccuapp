@@ -270,7 +270,10 @@ public class add_income extends AppCompatActivity {
             updateType();
             input_book.setAdapter(bookList);
             input_type.setAdapter(typeList);
+            //從流水帳來
             if(detail){
+                typePosition = typeList.getPosition(getSaveBag.getString("typeName"));
+                input_type.setSelection(typePosition);
                 saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
                 saveDetailEnddate = getSaveBag.getString("saveDetailEnddate");

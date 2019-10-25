@@ -278,8 +278,8 @@ public class productListAdapter extends ArrayAdapter {
         Intent intent= new Intent(this.context,add_expense.class);
         intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle poolrecord = new Bundle();
-        poolrecord.putString("product_price",product_price);
-        poolrecord.putString("product_name",product_name);
+        poolrecord.putString("amount",product_price);
+        poolrecord.putString("note",product_name);
         intent.putExtras(poolrecord);
         this.context.startActivity(intent);
     }
