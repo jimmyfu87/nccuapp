@@ -35,6 +35,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,8 +79,6 @@ public class wishpool_channel extends AppCompatActivity {
     private static List<Cardtype> othercardtypelist=new ArrayList<Cardtype>();
     private List<Activity> activitylistwithcard=new ArrayList<Activity>();  //沒用到，可刪掉！！！
     private static List<String> nocardnamelist = new ArrayList<String>();   //使用者沒卡時推薦一張信用卡
-    private List<Activity> activitylistwithothercard=new ArrayList<Activity>();
-    private static List<String> nocardname = new ArrayList<String>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -538,6 +537,12 @@ public class wishpool_channel extends AppCompatActivity {
         //檢查使用者是否有信用卡
         String creditcardname = owncardnamelist.isEmpty() ?
                 getMaxdiscountInothercardtypelist()  : owncardnamelist.get(singleChoiceIndex) ;
+        //刪掉推薦信用卡的括號內容
+        if(singleChoiceIndex == 1){
+            creditcardname = creditcardname.substring(0, creditcardname.length()-13);
+        }
+
+//        System.out.println("creditcardname:"+creditcardname);
 
         for(int i = 0; i < longactivitylist.size();i++){
             if(longactivitylist.get(i).getChannel_name().equals(channel_name)){
@@ -598,6 +603,8 @@ public class wishpool_channel extends AppCompatActivity {
             }
         }
 
+//        System.out.println("longdiscount:"+longactivity_discount+", shortdiscount:"+shortactivity_discount);
+        System.out.println("longdiscountposition:"+longactivity_position+", shortdiscountposition:"+shortactivity_position);
 
 
     }
@@ -625,31 +632,36 @@ public class wishpool_channel extends AppCompatActivity {
             newActivity.setText("卡片目前無任何優惠");
             return;
         }
-        String longRemark ="";
-        for (int i= 0; i < longactivitylist.size();i++){
-            if(owncardnamelist.get(singleChoiceIndex).equals(longactivitylist.get(i).getCardtype_name())){
-                if(longactivitylist.get(longactivity_position).getRemarks().equals(null) || longactivitylist.get(longactivity_position).getRemarks().equals("")){
-                    longRemark = "目前無長期優惠";
-                    break;
-                }else {
-                    longRemark = longactivitylist.get(longactivity_position).getRemarks();
-                }
-            }
-        }
-        String shortRemark = "";
-        for (int i= 0; i < shortactivitylist.size();i++){
-            if(owncardnamelist.get(singleChoiceIndex).equals(shortactivitylist.get(i).getCardtype_name())){
-                if(shortactivitylist.get(shortactivity_position).getRemarks().equals(null) || shortactivitylist.get(shortactivity_position).getRemarks().equals("")){
-                    shortRemark = "目前無短期優惠";
-                    break;
-                }else {
-                    shortRemark = shortactivitylist.get(shortactivity_position).getRemarks();
-                }
-            }
+        //檢查使用者是否有信用卡
+        String creditcardname = owncardnamelist.isEmpty() ?
+                getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
+
+        //刪掉推薦信用卡的括號內容
+        if(singleChoiceIndex == 1){
+            creditcardname = creditcardname.substring(0, creditcardname.length()-13);
         }
 
-        newActivity.setText("最新長期優惠: " + longRemark +"\n"
-                    + "最新短期優惠: " + shortRemark);
+        String longName ="";
+        if(longactivity_position == 0 && !longactivitylist.get(longactivity_position).getCardtype_name().equals(creditcardname)){
+            longName = "目前無長期優惠";
+        }else{
+            longName = longactivitylist.get(longactivity_position).getActivity_name();
+        }
+        longName = longName.equals("") || longName.equals(null) ? "目前無長期優惠" : longName;
+
+
+        String shortName = "";
+        if(shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname)){
+                shortName = "目前無短期優惠";
+        }else {
+            shortName = shortactivitylist.get(shortactivity_position).getActivity_name();
+        }
+        shortName = shortName.equals("") || shortName.equals(null) ? "目前無長期優惠" : shortName;
+
+
+
+        newActivity.setText("最新長期優惠: " + longName +"\n"
+                    + "最新短期優惠: " + shortName);
 
 //        for(int i = 0; i < activitylistwithcard.size(); i++){
 //            if(activitylistwithcard.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
@@ -664,6 +676,11 @@ public class wishpool_channel extends AppCompatActivity {
         //檢查使用者是否有信用卡
         String creditcardname = owncardnamelist.isEmpty() ?
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
+
+        //刪掉推薦信用卡的括號內容
+        if(singleChoiceIndex == 1){
+            creditcardname = creditcardname.substring(0, creditcardname.length()-13);
+        }
 
         for(int i = 0; i < longactivitylist.size(); i++){
             if(longactivitylist.get(i).getCardtype_name().equals(creditcardname)){
@@ -689,6 +706,7 @@ public class wishpool_channel extends AppCompatActivity {
         List<Cardtype> tempcardtypelist = new ArrayList<Cardtype>();
         for(int i = 0; i <owncardtypelist.size(); i++) {
             tempcardtypelist.add(new Cardtype(this.owncardtypelist.get(i).getId(),this.owncardtypelist.get(i).getCardtype_name(),this.owncardtypelist.get(i).getApply_url()));
+            tempcardtypelist.get(i).setdiscountmax(this.owncardtypelist.get(i).getdiscountMax());
         }
         int count = 0;
 
@@ -812,8 +830,9 @@ public class wishpool_channel extends AppCompatActivity {
                 discountMax = othercardtypelist.get(i).getdiscountMax();
                 cardnameMaxdiscount = othercardtypelist.get(i).getCardtype_name();
             }
+//            System.out.println("cardname:"+othercardtypelist.get(i).getCardtype_name()+" ,carddiscount:"+othercardtypelist.get(i).getdiscountMax());
         }
-        System.out.println("cardnameMaxdiscount:"+cardnameMaxdiscount);
+//        System.out.println("cardnameMaxdiscount:"+cardnameMaxdiscount);
         return cardnameMaxdiscount;
     }
 
