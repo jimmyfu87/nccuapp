@@ -160,11 +160,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 setBook(i_book_name);   //設定現在選取的帳本
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
-                select_expense = dbmanager.fetchExpenseWithbook("0000-00-00","9999-99-99",selectBook);
+                select_expense = dbmanager.fetchExpenseWithbook("0000-01-01","9999-12-31",selectBook);
 //                System.out.println("fetchExpense size: "+select_expense.size());
-                select_income = dbmanager.fetchIncomeWithbook("0000-00-00","9999-99-99",selectBook);
+                select_income = dbmanager.fetchIncomeWithbook("0000-01-01","9999-12-31",selectBook);
                 select_BookAttribute = dbmanager.fetchBookallattribute(selectBook);
-                dbmanager.close();String book_id=spn_homeBook.getSelectedItem().toString();
+                dbmanager.close();
+                String book_id=spn_homeBook.getSelectedItem().toString();
 
                 SharedPreferences SP = getSharedPreferences("Book", MODE_PRIVATE);
                 SharedPreferences.Editor editor = SP.edit();
@@ -172,16 +173,18 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 editor.putInt("book_position",position);
                 editor.commit();
 
+                int amountReamin = 0;
                 for(int i = 0; i < select_BookAttribute.size(); i++){
                     if(select_BookAttribute.get(i).getName().equals(i_book_name)){
                         startBudget = select_BookAttribute.get(i).getAmount_start();
+                        amountReamin = select_BookAttribute.get(i).getAmount_remain();
                         break;
 
                     }
                 }
                 countExpenseAndIncome();
-                PB_expense.setText(Integer.toString(expense));
-                PB_left.setText(Integer.toString(startBudget-expense+income));
+                PB_expense.setText(Integer.toString(expense));       // 帳本花費（總支出）
+                PB_left.setText(Integer.toString(amountReamin));    //  帳本剩餘
                 PB.setProgress(Math.round(countPercentage()));
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
@@ -623,8 +626,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     //計算該帳本預算占幾%
     public float countPercentage(){
         System.out.println(expense +", "+ startBudget+", "+income);
-        if(startBudget+income == 0){
-            return 0;
+        if(startBudget+income == 0 || expense >= startBudget+income){
+            return 100;
         }
 
         return ((float)expense/(startBudget+income))*100f;
@@ -639,7 +642,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         for(int i= 0; i<select_income.size();i++){
             income += select_income.get(i).getIn_price();
         }
-
+//        System.out.println("expense:" + expense+",income:"+income);
     }
     public static boolean isDate2Bigger(String str1, String str2) {
         boolean isBigger = false;
