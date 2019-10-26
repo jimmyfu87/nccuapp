@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/topbar_onlineshopping_path">
+        android:background="@drawable/topbar_onlineshopping">
 
         <Button
             android:id="@+id/lastPage"
@@ -17,10 +17,19 @@
             android:layout_width="70dp"
             android:layout_height="61dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="10dp"
+            android:text="購物商城"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
         <Button
             android:id="@+id/refresh"
-            android:layout_width="76dp"
-            android:layout_height="62dp"
+            android:layout_width="70dp"
+            android:layout_height="61dp"
             android:layout_alignRight="@+id/imageView3"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="11dp"

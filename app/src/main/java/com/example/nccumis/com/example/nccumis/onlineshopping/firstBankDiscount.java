@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,11 +30,12 @@ public class firstBankDiscount extends AppCompatActivity {
     private Button btn_lastPage;
     private TextView ecommerceName;
     private String getEcommerceName;
-    private TextView discountDetail;
+    private TextView discountDetailLong;
+    private TextView discountDetailShort;
     private List<Activity> longactivitylist=new ArrayList<Activity>();
     private List<Activity> shortactivitylist=new ArrayList<Activity>();
-    private String dicountLong ="";
-    private String dicountShort ="";
+    private String discountLong ="";
+    private String discountShort ="";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,8 @@ public class firstBankDiscount extends AppCompatActivity {
         ecommerceName.setText(getEcommerceName+"線上購物平台");
 
         //一銀與電商優惠，從資料庫fetch資料
-        discountDetail = (TextView)findViewById(R.id.discountDetail);
-        discountDetail.setText("優惠資訊：");
+        discountDetailLong = (TextView)findViewById(R.id.discountDetailLong);
+        discountDetailShort = (TextView)findViewById(R.id.discountDetailShort);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -90,8 +92,9 @@ public class firstBankDiscount extends AppCompatActivity {
 
                         setLongactivity();
                         setShortactivity();
-//                        System.out.println("discountlong:" + dicountLong);
-                        discountDetail.setText("長期優惠資訊： \n\n"+dicountLong + "\n 短期優惠資訊： \n\n" + dicountShort);
+                        discountDetailLong.setText("長期優惠資訊： \n\n" +discountLong + "\n");
+                        discountDetailShort.setText("短期優惠資訊： \n\n" + discountShort + "\n");
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -138,15 +141,20 @@ public class firstBankDiscount extends AppCompatActivity {
 
     public void setLongactivity(){
         for(int i = 0; i < longactivitylist.size(); i++){
-            dicountLong += longactivitylist.get(i).getRemarks() + "\n";
+            discountLong += "("+(i+1)+") "+longactivitylist.get(i).getActivity_name() + "\n";
 
         }
-//        System.out.println("Remark: "+dicountLong);
+        if(discountLong.equals("")){
+            discountLong = "目前無長期優惠";
+        }
     }
 
     public void setShortactivity(){
         for(int i = 0; i < shortactivitylist.size(); i++){
-            dicountShort += shortactivitylist.get(i).getRemarks() + "\n";
+            discountShort += "("+(i+1)+") "+shortactivitylist.get(i).getActivity_name() + "\n";
+        }
+        if(discountShort.equals("")){
+            discountShort = "目前無短期優惠";
         }
     }
 }
