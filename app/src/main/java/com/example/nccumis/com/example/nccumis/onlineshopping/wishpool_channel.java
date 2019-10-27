@@ -105,17 +105,6 @@ public class wishpool_channel extends AppCompatActivity {
 
         newActivity = (TextView)findViewById(R.id.newActivity);
 
-        changeCard = (Button)findViewById(R.id.changeCard);
-        changeCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(owncardnamelist.isEmpty() || owncardnamelist == null){
-                    singleDialogEventWhenNocard();
-                }else{
-                    singleDialogEvent();
-                }
-            }
-        });
 
         //商品列表
         ProductListView = (com.example.nccumis.MyListView)findViewById(R.id.ProductListView);
@@ -428,7 +417,17 @@ public class wishpool_channel extends AppCompatActivity {
         requestQueue5.add(getRequest5);
 
 
-
+        changeCard = (Button)findViewById(R.id.changeCard);
+        changeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(owncardtypelist.isEmpty() || owncardtypelist == null){
+                    singleDialogEventWhenNocard();
+                }else{
+                    singleDialogEvent();
+                }
+            }
+        });
 
     }
 
@@ -604,7 +603,7 @@ public class wishpool_channel extends AppCompatActivity {
         }
 
 //        System.out.println("longdiscount:"+longactivity_discount+", shortdiscount:"+shortactivity_discount);
-        System.out.println("longdiscountposition:"+longactivity_position+", shortdiscountposition:"+shortactivity_position);
+        System.out.println("long_position:"+longactivity_position+", short_position:"+shortactivity_position);
 
 
     }
@@ -628,7 +627,8 @@ public class wishpool_channel extends AppCompatActivity {
 
     //更新使用者有的信用卡中的最新活動訊息
     public void updateActivity(){
-        if(!hasActivity() || owncardnamelist.isEmpty()){
+        setLongShortActivity();
+        if(!hasActivity()){
             newActivity.setText("卡片目前無任何優惠");
             return;
         }
@@ -640,18 +640,21 @@ public class wishpool_channel extends AppCompatActivity {
         if(singleChoiceIndex == 1){
             creditcardname = creditcardname.substring(0, creditcardname.length()-13);
         }
+        System.out.println("longactivity_position:"+longactivity_position);
 
         String longName ="";
-        if(longactivity_position == 0 && !longactivitylist.get(longactivity_position).getCardtype_name().equals(creditcardname)){
+        if(longactivitylist.isEmpty() || (longactivity_position == 0 && !longactivitylist.get(longactivity_position).getCardtype_name().equals(creditcardname))){
             longName = "目前無長期優惠";
         }else{
             longName = longactivitylist.get(longactivity_position).getActivity_name();
         }
+        System.out.println("longactivitylist.size:"+longactivitylist.size() +" ,longName:"+longName);
         longName = longName.equals("") || longName.equals(null) ? "目前無長期優惠" : longName;
 
 
         String shortName = "";
-        if(shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname)){
+        System.out.println("shortactivity_position:"+shortactivity_position+" ,shortactivitylist.size:"+shortactivitylist.size());
+        if(shortactivitylist.isEmpty() || (shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname))){
                 shortName = "目前無短期優惠";
         }else {
             shortName = shortactivitylist.get(shortactivity_position).getActivity_name();
@@ -870,6 +873,20 @@ public class wishpool_channel extends AppCompatActivity {
 
     //當使用者無信用卡可選時，直接推薦使用者可辦的卡
     public void singleDialogEventWhenNocard(){
+        //若算出商品總數是零，不推薦卡
+        if(countProductListTotalPrice() == 0){
+            new AlertDialog.Builder(wishpool_channel.this)
+                    .setMessage("許願池目前無商品，請到購物商城新增商品")
+                    .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(wishpool_channel.this, "無卡片可推薦", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+            return;
+        }
         set_othercarddiscount();
 
         nocardnamelist.clear();
