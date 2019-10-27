@@ -58,23 +58,22 @@ public class Settings extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        btn_setToHome = (Button) findViewById(R.id.btn_setToHome);
-        password_change = (Button) findViewById(R.id.password_change);
         OwncardtypeListView = (ListView)findViewById(R.id.owncardtypeListView);
         OthercardtypeListView = (ListView)findViewById(R.id.othercardtypeListView);
 
 
-        password_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                passwordchange();
-            }
-
-            public void passwordchange() {
-                Intent intent = new Intent(Settings.this, password_change.class);
-                startActivity(intent);
-            }
-
-        });
+//        password_change.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                passwordchange();
+//            }
+//
+//            public void passwordchange() {
+//                Intent intent = new Intent(Settings.this, password_change.class);
+//                startActivity(intent);
+//            }
+//
+//        });
 
 //        btn_setToHome.setOnClickListener(new View.OnClickListener() {
 //            @Override

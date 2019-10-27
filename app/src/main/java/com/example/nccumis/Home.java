@@ -208,19 +208,40 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                 .setPositiveButton(selection, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        dbmanager.open();
-                                        dbmanager.updateClosed(select_BookAttribute.get(i).getId(),1);
-                                        dbmanager.close();
-                                        editor.putInt("book_position",0);
-                                        editor.commit();
-
                                         if(select_BookAttribute.get(i).getAmount_remain()>=0) {
-                                            Intent intent = new Intent(Home.this, onlineShoppingPath.class);
-                                            Home.this.startActivity(intent);
+                                            if (checklogin()) {
+                                                dbmanager.open();
+                                                dbmanager.updateClosed(select_BookAttribute.get(i).getId(), 1);
+                                                dbmanager.close();
+                                                editor.putInt("book_position", 0);
+                                                editor.commit();
+                                                jumpToWishpool();
+                                            } else {
+                                                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Home.this);
+                                                builder.setMessage("請先登入")
+                                                        .setPositiveButton("登入", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                Intent intent = new Intent(Home.this, LogIn.class);
+                                                                Home.this.startActivity(intent);
+                                                            }
+                                                        })
+                                                        .setNegativeButton("等等再登入", null)
+                                                        .create()
+                                                        .show();
+
+                                            }
                                         }
                                         else{
+                                            dbmanager.open();
+                                            dbmanager.updateClosed(select_BookAttribute.get(i).getId(), 1);
+                                            dbmanager.close();
+                                            editor.putInt("book_position", 0);
+                                            editor.commit();
                                             refresh();
                                         }
+
+
                                     }
                                 })
                                 .create()
@@ -296,7 +317,24 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         onlineShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToOnlineShoppingPath();
+                if(checklogin()){
+                    jumpToOnlineShoppingPath();
+                }
+                else{
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Home.this);
+                    builder.setMessage("請先登入")
+                            .setPositiveButton("登入", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(Home.this, LogIn.class);
+                                    Home.this.startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("等等再登入", null)
+                            .create()
+                            .show();
+
+                }
             }
         });
         //到許願池
@@ -304,7 +342,25 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         wishpool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jumpToWishpool();
+                if(checklogin()){
+                    jumpToWishpool();
+                }
+                else{
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Home.this);
+                    builder.setMessage("請先登入")
+                            .setPositiveButton("登入", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(Home.this, LogIn.class);
+                                    Home.this.startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("等等再登入", null)
+                            .create()
+                            .show();
+
+                }
+
             }
         });
     }
@@ -319,12 +375,33 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.setting){
-            Intent intent = new Intent(Home.this,Settings.class);
-            startActivity(intent);
+            if(checklogin()){
+                Intent intent = new Intent(Home.this,Settings.class);
+                startActivity(intent);
+            }
+            else{
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Home.this);
+                builder.setMessage("請先登入")
+                        .setPositiveButton("登入", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Home.this, LogIn.class);
+                                Home.this.startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("等等再登入", null)
+                        .create()
+                        .show();
+
+            }
         }else if(id == R.id.login){
             Intent intent = new Intent(Home.this,LogIn.class);
             startActivity(intent);
         }else if(id == R.id.logout){
+            SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("member_id",null);
+            editor.commit();
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestEmail()
                     .build();
@@ -344,8 +421,25 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             Intent intent = new Intent(Home.this,BookManage.class);
             startActivity(intent);
         }else if(id == R.id.changepassword){
-            Intent intent = new Intent(Home.this,password_change.class);
-            startActivity(intent);
+            if(checklogin()){
+                Intent intent = new Intent(Home.this,password_change.class);
+                startActivity(intent);
+            }
+            else{
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Home.this);
+                builder.setMessage("請先登入")
+                        .setPositiveButton("登入", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Home.this, LogIn.class);
+                                Home.this.startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("等等再登入", null)
+                        .create()
+                        .show();
+
+            }
         } else if(id == R.id.cloudBackup){
             signIn(REQUEST_CODE_SIGN_IN_create);
         }else if(id == R.id.cloudreturn){
@@ -667,5 +761,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Intent intent = new Intent(Home.this, Home.class);
         startActivity(intent);
     }
-
+    private boolean checklogin(){
+        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        if(sp.getString("member_id",null)!=null){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

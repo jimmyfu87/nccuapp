@@ -100,7 +100,7 @@ public class totalPriceDetail extends AppCompatActivity {
             public void onClick(View v) {
                 remarkLongText = (remarkLongText == null) ? "無長期優惠備註" : remarkLongText ;
                 if(nameLongText!=null&&remarkLongText!=null){
-                    shareTextToLine("活動名稱："+nameLongText+"\n"+"活動內容："+remarkLongText+"\n"+"辦卡網址：https://card.esunbank.com.tw/EsunCreditweb/txnproc/preChoice?PRJCD=APYCRD0055#b");
+                    shareTextToLine("活動名稱："+nameLongText+"\n"+"活動內容："+remarkLongText+"\n"+"辦卡網址："+applyURL);
                 }
                 else{
                     Toast.makeText(totalPriceDetail.this,
@@ -113,7 +113,7 @@ public class totalPriceDetail extends AppCompatActivity {
             public void onClick(View v) {
                 remarkShortText = (remarkShortText == null) ? "無短期優惠備註" : remarkShortText ;
                 if(nameShortText!=null&&remarkShortText!=null) {
-                    shareTextToLine("活動名稱："+nameShortText+"\n"+"活動內容："+remarkShortText+"\n"+"辦卡網址：https://card.esunbank.com.tw/EsunCreditweb/txnproc/preChoice?PRJCD=APYCRD0055#b");
+                    shareTextToLine("活動名稱："+nameShortText+"\n"+"活動內容："+remarkShortText+"\n"+"辦卡網址："+applyURL);
                 }
                 else{
                     Toast.makeText(totalPriceDetail.this,

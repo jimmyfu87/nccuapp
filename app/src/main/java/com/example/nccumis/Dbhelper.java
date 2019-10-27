@@ -46,7 +46,7 @@ public class Dbhelper extends SQLiteOpenHelper {
                     + "ExpenseorIncome" + " text " + ");";
     static final String insert_default_book=
             "INSERT INTO " + "Book" + " (Book_name,Amount_start,Amount_remain,Currency_type,Start_date,End_date,Closed) VALUES"
-                    + "('現金帳本',0,0,'TWD','2019-04-20','2019-08-31',1)"+ ",('旅遊帳本',6000,0,'TWD','2019-07-01','2019-10-12',0)"+",('購物帳本',3000,0,'TWD','2018-03-31','2019-10-31',0);";
+                    + "('現金帳本',-100000,0,'TWD','2019-04-20','2019-10-11',0)"+ ",('旅遊帳本',6000,0,'TWD','2019-07-01','2019-10-12',0)"+",('購物帳本',3000,0,'TWD','2018-03-31','2019-10-31',0);";
     static final String insert_default_expense_type=
             "INSERT INTO " + "Type" + " (Type_name,ExpenseorIncome) VALUES"
                     + "('早餐','Expense')"+ ",('午餐','Expense')"+ ",('晚餐','Expense')"+ ",('飲料','Expense')"

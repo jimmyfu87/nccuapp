@@ -57,14 +57,6 @@
         </LinearLayout>
 
 
-        <Button
-            android:id="@+id/password_change"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="更改密碼"
-            />
         <!--<Button-->
             <!--android:id="@+id/addcardrelation"-->
             <!--android:layout_width="wrap_content"-->

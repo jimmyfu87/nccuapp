@@ -347,8 +347,8 @@ public class AutocrawlService extends Service {
                 .build();
         if(sp3.getInt("changeamount",0)>0) {
             Notification notification2 = notificationBuilder
-                    .setSmallIcon(R.drawable.ic_stat_name)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_name))
+                    .setSmallIcon(R.drawable.ic_logo)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_logo))
                     .setContentTitle("有商品更新了喔")
                      .setContentText("快來查看吧")
                     .setLights(Color.GREEN, 1000, 1000)
