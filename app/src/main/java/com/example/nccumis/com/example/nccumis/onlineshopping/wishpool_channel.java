@@ -716,7 +716,7 @@ public class wishpool_channel extends AppCompatActivity {
                 owncardnamelist.add(tempcardtypelist.get(i).getCardtype_name());
                 continue;
             }
-            
+
         }
     }
 
