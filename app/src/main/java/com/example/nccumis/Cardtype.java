@@ -1,10 +1,12 @@
 package com.example.nccumis;
 
-public class Cardtype {
+public class Cardtype implements Comparable<Cardtype>{
     private int  id;
     private String cardtype_name;
     private int discountMax;
     private String apply_url;
+
+
     public Cardtype(int id, String cardtype_name,String apply_url) {
         this.id = id;
         this.cardtype_name = cardtype_name;
@@ -42,5 +44,10 @@ public class Cardtype {
 
     public void setApply_url(String apply_url) {
         this.apply_url = apply_url;
+    }
+
+    @Override
+    public int compareTo(Cardtype other) {
+        return this.discountMax - other.discountMax;
     }
 }

@@ -37,6 +37,7 @@ import org.jsoup.select.Elements;
 
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -509,13 +510,11 @@ public class wishpool_channel extends AppCompatActivity {
 
     public void initProductList(){
         for(int i = 0; i < this.productlist.size();i++){
-            if(this.productlist.get(i).getChannel_name().equals(channel_name)){
                 this.idArray.add(this.productlist.get(i).getId());
                 this.nameArray.add(this.productlist.get(i).getProduct_name());
                 this.urlArray.add(this.productlist.get(i).getProduct_url());
                 this.priceArray.add(Integer.parseInt(this.productlist.get(i).getProduct_price()));
                 this.uploadTimeArray.add(this.productlist.get(i).getUpload_time());
-            }
         }
         //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
@@ -537,14 +536,14 @@ public class wishpool_channel extends AppCompatActivity {
         String creditcardname = owncardnamelist.isEmpty() ?
                 getMaxdiscountInothercardtypelist()  : owncardnamelist.get(singleChoiceIndex) ;
         //刪掉推薦信用卡的括號內容
-        if(singleChoiceIndex == 1){
-            creditcardname = creditcardname.substring(0, creditcardname.length()-13);
+        if(singleChoiceIndex == 0){
+            creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
 
 //        System.out.println("creditcardname:"+creditcardname);
 
         for(int i = 0; i < longactivitylist.size();i++){
-            if(longactivitylist.get(i).getChannel_name().equals(channel_name)){
+
                 if(longactivitylist.get(i).getCardtype_name().equals(creditcardname)){
                     int longactivity_discount_temp = 0;
                     if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
@@ -570,12 +569,12 @@ public class wishpool_channel extends AppCompatActivity {
 //                    }
 //                }
 
-            }
+
         }
 
 
         for(int i = 0; i < shortactivitylist.size();i++){
-            if(shortactivitylist.get(i).getChannel_name().equals(channel_name)){
+
                 if(shortactivitylist.get(i).getCardtype_name().equals(creditcardname)){
                     int shortactivity_discount_temp = 0;
                     if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
@@ -599,7 +598,7 @@ public class wishpool_channel extends AppCompatActivity {
 //                        shortactivity_position = i;
 //                    }
 //                }
-            }
+
         }
 
 //        System.out.println("longdiscount:"+longactivity_discount+", shortdiscount:"+shortactivity_discount);
@@ -637,8 +636,8 @@ public class wishpool_channel extends AppCompatActivity {
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
 
         //刪掉推薦信用卡的括號內容
-        if(singleChoiceIndex == 1){
-            creditcardname = creditcardname.substring(0, creditcardname.length()-13);
+        if(singleChoiceIndex == 0){
+            creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
         System.out.println("longactivity_position:"+longactivity_position);
 
@@ -681,8 +680,8 @@ public class wishpool_channel extends AppCompatActivity {
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
 
         //刪掉推薦信用卡的括號內容
-        if(singleChoiceIndex == 1){
-            creditcardname = creditcardname.substring(0, creditcardname.length()-13);
+        if(singleChoiceIndex == 0){
+            creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
 
         for(int i = 0; i < longactivitylist.size(); i++){
@@ -707,33 +706,17 @@ public class wishpool_channel extends AppCompatActivity {
         set_othercarddiscount();
 
         List<Cardtype> tempcardtypelist = new ArrayList<Cardtype>();
-        for(int i = 0; i <owncardtypelist.size(); i++) {
-            tempcardtypelist.add(new Cardtype(this.owncardtypelist.get(i).getId(),this.owncardtypelist.get(i).getCardtype_name(),this.owncardtypelist.get(i).getApply_url()));
-            tempcardtypelist.get(i).setdiscountmax(this.owncardtypelist.get(i).getdiscountMax());
-        }
-        int count = 0;
+        tempcardtypelist = owncardtypelist;
 
-        while (tempcardtypelist.size() != 0){
-            if(count == 1){
-                owncardnamelist.add(getMaxdiscountInothercardtypelist()+"\n(以上為推薦使用者之卡)");
-                count++;
+        Collections.sort(tempcardtypelist);
+
+        for (int i = 0; i < tempcardtypelist.size() ; i++){
+            if(i == 0){
+                owncardnamelist.add(getMaxdiscountInothercardtypelist()+"\n(推薦卡)");
                 continue;
             }
-            int curMax = 0;
-            int position = 0;
-            for(int i = 0; i < tempcardtypelist.size(); i++){
-                int discount = tempcardtypelist.get(i).getdiscountMax();
-                if(discount > curMax){
-                    curMax = discount;
-                    position = i;
-                }
-            }
-            owncardnamelist.add(tempcardtypelist.get(position).getCardtype_name());
-            tempcardtypelist.remove(position);
-            count++;
+            owncardnamelist.add(tempcardtypelist.get(i).getCardtype_name());
         }
-
-
     }
 
 
@@ -747,25 +730,22 @@ public class wishpool_channel extends AppCompatActivity {
             int discountlongMax = 0;    //試算最大的長期優惠金額
             for(int j = 0; j < longactivitylist.size();j++){
 //                System.out.println("longactivitylistsize: "+longactivitylist.size());
-                if(longactivitylist.get(j).getChannel_name().equals(channel_name) && longactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
+                if(longactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
                     int longactivity_discount_temp = 0;
                     if(longactivitylist.get(j).getDiscount_limit() > totalPriceinProductList*longactivitylist.get(j).getDiscount_ratio() ){
                         longactivity_discount_temp = Double.valueOf(totalPriceinProductList*longactivitylist.get(j).getDiscount_ratio()).intValue();
                     }else {
                         longactivity_discount_temp = longactivitylist.get(j).getDiscount_limit();
                     }
-
                     discountlongMax = (longactivity_discount_temp > discountlongMax) ?
                             longactivity_discount_temp : discountlongMax ;
-
                 }
-
             }
 
             int discountshortMax = 0;    //試算最大的短期優惠金額
             for(int j = 0; j < shortactivitylist.size();j++){
 //                System.out.println("shortactivitylistsize: "+shortactivitylist.size());
-                if(shortactivitylist.get(j).getChannel_name().equals(channel_name) && shortactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
+                if(shortactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
                     int shortactivity_discount_temp = 0;
 
                     if(totalPriceinProductList > shortactivitylist.get(j).getMinimum_pay()){
@@ -793,7 +773,7 @@ public class wishpool_channel extends AppCompatActivity {
 
             int discountlongMax = 0;
             for(int j = 0; j < longactivitylist.size();j++){
-                if(longactivitylist.get(j).getChannel_name().equals(channel_name) && longactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
+                if(longactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
                     int longactivity_discount_temp = 0;
                     if(longactivitylist.get(j).getDiscount_limit() > totalPriceinProductList*longactivitylist.get(j).getDiscount_ratio() ){
                         longactivity_discount_temp = Double.valueOf(totalPriceinProductList*longactivitylist.get(j).getDiscount_ratio()).intValue();
@@ -808,7 +788,7 @@ public class wishpool_channel extends AppCompatActivity {
 
             int discountshortMax = 0;
             for(int j = 0; j < shortactivitylist.size();j++){
-                if(shortactivitylist.get(j).getChannel_name().equals(channel_name) && shortactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
+                if(shortactivitylist.get(j).getCardtype_name().equals(getcardtypeName)){
                     int shortactivity_discount_temp = 0;
 
                     if(totalPriceinProductList > shortactivitylist.get(j).getMinimum_pay()){
