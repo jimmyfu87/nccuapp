@@ -21,23 +21,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="帳本名稱"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="預算"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="結餘"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="貨幣"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
 
         </LinearLayout>
 
