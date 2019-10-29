@@ -48,6 +48,6 @@ public class Cardtype implements Comparable<Cardtype>{
 
     @Override
     public int compareTo(Cardtype other) {
-        return this.discountMax - other.discountMax;
+        return other.discountMax - this.discountMax;
     }
 }

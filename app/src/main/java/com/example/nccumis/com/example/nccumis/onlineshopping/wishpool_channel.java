@@ -711,11 +711,12 @@ public class wishpool_channel extends AppCompatActivity {
         Collections.sort(tempcardtypelist);
 
         for (int i = 0; i < tempcardtypelist.size() ; i++){
-            if(i == 0){
+            if(owncardnamelist.isEmpty()){
                 owncardnamelist.add(getMaxdiscountInothercardtypelist()+"\n(推薦卡)");
+                owncardnamelist.add(tempcardtypelist.get(i).getCardtype_name());
                 continue;
             }
-            owncardnamelist.add(tempcardtypelist.get(i).getCardtype_name());
+            
         }
     }
 
