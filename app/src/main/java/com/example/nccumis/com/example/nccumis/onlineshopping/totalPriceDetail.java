@@ -13,6 +13,7 @@ import com.example.nccumis.R;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 public class totalPriceDetail extends AppCompatActivity {
     private Button lastPage;
@@ -32,6 +33,7 @@ public class totalPriceDetail extends AppCompatActivity {
     private String nameShortText;
     private String applyURL;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_totalprice_detail);
@@ -46,6 +48,7 @@ public class totalPriceDetail extends AppCompatActivity {
 
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
+
         isCheckedPrice = (TextView)findViewById(R.id.isCheckedPrice);
         isCheckedPrice.setText(Integer.toString(getSaveBag.getInt("isCheckedprice")));
 
