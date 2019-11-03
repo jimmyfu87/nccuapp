@@ -127,7 +127,7 @@ public class wishpool extends AppCompatActivity {
     }
 
     public void jumpTowishpool_channel(int position){
-        Intent saveWishpoolData = new Intent(wishpool.this, wishpool_channel.class);
+        Intent saveWishpoolData = new Intent(wishpool.this, getactivityload.class);
         Bundle saveBag = new Bundle();
         saveBag.putString("channel_name", nameArray.get(position));
         saveBag.putString("channel_webHome", homeurlArray.get(position));

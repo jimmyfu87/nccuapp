@@ -1,6 +1,10 @@
 package com.example.nccumis.com.example.nccumis.onlineshopping;
 
-public class Activity {
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Activity implements Parcelable {
     private int  id;
     private String activity_name;
     private String channel_name;
@@ -25,6 +29,9 @@ public class Activity {
         Start_time = start_time;
         End_time = end_time;
         Remarks = remarks;
+    }
+    public Activity(){
+
     }
 
     public int getId() {
@@ -114,4 +121,52 @@ public class Activity {
     public void setRemarks(String remarks) {
         Remarks = remarks;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(activity_name);
+        dest.writeString(channel_name);
+        dest.writeString(cardtype_name);
+        dest.writeInt(Minimum_pay);
+        dest.writeDouble(Discount_ratio);
+        dest.writeInt(Discount_limit);
+        dest.writeInt(Discount_money);
+        dest.writeString(Start_time);
+        dest.writeString(End_time);
+        dest.writeString(Remarks);
+
+    }
+    public static final Parcelable.Creator<Activity> CREATOR  = new Creator<Activity>() {
+        //实现从source中创建出类的实例的功能
+        @Override
+        public Activity createFromParcel(Parcel source) {
+            Activity activity  = new Activity();
+            activity.id=source.readInt();
+            activity.activity_name=source.readString();
+            activity.channel_name=source.readString();
+            activity.cardtype_name=source.readString();
+            activity.Minimum_pay=source.readInt();
+            activity.Discount_ratio=source.readDouble();
+            activity.Discount_limit=source.readInt();
+            activity.Discount_money=source.readInt();
+            activity.Start_time=source.readString();
+            activity.End_time=source.readString();
+            activity.Remarks=source.readString();
+
+            return activity;
+        }
+        //创建一个类型为T，长度为size的数组
+        @Override
+        public Activity[] newArray(int size) {
+            return new Activity[size];
+        }
+    };
+
 }

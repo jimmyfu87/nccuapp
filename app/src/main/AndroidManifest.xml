@@ -12,89 +12,94 @@
 
     <application
         android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="iWant購"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:fullBackupContent="@xml/backup_rules"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".com.example.nccumis.onlineshopping.getactivityload"></activity>
+
         <service
             android:name=".AutocrawlService"
             android:enabled="true"
-            android:exported="true"></service>
-        <receiver android:name=".AlarmReceiver"/>
+            android:exported="true" />
+
+        <receiver android:name=".AlarmReceiver" />
+
         <activity android:name=".BookManage" />
         <activity
             android:name=".password_change"
             android:label="@string/title_activity_password_change"
-            android:theme="@style/LightGreenBar"
             android:parentActivityName=".Settings"
-            />
-        <activity android:name=".Settings"
-            android:theme="@style/LightGreenBar"
-            android:parentActivityName=".Home"/> <!-- //backupagent key -->
+            android:theme="@style/LightGreenBar" />
+        <activity
+            android:name=".Settings"
+            android:parentActivityName=".Home"
+            android:theme="@style/LightGreenBar" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
         <activity android:name=".add_spend_viewpager" />
-        <activity android:name=".add_type"
-            android:theme="@style/LightGreenBar"
-            />
-
-        <activity android:name=".add_book"
-            android:theme="@style/LightGreenBar"/>
-
-        <activity android:name=".add_expense"
-            android:theme="@style/LightGreenBar"
-            android:parentActivityName=".Home"/>
-        <activity android:name=".add_income"
-            android:theme="@style/LightGreenBar"
-            android:parentActivityName=".Home"/>
+        <activity
+            android:name=".add_type"
+            android:theme="@style/LightGreenBar" />
+        <activity
+            android:name=".add_book"
+            android:theme="@style/LightGreenBar" />
+        <activity
+            android:name=".add_expense"
+            android:parentActivityName=".Home"
+            android:theme="@style/LightGreenBar" />
+        <activity
+            android:name=".add_income"
+            android:parentActivityName=".Home"
+            android:theme="@style/LightGreenBar" />
         <activity
             android:name=".check_expense"
-            android:theme="@style/LightGreenBar"
             android:parentActivityName=".Home"
+            android:theme="@style/LightGreenBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".check_income"
-            android:theme="@style/LightGreenBar"
             android:parentActivityName=".Home"
+            android:theme="@style/LightGreenBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".check_expense_detail"
-            android:theme="@style/LightGreenBar"
-            android:parentActivityName=".check_expense"/>
-
-        <activity android:name=".check_income_detail"
-            android:theme="@style/LightGreenBar"
-            android:parentActivityName=".check_income"/>
+        <activity
+            android:name=".check_expense_detail"
+            android:parentActivityName=".check_expense"
+            android:theme="@style/LightGreenBar" />
+        <activity
+            android:name=".check_income_detail"
+            android:parentActivityName=".check_income"
+            android:theme="@style/LightGreenBar" />
         <activity
             android:name=".CountMoney"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping" />
-        <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler"></activity>
-        <!-- //backupagent key -->
+        <activity android:name=".com.example.nccumis.onlineshopping.Webcrawler" /> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
-        <!--<activity android:name=".Home" />-->
+        <!-- <activity android:name=".Home" /> -->
         <activity android:name=".com.example.nccumis.onlineshopping.firstBankDiscount" /> <!-- <activity android:name=".com.example.nccumis.onlineshopping.OnlineShopping"/> -->
-
-        <activity android:name=".PasswordCheckEmail"
-            android:theme="@style/LightGreenBar"
-            android:parentActivityName=".LogIn"/>
-        <activity android:name=".Register"
-            android:theme="@style/LightGreenBar"
+        <activity
+            android:name=".PasswordCheckEmail"
+            android:parentActivityName=".LogIn"
+            android:theme="@style/LightGreenBar" />
+        <activity
+            android:name=".Register"
             android:parentActivityName=".Home"
-            />
+            android:theme="@style/LightGreenBar" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool_channel" />
         <activity android:name=".com.example.nccumis.onlineshopping.onlineShoppingPath" />
         <activity android:name=".com.example.nccumis.onlineshopping.wishpool" />
         <activity android:name=".com.example.nccumis.onlineshopping.totalPriceDetail" />
         <activity
             android:name=".LogIn"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".Home"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

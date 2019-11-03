@@ -89,6 +89,8 @@ public class wishpool_channel extends AppCompatActivity {
         if(getSaveBag != null){
             channel_name = getSaveBag.getString("channel_name");
             channel_webHome = getSaveBag.getString("channel_webHome");
+            longactivitylist=getSaveBag.getParcelableArrayList("longactivitylist");
+            shortactivitylist=getSaveBag.getParcelableArrayList("shortactivitylist");
         }
 
         lastPage = (Button)findViewById(R.id.lastPage);
@@ -155,79 +157,7 @@ public class wishpool_channel extends AppCompatActivity {
         requestQueue.add(getRequest);
 
 
-        //取得信用卡優惠活動(不根據使用者有的卡片)
-        Response.Listener<String> responseListener3 = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(!response.equals("NoValue")){
-                    try {
-                        JSONArray array = new JSONArray(response);
-                        longactivitylist.clear();
-                        shortactivitylist.clear();
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            int id = jsonObject.getInt("id");
-                            String activity_name = jsonObject.getString("activity_name");
-                            String channel_name = jsonObject.getString("channel_name");
-                            String cardtype_name = jsonObject.getString("cardtype_name");
-                            int Minimum_pay = jsonObject.getInt("Minimum_pay");
-                            double Discount_ratio = jsonObject.getDouble("Discount_ratio");
-                            int Discount_limit = jsonObject.getInt("Discount_limit");
-                            int Discount_money = jsonObject.getInt("Discount_money");
-                            String Start_time = jsonObject.getString("Start_time");
-                            String End_time = jsonObject.getString("End_time");
-                            String Remarks = jsonObject.getString("Remarks");
-                            if(Discount_money==0){
-                                longactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
-                            }
-                            else{
-                                shortactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
-                            }
-                        }
 
-                        activityFinish = true;
-                        //拿longactivity和shortactivity去調用，一個是長期的優惠活動一個是短期的優惠活動，下面是我測試用，看完可以刪掉
-//                        System.out.println(longactivitylist.get(0).getId());
-//                        System.out.println(longactivitylist.get(0).getActivity_name());
-//                        System.out.println(longactivitylist.get(0).getChannel_name());
-//                        System.out.println(longactivitylist.get(0).getCardtype_name());
-//                        System.out.println(longactivitylist.get(0).getMinimum_pay());
-//                        System.out.println(longactivitylist.get(0).getDiscount_ratio());
-//                        System.out.println(longactivitylist.get(0).getDiscount_limit());
-//                        System.out.println(longactivitylist.get(0).getDiscount_money());
-//                        System.out.println(longactivitylist.get(0).getStart_time());
-//                        System.out.println(longactivitylist.get(0).getEnd_time());
-//                        System.out.println(longactivitylist.get(0).getRemarks());
-//
-//                        System.out.println(shortactivitylist.get(0).getId());
-//                        System.out.println(shortactivitylist.get(0).getActivity_name());
-//                        System.out.println(shortactivitylist.get(0).getChannel_name());
-//                        System.out.println(shortactivitylist.get(0).getCardtype_name());
-//                        System.out.println(shortactivitylist.get(0).getMinimum_pay());
-//                        System.out.println(shortactivitylist.get(0).getDiscount_ratio());
-//                        System.out.println(shortactivitylist.get(0).getDiscount_limit());
-//                        System.out.println(shortactivitylist.get(0).getDiscount_money());
-//                        System.out.println(shortactivitylist.get(0).getStart_time());
-//                        System.out.println(shortactivitylist.get(0).getEnd_time());
-//                        System.out.println(shortactivitylist.get(0).getRemarks());
-
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    //發現沒有匹配活動的處理方式，要改可以改
-                }
-            }
-        };
-        SharedPreferences sp3 = getSharedPreferences("User", MODE_PRIVATE);
-        SharedPreferences.Editor editor3 = sp3.edit();
-        //選擇的卡片名稱存在cardtypename
-        GetactivityRequest getactivityRequest = new GetactivityRequest(sp3.getString("member_id",null),channel_name,responseListener3);
-        RequestQueue requestQueue3 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(getactivityRequest);
 
         //信用卡優惠listview
 //        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
@@ -338,7 +268,7 @@ public class wishpool_channel extends AppCompatActivity {
         SharedPreferences.Editor editor4 = sp4.edit();
         GetothercardRequest getothercardRequest = new GetothercardRequest(sp4.getString("member_id",null),responseListener4);
         RequestQueue requestQueue4 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(getothercardRequest);
+        requestQueue4.add(getothercardRequest);
 
         //取得使用者擁有的信用卡
         Response.Listener<String> responseListener2 = new Response.Listener<String>() {
@@ -379,7 +309,7 @@ public class wishpool_channel extends AppCompatActivity {
         System.out.println("member_id"+sp2.getString("member_id",null));
         GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
         RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(getcardRequest);
+        requestQueue2.add(getcardRequest);
 
 
         //取得使用者有的信用卡的活動
@@ -451,21 +381,21 @@ public class wishpool_channel extends AppCompatActivity {
             return params;
         }
     }
-    public class GetactivityRequest extends StringRequest {
-        private static final String Getactivity_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getactivity.php";
-        private Map<String, String> params;
-        //
-        public GetactivityRequest(String member_id, String channel_name,Response.Listener<String> listener) {
-            super(Method.POST, Getactivity_REQUEST_URL, listener, null);
-            params = new HashMap<>();
-            params.put("member_id", member_id);
-            params.put("channel_name", channel_name);
-        }
-        @Override
-        public Map<String, String> getParams() {
-            return params;
-        }
-    }
+//    public class GetactivityRequest extends StringRequest {
+//        private static final String Getactivity_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getactivity.php";
+//        private Map<String, String> params;
+//        //
+//        public GetactivityRequest(String member_id, String channel_name,Response.Listener<String> listener) {
+//            super(Method.POST, Getactivity_REQUEST_URL, listener, null);
+//            params = new HashMap<>();
+//            params.put("member_id", member_id);
+//            params.put("channel_name", channel_name);
+//        }
+//        @Override
+//        public Map<String, String> getParams() {
+//            return params;
+//        }
+//    }
     public class GetcardRequest extends StringRequest {
         private static final String Getcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getcard.php";
         private Map<String, String> params;
