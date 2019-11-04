@@ -234,7 +234,7 @@ public class productListAdapter extends ArrayAdapter {
 //        pictureTextField.setText(pictureArray.get(position).toString());
         nameTextField.setText(nameArray.get(position));
         priceTextField.setText("$"+priceArray.get(position).toString());
-        uploadTimeTextField.setText(uploadTimeArray.get(position));
+        uploadTimeTextField.setText("上次更新時間: "+uploadTimeArray.get(position));
         return rowView;
 
 

@@ -657,7 +657,7 @@ public class wishpool_channel extends AppCompatActivity {
         String creditcardname = owncardnamelist.isEmpty() ?
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
 
-        //刪掉推薦信用卡的括號內容
+        //刪掉推薦卡的括號內容
         if(singleChoiceIndex == 0){
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
@@ -683,9 +683,8 @@ public class wishpool_channel extends AppCompatActivity {
         set_owncarddiscount();  //  設定每張卡的優惠
         set_othercarddiscount();
 
-        while (!isFinish){
-            System.out.println("NOT FINISH!!!!");
-            continue;
+        if (!isFinish){
+            System.out.println("NOT FINISH DISCOUNTMAX SETTING!");
         }
 
         List<Cardtype> tempcardtypelist = new ArrayList<Cardtype>();
@@ -709,10 +708,11 @@ public class wishpool_channel extends AppCompatActivity {
     public void set_owncarddiscount(){
         int totalPriceinProductList = countProductListTotalPrice();
 
-//        while (!activityFinish){
-//            System.out.println("ACIIVITY NOT FINISH!");
-//            continue;
-//        }
+        if (!activityFinish){
+            System.out.println("ACIIVITY NOT FINISH!");
+            refresh();
+        }
+
         for(int i = 0; i < owncardtypelist.size(); i++){
             isFinish = false;
             String getcardtypeName = owncardtypelist.get(i).getCardtype_name();
@@ -758,10 +758,10 @@ public class wishpool_channel extends AppCompatActivity {
     public void set_othercarddiscount(){
         int totalPriceinProductList = countProductListTotalPrice();
 
-//        while (!activityFinish){
-//            System.out.println("ACIIVITY NOT FINISH!");
-//            continue;
-//        }
+        if (!activityFinish){
+            System.out.println("ACIIVITY NOT FINISH!");
+            refresh();
+        }
 
         for(int i = 0; i < othercardtypelist.size(); i++){
             isFinish = false;
@@ -898,11 +898,21 @@ public class wishpool_channel extends AppCompatActivity {
                     return creditcardurl;
                 }
             }
-        }else {
+        }else if(singleChoiceIndex == 0){
+            String creditcardname = owncardnamelist.get(0).substring(0, owncardnamelist.get(0).length()-6);
+            for(int i = 0; i < othercardtypelist.size(); i++){
+                if(creditcardname.equals(othercardtypelist.get(i).getCardtype_name())){
+                    creditcardurl = othercardtypelist.get(i).getApply_url();
+//                    System.out.println("第一張卡");
+                    return creditcardurl;
+                }
+            }
+        }
+        else {
             for(int i = 0; i < owncardtypelist.size(); i++){
                 if(owncardnamelist.get(singleChoiceIndex).equals(owncardtypelist.get(i).getCardtype_name())){
                     creditcardurl = owncardtypelist.get(i).getApply_url();
-//                    System.out.println("有卡");
+//                    System.out.println("其他卡");
                     return creditcardurl;
                 }
             }
@@ -1155,4 +1165,6 @@ public class wishpool_channel extends AppCompatActivity {
             return params;
         }
     }
+
+
 }
