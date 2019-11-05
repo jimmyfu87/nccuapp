@@ -41,6 +41,7 @@
             android:layout_weight="1"
             android:text="剩餘金額"
             android:textSize="16sp"/>
+
         <TextView
             android:id="@+id/currency_type"
             android:layout_width="wrap_content"
@@ -56,6 +57,30 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/startdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="開始日期"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/enddate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="結束日期"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/fixBtn"

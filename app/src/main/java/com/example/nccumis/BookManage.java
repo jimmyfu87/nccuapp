@@ -37,6 +37,8 @@ public class BookManage extends AppCompatActivity {
     private List<Integer> amount_startArray = new ArrayList<Integer>();
     private List<Integer> amount_remainArray = new ArrayList<Integer>();
     private List<String> i_currencyidArray = new ArrayList<String>();
+    private List<String> startdateArray = new ArrayList<String>();
+    private List<String> enddateArray = new ArrayList<String>();
     private List<String> getBookNameFromDB = new ArrayList<String>();   //接資料庫用
     private List<Book> getBookArrayFromDB = new ArrayList<Book>();
     private ListView BookListView;
@@ -57,17 +59,10 @@ public class BookManage extends AppCompatActivity {
         setListViewHeightBasedOnChildren(BookListView);
 
 
-
         btn_newBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 jumpToadd_book();
-            }
-            public void jumpToadd_book() {
-                Intent intent = new Intent(BookManage.this,add_book.class);
-                Bundle saveIncomeData = new Bundle();
-                intent.putExtras(saveIncomeData);
-                startActivity(intent);
             }
         });
     }
@@ -85,12 +80,13 @@ public class BookManage extends AppCompatActivity {
     }
 
     public void clearList(){
-
         this.idArray.clear();
         this.amount_remainArray.clear();
         this.nameArray.clear();
         this.amount_startArray.clear();
         this.i_currencyidArray.clear();
+        this.startdateArray.clear();
+        this.enddateArray.clear();
     }
 
 
@@ -102,12 +98,14 @@ public class BookManage extends AppCompatActivity {
             this.amount_startArray.add(getBookArrayFromDB.get(i).getAmount_start());
             this.amount_remainArray.add(getBookArrayFromDB.get(i).getAmount_remain());
             this.i_currencyidArray.add(getBookArrayFromDB.get(i).getCurrency_type());
+            this.startdateArray.add(getBookArrayFromDB.get(i).getStart_date());
+            this.enddateArray.add(getBookArrayFromDB.get(i).getEnd_date());
         }
     }
 
     public void setList() {
         initialData();
-        book_detail_adapter bk_adapter = new book_detail_adapter(this,idArray,nameArray,amount_startArray,amount_remainArray,i_currencyidArray);
+        book_detail_adapter bk_adapter = new book_detail_adapter(this,idArray,nameArray,amount_startArray,amount_remainArray,i_currencyidArray,startdateArray,enddateArray);
         BookListView.setAdapter(bk_adapter);
     }
 
@@ -130,5 +128,13 @@ public class BookManage extends AppCompatActivity {
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+    }
+
+    public void jumpToadd_book() {
+        Intent intent = new Intent(BookManage.this,add_book.class);
+        Bundle saveBookData = new Bundle();
+        saveBookData.putBoolean("FromBookManage", true);
+        intent.putExtras(saveBookData);
+        startActivity(intent);
     }
 }

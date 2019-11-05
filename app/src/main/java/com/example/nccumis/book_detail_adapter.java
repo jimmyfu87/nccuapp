@@ -28,12 +28,15 @@ public class book_detail_adapter extends ArrayAdapter {
     private final List<Integer> amount_startArray;
     private final List<Integer> amount_remainArray;
     private final List<String> i_currencyidArray;
+    private final List<String> startdateArray;
+    private final List<String> enddateArray;
+
     private Button fixBtn;
     private Button deleteBtn;
 
 
     //, Button fixParam, Button deleteParam
-    public book_detail_adapter (Activity context, List<Integer> idArrayParam , List<String> nameArrayParam, List<Integer> Amount_startArrayParam, List<Integer> Amount_remainArrayParam, List<String> currency_typeArrayParam){
+    public book_detail_adapter (Activity context, List<Integer> idArrayParam , List<String> nameArrayParam, List<Integer> Amount_startArrayParam, List<Integer> Amount_remainArrayParam, List<String> currency_typeArrayParam,List<String> startdateParam,List<String> enddateParam){
         super(context, R.layout.activity_book_adapter,nameArrayParam);
 
         this.idArray = idArrayParam;
@@ -42,6 +45,8 @@ public class book_detail_adapter extends ArrayAdapter {
         this.amount_remainArray = Amount_remainArrayParam;
         this.amount_startArray = Amount_startArrayParam;
         this.i_currencyidArray = currency_typeArrayParam;
+        this.startdateArray = startdateParam;
+        this.enddateArray = enddateParam;
     }
     public View getView(final int position, final View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
@@ -50,6 +55,8 @@ public class book_detail_adapter extends ArrayAdapter {
         TextView Amount_startTextField = (TextView) rowView.findViewById(R.id.amount_start);
         TextView Amount_remainTextField = (TextView) rowView.findViewById(R.id.amount_remain);
         TextView currency_typeTextField = (TextView) rowView.findViewById(R.id.currency_type);
+        TextView startdateField = (TextView) rowView.findViewById(R.id.startdate);
+        TextView enddateField = (TextView) rowView.findViewById(R.id.enddate);
         fixBtn = (Button) rowView.findViewById(R.id.fixBtn);
         deleteBtn = (Button) rowView.findViewById(R.id.deleteBtn);
 
@@ -57,12 +64,12 @@ public class book_detail_adapter extends ArrayAdapter {
         Amount_startTextField.setText(amount_startArray.get(position).toString());
         Amount_remainTextField.setText(amount_remainArray.get(position).toString());
         currency_typeTextField.setText(i_currencyidArray.get(position));
+        startdateField.setText(startdateArray.get(position));
+        enddateField.setText(enddateArray.get(position));
 
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 jumpToadd_book(position, context);
             }
         });
@@ -112,10 +119,11 @@ public class book_detail_adapter extends ArrayAdapter {
         saveBookData.putString("amount_start",amount_startArray.get(position).toString());
         saveBookData.putInt("amount_remain", amount_remainArray.get(position));
         saveBookData.putString("currency_type", i_currencyidArray.get(position));
+        saveBookData.putString("startdate", startdateArray.get(position));
+        saveBookData.putString("enddate", enddateArray.get(position));
         saveBookData.putBoolean("FromBookManage", true);
         intent.putExtras(saveBookData);
         activity.startActivity(intent);
-
     }
 
 

@@ -114,10 +114,7 @@ public class add_book extends AppCompatActivity {
                         dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,i_startdate,i_enddate,0);            //將資料放到資料庫
                         jumpToaddSpend(saveBag);
                     }
-                    dbmanager.open();                                                                       //開啟、建立資料庫(if not exists)
-                    dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,i_startdate,i_enddate,0);            //將資料放到資料庫
                     dbmanager.close();                                                                      //關閉資料庫
-
                 }
             }
         });
@@ -143,21 +140,6 @@ public class add_book extends AppCompatActivity {
             }
         });
 
-        //預設帳本
-
-
-        //從bookManager返回
-        Intent getSaveData = getIntent();
-        Bundle getSaveBag = getSaveData.getExtras();
-        if(getSaveBag != null ){
-            input_bookName.setText(getSaveBag.getString("name"));
-            book_name = getSaveBag.getString("name");
-            input_startBudget.setText(getSaveBag.getString("amount_start"));
-            budget_start = getSaveBag.getString("amount_start");
-            int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency_type"));
-            input_currency.setSelection(currencyListPosition);
-            //updateBook();
-        }
         //開始日期
         input_startdate = (EditText)findViewById(R.id.startdate_input);
         input_startdate.setOnTouchListener(new View.OnTouchListener() {
@@ -206,6 +188,24 @@ public class add_book extends AppCompatActivity {
             }
         });
 
+        //從bookManager返回
+        Intent getSaveData = getIntent();
+        Bundle getSaveBag = getSaveData.getExtras();
+        if(getSaveBag != null ){
+            input_bookName.setText(getSaveBag.getString("name"));
+            book_name = getSaveBag.getString("name");
+            input_startBudget.setText(getSaveBag.getString("amount_start"));
+            budget_start = getSaveBag.getString("amount_start");
+            int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency_type"));
+            input_currency.setSelection(currencyListPosition);
+            System.out.println("startdate:"+getSaveBag.getString("startdate"));
+            //////////////////////////////here/////////////////////////////////////
+//            i_startdate = setDateformat(getSaveBag.getString("startdate"));
+            input_startdate.setText(getSaveBag.getString("startdate"));
+//            i_enddate = setDateformat(getSaveBag.getString("enddate"));
+            input_enddate.setText(getSaveBag.getString("enddate"));
+            //updateBook();
+        }
 
     }
 
@@ -327,6 +327,11 @@ public class add_book extends AppCompatActivity {
         else
             i_enddate=year+"-"+st_month+"-"+st_day;
     }
+
+    public String setDateformat2(String date){
+        return date;
+    }
+
     public boolean isDate2Bigger(String str1, String str2) {
         boolean isBigger = true;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
@@ -345,6 +350,8 @@ public class add_book extends AppCompatActivity {
 
         return isBigger;
     }
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event){
         this.geatureObject.onTouchEvent(event);
