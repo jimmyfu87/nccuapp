@@ -362,7 +362,7 @@ public class wishpool_channel extends AppCompatActivity {
                             System.out.println("使用者有的信用卡卡名："+owncardtypelist.get(i).getCardtype_name());
 
                         }
-                        while (!activityFinish){
+                        if (!activityFinish){
                             System.out.println("ACIIVITY NOT FINISH!");
                         }
                         updatePrice();
