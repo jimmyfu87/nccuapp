@@ -229,13 +229,6 @@ public class wishpool_channel extends AppCompatActivity {
         RequestQueue requestQueue3 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
 
-        //信用卡優惠listview
-//        CreditCardListView = (ListView)findViewById(R.id.CreditCardListView);
-//        CreditCardListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//        setCreditCardDiscountList();
-//        setListViewHeightBasedOnChildren(CreditCardListView);
-
-
         //計算後的總價
         isCheckedprice = 0;
         longactivity_discount = 0;
