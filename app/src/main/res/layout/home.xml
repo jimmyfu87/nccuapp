@@ -21,36 +21,70 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="90dp"
-            android:layout_marginLeft="30dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="已用 : "
-                android:textColor="#417505"
-                android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/PB_expense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"/>
-            <TextView
+        <LinearLayout
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/orange_background"
+            android:orientation="vertical">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="剩餘 : "
-                android:textColor="#417505"
-                android:layout_marginLeft="100dp"
-                android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/PB_left"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="選擇匯入之帳本"
+                    android:textColor="#417505" />
+
+                <Spinner
+                    android:id="@+id/spn_homeBook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></Spinner>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="已用 : "
+                    android:textColor="#417505"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/PB_expense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:text="剩餘 : "
+                    android:textColor="#417505"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/PB_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <ProgressBar
@@ -58,86 +92,53 @@
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:progress="100"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="16dp">
-            <TextView
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/addSpend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="選擇匯入之帳本"
-                android:textColor="#417505"/>
-            <Spinner
-                android:id="@+id/spn_homeBook"
+                android:background="@drawable/addspend_btn" />
+
+            <Button
+                android:id="@+id/checkSpend"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </Spinner>
-            <!--<Button-->
-            <!--android:id="@+id/btn_showPB"-->
-            <!--android:onClick="showPB"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/notification_btn"/>-->
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkspend_btn" />
+
+
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/onlineshopping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/onlineshopping_btn" />
 
+            <Button
+                android:id="@+id/wishpool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/wishpool_btn" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/addSpend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="380dp"
-            android:background="@drawable/addspend_btn" />
-
-        <Button
-            android:id="@+id/checkSpend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="380dp"
-            android:background="@drawable/checkspend_btn" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/onlineshopping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="480dp"
-            android:background="@drawable/onlineshopping_btn" />
-
-        <Button
-            android:id="@+id/wishpool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="480dp"
-            android:background="@drawable/wishpool_btn" />
-    </LinearLayout>
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
