@@ -11,17 +11,6 @@
         android:orientation="vertical"
         android:padding="10dp"
         >
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="帳本管理"
-            android:layout_gravity="center"
-            android:textSize="17dp"/>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,27 +21,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="帳本名稱"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="預算"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="結餘"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="貨幣"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="#0D3B47"
+                />
 
         </LinearLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,26 +56,15 @@
                 android:id="@+id/book_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
             </ListView>
-
-
         </LinearLayout>
-
-
-
-
-
-
-
-
         <Button
             android:id="@+id/btn_newBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="新增帳本"
+            android:background="@drawable/lightorange"
             />
-
     </LinearLayout>
 </ScrollView>

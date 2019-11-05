@@ -49,6 +49,8 @@ public class BookManage extends AppCompatActivity {
         setContentView(R.layout.activity_book_management);
         btn_newBook=(Button)findViewById(R.id.btn_newBook);
         BookListView = (ListView)findViewById(R.id.book_listview);
+        getSupportActionBar().setTitle("帳本管理");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setBookFromDBList();
         setList();
