@@ -77,7 +77,7 @@ public class wishpool_channel extends AppCompatActivity {
 //    private List<Activity> activitylistwithcard=new ArrayList<Activity>();  //沒用到，可刪掉！！！
     private static List<String> nocardnamelist = new ArrayList<String>();   //使用者沒卡時推薦一張信用卡
     private boolean activityFinish = false;
-    private boolean isFinish = false;
+    private boolean DiscountMaxSettingisFinish = false;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -361,6 +361,9 @@ public class wishpool_channel extends AppCompatActivity {
                         for(int i = 0; i < owncardtypelist.size();i++){
                             System.out.println("使用者有的信用卡卡名："+owncardtypelist.get(i).getCardtype_name());
 
+                        }
+                        while (!activityFinish){
+                            System.out.println("ACIIVITY NOT FINISH!");
                         }
                         updatePrice();
                         updateActivity();
@@ -683,7 +686,7 @@ public class wishpool_channel extends AppCompatActivity {
         set_owncarddiscount();  //  設定每張卡的優惠
         set_othercarddiscount();
 
-        if (!isFinish){
+        if (!DiscountMaxSettingisFinish){
             System.out.println("NOT FINISH DISCOUNTMAX SETTING!");
         }
 
@@ -710,11 +713,11 @@ public class wishpool_channel extends AppCompatActivity {
 
         if (!activityFinish){
             System.out.println("ACIIVITY NOT FINISH!");
-            refresh();
+            singleDialogEventForRefresh();
         }
 
         for(int i = 0; i < owncardtypelist.size(); i++){
-            isFinish = false;
+            DiscountMaxSettingisFinish = false;
             String getcardtypeName = owncardtypelist.get(i).getCardtype_name();
 
             int discountlongMax = 0;    //試算最大的長期優惠金額
@@ -751,7 +754,7 @@ public class wishpool_channel extends AppCompatActivity {
 //            System.out.println("hhhhhhhh: "+discountlongMax + discountshortMax);
             owncardtypelist.get(i).setdiscountmax(discountlongMax + discountshortMax);
         }
-        isFinish = true;
+        DiscountMaxSettingisFinish = true;
     }
 
     //算出 othercardtypelist 每張的優惠程度
@@ -760,11 +763,11 @@ public class wishpool_channel extends AppCompatActivity {
 
         if (!activityFinish){
             System.out.println("ACIIVITY NOT FINISH!");
-            refresh();
+            singleDialogEventForRefresh();
         }
 
         for(int i = 0; i < othercardtypelist.size(); i++){
-            isFinish = false;
+            DiscountMaxSettingisFinish = false;
             String getcardtypeName = othercardtypelist.get(i).getCardtype_name();
 
             int discountlongMax = 0;
@@ -797,7 +800,7 @@ public class wishpool_channel extends AppCompatActivity {
             }
             othercardtypelist.get(i).setdiscountmax(discountlongMax + discountshortMax);
         }
-        isFinish = true;
+        DiscountMaxSettingisFinish = true;
     }
 
     //取得othercardtypelist中值最大的
@@ -881,6 +884,20 @@ public class wishpool_channel extends AppCompatActivity {
                         updatePrice();
                         updateActivity();
                         Toast.makeText(wishpool_channel.this, "你選擇的是"+nocardnamelist.get(singleChoiceIndex), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    //當使用者勾選信用卡時 && 紀錄選了哪張卡
+    public void singleDialogEventForRefresh(){
+        new AlertDialog.Builder(wishpool_channel.this)
+                .setMessage("網路不穩請重試")
+                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        refresh();
                         dialog.dismiss();
                     }
                 })
