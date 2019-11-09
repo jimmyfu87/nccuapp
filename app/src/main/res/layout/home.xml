@@ -23,7 +23,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="380dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:layout_gravity="center"
@@ -90,10 +90,10 @@
         <ProgressBar
             android:id="@+id/PB"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="3dp"
             android:progress="100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -107,16 +107,23 @@
 
             <Button
                 android:id="@+id/addSpend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/addspend_btn"
-                android:layout_marginRight="10dp"/>
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/btn1"
+                android:layout_marginRight="30dp"
+                android:text="記帳"
+                android:textSize="30dp"
+                android:textColor="#ffff"/>
 
             <Button
                 android:id="@+id/checkSpend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/checkspend_btn" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/btn2"
+                android:text="查帳"
+                android:textSize="30dp"
+                android:textColor="#ffff"
+                />
 
 
         </LinearLayout>
@@ -124,21 +131,27 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
             <Button
                 android:id="@+id/onlineshopping"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/onlineshopping_btn"
-                android:layout_marginRight="10"/>
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/btn3"
+                android:layout_marginRight="30dp"
+                android:text="購物  商城"
+                android:textSize="25dp"
+                />
 
             <Button
                 android:id="@+id/wishpool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/wishpool_btn" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/btn4"
+                android:text="許願池"
+                android:textSize="28dp"
+                />
         </LinearLayout>
     </LinearLayout>
 
