@@ -89,7 +89,7 @@
 
         <ProgressBar
             android:id="@+id/PB"
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -109,7 +109,8 @@
                 android:id="@+id/addSpend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/addspend_btn" />
+                android:background="@drawable/addspend_btn"
+                android:layout_marginRight="10dp"/>
 
             <Button
                 android:id="@+id/checkSpend"
@@ -130,7 +131,8 @@
                 android:id="@+id/onlineshopping"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/onlineshopping_btn" />
+                android:background="@drawable/onlineshopping_btn"
+                android:layout_marginRight="10"/>
 
             <Button
                 android:id="@+id/wishpool"
