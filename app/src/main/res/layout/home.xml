@@ -134,23 +134,27 @@
             android:layout_marginTop="40dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
+
             <Button
                 android:id="@+id/onlineshopping"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/btn3"
                 android:layout_marginRight="30dp"
-                android:text="購物  商城"
-                android:textSize="25dp"
+                android:background="@drawable/btn3"
+                android:text="購物\n商城"
+                android:textSize="26dp"
+                android:textColor="#ffff"
                 />
 
             <Button
                 android:id="@+id/wishpool"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/btn4"
                 android:text="許願池"
-                android:textSize="28dp"
+                android:textSize="26dp"
+                android:textColor="#ffff"
                 />
         </LinearLayout>
     </LinearLayout>
