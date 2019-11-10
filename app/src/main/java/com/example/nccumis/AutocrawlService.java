@@ -128,7 +128,7 @@ public class AutocrawlService extends Service {
         }).start();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         //int time = 8*60*60*10*1000;
-        int time= 10*10*1000;
+        int time= 60*10*1000;
         //int anHour=10*1000;
         long triggerAtTime = SystemClock.elapsedRealtime()+time;
         Intent i = new Intent(this,AlarmReceiver.class);
@@ -153,6 +153,9 @@ public class AutocrawlService extends Service {
             }
         }
         else if(inputurl.contains("momoshop.com.tw/goods")){
+
+        }
+        else if(inputurl.contains("buy.yahoo.com/gdsale")){
 
         }
         else{
@@ -227,6 +230,30 @@ public class AutocrawlService extends Service {
                                         break;
 
                                 }
+                            }
+                            else if(response.contains("Yahoo奇摩購物中心")){
+                                doc[0] = Jsoup.parse(response);
+                                String sb = "";
+                                String sb2 = "";
+                                Elements element6 = doc[0].getElementsByTag("title");
+                                for (Element element : element6) {
+                                    sb = sb + element;
+                                    sb = sb.replace("<title>", "");
+                                    sb = sb.replace("</title>", "");
+                                }
+                                int pos=sb.indexOf("|");
+                                sb=sb.substring(0,pos);
+                                Elements elements3 = doc[0].getElementsByClass("HeroInfo__mainPrice___H9A5r");
+                                for (Element element : elements3) {
+                                    sb2="";
+                                    sb2 = sb2 + element;
+                                    sb2 = sb2.replace("<div class=\"HeroInfo__mainPrice___H9A5r\">", "");
+                                    sb2 = sb2.replace("</div>","");
+                                    sb2 = sb2.replace(",", "");//移除價錢的逗號
+                                    sb2 = sb2.replace("$", "");//移除價錢的錢號
+                                }
+                                sb2=sb2.trim();
+                                UpdateDatabase(product_id,sb,sb2);
                             }
                             //Pchome爬蟲
                             else {
