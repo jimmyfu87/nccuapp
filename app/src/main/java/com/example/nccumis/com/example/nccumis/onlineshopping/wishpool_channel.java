@@ -187,31 +187,6 @@ public class wishpool_channel extends AppCompatActivity {
 
                         activityFinish = true;
                         //拿longactivity和shortactivity去調用，一個是長期的優惠活動一個是短期的優惠活動，下面是我測試用，看完可以刪掉
-//                        System.out.println(longactivitylist.get(0).getId());
-//                        System.out.println(longactivitylist.get(0).getActivity_name());
-//                        System.out.println(longactivitylist.get(0).getChannel_name());
-//                        System.out.println(longactivitylist.get(0).getCardtype_name());
-//                        System.out.println(longactivitylist.get(0).getMinimum_pay());
-//                        System.out.println(longactivitylist.get(0).getDiscount_ratio());
-//                        System.out.println(longactivitylist.get(0).getDiscount_limit());
-//                        System.out.println(longactivitylist.get(0).getDiscount_money());
-//                        System.out.println(longactivitylist.get(0).getStart_time());
-//                        System.out.println(longactivitylist.get(0).getEnd_time());
-//                        System.out.println(longactivitylist.get(0).getRemarks());
-//
-//                        System.out.println(shortactivitylist.get(0).getId());
-//                        System.out.println(shortactivitylist.get(0).getActivity_name());
-//                        System.out.println(shortactivitylist.get(0).getChannel_name());
-//                        System.out.println(shortactivitylist.get(0).getCardtype_name());
-//                        System.out.println(shortactivitylist.get(0).getMinimum_pay());
-//                        System.out.println(shortactivitylist.get(0).getDiscount_ratio());
-//                        System.out.println(shortactivitylist.get(0).getDiscount_limit());
-//                        System.out.println(shortactivitylist.get(0).getDiscount_money());
-//                        System.out.println(shortactivitylist.get(0).getStart_time());
-//                        System.out.println(shortactivitylist.get(0).getEnd_time());
-//                        System.out.println(shortactivitylist.get(0).getRemarks());
-
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -1011,6 +986,9 @@ public class wishpool_channel extends AppCompatActivity {
         else if(inputurl.contains("momoshop.com.tw/goods")){
 
         }
+        else if(inputurl.contains("buy.yahoo.com/gdsale")){
+
+        }
         else{
             //無法解析
             UpdateDatabase(product_id,"delete","delete");
@@ -1083,6 +1061,30 @@ public class wishpool_channel extends AppCompatActivity {
                                         break;
 
                                 }
+                            }
+                            else if(response.contains("Yahoo奇摩購物中心")){
+                                doc[0] = Jsoup.parse(response);
+                                String sb = "";
+                                String sb2 = "";
+                                Elements element6 = doc[0].getElementsByTag("title");
+                                for (Element element : element6) {
+                                    sb = sb + element;
+                                    sb = sb.replace("<title>", "");
+                                    sb = sb.replace("</title>", "");
+                                }
+                                int pos=sb.indexOf("|");
+                                sb=sb.substring(0,pos);
+                                Elements elements3 = doc[0].getElementsByClass("HeroInfo__mainPrice___H9A5r");
+                                for (Element element : elements3) {
+                                    sb2="";
+                                    sb2 = sb2 + element;
+                                    sb2 = sb2.replace("<div class=\"HeroInfo__mainPrice___H9A5r\">", "");
+                                    sb2 = sb2.replace("</div>","");
+                                    sb2 = sb2.replace(",", "");//移除價錢的逗號
+                                    sb2 = sb2.replace("$", "");//移除價錢的錢號
+                                }
+                                sb2=sb2.trim();
+                                UpdateDatabase(product_id,sb,sb2);
                             }
                             //Pchome爬蟲
                             else {
