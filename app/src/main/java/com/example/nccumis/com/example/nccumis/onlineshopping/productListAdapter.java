@@ -109,6 +109,7 @@ public class productListAdapter extends ArrayAdapter {
 //                    Toast.makeText(context, nameArray.get(position) +" 已勾選", Toast.LENGTH_SHORT).show();
                     isCheckArray.set(position, true);
                     wishpool_channel.setisCheckedPrice(countPrice());
+                    wishpool_channel.updateActivity();
                 }
                 else
                 {
@@ -116,6 +117,7 @@ public class productListAdapter extends ArrayAdapter {
 //                    Toast.makeText(context, nameArray.get(position) +" 已取消勾選", Toast.LENGTH_SHORT).show();
                     isCheckArray.set(position, false);
                     wishpool_channel.setisCheckedPrice(countPrice());
+                    wishpool_channel.updateActivity();
                 }
             }
         });

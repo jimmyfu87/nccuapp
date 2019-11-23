@@ -49,7 +49,7 @@ public class wishpool_channel extends AppCompatActivity {
     private static String channel_webHome = "";
     private Button lastPage;
     private TextView ecommerceName;
-    private TextView newActivity;
+    private static TextView newActivity;
     private Button changeCard;
     private Button refresh;
 
@@ -194,6 +194,7 @@ public class wishpool_channel extends AppCompatActivity {
                 }
                 else{
                     //發現沒有匹配活動的處理方式，要改可以改
+                    activityFinish = true;
                 }
             }
         };
@@ -574,10 +575,10 @@ public class wishpool_channel extends AppCompatActivity {
     }
 
     //更新使用者有的信用卡中的最新活動訊息
-    public void updateActivity(){
+    public static void updateActivity(){
         setLongShortActivity();
         if(!hasActivity()){
-            newActivity.setText("卡片目前無任何優惠");
+            newActivity.setText("勾選卡片目前無任何優惠");
             return;
         }
         //檢查使用者是否有信用卡
@@ -592,27 +593,27 @@ public class wishpool_channel extends AppCompatActivity {
 
         String longName ="";
         if(longactivitylist.isEmpty() || (longactivity_position == 0 && !longactivitylist.get(longactivity_position).getCardtype_name().equals(creditcardname))){
-            longName = "目前無長期優惠";
+            longName = "無長期優惠(根據目前勾選商品金額或信卡活動)";
         }else{
             longName = longactivitylist.get(longactivity_position).getActivity_name();
         }
         System.out.println("longactivitylist.size:"+longactivitylist.size() +" ,longName:"+longName);
-        longName = longName.equals("") || longName.equals(null) ? "目前無長期優惠" : longName;
+        longName = longName.equals("") || longName.equals(null) ? "無長期優惠(根據目前勾選商品金額或信卡活動)" : longName;
 
 
         String shortName = "";
         System.out.println("shortactivity_position:"+shortactivity_position+" ,shortactivitylist.size:"+shortactivitylist.size());
         if(shortactivitylist.isEmpty() || (shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname))){
-                shortName = "目前無短期優惠";
+                shortName = "無短期優惠(根據目前勾選商品金額或信卡活動)";
         }else {
             shortName = shortactivitylist.get(shortactivity_position).getActivity_name();
         }
-        shortName = shortName.equals("") || shortName.equals(null) ? "目前無長期優惠" : shortName;
+        shortName = shortName.equals("") || shortName.equals(null) ? "無短期優惠(根據目前勾選商品金額或信卡活動)" : shortName;
 
 
 
-        newActivity.setText("最新長期優惠: " + longName +"\n"
-                    + "最新短期優惠: " + shortName);
+        newActivity.setText("長期優惠: " + longName +"\n"
+                    + "短期優惠: " + shortName);
 
 //        for(int i = 0; i < activitylistwithcard.size(); i++){
 //            if(activitylistwithcard.get(i).getCardtype_name().equals(owncardnamelist.get(singleChoiceIndex))){
@@ -623,7 +624,7 @@ public class wishpool_channel extends AppCompatActivity {
     }
 
     //檢查勾選信用卡是否有長期或短期活動
-    public boolean hasActivity(){
+    public static boolean hasActivity(){
         //檢查使用者是否有信用卡
         String creditcardname = owncardnamelist.isEmpty() ?
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
