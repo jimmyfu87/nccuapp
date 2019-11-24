@@ -107,54 +107,6 @@ public class wishpool_channel extends AppCompatActivity {
 
         //商品列表
         ProductListView = (com.example.nccumis.MyListView)findViewById(R.id.ProductListView);
-
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(!response.equals("NoValue")){
-                    try {
-                        JSONArray array = new JSONArray(response);
-                        productlist.clear();
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            int id = jsonObject.getInt("id");
-                            String product_name = jsonObject.getString("product_name");
-                            String product_price = jsonObject.getString("product_price");
-                            String product_url = jsonObject.getString("product_url");
-                            String member_id = jsonObject.getString("member_id");
-                            String channel_name = jsonObject.getString("channel_name");
-                            String upload_time = jsonObject.getString("upload_time");
-                            productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name,upload_time));
-                            //拿productlist去調用，包含登入使用者的所有product
-                        }
-                        setProductList();
-                        setListViewHeightBasedOnChildren(ProductListView);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    //這邊是發現許願池是空的處理方式，要改可以改
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
-                    builder.setMessage("沒有商品")
-                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                  
-                                }
-                            })
-                            .create()
-                            .show();
-                }
-            }
-        };
-        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        wishpool_channel.GetallproductRequest getRequest = new wishpool_channel.GetallproductRequest(sp.getString("member_id",null),channel_name,responseListener);
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(getRequest);
-
-
         //取得信用卡優惠活動(不根據使用者有的卡片)
         Response.Listener<String> responseListener3 = new Response.Listener<String>() {
             @Override
@@ -202,8 +154,57 @@ public class wishpool_channel extends AppCompatActivity {
         SharedPreferences.Editor editor3 = sp3.edit();
         //選擇的卡片名稱存在cardtypename
         GetactivityRequest getactivityRequest = new GetactivityRequest(sp3.getString("member_id",null),channel_name,responseListener3);
-        RequestQueue requestQueue3 = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getactivityRequest);
+
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("NoValue")){
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        productlist.clear();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String product_name = jsonObject.getString("product_name");
+                            String product_price = jsonObject.getString("product_price");
+                            String product_url = jsonObject.getString("product_url");
+                            String member_id = jsonObject.getString("member_id");
+                            String channel_name = jsonObject.getString("channel_name");
+                            String upload_time = jsonObject.getString("upload_time");
+                            productlist.add(new Product(id, product_name, product_price, product_url, member_id, channel_name,upload_time));
+                            //拿productlist去調用，包含登入使用者的所有product
+                        }
+                        setProductList();
+                        setListViewHeightBasedOnChildren(ProductListView);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //這邊是發現許願池是空的處理方式，要改可以改
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(wishpool_channel.this);
+                    builder.setMessage("沒有商品")
+                            .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                  
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+            }
+        };
+        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        wishpool_channel.GetallproductRequest getRequest = new wishpool_channel.GetallproductRequest(sp.getString("member_id",null),channel_name,responseListener);
+        requestQueue.add(getRequest);
+
+
+
 
         //計算後的總價
         isCheckedprice = 0;
@@ -306,7 +307,6 @@ public class wishpool_channel extends AppCompatActivity {
         SharedPreferences sp4 = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor editor4 = sp4.edit();
         GetothercardRequest getothercardRequest = new GetothercardRequest(sp4.getString("member_id",null),responseListener4);
-        RequestQueue requestQueue4 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getothercardRequest);
 
         //取得使用者擁有的信用卡
@@ -326,7 +326,7 @@ public class wishpool_channel extends AppCompatActivity {
                             //拿owncardtypelist去調用
 
                         }
-                        set_owncardnamelist();   //丟進alertdialog 的 String list
+                        //set_owncardnamelist();   //丟進alertdialog 的 String list
                         for(int i = 0; i < owncardtypelist.size();i++){
                             System.out.println("使用者有的信用卡卡名："+owncardtypelist.get(i).getCardtype_name());
 
@@ -334,8 +334,8 @@ public class wishpool_channel extends AppCompatActivity {
                         if (!activityFinish){
                             System.out.println("ACIIVITY NOT FINISH!");
                         }
-                        updatePrice();
-                        updateActivity();
+//                        updatePrice();
+//                        updateActivity();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -350,7 +350,6 @@ public class wishpool_channel extends AppCompatActivity {
         SharedPreferences.Editor editor2 = sp2.edit();
         System.out.println("member_id"+sp2.getString("member_id",null));
         GetcardRequest getcardRequest = new GetcardRequest(sp2.getString("member_id",null),responseListener2);
-        RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(getcardRequest);
 
 
@@ -396,6 +395,9 @@ public class wishpool_channel extends AppCompatActivity {
         changeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                set_owncardnamelist();   //丟進alertdialog 的 String list
+                updatePrice();
+                updateActivity();
                 if(owncardtypelist.isEmpty() || owncardtypelist == null){
                     singleDialogEventWhenNocard();
                 }else{
