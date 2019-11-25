@@ -215,6 +215,18 @@ public class OnlineShopping extends AppCompatActivity {
         else if(inputurl.contains("buy.yahoo.com/gdsale")){
 
         }
+        else if(inputurl.contains("https://shopee.tw/")&&inputurl.contains("-i.")){
+            String shopid="";
+            String itemid="";
+            int position=inputurl.indexOf("i.");
+            inputurl=inputurl.substring(position+2);
+            if(inputurl.contains(".")){
+                int pos=inputurl.indexOf(".");
+                shopid=inputurl.substring(0,pos);
+                itemid=inputurl.substring(pos+1);
+                inputurl="https://shopee.tw/api/v2/item/get?itemid="+itemid+"&shopid="+shopid;
+            }
+        }
         else{
             Toast.makeText(getApplicationContext(), "無法解析", Toast.LENGTH_SHORT).show();
             return;
@@ -312,6 +324,17 @@ public class OnlineShopping extends AppCompatActivity {
                                 sb2=sb2.trim();
                                 InsertIntoDatabase(sb, sb2, finalInputurl, "Yahoo購物中心");
 
+                            }
+                            else if(response.contains("shopee")){
+                                JSONObject jsonresponse=new JSONObject(response);
+                                JSONObject item=jsonresponse.getJSONObject("item");
+                                String itemname=item.getString("name");
+                                String itemprice_max=item.getString("price_max");
+                                int pos=itemprice_max.length()-4;
+                                itemprice_max=itemprice_max.substring(0,pos-1);
+                                System.out.println(itemname);
+                                System.out.println(itemprice_max);
+                                InsertIntoDatabase(itemname,itemprice_max,finalInputurl,"蝦皮購物");
                             }
                             //Pchome爬蟲
                             else {
