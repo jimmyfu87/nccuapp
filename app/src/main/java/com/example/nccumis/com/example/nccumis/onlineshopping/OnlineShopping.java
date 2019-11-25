@@ -325,6 +325,7 @@ public class OnlineShopping extends AppCompatActivity {
                                 InsertIntoDatabase(sb, sb2, finalInputurl, "Yahoo購物中心");
 
                             }
+                            //蝦皮爬蟲
                             else if(response.contains("shopee")){
                                 JSONObject jsonresponse=new JSONObject(response);
                                 JSONObject item=jsonresponse.getJSONObject("item");
@@ -332,8 +333,6 @@ public class OnlineShopping extends AppCompatActivity {
                                 String itemprice_max=item.getString("price_max");
                                 int pos=itemprice_max.length()-4;
                                 itemprice_max=itemprice_max.substring(0,pos-1);
-                                System.out.println(itemname);
-                                System.out.println(itemprice_max);
                                 InsertIntoDatabase(itemname,itemprice_max,finalInputurl,"蝦皮購物");
                             }
                             //Pchome爬蟲

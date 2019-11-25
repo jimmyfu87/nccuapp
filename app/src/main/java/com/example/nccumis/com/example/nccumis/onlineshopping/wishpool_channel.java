@@ -100,7 +100,7 @@ public class wishpool_channel extends AppCompatActivity {
         });
 
         ecommerceName = (TextView)findViewById(R.id.ecommerceName);
-        ecommerceName.setText(channel_name+" 購物網");//之後從資料庫抓電商名稱
+        ecommerceName.setText(channel_name);//之後從資料庫抓電商名稱
 
         newActivity = (TextView)findViewById(R.id.newActivity);
 
@@ -992,6 +992,18 @@ public class wishpool_channel extends AppCompatActivity {
         else if(inputurl.contains("buy.yahoo.com/gdsale")){
 
         }
+        else if(inputurl.contains("https://shopee.tw/")&&inputurl.contains("-i.")){
+            String shopid="";
+            String itemid="";
+            int position=inputurl.indexOf("i.");
+            inputurl=inputurl.substring(position+2);
+            if(inputurl.contains(".")){
+                int pos=inputurl.indexOf(".");
+                shopid=inputurl.substring(0,pos);
+                itemid=inputurl.substring(pos+1);
+                inputurl="https://shopee.tw/api/v2/item/get?itemid="+itemid+"&shopid="+shopid;
+            }
+        }
         else{
             //無法解析
             UpdateDatabase(product_id,"delete","delete");
@@ -1088,6 +1100,16 @@ public class wishpool_channel extends AppCompatActivity {
                                 }
                                 sb2=sb2.trim();
                                 UpdateDatabase(product_id,sb,sb2);
+                            }
+                            //蝦皮爬蟲
+                            else if(response.contains("shopee")){
+                                JSONObject jsonresponse=new JSONObject(response);
+                                JSONObject item=jsonresponse.getJSONObject("item");
+                                String itemname=item.getString("name");
+                                String itemprice_max=item.getString("price_max");
+                                int pos=itemprice_max.length()-4;
+                                itemprice_max=itemprice_max.substring(0,pos-1);
+                                UpdateDatabase(product_id,itemname,itemprice_max);
                             }
                             //Pchome爬蟲
                             else {
