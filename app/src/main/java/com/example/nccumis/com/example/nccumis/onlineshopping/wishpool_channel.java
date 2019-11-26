@@ -134,8 +134,8 @@ public class wishpool_channel extends AppCompatActivity {
                             else{
                                 shortactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
                             }
-                            System.out.println(longactivitylist.size());
-                            System.out.println(shortactivitylist.size());
+                            System.out.println("size:"+longactivitylist.size());
+                            System.out.println("size:"+shortactivitylist.size());
                         }
 
                         activityFinish = true;
@@ -149,6 +149,8 @@ public class wishpool_channel extends AppCompatActivity {
                     //發現沒有匹配活動的處理方式，要改可以改
                     longactivitylist.clear();
                     shortactivitylist.clear();
+//                    System.out.println("size:"+longactivitylist.size());
+//                    System.out.println("size:"+shortactivitylist.size());
                     activityFinish = true;
                 }
             }
@@ -399,12 +401,13 @@ public class wishpool_channel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isCheckCard = true;
-                set_owncardnamelist();   //丟進alertdialog 的 String list
-                updatePrice();
-                updateActivity();
                 if(owncardtypelist.isEmpty() || owncardtypelist == null){
                     singleDialogEventWhenNocard();
                 }else{
+                    nocardnamelist.clear();
+                    set_owncardnamelist();   //丟進alertdialog 的 String list
+                    updatePrice();
+                    updateActivity();
                     singleDialogEvent();
                 }
             }
@@ -518,7 +521,7 @@ public class wishpool_channel extends AppCompatActivity {
         String creditcardname = owncardnamelist.isEmpty() ?
                 getMaxdiscountInothercardtypelist()  : owncardnamelist.get(singleChoiceIndex) ;
         //刪掉推薦信用卡的括號內容
-        if(singleChoiceIndex == 0){
+        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")){
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
 
@@ -591,7 +594,7 @@ public class wishpool_channel extends AppCompatActivity {
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
 
         //刪掉推薦信用卡的括號內容
-        if(singleChoiceIndex == 0){
+        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")){
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
         System.out.println("longactivity_position:"+longactivity_position);
@@ -635,7 +638,7 @@ public class wishpool_channel extends AppCompatActivity {
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
 
         //刪掉推薦卡的括號內容
-        if(singleChoiceIndex == 0){
+        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")){
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
 
@@ -889,7 +892,7 @@ public class wishpool_channel extends AppCompatActivity {
                     return creditcardurl;
                 }
             }
-        }else if(singleChoiceIndex == 0){
+        }else if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")){
             String creditcardname = owncardnamelist.get(0).substring(0, owncardnamelist.get(0).length()-6);
             for(int i = 0; i < othercardtypelist.size(); i++){
                 if(creditcardname.equals(othercardtypelist.get(i).getCardtype_name())){
