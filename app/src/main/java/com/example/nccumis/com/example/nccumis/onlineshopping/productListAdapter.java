@@ -102,23 +102,28 @@ public class productListAdapter extends ArrayAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                //判斷CheckBox是否有勾選，同mCheckBox.isChecked()
-                if(isChecked)
-                {
-                    //CheckBox狀態 : 已勾選
+                if(wishpool_channel.isCheckCard){
+                    //判斷CheckBox是否有勾選，同mCheckBox.isChecked()
+                    if(isChecked)
+                    {
+                        //CheckBox狀態 : 已勾選
 //                    Toast.makeText(context, nameArray.get(position) +" 已勾選", Toast.LENGTH_SHORT).show();
-                    isCheckArray.set(position, true);
-                    wishpool_channel.setisCheckedPrice(countPrice());
-                    wishpool_channel.updateActivity();
-                }
-                else
-                {
-                    //CheckBox狀態 : 未勾選
+                        isCheckArray.set(position, true);
+                        wishpool_channel.setisCheckedPrice(countPrice());
+                        wishpool_channel.updateActivity();
+                    }
+                    else
+                    {
+                        //CheckBox狀態 : 未勾選
 //                    Toast.makeText(context, nameArray.get(position) +" 已取消勾選", Toast.LENGTH_SHORT).show();
-                    isCheckArray.set(position, false);
-                    wishpool_channel.setisCheckedPrice(countPrice());
-                    wishpool_channel.updateActivity();
+                        isCheckArray.set(position, false);
+                        wishpool_channel.setisCheckedPrice(countPrice());
+                        wishpool_channel.updateActivity();
+                    }
+                }else{
+                     Toast.makeText(context, "請先選擇信用卡", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

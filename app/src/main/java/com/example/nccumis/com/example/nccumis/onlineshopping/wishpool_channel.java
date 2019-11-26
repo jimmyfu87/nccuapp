@@ -78,8 +78,7 @@ public class wishpool_channel extends AppCompatActivity {
     private static List<String> nocardnamelist = new ArrayList<String>();   //使用者沒卡時推薦一張信用卡
     private boolean activityFinish = false;
     private boolean DiscountMaxSettingisFinish = false;
-
-
+    public static boolean isCheckCard = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishpool_channel);
@@ -395,6 +394,7 @@ public class wishpool_channel extends AppCompatActivity {
         changeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isCheckCard = true;
                 set_owncardnamelist();   //丟進alertdialog 的 String list
                 updatePrice();
                 updateActivity();
@@ -594,18 +594,18 @@ public class wishpool_channel extends AppCompatActivity {
         System.out.println("longactivity_position:"+longactivity_position);
 
         String longName ="";
-        if(longactivitylist.isEmpty() || (longactivity_position == 0 && !longactivitylist.get(longactivity_position).getCardtype_name().equals(creditcardname))){
+        if(isCheckedprice == 0 || longactivitylist.isEmpty() || (longactivity_position == 0 && !longactivitylist.get(longactivity_position).getCardtype_name().equals(creditcardname))){
             longName = "無長期優惠(根據目前勾選商品金額或信卡活動)";
         }else{
             longName = longactivitylist.get(longactivity_position).getActivity_name();
         }
-        System.out.println("longactivitylist.size:"+longactivitylist.size() +" ,longName:"+longName);
+//        System.out.println("longactivitylist.size:"+longactivitylist.size() +" ,longName:"+longName);
         longName = longName.equals("") || longName.equals(null) ? "無長期優惠(根據目前勾選商品金額或信卡活動)" : longName;
 
 
         String shortName = "";
-        System.out.println("shortactivity_position:"+shortactivity_position+" ,shortactivitylist.size:"+shortactivitylist.size());
-        if(shortactivitylist.isEmpty() || (shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname))){
+//        System.out.println("shortactivity_position:"+shortactivity_position+" ,shortactivitylist.size:"+shortactivitylist.size());
+        if(isCheckedprice == 0 || shortactivitylist.isEmpty() || (shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname))){
                 shortName = "無短期優惠(根據目前勾選商品金額或信卡活動)";
         }else {
             shortName = shortactivitylist.get(shortactivity_position).getActivity_name();

@@ -20,16 +20,15 @@
             android:layout_width="70dp"
             android:layout_height="61dp"
             android:background="@drawable/backup_btn" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
-            android:text="一銀優惠資訊"
+            android:text="銀行優惠資訊"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
-
-
     </LinearLayout>
 
 
@@ -73,7 +72,8 @@
         android:background="@drawable/orange_background"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:id="@+id/imageView_star2"

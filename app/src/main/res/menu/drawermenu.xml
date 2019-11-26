@@ -8,9 +8,9 @@
         <item android:id="@+id/logout" android:title="登出" />
         <item android:id="@+id/register" android:title="註冊" />
         <item android:id="@+id/bookManagement" android:title="帳本管理" />
-        <item android:id="@+id/cloudBackup" android:title="Google雲端備份" />
-        <item android:id="@+id/cloudreturn" android:title="Google雲端還原" />
-        <item android:id="@+id/phoneBackup" android:title="手機備份" />
-        <item android:id="@+id/phone_restore" android:title="手機還原" />
+        <item android:id="@+id/cloudBackup" android:title="Google雲端備份(帳本)" />
+        <item android:id="@+id/cloudreturn" android:title="Google雲端還原(帳本)" />
+        <item android:id="@+id/phoneBackup" android:title="手機備份(帳本)" />
+        <item android:id="@+id/phone_restore" android:title="手機還原(帳本)" />
     </group>
 </menu>

@@ -55,7 +55,7 @@ public class firstBankDiscount extends AppCompatActivity {
         //電商名城
         ecommerceName = (TextView)findViewById(R.id.ecommerceName);
         getEcommerceName = getSaveBag.getString("webName");
-        ecommerceName.setText(getEcommerceName+"線上購物平台");
+        ecommerceName.setText(getEcommerceName);
 
         //一銀與電商優惠，從資料庫fetch資料
         discountDetailLong = (TextView)findViewById(R.id.discountDetailLong);
