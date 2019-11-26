@@ -538,19 +538,18 @@ public class wishpool_channel extends AppCompatActivity {
 
 
         for(int i = 0; i < shortactivitylist.size();i++){
-
-                if(shortactivitylist.get(i).getCardtype_name().equals(creditcardname)){
-                    int shortactivity_discount_temp = 0;
-                    if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
-                        shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
-                    }
-
-                    if(shortactivity_discount_temp > shortactivity_discount){
-                        shortactivity_discount = shortactivity_discount_temp;
-                        shortactivity_position = i;
-                    }
-
+            if(shortactivitylist.get(i).getCardtype_name().equals(creditcardname)){
+                int shortactivity_discount_temp = 0;
+                if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
+                    shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
+                }else {
+                    shortactivity_position = -1;
                 }
+                if(shortactivity_discount_temp > shortactivity_discount){
+                    shortactivity_discount = shortactivity_discount_temp;
+                    shortactivity_position = i;
+                }
+            }
         }
 
 //        System.out.println("longdiscount:"+longactivity_discount+", shortdiscount:"+shortactivity_discount);
@@ -605,7 +604,7 @@ public class wishpool_channel extends AppCompatActivity {
 
         String shortName = "";
 //        System.out.println("shortactivity_position:"+shortactivity_position+" ,shortactivitylist.size:"+shortactivitylist.size());
-        if(isCheckedprice == 0 || shortactivitylist.isEmpty() || (shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname))){
+        if(shortactivity_position == -1 || isCheckedprice == 0 || shortactivitylist.isEmpty() || (shortactivity_position == 0 && !shortactivitylist.get(shortactivity_position).getCardtype_name().equals(creditcardname))){
                 shortName = "無短期優惠(根據目前勾選商品金額或信卡活動)";
         }else {
             shortName = shortactivitylist.get(shortactivity_position).getActivity_name();
@@ -668,7 +667,7 @@ public class wishpool_channel extends AppCompatActivity {
 
         for (int i = 0; i < tempcardtypelist.size() ; i++){
             System.out.println("目前塞入卡片："+tempcardtypelist.get(i).getCardtype_name()+" ,優惠金額："+tempcardtypelist.get(i).getdiscountMax());
-            if(owncardnamelist.isEmpty()){
+            if(owncardnamelist.isEmpty() && !getMaxdiscountInothercardtypelist().equals(null) && !getMaxdiscountInothercardtypelist().equals("")){
                 owncardnamelist.add(getMaxdiscountInothercardtypelist()+"\n(推薦卡)");
                 owncardnamelist.add(tempcardtypelist.get(i).getCardtype_name());
                 continue;
