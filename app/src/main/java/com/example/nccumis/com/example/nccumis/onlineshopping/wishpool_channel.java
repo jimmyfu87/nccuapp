@@ -956,10 +956,10 @@ public class wishpool_channel extends AppCompatActivity {
 
         }
         saveCheckPriceData.putInt("shortactivity_discount", shortactivity_discount);
-        if(shortactivity_discount != 0){
+        if(shortactivity_discount != 0 && shortactivity_position != -1){
             saveCheckPriceData.putString("shortactivity_name",shortactivitylist.get(shortactivity_position).getActivity_name());
             saveCheckPriceData.putString("shortactivity_remark",shortactivitylist.get(shortactivity_position).getRemarks());
-//            saveCheckPriceData.putString("applyurl",);
+//              saveCheckPriceData.putString("applyurl",);
 
         }
 
