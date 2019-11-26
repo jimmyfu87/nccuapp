@@ -134,6 +134,8 @@ public class wishpool_channel extends AppCompatActivity {
                             else{
                                 shortactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
                             }
+                            System.out.println(longactivitylist.size());
+                            System.out.println(shortactivitylist.size());
                         }
 
                         activityFinish = true;
@@ -145,6 +147,8 @@ public class wishpool_channel extends AppCompatActivity {
                 }
                 else{
                     //發現沒有匹配活動的處理方式，要改可以改
+                    longactivitylist.clear();
+                    shortactivitylist.clear();
                     activityFinish = true;
                 }
             }
