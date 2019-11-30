@@ -529,11 +529,11 @@ public class wishpool_channel extends AppCompatActivity {
         String creditcardname = owncardnamelist.isEmpty() ?
                 getMaxdiscountInothercardtypelist()  : owncardnamelist.get(singleChoiceIndex) ;
         //刪掉推薦信用卡的括號內容
-        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")){
+        if((nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")) || !nocardnamelist.isEmpty() ){
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
 
-        System.out.println("creditcardname:"+creditcardname);
+//        System.out.println("creditcardname:"+creditcardname);
 
         for(int i = 0; i < longactivitylist.size();i++){
             if(longactivitylist.get(i).getCardtype_name().equals(creditcardname)){
@@ -612,7 +612,7 @@ public class wishpool_channel extends AppCompatActivity {
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
 
         //刪掉推薦信用卡的括號內容
-        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")){
+        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)") || !nocardnamelist.isEmpty()){
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
         System.out.println("longactivity_position:"+longactivity_position);
@@ -656,7 +656,7 @@ public class wishpool_channel extends AppCompatActivity {
                 getMaxdiscountInothercardtypelist() : owncardnamelist.get(singleChoiceIndex);
 
         //刪掉推薦卡的括號內容
-        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)")){
+        if(nocardnamelist.isEmpty() && singleChoiceIndex == 0 && owncardnamelist.get(0).contains("(推薦卡)") || !nocardnamelist.isEmpty()){
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
 
@@ -864,7 +864,7 @@ public class wishpool_channel extends AppCompatActivity {
         set_othercarddiscount();
 
         nocardnamelist.clear();
-        nocardnamelist.add(getMaxdiscountInothercardtypelist());
+        nocardnamelist.add(getMaxdiscountInothercardtypelist()+"\n(推薦卡)");
         new AlertDialog.Builder(wishpool_channel.this)
                 .setSingleChoiceItems(nocardnamelist.toArray(new String[nocardnamelist.size()]), singleChoiceIndex,
                         new DialogInterface.OnClickListener() {
