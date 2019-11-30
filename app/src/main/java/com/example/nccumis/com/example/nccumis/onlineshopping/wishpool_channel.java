@@ -584,6 +584,14 @@ public class wishpool_channel extends AppCompatActivity {
                 " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
     }
 
+    //計算目前勾選總額(沒有選卡前)
+    public static void setisCheckedPriceBeforeChooseCard(int para){
+        isCheckedprice = para;
+        int totalPriceData = isCheckedprice - longactivity_discount - shortactivity_discount;
+        totalPrice.setText("最終結算金額: \n"+isCheckedprice +"(所有勾選商品金額)" +
+                " - " + longactivity_discount +"(長期優惠) - " + shortactivity_discount +"(短期優惠) \n\t= " + totalPriceData);
+    }
+
     //改了勾選信用卡後更新總額
     public static void updatePrice(){
         setLongShortActivity();
