@@ -134,8 +134,15 @@ public class wishpool_channel extends AppCompatActivity {
                             else{
                                 shortactivitylist.add(new Activity(id, activity_name, channel_name, cardtype_name, Minimum_pay, Discount_ratio,Discount_limit,Discount_money,Start_time,End_time,Remarks));
                             }
-                            System.out.println("size:"+longactivitylist.size());
-                            System.out.println("size:"+shortactivitylist.size());
+//                            System.out.println("size:"+longactivitylist.size());
+//                            System.out.println("size:"+shortactivitylist.size());
+                        }
+
+                        for(int j = 0; j < shortactivitylist.size(); j++){
+                            System.out.println("短期活動名稱:"+shortactivitylist.get(j).getActivity_name());
+                        }
+                        for(int j = 0; j < longactivitylist.size(); j++){
+                            System.out.println("長期活動名稱:"+longactivitylist.get(j).getActivity_name());
                         }
 
                         activityFinish = true;
@@ -528,28 +535,30 @@ public class wishpool_channel extends AppCompatActivity {
 //        System.out.println("creditcardname:"+creditcardname);
 
         for(int i = 0; i < longactivitylist.size();i++){
-
-                if(longactivitylist.get(i).getCardtype_name().equals(creditcardname)){
-                    int longactivity_discount_temp = 0;
-                    if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
-                        longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
-                    }else {
-                        longactivity_discount_temp = longactivitylist.get(i).getDiscount_limit();
-                    }
-                    if(longactivity_discount_temp > longactivity_discount){
-                        longactivity_discount = longactivity_discount_temp;
-                        longactivity_position = i;
-                    }
+            if(longactivitylist.get(i).getCardtype_name().equals(creditcardname)){
+                int longactivity_discount_temp = 0;
+                if(longactivitylist.get(i).getDiscount_limit() > isCheckedprice*longactivitylist.get(i).getDiscount_ratio() ){
+                    longactivity_discount_temp = Double.valueOf(isCheckedprice*longactivitylist.get(i).getDiscount_ratio()).intValue();
+                }else {
+                    longactivity_discount_temp = longactivitylist.get(i).getDiscount_limit();
                 }
+                if(longactivity_discount_temp > longactivity_discount){
+                    longactivity_discount = longactivity_discount_temp;
+                    longactivity_position = i;
+                }
+            }
         }
 
 
+        boolean hasShortActivity = false;
         for(int i = 0; i < shortactivitylist.size();i++){
             if(shortactivitylist.get(i).getCardtype_name().equals(creditcardname)){
                 int shortactivity_discount_temp = 0;
+                System.out.println("短期活動低消："+shortactivitylist.get(i).getMinimum_pay());
                 if(isCheckedprice > shortactivitylist.get(i).getMinimum_pay()){
                     shortactivity_discount_temp = shortactivitylist.get(i).getDiscount_money();
-                }else {
+                    hasShortActivity = true;
+                }else if(!hasShortActivity){
                     shortactivity_position = -1;
                 }
                 if(shortactivity_discount_temp > shortactivity_discount){
