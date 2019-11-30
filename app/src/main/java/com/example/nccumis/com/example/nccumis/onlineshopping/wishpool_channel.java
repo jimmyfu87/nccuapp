@@ -83,6 +83,7 @@ public class wishpool_channel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishpool_channel);
 
+        isCheckCard = false;
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
         if(getSaveBag != null){
@@ -532,7 +533,7 @@ public class wishpool_channel extends AppCompatActivity {
             creditcardname = creditcardname.substring(0, creditcardname.length()-6);
         }
 
-//        System.out.println("creditcardname:"+creditcardname);
+        System.out.println("creditcardname:"+creditcardname);
 
         for(int i = 0; i < longactivitylist.size();i++){
             if(longactivitylist.get(i).getCardtype_name().equals(creditcardname)){

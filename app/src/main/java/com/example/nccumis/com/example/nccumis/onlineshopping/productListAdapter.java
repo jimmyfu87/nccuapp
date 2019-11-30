@@ -121,7 +121,14 @@ public class productListAdapter extends ArrayAdapter {
                         wishpool_channel.updateActivity();
                     }
                 }else{
-                     Toast.makeText(context, "請先選擇信用卡", Toast.LENGTH_SHORT).show();
+                    if(isChecked) {//CheckBox狀態 : 已勾選
+                        isCheckArray.set(position, true);
+                    }
+                    else {
+                        //CheckBox狀態 : 未勾選
+                        isCheckArray.set(position, false);
+                    }
+                    Toast.makeText(context, "請先選擇信用卡", Toast.LENGTH_SHORT).show();
                 }
 
             }
