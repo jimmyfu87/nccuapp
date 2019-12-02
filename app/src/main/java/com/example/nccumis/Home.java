@@ -161,7 +161,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                 dbmanager.open();
                 select_expense = dbmanager.fetchExpenseWithbook("0000-01-01","9999-12-31",selectBook);
-//                System.out.println("fetchExpense size: "+select_expense.size());
                 select_income = dbmanager.fetchIncomeWithbook("0000-01-01","9999-12-31",selectBook);
                 select_BookAttribute = dbmanager.fetchBookallattribute(selectBook);
                 dbmanager.close();
@@ -689,7 +688,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             this.dateinEnd = year+"-"+month+"-"+30;
         }
 
-//        System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
     public void initBook(){
@@ -719,7 +717,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     //計算該帳本預算占幾%
     public float countPercentage(){
-        System.out.println(expense +", "+ startBudget+", "+income);
         if(startBudget+income == 0 || expense >= startBudget+income){
             return 100;
         }
@@ -736,7 +733,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         for(int i= 0; i<select_income.size();i++){
             income += select_income.get(i).getIn_price();
         }
-//        System.out.println("expense:" + expense+",income:"+income);
     }
     public static boolean isDate2Bigger(String str1, String str2) {
         boolean isBigger = false;

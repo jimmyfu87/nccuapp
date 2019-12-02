@@ -92,9 +92,6 @@ public class wishpool extends AppCompatActivity {
                             .create()
                             .show();
                 }
-//                System.out.println(channellist.get(0).getId());
-//                System.out.println(channellist.get(0).getChannel_name());
-//                System.out.println(channellist.get(0).getChannel_url());
             }
         };
         wishpool.GetallchannelRequest getRequest = new wishpool.GetallchannelRequest(responseListener);
@@ -111,13 +108,11 @@ public class wishpool extends AppCompatActivity {
     }
 
     public void initChannelList(){
-//        System.out.println("channellist size:333 "+this.channellist.size());
         for(int i = 0; i < this.channellist.size();i++){
 //            this.idArray.add(this.btn_webHome.get(i).getId());
             this.nameArray.add(this.channellist.get(i).getChannel_name());
             this.homeurlArray.add(this.channellist.get(i).getChannel_url());
         }
-        //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
 
     public void setChannelList(){

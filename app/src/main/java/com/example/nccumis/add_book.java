@@ -198,8 +198,6 @@ public class add_book extends AppCompatActivity {
             budget_start = getSaveBag.getString("amount_start");
             int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency_type"));
             input_currency.setSelection(currencyListPosition);
-            System.out.println("startdate:"+getSaveBag.getString("startdate"));
-            //////////////////////////////here/////////////////////////////////////
 //            i_startdate = setDateformat(getSaveBag.getString("startdate"));
             input_startdate.setText(getSaveBag.getString("startdate"));
 //            i_enddate = setDateformat(getSaveBag.getString("enddate"));

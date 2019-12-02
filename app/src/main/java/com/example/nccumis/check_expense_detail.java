@@ -45,7 +45,6 @@ public class check_expense_detail extends AppCompatActivity {
         endDate = saveBag.getString("endDate");
         selectBooks = saveBag.getStringArrayList("selectBooks");
 
-        //System.out.println(startDate+", "+endDate);
 
         //上一頁
 //        lastPage = (Button)findViewById(R.id.lastPage);
@@ -81,7 +80,6 @@ public class check_expense_detail extends AppCompatActivity {
             this.noteArray.add((this.expenseList.get(i).getEx_note().isEmpty()) ? "無備註" : this.expenseList.get(i).getEx_note());
             this.bookArray.add(this.expenseList.get(i).getBook_name());
         }
-        //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
 
     public void setList(){

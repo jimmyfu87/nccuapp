@@ -37,7 +37,6 @@
             android:theme="@style/LightGreenBar"
             android:parentActivityName=".Home"/> <!-- //backupagent key -->
         <!-- <meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAI_UhFcXuOU-YeOmOuUPjMkySHaOhJgNAJwc7evQ" /> -->
-        <activity android:name=".add_spend_viewpager" />
         <activity android:name=".add_type"
             android:theme="@style/LightGreenBar"
             />

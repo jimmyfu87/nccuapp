@@ -79,7 +79,6 @@ public class check_income_detail extends AppCompatActivity {
             this.noteArray.add((this.incomeList.get(i).getIn_note().isEmpty()) ? "無備註" : this.incomeList.get(i).getIn_note());
             this.bookArray.add(this.incomeList.get(i).getBook_name());
         }
-        //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
 
     public void setList(){

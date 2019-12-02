@@ -37,7 +37,6 @@ import java.util.Map;
 public class productListAdapter extends ArrayAdapter {
     //to reference the Activity
     private final Activity context;
-//    private final List<Integer> pictureArray;   //  還沒弄
     private final List<Integer> idArray;
     private final List<String> urlArray;
     private final List<String> nameArray;
@@ -61,7 +60,6 @@ public class productListAdapter extends ArrayAdapter {
         this.context=context;
         this.channel_name = channel_nameParam;
         this.channel_webHome = channel_webHomeParam;
-//        this.pictureArray = pictureArrayParam;
         this.idArray = idArrayParam;
         this.urlArray = urlArrayParam;
         this.nameArray = nameArrayParam;
@@ -79,7 +77,6 @@ public class productListAdapter extends ArrayAdapter {
         View rowView=inflater.inflate(R.layout.product_listview_row, null,true);
 
         //this code gets references to objects in the listview_row.xml file
-//        TextView pictureTextField = (TextView) rowView.findViewById(R.id.picture);
         TextView idTextField = (TextView)rowView.findViewById(R.id.id);
         TextView nameTextField = (TextView) rowView.findViewById(R.id.name);
         TextView priceTextField = (TextView) rowView.findViewById(R.id.price);
@@ -89,13 +86,7 @@ public class productListAdapter extends ArrayAdapter {
         deleteBtn =(Button)rowView.findViewById(R.id.deleteBtn);
         productWebBtn = (Button)rowView.findViewById(R.id.productWebBtn);
         record=(Button)rowView.findViewById(R.id.record);
-//        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(context, isChecked + "", Toast.LENGTH_SHORT).show();
-//                wishpool_channel.setFinalPrice(priceArray.get(position));
-//            }
-//        });
+
 
         check.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener()
         {
@@ -107,7 +98,6 @@ public class productListAdapter extends ArrayAdapter {
                     if(isChecked)
                     {
                         //CheckBox狀態 : 已勾選
-//                    Toast.makeText(context, nameArray.get(position) +" 已勾選", Toast.LENGTH_SHORT).show();
                         isCheckArray.set(position, true);
                         wishpool_channel.setisCheckedPrice(countPrice());
                         wishpool_channel.updateActivity();
@@ -115,7 +105,6 @@ public class productListAdapter extends ArrayAdapter {
                     else
                     {
                         //CheckBox狀態 : 未勾選
-//                    Toast.makeText(context, nameArray.get(position) +" 已取消勾選", Toast.LENGTH_SHORT).show();
                         isCheckArray.set(position, false);
                         wishpool_channel.setisCheckedPrice(countPrice());
                         wishpool_channel.updateActivity();
@@ -247,7 +236,6 @@ public class productListAdapter extends ArrayAdapter {
         });
 
         //this code sets the values of the objects to values from the arrays
-//        pictureTextField.setText(pictureArray.get(position).toString());
         nameTextField.setText(nameArray.get(position));
         priceTextField.setText("$"+priceArray.get(position).toString());
         uploadTimeTextField.setText("上次更新時間: "+uploadTimeArray.get(position));

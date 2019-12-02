@@ -4,12 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/pager">-->
-    <!--</android.support.v4.view.ViewPager>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,22 +14,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!--<Button-->
-                <!--android:id="@+id/lastPage"-->
-                <!--style="@android:style/Widget.DeviceDefault.Button.Borderless"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="上一頁"-->
-                <!--android:textAppearance="@style/TextAppearance.AppCompat" />-->
-
             <Button
                 android:id="@+id/checkExpense"
                 style="@android:style/Widget.DeviceDefault.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/lightorange"
                 android:text="查詢收入" />
@@ -45,7 +29,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:text="切換帳戶"
                 android:background="@drawable/lightorange"/>
@@ -74,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/login_btn"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:text="本月"
                     android:layout_gravity="left|center_vertical"
                     android:layout_weight="1"
@@ -84,6 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:text="本年"
                     android:layout_gravity="left|center_vertical"
                     android:layout_weight="1"
@@ -158,21 +144,6 @@
             </com.github.mikephil.charting.charts.PieChart>
 
         </LinearLayout>
-
-        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="400dp"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<com.github.mikephil.charting.charts.LineChart-->
-                <!--android:id="@+id/Exlinechart"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginTop="10dp">-->
-
-            <!--</com.github.mikephil.charting.charts.LineChart>-->
-        <!--</LinearLayout>-->
-
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"

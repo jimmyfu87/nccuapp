@@ -62,16 +62,6 @@ public class add_expense extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fix_addexpense);
 
-        geatureObject = new GestureDetectorCompat(this, new LearnGesture());
-//        pager = (ViewPager) findViewById(R.id.pager);
-//
-//        LayoutInflater li = getLayoutInflater().from(this);
-//        View v1 = li.inflate(R.layout.income_check,null);
-//        pagerList = new ArrayList<View>();
-//        pagerList.add(v1);
-//
-//        pager.setAdapter(new myViewPagerAdapter(pagerList));
-//        pager.setCurrentItem(0);
 
 
         //Spinner ArrayAdapter 初始化
@@ -274,7 +264,6 @@ public class add_expense extends AppCompatActivity {
             updateType();
             input_book.setAdapter(bookList);
             input_type.setAdapter(typeList);
-            System.out.println("amount:"+i_price+",note:"+i_note);
             //從流水帳來
             if(detail){
                 typePosition = typeList.getPosition(getSaveBag.getString("typeName"));

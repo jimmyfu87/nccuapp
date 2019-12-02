@@ -117,7 +117,6 @@ public class check_income extends AppCompatActivity {
         if(saveBag != null){
             start_date = saveBag.getString("startDate");
             end_date = saveBag.getString("endDate");
-            System.out.println("查帳："+start_date+", "+end_date);
             selectBooks = saveBag.getStringArrayList("selectBooks");
 
             dateStart_input.setText(resetDateformat(START_DATE,start_date));
@@ -126,7 +125,6 @@ public class check_income extends AppCompatActivity {
             DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
             dbmanager.open();
             select_income=dbmanager.fetchIncomeWithbook(start_date,end_date,selectBooks);
-            System.out.println(select_income.size()+", "+selectBooks.size());
             dbmanager.close();
             setIncomeData(select_income);
             setList();
@@ -230,7 +228,6 @@ public class check_income extends AppCompatActivity {
                     DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
                     dbmanager.open();
                     // select_expense=dbmanager.fetchExpense(start_date,end_date);           //可直接調用select_expense的資訊
-                    //System.out.println("Size of select books"+selectBooks.size());
                     select_income=dbmanager.fetchIncomeWithbook(start_date,end_date,selectBooks);
                     if(select_income.isEmpty()){
                         Snackbar.make(v,"查詢金額為零",Snackbar.LENGTH_SHORT).show();
@@ -351,7 +348,6 @@ public class check_income extends AppCompatActivity {
                                 sb.append(bookArray.get(i));
                                 sb.append(" ");
                                 selectBooks.add(bookArray.get(i));
-                                //System.out.println("Here"+bookArray.get(i));
                                 isEmpty = false;
                             }
                         }
@@ -388,7 +384,6 @@ public class check_income extends AppCompatActivity {
                 this.getTypeName.add(getTypeName);
                 this.getPriceData.add(getPrice);
             }
-            //System.out.println(getTypeName+" ,"+getPriceData);
         }
     }
 
@@ -437,7 +432,6 @@ public class check_income extends AppCompatActivity {
         if(total==0){
             return 0;
         }
-        //System.out.println(priceOfType+", "+total+", "+priceOfType/total);
         return priceOfType/total*100;
     }
 
@@ -445,7 +439,6 @@ public class check_income extends AppCompatActivity {
         ArrayList<Type> typelist = new ArrayList<Type>();
         for(int i = 0; i < this.getPriceData.size(); i++){
             typelist.add(new Type(this.getPriceData.get(i), this.getTypeName.get(i)));
-            //System.out.println(typelist.get(i).getPrice()+", "+typelist.get(i).getTypeName());
         }
         ArrayList<Type> sortedTypelist = new ArrayList<Type>();
         //selection sort
@@ -479,11 +472,9 @@ public class check_income extends AppCompatActivity {
             double percentage = countPercentage(this.getPriceData.get(i), selectDateTotalPrice);
             DecimalFormat df = new DecimalFormat("##.0");
             percentage = Double.parseDouble(df.format(percentage));
-            //System.out.println(selectDateTotalPrice+" ,"+percentage);
             this.percentageArray.add(percentage +" %");
             this.totalArray.add(this.getPriceData.get(i));
         }
-        //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
 
     public void setList(){
@@ -585,7 +576,6 @@ public class check_income extends AppCompatActivity {
 //                        countMoneyPerYear += In_list.get(j).getIn_price();
 //                    }
 //                    values.add(new Entry(i,countMoneyPerYear));
-////                    System.out.println("year:"+i +", "+countMoneyPerYear);
 //                }
 //                this.lineChartName = this.yearStart +"~"+ this.yearEnd + "年收入";
 //                break;
@@ -604,7 +594,6 @@ public class check_income extends AppCompatActivity {
 //                    }else {
 //                        endDay = 30;
 //                    }
-////                    System.out.println("月天數"+endDay);
 //                    DatabaseManager dbmanager=new DatabaseManager(getApplicationContext());    //選取start_date到end_date的所有帳目，包裝成List<Expense>
 //                    dbmanager.open();
 //                    dbmanager.close();
@@ -617,7 +606,6 @@ public class check_income extends AppCompatActivity {
 //                        countMoneyPerMonth += In_list.get(j).getIn_price();
 //                    }
 //                    values.add(new Entry(i,countMoneyPerMonth));
-////                    System.out.println("month:"+i +", "+countMoneyPerMonth);
 //                }
 //                this.lineChartName = this.yearStart+"/" + this.monthStart +"~"+ this.yearEnd+"/"+this.monthEnd+ "月收入";
 //                break;
@@ -636,7 +624,6 @@ public class check_income extends AppCompatActivity {
 //                        countMoneyPerDay += In_list.get(j).getIn_price();
 //                    }
 //                    values.add(new Entry(i,countMoneyPerDay));
-////                    System.out.println("day:"+i +", "+countMoneyPerDay);
 //
 //                }
 //                this.lineChartName = this.yearStart+"/" + this.monthStart+"/" + this.dayStart +"~"+ this.yearEnd+"/" + this.monthEnd+"/" + this.dayEnd + "日收入";
@@ -690,7 +677,6 @@ public class check_income extends AppCompatActivity {
             end_date = set_dateformat(Integer.parseInt(year),Integer.parseInt(month),30);
         }
         this.dateEnd_input.setError(null);
-        //System.out.println(this.dateinStart+" ,"+this.dateinEnd);
     }
 
     //根據當年自動設起訖日期

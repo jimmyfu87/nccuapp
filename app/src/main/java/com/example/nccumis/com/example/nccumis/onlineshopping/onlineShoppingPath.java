@@ -64,15 +64,6 @@ public class  onlineShoppingPath extends AppCompatActivity {
             }
         });
 
-//        inputPath = (EditText)findViewById(R.id.input_path);
-//
-//        searchPath = (Button)findViewById(R.id.search_path);
-//        searchPath.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
 
         ecommercePathListView = (MyListView)findViewById(R.id.ecommercePathListView);
@@ -110,9 +101,6 @@ public class  onlineShoppingPath extends AppCompatActivity {
                             .show();
 
                 }
-//                System.out.println(channellist.get(0).getId());
-//                System.out.println(channellist.get(1).getChannel_url());
-//                System.out.println(channellist.get(0).getChannel_url());
             }
         };
 
@@ -152,8 +140,6 @@ public class  onlineShoppingPath extends AppCompatActivity {
                             }
                         }
                         //拿channellist去調用
-//                        System.out.println(channellist.get(0).getActivitylist().get(0).getChannel_name());
-//                        System.out.println(channellist.get(0).getActivitylist().get(1).getChannel_name());
                         setChannelList();
                         setListViewHeightBasedOnChildren(ecommercePathListView);
 
@@ -165,12 +151,6 @@ public class  onlineShoppingPath extends AppCompatActivity {
                     //這邊是發現活動是空的處理方式，要改可以改
                     setChannelList();
                     setListViewHeightBasedOnChildren(ecommercePathListView);
-                    System.out.println("size of channellist : " + channellist.size());
-                    for(int i = 0; i < channellist.size(); i++){
-                        if(channellist.get(i).getActivitylist().isEmpty()){
-                            System.out.println("!empty!!!!!!!!!!!!!!");
-                        }
-                    }
                 }
             }
         };
@@ -181,14 +161,6 @@ public class  onlineShoppingPath extends AppCompatActivity {
         RequestQueue requestQueue2 = Volley.newRequestQueue(getApplicationContext());
         requestQueue2.add(getRequest2);
 
-
-        ecommercePathListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //到更詳細的優惠資訊
-//                jumpTodiscount_detail(position);
-            }
-        });
     }
 
     public void jumpToHome(){
@@ -221,7 +193,6 @@ public class  onlineShoppingPath extends AppCompatActivity {
     }
 
     public void initChannelList(){
-//        System.out.println("channellist size: "+this.channellist.size());
         for(int i = 0; i < this.channellist.size();i++){
             String discountDetailtemp = "";
             this.idArray.add(this.channellist.get(i).getId());
@@ -234,11 +205,9 @@ public class  onlineShoppingPath extends AppCompatActivity {
                 }
             }
             discountDetailtemp = discountDetailtemp == "" ? "無優惠資訊" : discountDetailtemp;
-//            System.out.println("discountDetailtemp :"+discountDetailtemp);
             this.discountDetailArray.add(discountDetailtemp);
             this.urlArray.add(this.channellist.get(i).getChannel_url());
         }
-        //System.out.println(this.getPriceData.size()+" ,"+this.typeName.size());
     }
 
     public void setChannelList(){
