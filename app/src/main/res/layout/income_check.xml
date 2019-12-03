@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/login_btn"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:text="本月"
                     android:layout_gravity="left|center_vertical"
                     android:layout_weight="1"/>
@@ -80,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/forget_password_btn"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:text="本年"
                     android:layout_gravity="left|center_vertical"
                     android:layout_weight="1"/>

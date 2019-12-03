@@ -11,54 +11,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
+
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="15dp" >
-                <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+                <TextView
+                    android:text="date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                        <TextView
-                            android:text="date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/date"
-                            android:textSize="16sp"
-                            android:layout_weight="1"
-                            android:textColor="#0D3B47"
-                            />
-                        <TextView
-                            android:text="price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/price"
-                            android:layout_weight="1"
-                            android:textColor="#0D3B47"
-                            android:textSize="16sp"
-                            />
-                        <TextView
-                            android:text="book"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/book"
-                            android:layout_weight="1"
-                            android:textColor="#0D3B47"
-                            android:textSize="16sp"
-                            />
-                        <TextView
-                            android:text="note"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/note_input"
-                            android:layout_weight="1"
-                            android:textColor="#0D3B47"
-                            android:textSize="16sp"
-                            />
+                    android:id="@+id/date"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    />
+                <TextView
+                    android:text="price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/price"
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:text="book"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/book"
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:text="note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/note_input"
+                    android:layout_weight="1"
+                    android:textColor="#0D3B47"
+                    android:textSize="16sp"
+                    />
 
-                </LinearLayout>
+        </LinearLayout>
 
 
 
@@ -75,7 +71,7 @@
 
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -106,7 +102,7 @@
                 </LinearLayout>>
 
 
-        </LinearLayout>
+
 
         <!--<LinearLayout-->
             <!--xmlns:android="http://schemas.android.com/apk/res/android"-->

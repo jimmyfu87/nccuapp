@@ -80,7 +80,6 @@ public class check_expense extends AppCompatActivity {
     private List<String> nameArray = new ArrayList<String>();
     private List<String> percentageArray = new ArrayList<String>();
     private List<Integer> totalArray = new ArrayList<Integer>();
-
     private List<String> bookArray = new ArrayList<String>();
     private ArrayList<String> selectBooks = new ArrayList<String>();
 
@@ -471,7 +470,7 @@ public class check_expense extends AppCompatActivity {
     public void setList(){
         sortListData();
         initListData();
-        ExpenseIncomeListAdapter Ex_adapter = new ExpenseIncomeListAdapter(this, this.numberArray, this.nameArray, this.percentageArray, this.totalArray);
+        ExpenseIncomeListAdapter Ex_adapter = new ExpenseIncomeListAdapter(this ,this.numberArray, this.nameArray, this.percentageArray, this.totalArray);
         TypeListView.setAdapter(Ex_adapter);
     }
 

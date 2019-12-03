@@ -272,7 +272,7 @@ public class add_income extends AppCompatActivity {
             input_type.setAdapter(typeList);
             //從流水帳來
             if(detail){
-                typePosition = typeList.getPosition(getSaveBag.getString("typeName"));
+                typePosition = typeList.getPosition(getSaveBag.getString("type"));
                 input_type.setSelection(typePosition);
                 saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
