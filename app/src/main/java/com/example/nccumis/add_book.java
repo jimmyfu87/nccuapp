@@ -104,10 +104,14 @@ public class add_book extends AppCompatActivity {
                     dbmanager.open();
                     //從帳本管理來
                     if(saveBag.getBoolean("FromBookManage")){
-                        //updateBook();
-                        //int book_id,String book_name,int amount_start,int amount_remain,String currency_type
-                        int book_id = saveBag.getInt("id");
-                        dbmanager.updateBook(book_id,i_bookName,i_startBudget,i_currencyid,i_startdate,i_enddate);
+                        if(saveBag.getBoolean("newBook")){
+                            dbmanager.insert_Book(i_bookName,i_startBudget,i_remain,i_currencyid,i_startdate,i_enddate,0);            //將資料放到資料庫
+                        }else {
+                            //updateBook();
+                            //int book_id,String book_name,int amount_start,int amount_remain,String currency_type
+                            int book_id = saveBag.getInt("id");
+                            dbmanager.updateBook(book_id,i_bookName,i_startBudget,i_currencyid,i_startdate,i_enddate);
+                        }
                         jumptoBookManage();
                     }else{
                         //到下一頁
@@ -191,17 +195,17 @@ public class add_book extends AppCompatActivity {
         //從bookManager返回
         Intent getSaveData = getIntent();
         Bundle getSaveBag = getSaveData.getExtras();
-        if(getSaveBag != null ){
+        if(getSaveBag != null && !saveBag.getBoolean("newBook")){
             input_bookName.setText(getSaveBag.getString("name"));
             book_name = getSaveBag.getString("name");
             input_startBudget.setText(getSaveBag.getString("amount_start"));
             budget_start = getSaveBag.getString("amount_start");
             int currencyListPosition = currencyList.getPosition(getSaveBag.getString("currency_type"));
             input_currency.setSelection(currencyListPosition);
-//            i_startdate = setDateformat(getSaveBag.getString("startdate"));
-            input_startdate.setText(getSaveBag.getString("startdate"));
-//            i_enddate = setDateformat(getSaveBag.getString("enddate"));
-            input_enddate.setText(getSaveBag.getString("enddate"));
+            i_startdate = getSaveBag.getString("startdate");
+            input_startdate.setText(resetDateformat(i_startdate));
+            i_enddate = getSaveBag.getString("enddate");
+            input_enddate.setText(resetDateformat(i_enddate));
             //updateBook();
         }
 
@@ -270,7 +274,7 @@ public class add_book extends AppCompatActivity {
         if(isDate2Bigger(input_startdate.getText().toString(),input_enddate.getText().toString())){
             input_startdate.setError("輸入日期有誤");
             input_enddate.setError("輸入日期有誤");
-            Toast.makeText(add_book.this, "結束日期大於起始日期", Toast.LENGTH_SHORT).show();
+            Toast.makeText(add_book.this, "結束日期小於起始日期", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -326,8 +330,23 @@ public class add_book extends AppCompatActivity {
             i_enddate=year+"-"+st_month+"-"+st_day;
     }
 
-    public String setDateformat2(String date){
-        return date;
+    public String resetDateformat(String date){
+        String resetDate = "";
+        int index = 0;
+
+        for(String str : date.split("-")){
+            resetDate += (Integer.parseInt(str) < 10) ? str.substring(1): str;
+            if(index == 0){
+                resetDate += "年";
+            }else if(index == 1){
+                resetDate +="月";
+            }else if(index == 2){
+                resetDate += "日";
+            }
+            index++;
+        }
+
+        return resetDate;
     }
 
     public boolean isDate2Bigger(String str1, String str2) {

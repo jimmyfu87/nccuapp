@@ -64,8 +64,8 @@ public class book_detail_adapter extends ArrayAdapter {
         Amount_startTextField.setText(amount_startArray.get(position).toString());
         Amount_remainTextField.setText(amount_remainArray.get(position).toString());
         currency_typeTextField.setText(i_currencyidArray.get(position));
-        startdateField.setText(startdateArray.get(position));
-        enddateField.setText(enddateArray.get(position));
+        startdateField.setText("帳本開始日期："+startdateArray.get(position));
+        enddateField.setText("帳本結束日期："+enddateArray.get(position));
 
         fixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +122,7 @@ public class book_detail_adapter extends ArrayAdapter {
         saveBookData.putString("startdate", startdateArray.get(position));
         saveBookData.putString("enddate", enddateArray.get(position));
         saveBookData.putBoolean("FromBookManage", true);
+        saveBookData.putBoolean("newBook", false);
         intent.putExtras(saveBookData);
         activity.startActivity(intent);
     }

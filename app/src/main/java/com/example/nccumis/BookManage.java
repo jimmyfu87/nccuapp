@@ -134,6 +134,7 @@ public class BookManage extends AppCompatActivity {
         Intent intent = new Intent(BookManage.this,add_book.class);
         Bundle saveBookData = new Bundle();
         saveBookData.putBoolean("FromBookManage", true);
+        saveBookData.putBoolean("newBook", true);
         intent.putExtras(saveBookData);
         startActivity(intent);
     }
