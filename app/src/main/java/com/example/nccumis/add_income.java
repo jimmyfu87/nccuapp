@@ -274,6 +274,8 @@ public class add_income extends AppCompatActivity {
             if(detail){
                 typePosition = typeList.getPosition(getSaveBag.getString("type"));
                 input_type.setSelection(typePosition);
+                bookPosition = bookList.getPosition(getSaveBag.getString("book"));
+                input_book.setSelection(bookPosition);
                 saveDetailId=getSaveBag.getInt("id");
                 saveDetailStartdate = getSaveBag.getString("saveDetailStartdate");
                 saveDetailEnddate = getSaveBag.getString("saveDetailEnddate");
