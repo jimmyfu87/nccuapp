@@ -244,6 +244,18 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
                                     }
                                 })
+                                .setNegativeButton("回首頁", new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dbmanager.open();
+                                        dbmanager.updateClosed(select_BookAttribute.get(i).getId(), 1);
+                                        dbmanager.close();
+                                        editor.putInt("book_position", 0);
+                                        editor.commit();
+                                        refresh();
+                                    }
+
+                                })
                                 .create()
                                 .show();
                     }
