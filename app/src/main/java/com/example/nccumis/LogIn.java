@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.nccumis.com.example.nccumis.onlineshopping.wishpool_channel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -193,9 +194,19 @@ public class LogIn extends AppCompatActivity {
 //
 //    }
 //切換到驗證密碼的頁面
-    public void JumpToPasswordCheckEmail(){
-        Intent intent= new Intent(LogIn.this,PasswordCheckEmail.class);
-        startActivity(intent);
+    public void JumpToPasswordCheckEmail() {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(LogIn.this);
+        builder.setMessage("很抱歉，忘記密碼功能維修中")
+                .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .create()
+                .show();
+        //Intent intent= new Intent(LogIn.this,PasswordCheckEmail.class);
+        //startActivity(intent);
     }
     //切換到註冊頁面
     public void JumpToRegistr(){
