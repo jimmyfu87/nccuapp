@@ -54,7 +54,7 @@
             app:srcCompat="@drawable/ic_squline_02" />
 
         <EditText
-            android:id="@+id/date_input"
+            android:id="@+id/amount_input"
             android:layout_width="180dp"
             android:layout_height="45dp"
             android:layout_marginStart="36dp"
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/amount_input"
+            android:id="@+id/date_input"
             android:layout_width="180dp"
             android:layout_height="45dp"
             android:layout_marginStart="184dp"
@@ -81,13 +81,13 @@
             />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
             android:layout_marginLeft="36dp"
             android:layout_marginTop="108dp"
-            android:text="日期"
+            android:text="金額"
             android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -129,13 +129,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/amount"
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="184dp"
             android:layout_marginLeft="184dp"
             android:layout_marginTop="224dp"
-            android:text="金額"
+            android:text="日期"
             android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
