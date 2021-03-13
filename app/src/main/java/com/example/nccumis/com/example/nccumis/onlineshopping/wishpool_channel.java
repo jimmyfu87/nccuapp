@@ -378,7 +378,7 @@ public class wishpool_channel extends AppCompatActivity {
     }
 
     public class GetallproductRequest extends StringRequest {
-        private static final String Getallproduct_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getallproduct.php";
+        private static final String Getallproduct_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getallproduct.php";
         private Map<String, String> params;
         //
         public GetallproductRequest(String member_id, String channel_name, Response.Listener<String> listener) {
@@ -393,7 +393,7 @@ public class wishpool_channel extends AppCompatActivity {
         }
     }
     public class GetactivityRequest extends StringRequest {
-        private static final String Getactivity_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getactivity.php";
+        private static final String Getactivity_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getactivity.php";
         private Map<String, String> params;
         //
         public GetactivityRequest(String member_id, String channel_name,Response.Listener<String> listener) {
@@ -408,7 +408,7 @@ public class wishpool_channel extends AppCompatActivity {
         }
     }
     public class GetcardRequest extends StringRequest {
-        private static final String Getcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getcard.php";
+        private static final String Getcard_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getcard.php";
         private Map<String, String> params;
         //
         public GetcardRequest(String member_id, Response.Listener<String> listener) {
@@ -422,7 +422,7 @@ public class wishpool_channel extends AppCompatActivity {
         }
     }
     public class GetliveactivitywithcardRequest extends StringRequest {
-        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getliveactivitywithcard.php";
+        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getliveactivitywithcard.php";
         private Map<String, String> params;
         //
         public GetliveactivitywithcardRequest(String member_id,Response.Listener<String> listener) {
@@ -438,7 +438,7 @@ public class wishpool_channel extends AppCompatActivity {
     }
 
     public class GetliveactivitywithothercardRequest extends StringRequest {
-        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getliveactivitywithothercard.php";
+        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getliveactivitywithothercard.php";
         private Map<String, String> params;
         //
         public GetliveactivitywithothercardRequest(String member_id,Response.Listener<String> listener) {
@@ -1115,7 +1115,7 @@ public class wishpool_channel extends AppCompatActivity {
 
     }
     public class UpdatepoolRequest extends StringRequest {
-        private static final String UpdatepoolRequest_REQUEST_URL="https://nccugo105306.000webhostapp.com/Updatepool.php";
+        private static final String UpdatepoolRequest_REQUEST_URL="https://nccugo105306087.000webhostapp.com/Updatepool.php";
         private Map<String,String> params;
 
         public UpdatepoolRequest(String id,String product_name, String product_price, Response.Listener<String> listener){
@@ -1136,7 +1136,7 @@ public class wishpool_channel extends AppCompatActivity {
         startActivity(intent);
     }
     public class GetothercardRequest extends StringRequest {
-        private static final String Getothercard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getothercard.php";
+        private static final String Getothercard_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getothercard.php";
         private Map<String, String> params;
         //
         public GetothercardRequest(String member_id, Response.Listener<String> listener) {

@@ -217,7 +217,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
     }
 
     public class GetallchannelRequest extends StringRequest {
-        private static final String Getallchannel_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getallchannel.php";
+        private static final String Getallchannel_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getallchannel.php";
         private Map<String, String> params;
         //
         public GetallchannelRequest(Response.Listener<String> listener) {
@@ -231,7 +231,7 @@ public class  onlineShoppingPath extends AppCompatActivity {
         }
     }
     public class GetliveactivitywithcardRequest extends StringRequest {
-        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getliveactivitywithcard.php";
+        private static final String Getliveactivitywithcard_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getliveactivitywithcard.php";
         private Map<String, String> params;
         //
         public GetliveactivitywithcardRequest(String member_id,Response.Listener<String> listener) {

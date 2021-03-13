@@ -160,7 +160,7 @@ public class wishpool extends AppCompatActivity {
     }
 
     public class GetallchannelRequest extends StringRequest {
-        private static final String Getallchannel_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getallchannel.php";
+        private static final String Getallchannel_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getallchannel.php";
         private Map<String, String> params;
         //
         public GetallchannelRequest(Response.Listener<String> listener) {

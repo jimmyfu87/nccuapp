@@ -254,7 +254,7 @@ public class productListAdapter extends ArrayAdapter {
         return finalPrice;
     }
     public class DeleteproductRequest extends StringRequest {
-        private static final String Deleteproduct_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Deleteproduct.php";
+        private static final String Deleteproduct_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Deleteproduct.php";
         private Map<String, String> params;
         //
         public DeleteproductRequest(String id,Response.Listener<String> listener) {

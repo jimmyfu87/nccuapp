@@ -157,7 +157,7 @@ public class othercardtypeadapter extends ArrayAdapter{
 
     }
     public class AddcardrelationRequest extends StringRequest {
-        private static final String Addcardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Addcardrelation.php";
+        private static final String Addcardrelation_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Addcardrelation.php";
         private Map<String, String> params;
         public AddcardrelationRequest(String member_id,String cardtype_name,Response.Listener<String> listener) {
             super(Method.POST,  Addcardrelation_REQUEST_URL, listener, null);

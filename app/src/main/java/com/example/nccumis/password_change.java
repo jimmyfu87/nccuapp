@@ -120,7 +120,7 @@ public class password_change<ModifyPswActivity> extends AppCompatActivity {
         });
     }
     public class ChangepasswordRequest extends StringRequest {
-        private static final String Changepassword_REQUEST_URL="https://nccugo105306.000webhostapp.com/changepassword.php";
+        private static final String Changepassword_REQUEST_URL="https://nccugo105306087.000webhostapp.com/changepassword.php";
         private Map<String,String> params;
         public ChangepasswordRequest(String member_id,String newpassword, Response.Listener<String> listener){
             super(Method.POST, Changepassword_REQUEST_URL, listener, null);

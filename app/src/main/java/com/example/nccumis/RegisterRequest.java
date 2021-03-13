@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
-    private  static String REGISTER_REQUEST_URL="https://nccugo105306.000webhostapp.com/Register.php";
+    private  static String REGISTER_REQUEST_URL="https://nccugo105306087.000webhostapp.com/Register.php";
     private Map<String,String> params;
 
     public RegisterRequest(String member_name,String member_id,String member_phone,String member_email,String member_password,String member_personal_id,String member_birthday, Response.Listener<String> listener){

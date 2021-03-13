@@ -284,7 +284,7 @@ public class Settings extends AppCompatActivity {
 //        startActivity(intent);
 //    }
     public class GetcardRequest extends StringRequest {
-        private static final String Getcard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getcard.php";
+        private static final String Getcard_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getcard.php";
         private Map<String, String> params;
         //
         public GetcardRequest(String member_id,Response.Listener<String> listener) {
@@ -298,7 +298,7 @@ public class Settings extends AppCompatActivity {
         }
     }
     public class GetothercardRequest extends StringRequest {
-        private static final String Getothercard_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getothercard.php";
+        private static final String Getothercard_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getothercard.php";
         private Map<String, String> params;
         //
         public GetothercardRequest(String member_id,Response.Listener<String> listener) {
@@ -312,7 +312,7 @@ public class Settings extends AppCompatActivity {
         }
     }
 //    public class AddcardrelationRequest extends StringRequest {
-//        private static final String Addcardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Addcardrelation.php";
+//        private static final String Addcardrelation_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Addcardrelation.php";
 //        private Map<String, String> params;
 //        public AddcardrelationRequest(String member_id,String cardtype_name,Response.Listener<String> listener) {
 //            super(Method.POST,  Addcardrelation_REQUEST_URL, listener, null);
@@ -326,7 +326,7 @@ public class Settings extends AppCompatActivity {
 //        }
 //    }
 //    public class DeletecardrelationRequest extends StringRequest {
-//        private static final String Deletecardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Deletecardrelation.php";
+//        private static final String Deletecardrelation_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Deletecardrelation.php";
 //        private Map<String, String> params;
 //        public DeletecardrelationRequest(String id , Response.Listener<String> listener) {
 //            super(Method.POST,  Deletecardrelation_REQUEST_URL, listener, null);

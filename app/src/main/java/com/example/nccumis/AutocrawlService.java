@@ -335,7 +335,7 @@ public class AutocrawlService extends Service {
 
     }
     public class UpdatepoolRequest extends StringRequest {
-        private static final String UpdatepoolRequest_REQUEST_URL="https://nccugo105306.000webhostapp.com/Updatepool.php";
+        private static final String UpdatepoolRequest_REQUEST_URL="https://nccugo105306087.000webhostapp.com/Updatepool.php";
         private Map<String,String> params;
 
         public UpdatepoolRequest(String id,String product_name, String product_price, Response.Listener<String> listener){
@@ -351,7 +351,7 @@ public class AutocrawlService extends Service {
         }
     }
     public class GetallproductwithoutchannelRequest extends StringRequest {
-        private static final String Getallproductwithoutchannel_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getallproductwithoutchannel.php";
+        private static final String Getallproductwithoutchannel_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getallproductwithoutchannel.php";
         private Map<String, String> params;
         //
         public GetallproductwithoutchannelRequest(String member_id, String channel_name, Response.Listener<String> listener) {

@@ -159,7 +159,7 @@ public class owncardtypeadapter extends ArrayAdapter{
     }
 
     public class AddcardrelationRequest extends StringRequest {
-        private static final String Addcardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Addcardrelation.php";
+        private static final String Addcardrelation_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Addcardrelation.php";
         private Map<String, String> params;
         public AddcardrelationRequest(String member_id,String cardtype_name,Response.Listener<String> listener) {
             super(Method.POST,  Addcardrelation_REQUEST_URL, listener, null);
@@ -173,7 +173,7 @@ public class owncardtypeadapter extends ArrayAdapter{
         }
     }
     public class DeletecardrelationRequest extends StringRequest {
-        private static final String Deletecardrelation_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Deletecardrelation.php";
+        private static final String Deletecardrelation_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Deletecardrelation.php";
         private Map<String, String> params;
         public DeletecardrelationRequest(String member_id ,String cardtype_name, Response.Listener<String> listener) {
             super(Method.POST,  Deletecardrelation_REQUEST_URL, listener, null);

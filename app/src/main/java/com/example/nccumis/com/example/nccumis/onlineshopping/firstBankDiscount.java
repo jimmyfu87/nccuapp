@@ -124,7 +124,7 @@ public class firstBankDiscount extends AppCompatActivity {
     }
 
     public class GetactivityRequest extends StringRequest {
-        private static final String Getactivity_REQUEST_URL = "https://nccugo105306.000webhostapp.com/Getactivity.php";
+        private static final String Getactivity_REQUEST_URL = "https://nccugo105306087.000webhostapp.com/Getactivity.php";
         private Map<String, String> params;
 
         public GetactivityRequest(String member_id, String channel_name,Response.Listener<String> listener) {
